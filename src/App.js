@@ -1,10 +1,11 @@
+import {registerRootComponent} from "expo";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>É a orion, não tem jeito!</Text>
+      <Text>É a Orion, forget!!</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -18,3 +19,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+registerRootComponent(App);
