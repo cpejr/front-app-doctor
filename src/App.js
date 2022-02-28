@@ -1,23 +1,10 @@
 import {registerRootComponent} from "expo";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Routes from "./Routes";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>É a Orion, forget!!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <Routes />
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
 
 registerRootComponent(App);
