@@ -1,56 +1,60 @@
 import React from "react";
-import { Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
+import Botao from "./../../styles/Botao";
+import ConteudoBotao from "./../../styles/ConteudoBotao";
+import Input from "./../../styles/Input";
 import {
   Body,
   CaixaTitulo,
   Logo,
   Titulo,
   CaixaInputs,
-  StyledTextInput,
   CaixaInputsMesmaLinha,
   CaixaBotoes,
-  Botao
-} from "./Styles"
+} from "./Styles";
 
 function Cadastro() {
   return (
     <Body>
       <CaixaTitulo>
-        <Logo
-        source={logoGuilherme}
-        />
-        <Titulo>
-          Faça seu Cadastro
-        </Titulo>
+        <Logo source={logoGuilherme} />
+        <Titulo>Faça seu Cadastro</Titulo>
       </CaixaTitulo>
 
       <CaixaInputs>
-        <StyledTextInput
-        placeholder="Nome Completo"
-        keyboardType="default"
-        />
+        <Input placeholder="Nome Completo" keyboardType="default" />
         <CaixaInputsMesmaLinha>
-          <StyledTextInput
-          placeholder="Telefone"
-          keyboardType="numeric"
-          />
-          <StyledTextInput
-          placeholder="Data de Nascimento"
-          keyboardType="numeric"
-          />
+          <Input placeholder="Telefone" keyboardType="numeric" />
+          <Input placeholder="Data de Nascimento" keyboardType="numeric" />
         </CaixaInputsMesmaLinha>
       </CaixaInputs>
-      
+
       <CaixaBotoes>
         <Botao
-        title="CANCELAR"
-        />
+          width="42%"
+          height="50px"
+          backgroundColor="#ffffff"
+          borderRadius="3"
+          borderColor="rgba(255, 0, 0, 0.25)"
+          borderWidth="1"
+        >
+          <ConteudoBotao fontSize="15px" color="#000000">
+            CANCELAR
+          </ConteudoBotao>
+        </Botao>
         <Botao
-        title="CADASTRAR"
-        />
+          width="42%"
+          height="50px"
+          backgroundColor="#434B97"
+          borderRadius="3"
+          borderColor="#151B57"
+          borderWidth="1"
+        >
+          <ConteudoBotao fontSize="15px" color="#ffffff">
+            CADASTRAR
+          </ConteudoBotao>
+        </Botao>
       </CaixaBotoes>
-
     </Body>
   );
 }
