@@ -6,8 +6,12 @@ function Home({navigation}) {
     <View>
       <Text>Home</Text>
       <Button
-        title="Go to Cadastro"
+        title="Cadastro"
         onPress={() => navigation.navigate("Cadastro")}
+      />
+      <Button
+        title="Login"
+        onPress={() => navigation.navigate("Login")}
       />
     </View>
   );

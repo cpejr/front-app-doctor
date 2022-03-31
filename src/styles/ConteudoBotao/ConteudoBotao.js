@@ -8,5 +8,6 @@ export const ConteudoBotao = styled.Text`
   /*Fonte*/
   font-size: ${(props) => props.fontSize};
   color: ${(props) => props.color};
+  width: ${(props) => props.width};
 `;
 export default ConteudoBotao;

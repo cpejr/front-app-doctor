@@ -37,6 +37,7 @@ function Cadastro() {
           borderRadius="3"
           borderColor="rgba(255, 0, 0, 0.25)"
           borderWidth="1"
+          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.3)"
         >
           <ConteudoBotao fontSize="15px" color="#000000">
             CANCELAR
@@ -49,6 +50,7 @@ function Cadastro() {
           borderRadius="3"
           borderColor="#151B57"
           borderWidth="1"
+          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.3)"
         >
           <ConteudoBotao fontSize="15px" color="#ffffff">
             CADASTRAR

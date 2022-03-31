@@ -16,6 +16,6 @@ export const Botao = styled.TouchableOpacity`
   border-radius: ${(props) => props.borderRadius};
   border-color: ${(props) => props.borderColor};
   border-width: ${(props) => props.borderWidth};
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: ${(props) => props.boxShadow};
 `;
 export default Botao;
