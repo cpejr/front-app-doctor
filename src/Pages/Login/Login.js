@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import Input from "./../../styles/Input";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-community/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 import { useWindowDimensions, ScrollView } from "react-native";
 import {
@@ -42,7 +42,8 @@ function Login({ navigation }) {
       } catch (error) {
         setEmail(null);
         setSenha(null);
-        alert(requisicaoErro(error, () => navigation.navigate("Login")));
+        requisicaoErro(error, () => navigation.navigate("Login"));
+        alert(email,senha);
       }
     }
   }
