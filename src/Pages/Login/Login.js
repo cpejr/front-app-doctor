@@ -5,6 +5,9 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import Input from "./../../styles/Input";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import requisicaoErro from "../../utils/HttpErros";
+import { useWindowDimensions, ScrollView } from "react-native";
 import {
   Body,
   CaixaTitulo,
@@ -21,8 +24,9 @@ function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
+  const { width, height } = useWindowDimensions();
+
   async function requisicaoLogin() {
-    console.log(email, senha)
     if (email.length === 0 || senha.length === 0) {
       alert("Preencha os campos email e senha!");
     } else {
@@ -31,126 +35,145 @@ function Login({ navigation }) {
           email,
           senha,
         });
-        alert("Bem vindo");
-        login(resposta.data.token);
+        await AsyncStorage.setItem("@AirBnbApp:token", resposta.data.token);
+        await AsyncStorage.setItem("@AirBnbApp:email", resposta.data.email);
+        alert("Bem vindo!");
         navigation.navigate("Home");
       } catch (error) {
-        setEmail("");
-        setSenha("");
-        requisicaoErro(error, () => navigation.navigate("Login"));
-        alert(email, senha);
+        setEmail(null);
+        setSenha(null);
+        alert(requisicaoErro(error, () => navigation.navigate("Login")));
       }
     }
   }
+
+  const margemSuperior = height < 200 ? "5px" : "100px";
+  const tamanhoFonte = width > 500 ? "18px" : "11px";
+  const tamanhoIcone = width > 480 ? 20 : 18;
+  const larguraConteudoBotaoEntrar = width > 480 ? "35%" : "40%";
+  const larguraBotaoAlternativo = width > 480 ? "90%" : "100%";
+
   return (
-    <Body>
-      <CaixaTitulo>
-        <Logo source={logoGuilherme} />
-      </CaixaTitulo>
+    <ScrollView>
+      <Body>
+        <CaixaTitulo marginTop={margemSuperior}>
+          <Logo source={logoGuilherme} />
+        </CaixaTitulo>
 
-      <CaixaInputs>
-        <Input
-          placeholder="Email"
-          keyboardType="default"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          placeholder="Senha"
-          keyboardType="default"
-          type="password"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-        />
-      </CaixaInputs>
+        <CaixaInputs>
+          <Input
+            placeholder="Email"
+            keyboardType="web-search"
+            onChangeText={(e) => setEmail(e)}
+            value={email}
+          />
+          <Input
+            placeholder="Senha"
+            keyboardType="web-search"
+            secureTextEntry
+            onChangeText={(e) => setSenha(e)}
+            value={senha}
+          />
+        </CaixaInputs>
 
-      <Botao
-        width="32%"
-        height="40px"
-        backgroundColor="#434B97"
-        borderRadius="3"
-        borderColor="#151B57"
-        borderWidth="1"
-        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.3)"
-        onPress={() => requisicaoLogin()}
-      >
-        <ConteudoBotao fontSize="15px" color="#ffffff">
-          ENTRAR
-        </ConteudoBotao>
-      </Botao>
-
-      <SenhaCadastro>
         <Botao
-          backgroundColor="transparent"
-          borderRadius="3"
-          borderWidth="1"
-          borderColor="transparent"
-          color="#151B57"
-          fontSize="1em"
-          textDecoration="underline"
+          width="32%"
+          height="40px"
+          backgroundColor="#434B97"
+          borderRadius="3px"
+          borderColor="#151B57"
+          borderWidth="3px"
           boxShadow="none"
+          onPress={() => requisicaoLogin()}
         >
-          <ConteudoBotao fontSize="15px" color="#000000">
-            Esqueceu a senha?
+          <ConteudoBotao
+            width={larguraConteudoBotaoEntrar}
+            fontSize={tamanhoFonte}
+            color="#ffffff"
+          >
+            ENTRAR
           </ConteudoBotao>
         </Botao>
-        <Botao
-          backgroundColor="transparent"
-          borderRadius="3"
-          borderWidth="1"
-          borderColor="transparent"
-          color="#434B97"
-          fontSize="1em"
-          textDecoration="underline"
-          boxShadow="none"
-          onPress={() => navigation.navigate("Cadastro")}
-        >
-          <ConteudoBotao fontSize="15px" color="#000000">
-            Cadastre-se
-          </ConteudoBotao>
-        </Botao>
-      </SenhaCadastro>
-      <BarraEstetica />
 
-      <BotoesAlternativos>
-        <Botao
-          width="100%"
-          height="40px"
-          backgroundColor="#ffffff"
-          borderRadius="3"
-          borderColor="#434B97"
-          borderWidth="3"
-          boxShadow="none"
-        >
-          <ConteudoIcone>
-            <Icone>
-              <Icon name="google" size={18} color="#000000" />
-            </Icone>
-            <ConteudoBotao width="80%" fontSize="15px" color="#000000">
-              Continuar com o Google
+        <SenhaCadastro>
+          <Botao
+            backgroundColor="transparent"
+            borderColor="transparent"
+            width="50%"
+            height="40px"
+            borderRadius="3px"
+            borderWidth="3px"
+            boxShadow="none"
+          >
+            <ConteudoBotao width="100%" fontSize={tamanhoFonte} color="#000000">
+              Esqueceu a senha?
             </ConteudoBotao>
-          </ConteudoIcone>
-        </Botao>
-        <Botao
-          width="100%"
-          height="40px"
-          backgroundColor="#ffffff"
-          borderRadius="3"
-          borderColor="#434B97"
-          borderWidth="3"
-          boxShadow="none"
-        >
-          <ConteudoIcone>
-            <Icone>
-              <Icon name="facebook-square" size={18} color="#3b5998" />
-            </Icone>
-            <ConteudoBotao width="80%" fontSize="15px" color="#000000">
-              Continuar com o Facebook
+          </Botao>
+          <Botao
+            backgroundColor="transparent"
+            borderColor="transparent"
+            width="35%"
+            height="40px"
+            borderRadius="3px"
+            borderWidth="3px"
+            boxShadow="none"
+            onPress={() => navigation.navigate("Cadastro")}
+          >
+            <ConteudoBotao width="100%" fontSize={tamanhoFonte} color="#000000">
+              Cadastre-se
             </ConteudoBotao>
-          </ConteudoIcone>
-        </Botao>
-      </BotoesAlternativos>
-    </Body>
+          </Botao>
+        </SenhaCadastro>
+        <BarraEstetica />
+
+        <BotoesAlternativos>
+          <Botao
+            width={larguraBotaoAlternativo}
+            height="40px"
+            backgroundColor="#ffffff"
+            borderRadius="3px"
+            borderColor="#434B97"
+            borderWidth="3px"
+            boxShadow="none"
+          >
+            <ConteudoIcone>
+              <Icone>
+                <Icon name="google" size={tamanhoIcone} />
+              </Icone>
+              <ConteudoBotao
+                width="80%"
+                fontSize={tamanhoFonte}
+                color="#000000"
+              >
+                Continuar com o Google
+              </ConteudoBotao>
+            </ConteudoIcone>
+          </Botao>
+          <Botao
+            width={larguraBotaoAlternativo}
+            height="40px"
+            backgroundColor="#ffffff"
+            borderRadius="3px"
+            borderColor="#434B97"
+            borderWidth="3px"
+            boxShadow="none"
+          >
+            <ConteudoIcone>
+              <Icone>
+                <Icon name="facebook-square" size={tamanhoIcone} />
+              </Icone>
+              <ConteudoBotao
+                width="80%"
+                fontSize={tamanhoFonte}
+                color="#000000"
+              >
+                Continuar com o Facebook
+              </ConteudoBotao>
+            </ConteudoIcone>
+          </Botao>
+        </BotoesAlternativos>
+      </Body>
+    </ScrollView>
   );
 }
 
