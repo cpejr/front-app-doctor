@@ -1,28 +1,36 @@
 import styled from "styled-components/native";
 
+
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
   height: 100%;
-  /* background-color: #e5e5e5 */
+  background-color: #fff;
 `;
 
 export const CaixaTitulo = styled.View`
   display: flex;
   flex-direction: row;
+  width: 70%;
   align-items: center;
-  justify-content: center;
-  margin-top: 15%;
+  justify-content: space-around;
+  margin-top: 12%;
+  margin-bottom: 6px;
+  margin-bottom:15px
 `;
 
 export const Logo = styled.Image`
-  width: 70;
-  height: 70;
+  width: 70px;
+  height: 70px;
 `;
 
 export const Titulo = styled.Text`
-  font-size: 30px;
+  font-size: 25px;
+  display:flex;
+  align-items: center;
+  width:50%;
 `;
 
 export const CaixaInputs = styled.View`
@@ -31,7 +39,6 @@ export const CaixaInputs = styled.View`
   padding-right: 10%;
   height: auto;
   bottom: 0;
-  background-color: #fff;
   align-items: center;
 `;
 
@@ -39,13 +46,16 @@ export const CaixaInputsMesmaLinha = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  width:100%
 `;
 export const CaixaBotoes = styled.View`
   display: flex;
   flex-direction: row;
+  margin-top:6px;
   justify-content: space-between;
   align-items: center;
   width: 70%;
+  
+  margin-bottom: 5%;
 `;
 
