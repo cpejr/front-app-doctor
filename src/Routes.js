@@ -24,139 +24,130 @@ import SolicitarConsulta from "./Pages/SolicitarConsulta";
 import SolicitarExame from "./Pages/SolicitarExame";
 import Header from "./Pages/Header";
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const HomeStack = createNativeStackNavigator();
 
-
-function Pages() {
+function HomeStackScreen() {
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen
-        name="Alterar Dados"
-        component={AlterarDados}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Alterar Senha"
-        component={AlterarSenha}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Chat"
-        component={Chat}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Comentarios"
-        component={Comentarios}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Consultas"
-        component={Consultas}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Emergencia"
-        component={Emergencia}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Exames"
-        component={Exames}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="FormaPagamento"
-        component={FormaPagamento}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="GrupoAMIE"
-        component={GrupoAMIE}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ListaFormularios"
-        component={ListaFormularios}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Perfil"
-        component={Perfil}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="PreencherFormulario"
-        component={PreencherFormulario}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Recomendacoes"
-        component={Recomendacoes}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="RecomendacoesPreConsulta"
-        component={RecomendacoesPreConsulta}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SobreMim"
-        component={SobreMim}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SolicitarConsulta"
-        component={SolicitarConsulta}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SolicitarExame"
-        component={SolicitarExame}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <HomeStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="HomeScreen"
+    >
+      <HomeStack.Screen name="HomeScreen" component={Home} />
+      <HomeStack.Screen name="ComentariosScreen" component={Comentarios} />
+      <HomeStack.Screen name="EmergenciaScreen" component={Emergencia} />
+      <HomeStack.Screen name="GrupoAMIEScreen" component={GrupoAMIE} />
+      <HomeStack.Screen name="PerfilScreen" component={Perfil} />
+      <HomeStack.Screen name="RecomendacoesScreen" component={Recomendacoes} />
+      <HomeStack.Screen name="SobreMimScreen" component={SobreMim} />
+      <HomeStack.Screen name="AlterarDadosScreen" component={AlterarDados} />
+      <HomeStack.Screen name="AlterarSenhaScreen" component={AlterarSenha} />
+    </HomeStack.Navigator>
   );
 }
-function Tabs() {
+
+const FormulariosStack = createNativeStackNavigator();
+
+function FormulariosStackScreen() {
+  return (
+    <FormulariosStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="ListaFormulariosScreen"
+    >
+      <FormulariosStack.Screen
+        name="ListaFormulariosScreen"
+        component={ListaFormularios}
+      />
+      <FormulariosStack.Screen
+        name="PreencherFormularioScreen"
+        component={PreencherFormulario}
+      />
+    </FormulariosStack.Navigator>
+  );
+}
+
+const ExamesStack = createNativeStackNavigator();
+
+function ExamesStackScreen() {
+  return (
+    <ExamesStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="ExamesScreen"
+    >
+      <ExamesStack.Screen name="ExamesScreen" component={Exames} />
+      <ExamesStack.Screen
+        name="FormaPagamentoScreen"
+        component={FormaPagamento}
+      />
+      <ExamesStack.Screen
+        name="SolicitarExameScreen"
+        component={SolicitarExame}
+      />
+    </ExamesStack.Navigator>
+  );
+}
+
+const ConsultasStack = createNativeStackNavigator();
+
+function ConsultasStackScreen() {
+  return (
+    <ConsultasStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="ConsultasScreen"
+    >
+      <ConsultasStack.Screen name="ConsultasScreen" component={Consultas} />
+      <ConsultasStack.Screen
+        name="RecomendacoesPreConsultaScreen"
+        component={RecomendacoesPreConsulta}
+      />
+      <ConsultasStack.Screen
+        name="SolicitarConsultaScreen"
+        component={SolicitarConsulta}
+      />
+    </ConsultasStack.Navigator>
+  );
+}
+
+const ChatStack = createNativeStackNavigator();
+
+function ChatStackScreen() {
+  return (
+    <ChatStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="ChatScreen"
+    >
+      <ChatStack.Screen name="ChatScreen" component={Chat} />
+    </ChatStack.Navigator>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+function TabScreen() {
   return (
     <Tab.Navigator
       screenOptions={{ headerTitle: (props) => <Header {...props} /> }}
     >
-      <Tab.Screen name="NavBar" component={Pages} />
-      <Tab.Screen name="NavBa" component={Pages} />
-      <Tab.Screen name="NavB" component={Pages} />
+      <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Screen name="Formulários" component={FormulariosStackScreen} />
+      <Tab.Screen name="Exames" component={ExamesStackScreen} />
+      <Tab.Screen name="Consultas" component={ConsultasStackScreen} />
+      <Tab.Screen name="Chat" component={ChatStackScreen} />
     </Tab.Navigator>
   );
 }
 
+const Stack = createNativeStackNavigator();
+
 function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Rotas"
-          component={Tabs}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Cadastro"
-          component={Cadastro}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Tabs" component={TabScreen} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
 export default Routes;
