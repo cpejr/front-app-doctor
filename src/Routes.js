@@ -121,6 +121,11 @@ function Pages() {
         component={SolicitarExame}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Header"
+        component={Header}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

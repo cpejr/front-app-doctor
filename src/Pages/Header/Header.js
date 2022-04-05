@@ -1,11 +1,17 @@
 import React from "react";
-import { Text, View, Image } from "react-native";
+import logoGuilherme from "./../../assets/logoGuilherme.png";
+import { Corpo, Perfil, Logo, Botaoo } from "./Styles";
 
-function Header() {
+function Header({ navigation }) {
   return (
-    <View>
-      <Text>Header</Text>
-    </View>
+    <Corpo>
+      <Botaoo onPress={() => navigation.navigate("Home")}>
+        <Logo source={logoGuilherme}></Logo>
+      </Botaoo>
+      <Botaoo onPress={() => navigation.navigate("Perfil")}>
+        <Perfil />
+      </Botaoo>
+    </Corpo>
   );
 }
 

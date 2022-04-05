@@ -9,6 +9,10 @@ function Home({navigation}) {
         title="Go to Cadastro"
         onPress={() => navigation.navigate("Cadastro")}
       />
+      <Button
+        title="Go to Header"
+        onPress={() => navigation.navigate("Header")}
+      />
     </View>
   );
 }
