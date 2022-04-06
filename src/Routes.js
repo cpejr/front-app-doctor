@@ -24,6 +24,45 @@ import SolicitarConsulta from "./Pages/SolicitarConsulta";
 import SolicitarExame from "./Pages/SolicitarExame";
 import Header from "./Pages/Header";
 
+import { View, Image } from "react-native";
+
+function HomeIcon() {
+  return (
+    <View>
+      <Image source={require("./assets/homeicon.png")} />
+    </View>
+  );
+}
+function FormulariosIcon() {
+  return (
+    <View>
+      <Image source={require("./assets/formulariosicon.png")} />
+    </View>
+  );
+}
+function ExamesIcon() {
+  return (
+    <View>
+      <Image source={require("./assets/examesicon.png")} />
+    </View>
+  );
+}
+function ConsultasIcon() {
+  return (
+    <View>
+      <Image source={require("./assets/consultasicon.png")} />
+    </View>
+  );
+}
+function ChatIcon() {
+  return (
+    <View>
+      <Image source={require("./assets/chaticon.png")} />
+    </View>
+  );
+}
+
+
 const HomeStack = createNativeStackNavigator();
 
 function HomeStackScreen() {
@@ -127,11 +166,31 @@ function TabScreen() {
     <Tab.Navigator
       screenOptions={{ headerTitle: (props) => <Header {...props} /> }}
     >
-      <Tab.Screen name="Home" component={HomeStackScreen} />
-      <Tab.Screen name="Formulários" component={FormulariosStackScreen} />
-      <Tab.Screen name="Exames" component={ExamesStackScreen} />
-      <Tab.Screen name="Consultas" component={ConsultasStackScreen} />
-      <Tab.Screen name="Chat" component={ChatStackScreen} />
+      <Tab.Screen
+        name="Home"
+        options={{ tabBarIcon: HomeIcon }}
+        component={HomeStackScreen}
+      />
+      <Tab.Screen
+        name="Formulários"
+        options={{ tabBarIcon: FormulariosIcon }}
+        component={FormulariosStackScreen}
+      />
+      <Tab.Screen
+        name="Exames"
+        options={{ tabBarIcon: ExamesIcon }}
+        component={ExamesStackScreen}
+      />
+      <Tab.Screen
+        name="Consultas"
+        options={{ tabBarIcon: ConsultasIcon }}
+        component={ConsultasStackScreen}
+      />
+      <Tab.Screen
+        name="Chat"
+        options={{ tabBarIcon: ChatIcon }}
+        component={ChatStackScreen}
+      />
     </Tab.Navigator>
   );
 }
