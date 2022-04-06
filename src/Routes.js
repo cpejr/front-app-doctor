@@ -25,6 +25,7 @@ import SolicitarExame from "./Pages/SolicitarExame";
 import Header from "./Pages/Header";
 
 import { View, Image } from "react-native";
+import { Colors } from "react-native-paper";
 
 function HomeIcon() {
   return (
@@ -61,7 +62,6 @@ function ChatIcon() {
     </View>
   );
 }
-
 
 const HomeStack = createNativeStackNavigator();
 
@@ -164,7 +164,12 @@ const Tab = createBottomTabNavigator();
 function TabScreen() {
   return (
     <Tab.Navigator
-      screenOptions={{ headerTitle: (props) => <Header {...props} /> }}
+      screenOptions={
+        ({ headerTitle: (props) => <Header {...props} /> },
+        {
+          tabBarStyle: { backgroundColor: "#151B57", position: "absolute" },
+        })
+      }
     >
       <Tab.Screen
         name="Home"
