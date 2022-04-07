@@ -164,16 +164,21 @@ const Tab = createBottomTabNavigator();
 function TabScreen() {
   return (
     <Tab.Navigator
-      screenOptions={
-        ({ headerTitle: (props) => <Header {...props} /> },
-        {
-          tabBarStyle: { backgroundColor: "#151B57", position: "absolute" },
-        })
-      }
+      screenOptions={{
+        headerTitle: (props) => <Header {...props} />,
+
+        tabBarStyle: {
+          backgroundColor: "#151B57",
+          height: 60,
+        },
+        tabBarLabelStyle: { color: "#F7F7F7" },
+      }}
     >
       <Tab.Screen
         name="Home"
-        options={{ tabBarIcon: HomeIcon }}
+        options={{
+          tabBarIcon: HomeIcon,
+        }}
         component={HomeStackScreen}
       />
       <Tab.Screen
