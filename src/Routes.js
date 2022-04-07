@@ -164,14 +164,18 @@ const Tab = createBottomTabNavigator();
 function TabScreen() {
   return (
     <Tab.Navigator
+      
       screenOptions={{
         headerTitle: (props) => <Header {...props} />,
-
         tabBarStyle: {
           backgroundColor: "#151B57",
-          height: 60,
+          height: 70,
+          paddingBottom: 8,
+          paddingTop: 8,
+          borderTopColor: "transparent",
         },
-        tabBarLabelStyle: { color: "#F7F7F7" },
+        tabBarActiveTintColor: "#646464",
+        tabBarInactiveTintColor: "#F7F7F7",
       }}
     >
       <Tab.Screen
