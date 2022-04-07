@@ -27,7 +27,6 @@ import Header from "./Pages/Header";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
 function Pages() {
   return (
     <Stack.Navigator initialRouteName="Home">
@@ -132,7 +131,13 @@ function Pages() {
 function Tabs() {
   return (
     <Tab.Navigator
-      screenOptions={{ headerTitle: (props) => <Header {...props} /> }}
+      screenOptions={{
+        headerTitle: (props) => <Header {...props} />,
+        headerStyle: {
+          backgroundColor: "#151B57",
+          height: 100,
+        },
+      }}
     >
       <Tab.Screen name="NavBar" component={Pages} />
       <Tab.Screen name="NavBa" component={Pages} />
