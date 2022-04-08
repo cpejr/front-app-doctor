@@ -40,5 +40,5 @@ export const Perfil = styled.View`
   border-radius: 25px;
   border: #000000;
   border-width: 0px;
-  background-color: #c4c4c4;
+  background-color: green; /* background-color: #c4c4c4; */
 `;
