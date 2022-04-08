@@ -69,17 +69,17 @@ function HomeStackScreen() {
   return (
     <HomeStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="HomeScreen"
+      initialRouteName="Home"
     >
-      <HomeStack.Screen name="HomeScreen" component={Home} />
-      <HomeStack.Screen name="ComentariosScreen" component={Comentarios} />
-      <HomeStack.Screen name="EmergenciaScreen" component={Emergencia} />
-      <HomeStack.Screen name="GrupoAMIEScreen" component={GrupoAMIE} />
-      <HomeStack.Screen name="PerfilScreen" component={Perfil} />
-      <HomeStack.Screen name="RecomendacoesScreen" component={Recomendacoes} />
-      <HomeStack.Screen name="SobreMimScreen" component={SobreMim} />
-      <HomeStack.Screen name="AlterarDadosScreen" component={AlterarDados} />
-      <HomeStack.Screen name="AlterarSenhaScreen" component={AlterarSenha} />
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Comentarios" component={Comentarios} />
+      <HomeStack.Screen name="Emergencia" component={Emergencia} />
+      <HomeStack.Screen name="GrupoAMIE" component={GrupoAMIE} />
+      <HomeStack.Screen name="Perfil" component={Perfil} />
+      <HomeStack.Screen name="Recomendacoes" component={Recomendacoes} />
+      <HomeStack.Screen name="SobreMim" component={SobreMim} />
+      <HomeStack.Screen name="AlterarDados" component={AlterarDados} />
+      <HomeStack.Screen name="AlterarSenha" component={AlterarSenha} />
     </HomeStack.Navigator>
   );
 }
@@ -90,14 +90,14 @@ function FormulariosStackScreen() {
   return (
     <FormulariosStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="ListaFormulariosScreen"
+      initialRouteName="ListaFormularios"
     >
       <FormulariosStack.Screen
-        name="ListaFormulariosScreen"
+        name="ListaFormularios"
         component={ListaFormularios}
       />
       <FormulariosStack.Screen
-        name="PreencherFormularioScreen"
+        name="PreencherFormulario"
         component={PreencherFormulario}
       />
     </FormulariosStack.Navigator>
@@ -110,17 +110,11 @@ function ExamesStackScreen() {
   return (
     <ExamesStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="ExamesScreen"
+      initialRouteName="Exames"
     >
-      <ExamesStack.Screen name="ExamesScreen" component={Exames} />
-      <ExamesStack.Screen
-        name="FormaPagamentoScreen"
-        component={FormaPagamento}
-      />
-      <ExamesStack.Screen
-        name="SolicitarExameScreen"
-        component={SolicitarExame}
-      />
+      <ExamesStack.Screen name="Exames" component={Exames} />
+      <ExamesStack.Screen name="FormaPagamento" component={FormaPagamento} />
+      <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
     </ExamesStack.Navigator>
   );
 }
@@ -131,15 +125,15 @@ function ConsultasStackScreen() {
   return (
     <ConsultasStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="ConsultasScreen"
+      initialRouteName="Consultas"
     >
-      <ConsultasStack.Screen name="ConsultasScreen" component={Consultas} />
+      <ConsultasStack.Screen name="Consultas" component={Consultas} />
       <ConsultasStack.Screen
-        name="RecomendacoesPreConsultaScreen"
+        name="RecomendacoesPreConsulta"
         component={RecomendacoesPreConsulta}
       />
       <ConsultasStack.Screen
-        name="SolicitarConsultaScreen"
+        name="SolicitarConsulta"
         component={SolicitarConsulta}
       />
     </ConsultasStack.Navigator>
@@ -152,9 +146,9 @@ function ChatStackScreen() {
   return (
     <ChatStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="ChatScreen"
+      initialRouteName="Chat"
     >
-      <ChatStack.Screen name="ChatScreen" component={Chat} />
+      <ChatStack.Screen name="Chat" component={Chat} />
     </ChatStack.Navigator>
   );
 }
@@ -164,7 +158,6 @@ const Tab = createBottomTabNavigator();
 function TabScreen() {
   return (
     <Tab.Navigator
-      
       screenOptions={{
         headerTitle: (props) => <Header {...props} />,
         tabBarStyle: {
@@ -179,30 +172,31 @@ function TabScreen() {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="botao1"
         options={{
           tabBarIcon: HomeIcon,
+          title: "Home",
         }}
         component={HomeStackScreen}
       />
       <Tab.Screen
-        name="Formulários"
-        options={{ tabBarIcon: FormulariosIcon }}
+        name="botao2"
+        options={{ tabBarIcon: FormulariosIcon, title: "Formulários" }}
         component={FormulariosStackScreen}
       />
       <Tab.Screen
-        name="Exames"
-        options={{ tabBarIcon: ExamesIcon }}
+        name="botao3"
+        options={{ tabBarIcon: ExamesIcon, title: "Exames" }}
         component={ExamesStackScreen}
       />
       <Tab.Screen
-        name="Consultas"
-        options={{ tabBarIcon: ConsultasIcon }}
+        name="botao4"
+        options={{ tabBarIcon: ConsultasIcon, title: "Consultas" }}
         component={ConsultasStackScreen}
       />
       <Tab.Screen
-        name="Chat"
-        options={{ tabBarIcon: ChatIcon }}
+        name="botao5"
+        options={{ tabBarIcon: ChatIcon, title: "Chat" }}
         component={ChatStackScreen}
       />
     </Tab.Navigator>
