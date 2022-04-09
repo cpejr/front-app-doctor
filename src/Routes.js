@@ -158,7 +158,8 @@ function TabScreen() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerTitle: (props) => <Header {...props} />,
+        headerTitle: "",
+        headerBackground: (props) => <Header {...props} />,
         headerStyle: {
           backgroundColor: "#151B57",
           height: 100,
