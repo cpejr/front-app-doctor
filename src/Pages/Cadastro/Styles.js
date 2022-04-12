@@ -34,9 +34,6 @@ export const Titulo = styled.Text`
 `;
 
 export const CaixaInputs = styled.View`
-  width: 100%;
-  padding-left: 10%;
-  padding-right: 10%;
   height: auto;
   bottom: 0;
   align-items: center;
