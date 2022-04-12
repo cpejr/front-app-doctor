@@ -1,5 +1,5 @@
 import React, {useState, useCallback} from "react";
-import { ScrollView, Alert } from "react-native";
+import { ScrollView, Alert, useWindowDimensions } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao"
 import ConteudoBotao from "../../styles/ConteudoBotao"
@@ -15,6 +15,7 @@ import {
   CaixaBotoes,
 } from "./Styles";
 import ComponenteInput from "../../components/ComponenteInput";
+import InputMask from "../../styles/InputMask/InputMask";
 
 function Cadastro() {
 
@@ -37,10 +38,15 @@ function Cadastro() {
     numero:'',
     complemento:''
   });
+  const [maskedTelefone, setMakedTelefone ] = useState('')
+  const [maskedData, setMaskedData] = useState('')
+
+  const { width, height } = useWindowDimensions();
 
   function requisicaoCadastro() {
     if (estado.senha === estado.senhaConfirmada) {
       console.warn("Entrou")
+      console.log(estado)
       // api
       //   .post("/enderecos", endereco).then(() => {
       //     console.warn("Postou endereco")
@@ -59,10 +65,10 @@ function Cadastro() {
       //         // requisicaoErro(error, () => history.push("/cadastro"));
       //       });
       //   })
-        .catch((error) => {
-          // requisicaoErro(error, () => history.push("/cadastro"));
-          console.warn(error)
-        });
+        // .catch((error) => {
+        //   // requisicaoErro(error, () => history.push("/cadastro"));
+        //   console.warn(error)
+        // });
     } else {
       console.warn("As senhas digitadas são diferentes.");
     }
@@ -86,8 +92,11 @@ function Cadastro() {
       };
       
     });
-  } 
-  
+  }
+
+  const tamanhoInputs = width < 400 ?  "85%" : "80%";
+  const fontSizeConteudoBotao = width < 400 ?  "13px" : "15px";
+
   return (
     <ScrollView>
     <Body>
@@ -101,7 +110,9 @@ function Cadastro() {
         </Titulo>
       </CaixaTitulo>
 
-      <CaixaInputs>
+      <CaixaInputs
+      width={tamanhoInputs}
+      >
         <Input 
         placeholder="Nome Completo:" 
         keyboardType="default"
@@ -111,19 +122,31 @@ function Cadastro() {
         value={estado.nome}
          />
         <CaixaInputsMesmaLinha>
-          <Input 
+          <InputMask
           placeholder="Telefone:" 
           keyboardType="numeric"
           width="48%"
+          type={'cel-phone'}
+          options={{
+            maskType:'BRL',
+            withDDD: true,
+            dddMask:'(99) '
+          }}
           textContentType="telephoneNumber"
           dataDetectorTypes="phoneNumber"
           label="Telefone"
-          onChangeText={preenchendoDados.bind(this, 'telefone')}
+          // includeRawValueInChangeText={true}
+          // onChangeText={ (maskedText, rawText) => {preenchendoDados.bind(rawText, 'telefone')}
+          // }
           value={estado.telefone}
           />
-          <Input 
+          <InputMask
           placeholder="Data de Nascimento:" 
-          keyboardType="numeric" 
+          keyboardType="numeric"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY'
+          }}
           width="48%"
           maxLenght="10"
           label="data_nascimento"
@@ -139,9 +162,13 @@ function Cadastro() {
         onChangeText={preenchendoDados.bind(this, 'email')}
         value={estado.email}
         />
-        <Input 
+        <InputMask
         placeholder="CEP:" 
         keyboardType="default"
+        type={'custom'}
+          options={{
+            mask: '99.999-999'
+          }}
         width="100%"
         label="CEP"
         onChangeText={preenchendoEndereco.bind(this, 'cep')}
@@ -236,7 +263,7 @@ function Cadastro() {
           borderColor="rgba(255, 0, 0, 0.25)"
           borderWidth="1px"
         >
-          <ConteudoBotao fontSize="15px" color="#000000">
+          <ConteudoBotao fontSize={fontSizeConteudoBotao} color="#000000">
             CANCELAR
           </ConteudoBotao>
         </Botao>
@@ -250,8 +277,9 @@ function Cadastro() {
           onPress={requisicaoCadastro}
         >
           <ConteudoBotao 
-          fontSize="15px" 
-          color="#ffffff">
+          fontSize={fontSizeConteudoBotao} 
+          color="#ffffff"
+          >
             CADASTRAR
           </ConteudoBotao>
         </Botao>
