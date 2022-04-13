@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from "react";
+import React, {useState, useCallback, useRef} from "react";
 import { ScrollView, Alert, useWindowDimensions } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao"
@@ -16,6 +16,9 @@ import {
 } from "./Styles";
 import ComponenteInput from "../../components/ComponenteInput";
 import InputMask from "../../styles/InputMask/InputMask";
+import { brParaPadrao } from "../../utils/date";
+
+
 
 function Cadastro() {
 
@@ -45,8 +48,8 @@ function Cadastro() {
 
   function requisicaoCadastro() {
     if (estado.senha === estado.senhaConfirmada) {
-      console.warn("Entrou")
-      console.log(estado)
+      const aux = teste()
+      estado.data_nascimento = aux
       // api
       //   .post("/enderecos", endereco).then(() => {
       //     console.warn("Postou endereco")
@@ -74,14 +77,25 @@ function Cadastro() {
     }
   }
   
-  function preenchendoDados(inputIdentifier, enteredValue) {
-    setEstado((curEstado) => {
-      return {
-        ...curEstado,
-        [inputIdentifier]: enteredValue
-      };
-      
-    });
+  function preenchendoDados(   inputIdentifier, enteredValue) {
+      setEstado((curEstado) => {
+        console.log(inputIdentifier, enteredValue)
+        return {
+          ...curEstado,
+          [inputIdentifier]: enteredValue
+        };
+        
+      });
+    
+  }
+
+  function teste (){
+    try {
+      const response = brParaPadrao(estado.data_nascimento)
+      return response     
+    } catch {
+      console.log("Data inválida.")
+    }
   }
   
   function preenchendoEndereco(inputIdentifier, enteredValue) {
@@ -118,7 +132,7 @@ function Cadastro() {
         keyboardType="default"
         width="100%"
         label="Nome"
-        onChangeText={preenchendoDados.bind(this, 'nome')}
+        onChangeText={(text) => {preenchendoDados('nome', text)}}
         value={estado.nome}
          />
         <CaixaInputsMesmaLinha>
@@ -135,9 +149,10 @@ function Cadastro() {
           textContentType="telephoneNumber"
           dataDetectorTypes="phoneNumber"
           label="Telefone"
-          // includeRawValueInChangeText={true}
-          // onChangeText={ (maskedText, rawText) => {preenchendoDados.bind(rawText, 'telefone')}
-          // }
+          includeRawValueInChangeText={true}
+          onChangeText={(maskedText, rawText) => {
+            preenchendoDados('telefone', rawText)}}
+          
           value={estado.telefone}
           />
           <InputMask
@@ -145,12 +160,14 @@ function Cadastro() {
           keyboardType="numeric"
           type={'datetime'}
           options={{
-            format: 'DD/MM/YYYY'
+            format: 'DD-MM-YYYY'
           }}
           width="48%"
           maxLenght="10"
           label="data_nascimento"
-          onChangeText={preenchendoDados.bind(this, 'data_nascimento')}
+          includeRawValueInChangeText={true}
+          onChangeText={(text) => {preenchendoDados('data_nascimento', text)}
+            }
           value={estado.data_nascimento}
           />
         </CaixaInputsMesmaLinha>
@@ -159,7 +176,7 @@ function Cadastro() {
         keyboardType="default"
         width="100%"
         label="email"
-        onChangeText={preenchendoDados.bind(this, 'email')}
+        onChangeText={(text) => {preenchendoDados('email', text)}}
         value={estado.email}
         />
         <InputMask
@@ -171,7 +188,9 @@ function Cadastro() {
           }}
         width="100%"
         label="CEP"
-        onChangeText={preenchendoEndereco.bind(this, 'cep')}
+        includeRawValueInChangeText={true}
+        onChangeText={(maskedText, rawText) => {
+          preenchendoEndereco('cep', rawText)}}
         value={endereco.cep}
         />
         <Input 
@@ -179,7 +198,7 @@ function Cadastro() {
         keyboardType="default"
         width="100%"
         label="País"
-        onChangeText={preenchendoEndereco.bind(this, 'pais')}
+        onChangeText={(text) => {preenchendoEndereco('pais', text)}}
         value={endereco.pais}
         />
         <Input 
@@ -187,7 +206,7 @@ function Cadastro() {
         keyboardType="default" 
         width="100%"
         label="Estado"
-        onChangeText={preenchendoEndereco.bind(this, 'estado')}
+        onChangeText={(text) => {preenchendoEndereco('estado', text)}}
         value={endereco.estado}
         />
         <Input 
@@ -195,7 +214,7 @@ function Cadastro() {
         keyboardType="default" 
         width="100%"
         label="Cidade"
-        onChangeText={preenchendoEndereco.bind(this, 'cidade')}
+        onChangeText={(text) => {preenchendoEndereco('cidade', text)}}
         value={endereco.cidade}
         />
         <Input 
@@ -203,7 +222,7 @@ function Cadastro() {
         keyboardType="default" 
         width="100%"
         label="Bairro"
-        onChangeText={preenchendoEndereco.bind(this, 'bairro')}
+        onChangeText={(text) => {preenchendoEndereco('bairro', text)}}
         value={endereco.bairro}
         />
         <Input 
@@ -211,7 +230,7 @@ function Cadastro() {
         keyboardType="default" 
         width="100%"
         label="Rua"
-        onChangeText={preenchendoEndereco.bind(this, 'rua')}
+        onChangeText={(text) => {preenchendoEndereco('rua', text)}}
         value={endereco.rua}
         />
         <Input 
@@ -219,7 +238,7 @@ function Cadastro() {
         keyboardType="default" 
         width="100%"
         label="Numero"
-        onChangeText={preenchendoEndereco.bind(this, 'numero')}
+        onChangeText={(text) => {preenchendoEndereco('numero', text)}}
         value={endereco.numero}
         />
         <Input 
@@ -227,7 +246,7 @@ function Cadastro() {
         keyboardType="default" 
         width="100%"
         label="Complemento"
-        onChangeText={preenchendoEndereco.bind(this, 'complemento')}
+        onChangeText={(text) => {preenchendoEndereco( 'complemento', text)}}
         value={endereco.complemento}
         />
         <Input 
@@ -238,7 +257,7 @@ function Cadastro() {
         type="password"
         secureTextEntry 
         label="Senha"
-        onChangeText={preenchendoDados.bind(this, 'senha')}
+        onChangeText={(text) => {preenchendoDados('senha', text)}}
         value={estado.senha}
         />
         <Input 
@@ -249,7 +268,7 @@ function Cadastro() {
         secureTextEntry 
         type="password"
         label="Senha Confirmada"
-        onChangeText={preenchendoDados.bind(this, 'senhaConfirmada')}
+        onChangeText={(text) => {preenchendoDados('senhaConfirmada', text)}}
         value={endereco.senhaConfirmada}
         /> 
       </CaixaInputs>
