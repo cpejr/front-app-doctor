@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AlterarDados from "./Pages/AlterarDados";
+import EditarPerfil from "./Pages/EditarPerfil";
 import AlterarSenha from "./Pages/AlterarSenha";
 import Cadastro from "./Pages/Cadastro";
 import Chat from "./Pages/Chat";
@@ -77,7 +77,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Perfil" component={Perfil} />
       <HomeStack.Screen name="Recomendacoes" component={Recomendacoes} />
       <HomeStack.Screen name="SobreMim" component={SobreMim} />
-      <HomeStack.Screen name="AlterarDados" component={AlterarDados} />
+      <HomeStack.Screen name="EditarPerfil" component={EditarPerfil} />
       <HomeStack.Screen name="AlterarSenha" component={AlterarSenha} />
     </HomeStack.Navigator>
   );

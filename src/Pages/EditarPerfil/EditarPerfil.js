@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-function AlterarDados(){
+function EditarPerfil(){
   return(
     <View>
-      <Text>AlterarDados</Text>
+      <Text>EditarPerfil</Text>
     </View>
   )
 }
 
-export default AlterarDados;
+export default EditarPerfil;

@@ -38,8 +38,8 @@ function Home({ navigation }) {
         onPress={() => navigation.navigate("SobreMim")}
       />
       <Button
-        title="Go to AlterarDados"
-        onPress={() => navigation.navigate("AlterarDados")}
+        title="Go to EditarPerfil"
+        onPress={() => navigation.navigate("EditarPerfil")}
       />
       <Button
         title="Go to AlterarSenha"
