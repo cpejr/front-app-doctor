@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView } from "react-native";
 import Botao from "./../../styles/Botao";
-import ConteudoBotao from "./../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //import AsyncStorage from "react-native";
@@ -11,6 +10,7 @@ import api from "../../services/api";
 import {
   Body,
   CaixaBotao,
+  ConteudoBotaoPerfil,
   CaixaViews,
   ViewFotoNome,
   Foto,
@@ -29,11 +29,10 @@ import {
 
 async function getEmail(){
   await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
-    alert(res)
+    
     api.get(`/usuarios/${res}`).then((res) => {
       setUsuario(res.data);
       setTelefone(res.data.telefone);
-      console.log(res.data.telefone);
       api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
         setEndereco(res.data);
       });
@@ -58,9 +57,9 @@ async function getEmail(){
             borderWidth="2px"
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
           >
-            <ConteudoBotao fontSize="15px" color="#0A0E3C" width="100%">
+            <ConteudoBotaoPerfil>
               EMERGÊNCIA
-            </ConteudoBotao>
+            </ConteudoBotaoPerfil>
           </Botao>
         </CaixaBotao>
         <CaixaViews>
@@ -75,7 +74,7 @@ async function getEmail(){
             <Dados>{usuario.email}</Dados>
           </ViewContatoEndereco>
           <ViewContatoEndereco>
-            <Titulo>Endereco</Titulo>
+            <Titulo>Endereço</Titulo>
             <Dados>{endereco.pais}</Dados>
             <Dados>{endereco.estado}</Dados>
             <Dados>{endereco.cidade}</Dados>
@@ -93,9 +92,9 @@ async function getEmail(){
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
             >
-              <ConteudoBotao fontSize="15px" color="#0A0E3C" width="100%">
+              <ConteudoBotaoPerfil>
                 ALTERAR DADOS
-              </ConteudoBotao>
+              </ConteudoBotaoPerfil>
             </Botao>
             <Botao
               width="50%"
@@ -106,9 +105,9 @@ async function getEmail(){
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
             >
-              <ConteudoBotao fontSize="15px" color="#0A0E3C" width="100%">
+              <ConteudoBotaoPerfil>
                 ALTERAR SENHA
-              </ConteudoBotao>
+              </ConteudoBotaoPerfil>
             </Botao>
             <ExcluirConta>Excluir conta</ExcluirConta>
           </CaixaBotoes>
