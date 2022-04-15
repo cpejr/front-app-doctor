@@ -9,6 +9,5 @@ export const ConteudoBotao = styled.Text`
   font-size: ${(props) => props.fontSize};
   color: ${(props) => props.color};
   width: ${(props) => props.width};
-  font-weight: ${(props) => props.fontWeight};
 `;
 export default ConteudoBotao;

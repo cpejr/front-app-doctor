@@ -51,12 +51,11 @@ export const Nome = styled.Text`
 margin-bottom: 20px;
 font-size: 20px;
 color:#151B57;
-font-weight: 550;
 `
 
 export const ViewContatoEndereco = styled.View`
 display: flex;
-align-items: start;
+align-items: center;
 justify-content: center;
 padding-left: 8%;
 width: 100%;
@@ -73,12 +72,10 @@ export const Titulo = styled.Text`
 margin-bottom: 20px;
 font-size: 20px;
 color:#151B57;
-font-weight: 500;
 `
 
 export const Dados = styled.Text`
 color:#151B57;
-font-weight: 450;
 margin-bottom: 15px;
 `
 
@@ -92,7 +89,6 @@ export const CaixaBotoes = styled.View`
 
 export const ExcluirConta = styled.Text`
 color:#151B57;
-font-weight: 450;
 margin-top: 2%;
 text-decoration: underline;
 `
