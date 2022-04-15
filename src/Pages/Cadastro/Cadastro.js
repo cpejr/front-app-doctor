@@ -4,7 +4,6 @@ import Input from "../../styles/Input";
 import Botao from "../../styles/Botao"
 import ConteudoBotao from "../../styles/ConteudoBotao"
 import logoGuilherme from "./../../assets/logoGuilherme.png";
-import api from "../../services/api";
 import {
   Body,
   CaixaTitulo,
@@ -14,7 +13,6 @@ import {
   CaixaInputsMesmaLinha,
   CaixaBotoes,
 } from "./Styles";
-import ComponenteInput from "../../components/ComponenteInput";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
 
@@ -26,6 +24,7 @@ function Cadastro() {
     nome:'',
     telefone:'',
     data_nascimento:'',
+    cpf:'',
     email:'',
     senha:'',
     senhaConfirmada:'',
@@ -171,6 +170,14 @@ function Cadastro() {
           value={estado.data_nascimento}
           />
         </CaixaInputsMesmaLinha>
+        <Input 
+        placeholder="CPF:" 
+        keyboardType="default"
+        width="100%"
+        label="cpf"
+        onChangeText={(text) => {preenchendoDados('cpf', text)}}
+        value={estado.cpf}
+        />
          <Input 
         placeholder="Email:" 
         keyboardType="default"
