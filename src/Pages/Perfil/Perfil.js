@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView } from "react-native";
 import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../../services/api";
 import {
   Body,
   CaixaBotao,
@@ -17,7 +19,47 @@ import {
   ExcluirConta,
 } from "./Styles";
 
-function Perfil() {
+ function Perfil() {
+  const [usuario, setUsuario] = useState({});
+  const [endereco, setEndereco] = useState({});
+  const [telefone, setTelefone] = useState("");
+
+  async function getEmail() {
+    try {
+      await AsyncStorage.getItem("@AirBnbApp:email")
+        // if (resposta !== null) {
+        //   // We have data!!
+        //   alert(resposta);
+        
+      
+    } catch (error) {
+      alert(error)
+    }
+
+    // async function componentDidMount () {
+    //   if(AsyncStorage.getItem('@AirBnbApp:email')){
+    //     AsyncStorage.getItem('@AirBnbApp:email').then(value => this.setState({getValue: value}))
+    //   }
+    // }
+
+
+    // await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
+    //   alert(res)
+    //   api.get(`/usuarios/${res}`).then((res) => {
+    //     setUsuario(res.data);
+    //     setTelefone(res.data.telefone);
+    //     console.log(res.data.telefone);
+    //     api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
+    //       setEndereco(res.data);
+    //     });
+    //   });
+    // });
+  //}
+
+  useEffect(() => {
+    componentDidMount ();
+  }, []);
+
   return (
     <ScrollView>
       <Body>
@@ -39,22 +81,22 @@ function Perfil() {
         <CaixaViews>
           <ViewFotoNome>
             <Foto source={logoGuilherme} />
-            <Nome>Maria Monteiro Silva</Nome>
-            <Dados>Nascido em 15/05/2002</Dados>
+            <Nome>{usuario.nome}</Nome>
+            <Dados>Nascido em {usuario.data_nascimento}</Dados>
           </ViewFotoNome>
           <ViewContatoEndereco>
             <Titulo>Contato</Titulo>
-            <Dados>(79) 99999-9999</Dados>
-            <Dados>maria@cpejr.com.br</Dados>
+            <Dados>{usuario.telefone}</Dados>
+            <Dados>{usuario.email}</Dados>
           </ViewContatoEndereco>
           <ViewContatoEndereco>
             <Titulo>Endereco</Titulo>
-            <Dados>Brasil</Dados>
-            <Dados>Sergipe</Dados>
-            <Dados>Aracaju</Dados>
-            <Dados>49015-200</Dados>
-            <Dados>Rua Travessa Juca Barreto, 65</Dados>
-            <Dados>apto 103</Dados>
+            <Dados>{endereco.pais}</Dados>
+            <Dados>{endereco.estado}</Dados>
+            <Dados>{endereco.cidade}</Dados>
+            <Dados>{endereco.cep}</Dados>
+            <Dados>{endereco.rua}, {endereco.numero}</Dados>
+            <Dados>{endereco.complemento}</Dados>
           </ViewContatoEndereco>
           <CaixaBotoes>
             <Botao
@@ -89,6 +131,8 @@ function Perfil() {
       </Body>
     </ScrollView>
   );
+  }
 }
 
 export default Perfil;
+
