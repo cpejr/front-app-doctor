@@ -4,7 +4,10 @@ import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+//import AsyncStorage from "react-native";
+
 import api from "../../services/api";
+
 import {
   Body,
   CaixaBotao,
@@ -24,40 +27,22 @@ import {
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
 
-  async function getEmail() {
-    try {
-      await AsyncStorage.getItem("@AirBnbApp:email")
-        // if (resposta !== null) {
-        //   // We have data!!
-        //   alert(resposta);
-        
-      
-    } catch (error) {
-      alert(error)
-    }
-
-    // async function componentDidMount () {
-    //   if(AsyncStorage.getItem('@AirBnbApp:email')){
-    //     AsyncStorage.getItem('@AirBnbApp:email').then(value => this.setState({getValue: value}))
-    //   }
-    // }
-
-
-    // await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
-    //   alert(res)
-    //   api.get(`/usuarios/${res}`).then((res) => {
-    //     setUsuario(res.data);
-    //     setTelefone(res.data.telefone);
-    //     console.log(res.data.telefone);
-    //     api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
-    //       setEndereco(res.data);
-    //     });
-    //   });
-    // });
-  //}
+async function getEmail(){
+  await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
+    alert(res)
+    api.get(`/usuarios/${res}`).then((res) => {
+      setUsuario(res.data);
+      setTelefone(res.data.telefone);
+      console.log(res.data.telefone);
+      api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
+        setEndereco(res.data);
+      });
+    });
+  });
+}
 
   useEffect(() => {
-    componentDidMount ();
+    getEmail();
   }, []);
 
   return (
@@ -132,7 +117,7 @@ import {
     </ScrollView>
   );
   }
-}
+
 
 export default Perfil;
 
