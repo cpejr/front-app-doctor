@@ -15,6 +15,10 @@ import {
   ViewFotoNome,
   Foto,
   Nome,
+  CaixaDataCpf,
+  CaixaNascidoData,
+  TextNascido,
+  TextData,
   Dados,
   ViewContatoEndereco,
   Titulo,
@@ -25,7 +29,12 @@ import {
  function Perfil() {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [dataMasked, setDataMasked] = useState("");
   const [telefone, setTelefone] = useState("");
+  const [telMasked, setTelMasked] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [cpfMasked, setCpfMasked] = useState("")
 
 async function getEmail(){
   await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
@@ -33,6 +42,8 @@ async function getEmail(){
     api.get(`/usuarios/${res}`).then((res) => {
       setUsuario(res.data);
       setTelefone(res.data.telefone);
+      setDataNascimento(res.data.data_nascimento);
+      setCpf(res.data.cpf);
       api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
         setEndereco(res.data);
       });
@@ -43,6 +54,39 @@ async function getEmail(){
   useEffect(() => {
     getEmail();
   }, []);
+
+  useEffect(() => {
+    setCpfMasked(
+      cpf.slice(+0, -8) +
+        "." +
+        cpf.slice(+3, -5) +
+        "." +
+        cpf.slice(+6, -2) +
+        "-" +
+        cpf.slice(-2)
+    );
+  }, [cpf]);
+
+  useEffect(() => {
+    setTelMasked(
+      "(" +
+        telefone.slice(0, -9) +
+        ") " +
+        telefone.slice(2, -4) +
+        "-" +
+        telefone.slice(-4)
+    );
+  }, [telefone]);
+
+  useEffect(() => {
+    setDataMasked(
+      dataNascimento.slice(8, -14) +
+        "/" +
+        dataNascimento.slice(5, -17) +
+        "/" +
+        dataNascimento.slice(0, -20)
+    );
+  }, [dataNascimento]);
 
   return (
     <ScrollView>
@@ -66,11 +110,17 @@ async function getEmail(){
           <ViewFotoNome>
             <Foto source={logoGuilherme} />
             <Nome>{usuario.nome}</Nome>
-            <Dados>Nascido em {usuario.data_nascimento}</Dados>
+            <CaixaDataCpf>
+              <CaixaNascidoData>
+                <TextNascido>Nascido em:</TextNascido>
+                <TextData>{dataMasked}</TextData>
+              </CaixaNascidoData>
+            <Dados>{cpfMasked}</Dados>
+            </CaixaDataCpf>
           </ViewFotoNome>
           <ViewContatoEndereco>
             <Titulo>Contato</Titulo>
-            <Dados>{usuario.telefone}</Dados>
+            <Dados>{telMasked}</Dados>
             <Dados>{usuario.email}</Dados>
           </ViewContatoEndereco>
           <ViewContatoEndereco>
