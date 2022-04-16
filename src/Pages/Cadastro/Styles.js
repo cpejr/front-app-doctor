@@ -1,7 +1,5 @@
 import styled from "styled-components/native";
 
-
-
 export const Body = styled.View`
   display: flex;
   align-items: center;
@@ -39,12 +37,21 @@ export const CaixaInputs = styled.View`
   align-items: center;
 `;
 
+export const MensagemErro = styled.Text`
+color: #d90429;
+width:100%;
+font-size: 11px;
+padding-left: 10px;
+`;
+
+
 export const CaixaInputsMesmaLinha = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width:100%
+  width:100%;
 `;
+
 export const CaixaBotoes = styled.View`
   display: flex;
   flex-direction: row;

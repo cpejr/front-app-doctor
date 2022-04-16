@@ -10,13 +10,12 @@ import {
   Logo,
   Titulo,
   CaixaInputs,
+  MensagemErro,
   CaixaInputsMesmaLinha,
   CaixaBotoes,
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
-
-
 
 function Cadastro() {
 
@@ -40,15 +39,20 @@ function Cadastro() {
     numero:'',
     complemento:''
   });
-  const [maskedTelefone, setMakedTelefone ] = useState('')
-  const [maskedData, setMaskedData] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const { width, height } = useWindowDimensions();
 
+
   function requisicaoCadastro() {
+
+    
+       setErrorMessage("Campo Obrigatório!")
+
     if (estado.senha === estado.senhaConfirmada) {
       const aux = teste()
       estado.data_nascimento = aux
+
       // api
       //   .post("/enderecos", endereco).then(() => {
       //     console.warn("Postou endereco")
@@ -134,6 +138,8 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoDados('nome', text)}}
         value={estado.nome}
          />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
+        
         <CaixaInputsMesmaLinha>
           <InputMask
           placeholder="Telefone:" 
@@ -169,7 +175,9 @@ function Cadastro() {
             }
           value={estado.data_nascimento}
           />
+          
         </CaixaInputsMesmaLinha>
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="CPF:" 
         keyboardType="default"
@@ -178,6 +186,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoDados('cpf', text)}}
         value={estado.cpf}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
          <Input 
         placeholder="Email:" 
         keyboardType="default"
@@ -186,6 +195,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoDados('email', text)}}
         value={estado.email}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <InputMask
         placeholder="CEP:" 
         keyboardType="default"
@@ -200,6 +210,7 @@ function Cadastro() {
           preenchendoEndereco('cep', rawText)}}
         value={endereco.cep}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="País:" 
         keyboardType="default"
@@ -208,6 +219,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoEndereco('pais', text)}}
         value={endereco.pais}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="Estado:" 
         keyboardType="default" 
@@ -216,6 +228,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoEndereco('estado', text)}}
         value={endereco.estado}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="Cidade:" 
         keyboardType="default" 
@@ -224,6 +237,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoEndereco('cidade', text)}}
         value={endereco.cidade}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="Bairro:" 
         keyboardType="default" 
@@ -232,6 +246,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoEndereco('bairro', text)}}
         value={endereco.bairro}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="Rua:" 
         keyboardType="default" 
@@ -240,6 +255,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoEndereco('rua', text)}}
         value={endereco.rua}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="Número:" 
         keyboardType="default" 
@@ -248,6 +264,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoEndereco('numero', text)}}
         value={endereco.numero}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="Complemento:" 
         keyboardType="default" 
@@ -256,6 +273,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoEndereco( 'complemento', text)}}
         value={endereco.complemento}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="Defina sua senha:" 
         keyboardType="default" 
@@ -267,6 +285,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoDados('senha', text)}}
         value={estado.senha}
         />
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <Input 
         placeholder="Confirme sua senha:" 
         keyboardType="default"
@@ -278,6 +297,7 @@ function Cadastro() {
         onChangeText={(text) => {preenchendoDados('senhaConfirmada', text)}}
         value={endereco.senhaConfirmada}
         /> 
+        {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
       </CaixaInputs>
 
       <CaixaBotoes>
