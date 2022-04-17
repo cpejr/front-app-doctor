@@ -6,8 +6,8 @@ export const Body = styled.View`
   width: 100%;
   height: 100%;
   background-color: #fff;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: ${(props) => props.paddingLeft};;
+  padding-right: ${(props) => props.paddingRight};
 `;
 
 export const CaixaBotao = styled.View`
@@ -22,7 +22,7 @@ export const ConteudoBotaoPerfil = styled.Text`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size:  ${(props) => props.fontSize};
   font-weight: 700;
   color: #0a0e3c;
 `;
@@ -37,7 +37,7 @@ export const ViewFotoNome = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: ${(props) => props.width};
   background-color: #f7f7f7;
   border: 2px solid #5a5d76;
   border-radius: 4px;
@@ -54,7 +54,7 @@ export const Foto = styled.Image`
 
 export const Nome = styled.Text`
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: ${(props) => props.fontSize};
   color: #151b57;
   font-weight: 700;
 `;
@@ -79,13 +79,14 @@ export const TextNascido = styled.Text`
   margin-bottom: 15px;
   font-weight: normal;
   margin-bottom: 1px;
-  font-size: 12px;
+  font-size:${(props) => props.fontSize};
 `;
 
 export const TextData = styled.Text`
   color: #151b57;
   margin-bottom: 15px;
   font-weight: normal;
+  font-size: ${(props) => props.fontSize};
 `;
 
 export const ViewContatoEndereco = styled.View`
@@ -93,7 +94,7 @@ export const ViewContatoEndereco = styled.View`
   align-items: flex-start;
   justify-content: center;
   padding-left: 8%;
-  width: 100%;
+  width:  ${(props) => props.width};
   background-color: #f7f7f7;
   border: 2px solid #5a5d76;
   border-radius: 4px;
@@ -104,7 +105,7 @@ export const ViewContatoEndereco = styled.View`
 
 export const Titulo = styled.Text`
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: ${(props) => props.fontSize};
   color: #151b57;
   font-weight: 700;
 `;
@@ -113,6 +114,7 @@ export const Dados = styled.Text`
   color: #151b57;
   margin-bottom: 15px;
   font-weight: normal;
+  font-size: ${(props) => props.fontSize};
 `;
 
 export const CaixaBotoes = styled.View`
@@ -126,5 +128,6 @@ export const ExcluirConta = styled.Text`
   color: green;
   margin-top: 2%;
   text-decoration: underline;
+  font-size:15px
 `;
 //color:#151B57;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView } from "react-native";
+import { useWindowDimensions, ScrollView } from "react-native";
 import Botao from "./../../styles/Botao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -36,126 +36,183 @@ import {
   const [cpf, setCpf] = useState("");
   const [cpfMasked, setCpfMasked] = useState("")
 
-async function getEmail(){
-  await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
+  const { width, height, fontSize } = useWindowDimensions();
+
+// async function getEmail(){
+//   await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
     
-    api.get(`/usuarios/${res}`).then((res) => {
-      setUsuario(res.data);
-      setTelefone(res.data.telefone);
-      setDataNascimento(res.data.data_nascimento);
-      setCpf(res.data.cpf);
-      api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
-        setEndereco(res.data);
-      });
-    });
-  });
-}
+//     api.get(`/usuarios/${res}`).then((res) => {
+//       setUsuario(res.data);
+//       setTelefone(res.data.telefone);
+//       setDataNascimento(res.data.data_nascimento);
+//       setCpf(res.data.cpf);
+//       api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
+//         setEndereco(res.data);
+//       });
+//     });
+//   });
+// }
 
-  useEffect(() => {
-    getEmail();
-  }, []);
+  // useEffect(() => {
+  //   getEmail();
+  // }, []);
 
-  useEffect(() => {
-    setCpfMasked(
-      cpf.slice(+0, -8) +
-        "." +
-        cpf.slice(+3, -5) +
-        "." +
-        cpf.slice(+6, -2) +
-        "-" +
-        cpf.slice(-2)
-    );
-  }, [cpf]);
+  // useEffect(() => {
+  //   setCpfMasked(
+  //     cpf.slice(+0, -8) +
+  //       "." +
+  //       cpf.slice(+3, -5) +
+  //       "." +
+  //       cpf.slice(+6, -2) +
+  //       "-" +
+  //       cpf.slice(-2)
+  //   );
+  // }, [cpf]);
 
-  useEffect(() => {
-    setTelMasked(
-      "(" +
-        telefone.slice(0, -9) +
-        ") " +
-        telefone.slice(2, -4) +
-        "-" +
-        telefone.slice(-4)
-    );
-  }, [telefone]);
+  // useEffect(() => {
+  //   setTelMasked(
+  //     "(" +
+  //       telefone.slice(0, -9) +
+  //       ") " +
+  //       telefone.slice(2, -4) +
+  //       "-" +
+  //       telefone.slice(-4)
+  //   );
+  // }, [telefone]);
 
-  useEffect(() => {
-    setDataMasked(
-      dataNascimento.slice(8, -14) +
-        "/" +
-        dataNascimento.slice(5, -17) +
-        "/" +
-        dataNascimento.slice(0, -20)
-    );
-  }, [dataNascimento]);
+  // useEffect(() => {
+  //   setDataMasked(
+  //     dataNascimento.slice(8, -14) +
+  //       "/" +
+  //       dataNascimento.slice(5, -17) +
+  //       "/" +
+  //       dataNascimento.slice(0, -20)
+  //   );
+  // }, [dataNascimento]);
+
+  const larguraBotoesMaior = width < 600 ? "50%" : "35%";
+  const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
+  const paddingBody = width < 330 ? "5%" : "10%";
+  const fontSizeTitulos = fontSize < 1080 ? "20px" : "23px";
+  const fontSizeDados = fontSize < 1080 ? "15px" : "18px";
+  const fontSizeNascido = fontSize <1080 ? "12px" : "14px";
+  const larguraViews = width < 750 ? "100%" : "70%";
+
 
   return (
     <ScrollView>
-      <Body>
+      <Body
+      paddingLeft={paddingBody}
+      paddingRight={paddingBody}
+      >
         <CaixaBotao>
           <Botao
-            width="50%"
+            width={larguraBotoes}
             height="30px"
-            backgroundColor="#A7ADE8"
+            //backgroundColor="#A7ADE8"
+            backgroundColor="green"
             borderRadius="3px"
             borderColor="#353964"
             borderWidth="2px"
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
           >
-            <ConteudoBotaoPerfil>
+            <ConteudoBotaoPerfil
+            fontSize={fontSizeDados}
+            >
               EMERGÊNCIA
             </ConteudoBotaoPerfil>
           </Botao>
         </CaixaBotao>
         <CaixaViews>
-          <ViewFotoNome>
+          <ViewFotoNome
+          width={larguraViews}
+          >
             <Foto source={logoGuilherme} />
-            <Nome>{usuario.nome}</Nome>
+            <Nome
+            fontSize={fontSizeTitulos}
+            >Maria Monteiro Silva{usuario.nome}</Nome>
             <CaixaDataCpf>
               <CaixaNascidoData>
-                <TextNascido>Nascido em:</TextNascido>
-                <TextData>{dataMasked}</TextData>
+                <TextNascido
+                fontSize={fontSizeNascido}
+                >Nascido em:</TextNascido>
+                <TextData
+                fontSize={fontSizeDados}
+                >Data{dataMasked}</TextData>
               </CaixaNascidoData>
-            <Dados>{cpfMasked}</Dados>
+            <Dados
+            fontSize={fontSizeDados}
+            >06643203503{cpfMasked}</Dados>
             </CaixaDataCpf>
           </ViewFotoNome>
-          <ViewContatoEndereco>
-            <Titulo>Contato</Titulo>
-            <Dados>{telMasked}</Dados>
-            <Dados>{usuario.email}</Dados>
+          <ViewContatoEndereco
+          width={larguraViews}
+          >
+            <Titulo
+            fontSize={fontSizeTitulos}
+            >Contato</Titulo>
+            <Dados
+            fontSize={fontSizeDados}
+            >{telMasked}</Dados>
+            <Dados
+            fontSize={fontSizeDados}
+            >{usuario.email}</Dados>
           </ViewContatoEndereco>
-          <ViewContatoEndereco>
-            <Titulo>Endereço</Titulo>
-            <Dados>{endereco.pais}</Dados>
-            <Dados>{endereco.estado}</Dados>
-            <Dados>{endereco.cidade}</Dados>
-            <Dados>{endereco.cep}</Dados>
-            <Dados>{endereco.rua}, {endereco.numero}</Dados>
-            <Dados>{endereco.complemento}</Dados>
+          <ViewContatoEndereco
+          width={larguraViews}
+          >
+            <Titulo
+            fontSize={fontSizeTitulos}
+            >Endereço</Titulo>
+            <Dados
+            fontSize={fontSizeDados}
+            >Oi{endereco.pais}</Dados>
+            <Dados
+            fontSize={fontSizeDados}
+            >{endereco.estado}</Dados>
+            <Dados
+            fontSize={fontSizeDados}
+            >{endereco.cidade}</Dados>
+            <Dados
+            fontSize={fontSizeDados}
+            >{endereco.cep}</Dados>
+            <Dados
+            fontSize={fontSizeDados}
+            >{endereco.rua}, {endereco.numero}</Dados>
+            <Dados
+            fontSize={fontSizeDados}
+            >{endereco.complemento}</Dados>
           </ViewContatoEndereco>
           <CaixaBotoes>
             <Botao
-              width="50%"
+              width={larguraBotoes}
               height="30px"
-              backgroundColor="#A7ADE8"
+              //backgroundColor="#A7ADE8"
+              backgroundColor="green"
               borderRadius="3px"
               borderColor="#353964"
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
             >
-              <ConteudoBotaoPerfil>
+              <ConteudoBotaoPerfil
+              fontSize={fontSizeDados}
+              >
                 ALTERAR DADOS
               </ConteudoBotaoPerfil>
             </Botao>
             <Botao
-              width="50%"
+              width={larguraBotoes}
               height="30px"
-              backgroundColor="#A7ADE8"
+              //backgroundColor="#A7ADE8"
+              backgroundColor="green"
               borderRadius="3px"
               borderColor="#353964"
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
             >
-              <ConteudoBotaoPerfil>
+              <ConteudoBotaoPerfil
+              fontSize={fontSizeDados}
+              >
                 ALTERAR SENHA
               </ConteudoBotaoPerfil>
             </Botao>
