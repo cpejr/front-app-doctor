@@ -159,7 +159,12 @@ function TabScreen() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerTitle: (props) => <Header {...props} />,
+        headerTitle: "",
+        headerBackground: (props) => <Header {...props} />,
+        headerStyle: {
+          backgroundColor: "#151B57",
+          height: 100,
+        },
         tabBarStyle: {
           backgroundColor: "#151B57",
           height: 70,
@@ -208,7 +213,11 @@ const Stack = createNativeStackNavigator();
 function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name="Tabs" component={TabScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
