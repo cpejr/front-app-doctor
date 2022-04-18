@@ -6,10 +6,11 @@ function Home({ navigation }) {
     <View>
       <Text>Home</Text>
       <Button
-        title="Go to Cadastro"
+        title="Cadastro"
         onPress={() => navigation.navigate("Cadastro")}
       />
       <Button
+
         title="Go to Login"
         onPress={() => navigation.navigate("Login")}
       />
@@ -45,6 +46,7 @@ function Home({ navigation }) {
         title="Go to AlterarSenha"
         onPress={() => navigation.navigate("AlterarSenhaScreen")}
       />
+
     </View>
   );
 }
