@@ -40,7 +40,7 @@ function Home({ navigation }) {
       />
       <Button
         title="Go to AlterarDados"
-        onPress={() => navigation.navigate("AlterarDadosScreen")}
+        onPress={() => navigation.navigate("AlterarDados")}
       />
       <Button
         title="Go to AlterarSenha"
