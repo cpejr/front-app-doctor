@@ -1,14 +1,20 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import Input from "./../../styles/Input";
 import { useWindowDimensions, ScrollView } from "react-native";
-import { Body, CaixaAlterarDados, CaixaInputs, CaixaTitulo, Titulo, CaixaBotoes } from "./Styles";
+import {
+  Body,
+  CaixaAlterarDados,
+  CaixaInputs,
+  CaixaTitulo,
+  Titulo,
+  CaixaBotoes,
+} from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function AlterarDados() {
-
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
@@ -18,24 +24,42 @@ function AlterarDados() {
 
   async function pegandoDados() {
     await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
-    
-    const resposta = managerService.GetDadosUsuario(res);
-    setUsuario(resposta.dadosUsuario);
-    setTelefone(resposta.dadosUsuario.telefone);
-    setCpf(resposta.dadosUsuario.cpf);
-    setDataNascimento(resposta.dadosUsuario.data_nascimento);
-    setEndereco(resposta.dadosEndereco);
-    setComplemento(resposta.dadosEndereco.complemento);
-    setCarregando(false);
-  })
-}
+      const resposta = managerService.GetDadosUsuario(res);
+      console.log(resposta);
+      setUsuario(resposta.dadosUsuario);
+      setTelefone(resposta.dadosUsuario.telefone);
+      setCpf(resposta.dadosUsuario.cpf);
+      setDataNascimento(resposta.dadosUsuario.data_nascimento);
+      setEndereco(resposta.dadosEndereco);
+      setComplemento(resposta.dadosEndereco.complemento);
+    });
+  }
 
+  async function atualizarDados() {
+    await managerService.UpdateDadosUsuario(
+      usuario.id,
+      endereco.id,
+      endereco,
+      estado
+    );
+  }
+  function preenchendoDados(e) {
+    setEstado({ ...estado, [e.target.name]: e.target.value });
+  }
+
+  function preenchendoEndereco(e) {
+    setEndereco({ ...endereco, [e.target.name]: e.target.value });
+  }
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
   const { width } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
-  const larguraConteudoBotaoEntrar = width > 480 ? "45%" : "55%";
-  const larguraConteudoBotaoCancelar = width > 480 ? "60%" : "70%";
+  const larguraConteudoBotaoEntrar = width > 480 ? "45%" : "50%";
+  const larguraConteudoBotaoCancelar = width > 480 ? "60%" : "60%";
   return (
     <ScrollView>
       <Body>
@@ -46,10 +70,11 @@ function AlterarDados() {
 
           <CaixaInputs width={tamanhoInputs}>
             <Input
-              placeholder="Nome Completo:"
+              placeholder={usuario.nome}
               keyboardType="default"
               width="100%"
               label="Nome"
+              onChange={preenchendoDados}
             />
             <Input
               placeholder="Telefone:"
