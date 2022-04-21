@@ -1,16 +1,41 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import Input from "./../../styles/Input";
 import { useWindowDimensions, ScrollView } from "react-native";
 import { Body, CaixaAlterarDados, CaixaInputs, CaixaTitulo, Titulo, CaixaBotoes } from "./Styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function AlterarDados() {
+
+  const [usuario, setUsuario] = useState({});
+  const [endereco, setEndereco] = useState({});
+  const [telefone, setTelefone] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
+
+  async function pegandoDados() {
+    await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
+    
+    const resposta = managerService.GetDadosUsuario(res);
+    setUsuario(resposta.dadosUsuario);
+    setTelefone(resposta.dadosUsuario.telefone);
+    setCpf(resposta.dadosUsuario.cpf);
+    setDataNascimento(resposta.dadosUsuario.data_nascimento);
+    setEndereco(resposta.dadosEndereco);
+    setComplemento(resposta.dadosEndereco.complemento);
+    setCarregando(false);
+  })
+}
+
+
   const { width } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
-  const larguraConteudoBotaoEntrar = width > 480 ? "35%" : "55%";
-  const larguraConteudoBotaoCancelar = width > 480 ? "35%" : "70%";
+  const larguraConteudoBotaoEntrar = width > 480 ? "45%" : "55%";
+  const larguraConteudoBotaoCancelar = width > 480 ? "60%" : "70%";
   return (
     <ScrollView>
       <Body>
