@@ -16,35 +16,35 @@ function Home({ navigation }) {
       />
       <Button
         title="Go to Comentarios"
-        onPress={() => navigation.navigate("ComentariosScreen")}
+        onPress={() => navigation.navigate("Comentarios")}
       />
       <Button
         title="Go to Emergencia"
-        onPress={() => navigation.navigate("EmergenciaScreen")}
+        onPress={() => navigation.navigate("Emergencia")}
       />
       <Button
         title="Go to GrupoAMIE"
-        onPress={() => navigation.navigate("GrupoAMIEScreen")}
+        onPress={() => navigation.navigate("GrupoAMIE")}
       />
       <Button
         title="Go to Perfil"
-        onPress={() => navigation.navigate("PerfilScreen")}
+        onPress={() => navigation.navigate("Perfil")}
       />
       <Button
         title="Go to Recomendacoes"
-        onPress={() => navigation.navigate("RecomendacoesScreen")}
+        onPress={() => navigation.navigate("Recomendacoes")}
       />
       <Button
         title="Go to SobreMim"
-        onPress={() => navigation.navigate("SobreMimScreen")}
+        onPress={() => navigation.navigate("SobreMim")}
       />
       <Button
         title="Go to AlterarDados"
-        onPress={() => navigation.navigate("AlterarDadosScreen")}
+        onPress={() => navigation.navigate("AlterarDados")}
       />
       <Button
         title="Go to AlterarSenha"
-        onPress={() => navigation.navigate("AlterarSenhaScreen")}
+        onPress={() => navigation.navigate("AlterarSenha")}
       />
 
     </View>
