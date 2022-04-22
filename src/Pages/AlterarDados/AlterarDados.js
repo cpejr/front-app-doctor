@@ -14,24 +14,17 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as managerService from "../../services/ManagerService/managerService";
 
-function AlterarDados() {
+function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
+  const [estado, setEstado] = useState({});
   const [endereco, setEndereco] = useState({});
-  const [telefone, setTelefone] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [dataNascimento, setDataNascimento] = useState("");
 
   async function pegandoDados() {
-    await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
-      const resposta = managerService.GetDadosUsuario(res);
+    const email = await AsyncStorage.getItem("@AirBnbApp:email").then((email) => {
+      const resposta = managerService.GetDadosUsuario(email);
       console.log(resposta);
       setUsuario(resposta.dadosUsuario);
-      setTelefone(resposta.dadosUsuario.telefone);
-      setCpf(resposta.dadosUsuario.cpf);
-      setDataNascimento(resposta.dadosUsuario.data_nascimento);
-      setEndereco(resposta.dadosEndereco);
-      setComplemento(resposta.dadosEndereco.complemento);
+      console.log(usuario)
     });
   }
 
@@ -70,7 +63,7 @@ function AlterarDados() {
 
           <CaixaInputs width={tamanhoInputs}>
             <Input
-              placeholder={usuario.nome}
+              placeholder="nome"
               keyboardType="default"
               width="100%"
               label="Nome"
@@ -162,7 +155,7 @@ function AlterarDados() {
               borderColor="rgba(255, 0, 0, 0.25)"
               borderWidth="3px"
               boxShadow="none"
-              onPress={() => requisicaoLogin()}
+              onPress={() => navigation.navigate("Perfil")}
             >
               <ConteudoBotao
                 width={larguraConteudoBotaoCancelar}
@@ -180,7 +173,7 @@ function AlterarDados() {
               borderColor="#151B57"
               borderWidth="3px"
               boxShadow="none"
-              onPress={() => requisicaoLogin()}
+              onPress={() => atualizarDados()}
             >
               <ConteudoBotao
                 width={larguraConteudoBotaoEntrar}
