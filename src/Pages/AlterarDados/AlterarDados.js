@@ -16,32 +16,79 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
-  const [estado, setEstado] = useState({});
   const [endereco, setEndereco] = useState({});
+  const [telefone, setTelefone] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [numero, setNumero] = useState("");
+
+  const [estado, setEstado] = useState({});
+  const [novoEndereco, setNovoEndereco] = useState({});
+
+  const [cpfMasked, setCpfMasked] = useState("");
+  const [dataMasked, setDataMasked] = useState("");
+  const [telMasked, setTelMasked] = useState("");
 
   async function pegandoDados() {
-    const email = await AsyncStorage.getItem("@AirBnbApp:email").then((email) => {
-      const resposta = managerService.GetDadosUsuario(email);
-      console.log(resposta);
-      setUsuario(resposta.dadosUsuario);
-      console.log(usuario)
-    });
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    const resposta = await managerService.GetDadosUsuario(email);
+    setUsuario(resposta.dadosUsuario);
+    setTelefone(resposta.dadosUsuario.telefone);
+    setCpf(resposta.dadosUsuario.cpf);
+    setDataNascimento(resposta.dadosUsuario.data_nascimento);
+    setEndereco(resposta.dadosEndereco);
+    setComplemento(resposta.dadosEndereco.complemento);
+    setNumero(endereco.numero + " ");
+    console.log(estado);
   }
+
+  useEffect(() => {
+    setCpfMasked(
+      cpf.slice(+0, -8) +
+        "." +
+        cpf.slice(+3, -5) +
+        "." +
+        cpf.slice(+6, -2) +
+        "-" +
+        cpf.slice(-2)
+    );
+  }, [cpf]);
+  useEffect(() => {
+    setTelMasked(
+      "(" +
+        telefone.slice(0, -9) +
+        ")" +
+        telefone.slice(2, -4) +
+        "-" +
+        telefone.slice(-4)
+    );
+  }, [telefone]);
+  useEffect(() => {
+    setDataMasked(
+      dataNascimento.slice(8, -14) +
+        "/" +
+        dataNascimento.slice(5, -17) +
+        "/" +
+        dataNascimento.slice(0, -20)
+    );
+  }, [dataNascimento]);
 
   async function atualizarDados() {
     await managerService.UpdateDadosUsuario(
       usuario.id,
       endereco.id,
-      endereco,
+      novoEndereco,
       estado
     );
   }
-  function preenchendoDados(e) {
-    setEstado({ ...estado, [e.target.name]: e.target.value });
+
+  function preenchendoDados(identificador, valor) {
+    setEstado({ ...estado, [identificador]: valor });
   }
 
-  function preenchendoEndereco(e) {
-    setEndereco({ ...endereco, [e.target.name]: e.target.value });
+  function preenchendoEndereco(identificador, valor) {
+    setNovoEndereco({ ...novoEndereco, [identificador]: valor });
   }
 
   useEffect(() => {
@@ -63,87 +110,132 @@ function AlterarDados({ navigation }) {
 
           <CaixaInputs width={tamanhoInputs}>
             <Input
-              placeholder="nome"
+              placeholder={usuario.nome}
               keyboardType="default"
               width="100%"
-              label="Nome"
-              onChange={preenchendoDados}
+              label="nome"
+              onChangeText={(text) => {
+                preenchendoDados("nome", text);
+              }}
             />
             <Input
-              placeholder="Telefone:"
+              placeholder={telMasked}
               keyboardType="default"
               width="100%"
-              label="Telefone"
+              label="telefone"
+              onChangeText={(text) => {
+                preenchendoDados("telefone", text);
+              }}
             />
             <Input
-              placeholder="Data de Nascimento:"
+              placeholder={dataMasked}
               keyboardType="default"
               width="100%"
-              label="DataDeNascimento"
+              label="data_nascimento"
+              onChangeText={(text) => {
+                preenchendoDados("data_nascimento", text);
+              }}
             />
 
             <Input
-              placeholder="CPF:"
+              placeholder={cpfMasked}
               keyboardType="default"
               width="100%"
               label="cpf"
+              onChangeText={(text) => {
+                preenchendoDados("cpf", text);
+              }}
             />
 
             <Input
-              placeholder="Email:"
+              placeholder={usuario.email}
               keyboardType="default"
               width="100%"
               label="email"
+              onChangeText={(text) => {
+                preenchendoDados("email", text);
+              }}
             />
 
             <Input
-              placeholder="País:"
+              placeholder={endereco.pais}
               keyboardType="default"
               width="100%"
-              label="País"
+              label="pais"
+              onChangeText={(text) => {
+                preenchendoEndereco("pais", text);
+              }}
             />
 
             <Input
-              placeholder="Estado:"
+              placeholder={endereco.estado}
               keyboardType="default"
               width="100%"
-              label="Estado"
+              label="estado"
+              onChangeText={(text) => {
+                preenchendoEndereco("estado", text);
+              }}
             />
 
             <Input
-              placeholder="Cidade:"
+              placeholder={endereco.cidade}
               keyboardType="default"
               width="100%"
-              label="Cidade"
+              label="cidade"
+              onChangeText={(text) => {
+                preenchendoEndereco("cidade", text);
+              }}
             />
 
             <Input
-              placeholder="Bairro:"
+              placeholder={endereco.bairro}
               keyboardType="default"
               width="100%"
-              label="Bairro"
+              label="bairro"
+              onChangeText={(text) => {
+                preenchendoEndereco("bairro", text);
+              }}
             />
 
             <Input
-              placeholder="Rua:"
+              placeholder={endereco.rua}
               keyboardType="default"
               width="100%"
-              label="Rua"
+              label="rua"
+              onChangeText={(text) => {
+                preenchendoEndereco("rua", text);
+              }}
             />
-
             <Input
-              placeholder="Número:"
+              placeholder={numero}
               keyboardType="default"
               width="100%"
-              label="Numero"
+              label="numero"
+              onChangeText={(text) => {
+                preenchendoEndereco("numero", text);
+              }}
             />
-
-            <Input
-              placeholder="Complemento:"
-              keyboardType="default"
-              width="100%"
-              label="Complemento"
-            />
+            {complemento === null ? (
+              <Input
+                placeholder="Complemento: "
+                keyboardType="default"
+                width="100%"
+                label="complemento"
+                onChangeText={(text) => {
+                preenchendoEndereco("complemento", text);
+              }}
+              />
+            ) : (
+              <Input
+                placeholder={complemento}
+                keyboardType="default"
+                width="100%"
+                label="complemento"
+                onChangeText={(text) => {
+                preenchendoEndereco("complemento", text);
+                }}
+              />
+            )}
           </CaixaInputs>
 
           <CaixaBotoes>
