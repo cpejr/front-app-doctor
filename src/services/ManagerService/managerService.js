@@ -40,7 +40,6 @@ export const GetDadosUsuario = async (emailUrl) => {
         requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
         return false;
       });
-      console.log(estado)
   
     return false;
   };

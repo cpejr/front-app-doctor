@@ -40,7 +40,6 @@ function AlterarDados({ navigation }) {
     setEndereco(resposta.dadosEndereco);
     setComplemento(resposta.dadosEndereco.complemento);
     setNumero(endereco.numero + " ");
-    console.log(estado);
   }
 
   useEffect(() => {
@@ -79,7 +78,7 @@ function AlterarDados({ navigation }) {
       usuario.id,
       endereco.id,
       novoEndereco,
-      estado
+      estado,
     );
   }
 
@@ -272,7 +271,7 @@ function AlterarDados({ navigation }) {
                 fontSize={tamanhoFonte}
                 color="#ffffff"
               >
-                ENTRAR
+                CONFIRMAR
               </ConteudoBotao>
             </Botao>
           </CaixaBotoes>
