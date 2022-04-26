@@ -79,6 +79,7 @@ function AlterarDados({ navigation }) {
       endereco.id,
       novoEndereco,
       estado,
+      
     );
   }
 
@@ -157,6 +158,16 @@ function AlterarDados({ navigation }) {
             />
 
             <Input
+              placeholder={endereco.cep}
+              keyboardType="default"
+              width="100%"
+              label="cep"
+              onChangeText={(text) => {
+                preenchendoEndereco("cep", text);
+              }}
+            />
+
+            <Input
               placeholder={endereco.pais}
               keyboardType="default"
               width="100%"
@@ -221,8 +232,8 @@ function AlterarDados({ navigation }) {
                 width="100%"
                 label="complemento"
                 onChangeText={(text) => {
-                preenchendoEndereco("complemento", text);
-              }}
+                  preenchendoEndereco("complemento", text);
+                }}
               />
             ) : (
               <Input
@@ -231,7 +242,7 @@ function AlterarDados({ navigation }) {
                 width="100%"
                 label="complemento"
                 onChangeText={(text) => {
-                preenchendoEndereco("complemento", text);
+                  preenchendoEndereco("complemento", text);
                 }}
               />
             )}
