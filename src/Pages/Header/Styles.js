@@ -7,14 +7,14 @@ export const Corpo = styled.View`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #151b57;
+  background-color: #151B57;
 `;
 export const Botaoo = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #151b57;
+  background-color: #151B57;
   border-style: solid;
   border-radius: 25px;
   border: #000000;
@@ -42,7 +42,3 @@ export const Perfil = styled.View`
   border-width: 0px;
   background-color: green; /* background-color: #c4c4c4; */
 `;
-
-
-
-

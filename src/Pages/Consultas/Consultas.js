@@ -15,11 +15,11 @@ function Consultas({ navigation }) {
       />
       <Button
         title="Go to RecomendacoesPreConsulta"
-        onPress={() => navigation.navigate("RecomendacoesPreConsulta")}
+        onPress={() => navigation.navigate("RecomendacoesPreConsultaScreen")}
       />
       <Button
         title="Go to SolicitarConsulta"
-        onPress={() => navigation.navigate("SolicitarConsulta")}
+        onPress={() => navigation.navigate("SolicitarConsultaScreen")}
       />
     </View>
   );

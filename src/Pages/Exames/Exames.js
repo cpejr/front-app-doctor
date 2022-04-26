@@ -15,11 +15,11 @@ function Exames({ navigation }) {
       />
       <Button
         title="Go to FormaPagamento"
-        onPress={() => navigation.navigate("FormaPagamento")}
+        onPress={() => navigation.navigate("FormaPagamentoScreen")}
       />
       <Button
         title="Go to SolicitarExame"
-        onPress={() => navigation.navigate("SolicitarExame")}
+        onPress={() => navigation.navigate("SolicitarExameScreen")}
       />
     </View>
   );

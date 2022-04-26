@@ -15,7 +15,7 @@ function ListaFormularios({ navigation }) {
       />
       <Button
         title="Go to PreencherFormulario"
-        onPress={() => navigation.navigate("PreencherFormulario")}
+        onPress={() => navigation.navigate("PreencherFormularioScreen")}
       />
     </View>
   );
