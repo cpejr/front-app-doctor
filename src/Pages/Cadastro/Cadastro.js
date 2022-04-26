@@ -16,6 +16,7 @@ import {
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
+import api from "../../services/api";
 
 function Cadastro() {
 
@@ -52,29 +53,31 @@ function Cadastro() {
     if (estado.senha === estado.senhaConfirmada) {
       const aux = teste()
       estado.data_nascimento = aux
+      console.log(estado)
+      console.log(endereco)
 
-      // api
-      //   .post("/enderecos", endereco).then(() => {
-      //     console.warn("Postou endereco")
-      //   })
-      //   .then((res) => {
-      //     api
-      //       .post("/usuarios", { ...estado, id_endereco: res.data.id })
-      //       .then(() => {
-      //         Alert.alert("Usuário cadastrado com sucesso.");
-      //         // navigation.navigate("Home");
-      //         console.log(endereco)
-      //         console.log(estado)
-      //       })
-      //       .catch((error) => {
-      //         console.warn(error)
-      //         // requisicaoErro(error, () => history.push("/cadastro"));
-      //       });
-      //   })
-        // .catch((error) => {
-        //   // requisicaoErro(error, () => history.push("/cadastro"));
-        //   console.warn(error)
-        // });
+      api
+        .post("/enderecos", endereco).then(() => {
+          console.warn("Postou endereco")
+        })
+        .then((res) => {
+          api
+            .post("/usuarios", { ...estado, id_endereco: res.data.id })
+            .then(() => {
+              Alert.alert("Usuário cadastrado com sucesso.");
+              // navigation.navigate("Home");
+              console.log(endereco)
+              console.log(estado)
+            })
+            .catch((error) => {
+              console.warn(error)
+              // requisicaoErro(error, () => history.push("/cadastro"));
+            });
+        })
+        .catch((error) => {
+          // requisicaoErro(error, () => history.push("/cadastro"));
+          console.warn(error)
+        });
     } else {
       console.warn("As senhas digitadas são diferentes.");
     }
@@ -82,7 +85,7 @@ function Cadastro() {
   
   function preenchendoDados(   inputIdentifier, enteredValue) {
       setEstado((curEstado) => {
-        console.log(inputIdentifier, enteredValue)
+        //console.log(inputIdentifier, enteredValue)
         return {
           ...curEstado,
           [inputIdentifier]: enteredValue
@@ -103,6 +106,7 @@ function Cadastro() {
   
   function preenchendoEndereco(inputIdentifier, enteredValue) {
     setEndereco((curEndereco) => {
+      // console.log(inputIdentifier, enteredValue)
       return {
         ...curEndereco,
         [inputIdentifier]: enteredValue
@@ -117,7 +121,6 @@ function Cadastro() {
   return (
     <ScrollView>
     <Body>
-      
       <CaixaTitulo>
         <Logo 
         source={logoGuilherme}
@@ -196,7 +199,7 @@ function Cadastro() {
         value={estado.email}
         />
         {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
-        <InputMask
+        {/* <InputMask
         placeholder="CEP:" 
         keyboardType="default"
         type={'custom'}
@@ -207,7 +210,16 @@ function Cadastro() {
         label="CEP"
         includeRawValueInChangeText={true}
         onChangeText={(maskedText, rawText) => {
+          console.log(rawText, maskedText)
           preenchendoEndereco('cep', rawText)}}
+        value={endereco.cep}
+        /> */}
+        <Input 
+        placeholder="CEP:" 
+        keyboardType="default"
+        width="100%"
+        label="CEP"
+        onChangeText={(text) => {preenchendoEndereco('cep', text)}}
         value={endereco.cep}
         />
         {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
