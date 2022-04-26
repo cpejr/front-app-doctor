@@ -4,6 +4,7 @@ import Input from "../../styles/Input";
 import Botao from "../../styles/Botao"
 import ConteudoBotao from "../../styles/ConteudoBotao"
 import logoGuilherme from "./../../assets/logoGuilherme.png";
+import requisicaoErro from "../../utils/HttpErros";
 import {
   Body,
   CaixaTitulo,
@@ -45,41 +46,35 @@ function Cadastro() {
   const { width, height } = useWindowDimensions();
 
 
-  function requisicaoCadastro() {
+  async function requisicaoCadastro() {
 
     
-       setErrorMessage("Campo Obrigatório!")
-
+    //setErrorMessage("Campo Obrigatório!")
     if (estado.senha === estado.senhaConfirmada) {
       const aux = teste()
       estado.data_nascimento = aux
       console.log(estado)
       console.log(endereco)
-
-      api
-        .post("/enderecos", endereco).then(() => {
-          console.warn("Postou endereco")
+      try {
+        const resposta = await api
+        .post("/enderecos", endereco).then((res) => {
+          api.post("/usuarios", { ...estado, id_endereco: res.data.id })
+          .then(() => {
+             alert("Usuário cadastrado com sucesso.")
+             //navigation.navigate("Home");
+          })
+          .catch((error) => {
+            console.log(error)
+            //requisicaoErro(error, () => navigation.navigate("Cadastro"))
+          })
         })
-        .then((res) => {
-          api
-            .post("/usuarios", { ...estado, id_endereco: res.data.id })
-            .then(() => {
-              Alert.alert("Usuário cadastrado com sucesso.");
-              // navigation.navigate("Home");
-              console.log(endereco)
-              console.log(estado)
-            })
-            .catch((error) => {
-              console.warn(error)
-              // requisicaoErro(error, () => history.push("/cadastro"));
-            });
-        })
-        .catch((error) => {
-          // requisicaoErro(error, () => history.push("/cadastro"));
-          console.warn(error)
-        });
+      }
+      catch (error) {
+        console.log(error)
+        // requisicaoErro(error, () => navigation.navigate("Cadastro"))
+      }
     } else {
-      console.warn("As senhas digitadas são diferentes.");
+      alert("As senhas digitadas são diferentes.");
     }
   }
   
