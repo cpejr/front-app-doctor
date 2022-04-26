@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Botao from "./../../styles/Botao";
-import ConteudoBotao from "./../../styles/ConteudoBotao";
-import Input from "./../../styles/Input";
+import Botao from "../../styles/Botao";
+import ConteudoBotao from "../../styles/ConteudoBotao";
+import Input from "../../styles/Input";
 import { useWindowDimensions, ScrollView } from "react-native";
 import {
   Body,
