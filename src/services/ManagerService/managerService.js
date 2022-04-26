@@ -34,10 +34,9 @@ export const GetDadosUsuario = async (emailUrl) => {
       .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
       .then(() => {
         alert("Usuário atualizado com sucesso.");
-        window.location.href = "/web/perfil";
       })
       .catch((error) => {
-        requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
+        requisicaoErro(error);
         return false;
       });
   

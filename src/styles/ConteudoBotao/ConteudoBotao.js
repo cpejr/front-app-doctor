@@ -5,6 +5,7 @@ export const ConteudoBotao = styled.Text`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   /*Fonte*/
   font-size: ${(props) => props.fontSize};
   color: ${(props) => props.color};

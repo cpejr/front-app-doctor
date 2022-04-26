@@ -79,8 +79,8 @@ function AlterarDados({ navigation }) {
       endereco.id,
       novoEndereco,
       estado,
-      
-    );
+    )
+    navigation.navigate("Perfil");
   }
 
   function preenchendoDados(identificador, valor) {
@@ -98,8 +98,6 @@ function AlterarDados({ navigation }) {
   const { width } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
-  const larguraConteudoBotaoEntrar = width > 480 ? "45%" : "50%";
-  const larguraConteudoBotaoCancelar = width > 480 ? "60%" : "60%";
   return (
     <ScrollView>
       <Body>
@@ -260,7 +258,7 @@ function AlterarDados({ navigation }) {
               onPress={() => navigation.navigate("Perfil")}
             >
               <ConteudoBotao
-                width={larguraConteudoBotaoCancelar}
+                width="100%"
                 fontSize={tamanhoFonte}
                 color="#000000"
               >
@@ -278,7 +276,7 @@ function AlterarDados({ navigation }) {
               onPress={() => atualizarDados()}
             >
               <ConteudoBotao
-                width={larguraConteudoBotaoEntrar}
+                width="100%"
                 fontSize={tamanhoFonte}
                 color="#ffffff"
               >
