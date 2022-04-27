@@ -11,12 +11,16 @@ import {
   CaixaHora,
   ConteudoCaixa,
   Icone,
-  BotaoView,
-  BotaoIcone,
-  BotaoCaixa,
+  ViewBotao,
+  CaixaBotao,
+  IconeBotao,
 } from "./Styles";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import botaoIcone from "./../../assets/botaoIcone.png";
+import iconeAvaliDesabilitado from "./../../assets/iconeAvaliDesabilitado.png";
+import iconeAvaliHabilitado from "./../../assets/iconeAvaliHabilitado.png";
+import iconeLocal from "./../../assets/iconeLocal.png";
+
 function Consultas({ navigation }) {
   return (
     <ScrollView>
@@ -30,9 +34,13 @@ function Consultas({ navigation }) {
               <ConteudoCaixa>15-05-2002</ConteudoCaixa>
             </CaixaData>
             <CaixaNome>
-              <Icone source={botaoIcone} />
+              <Icone
+                marginRight="4%"
+                marginLeft="0"
+                source={iconeAvaliDesabilitado}
+              />
               <ConteudoCaixa>Consulta de Rotina</ConteudoCaixa>
-              <Icone source={botaoIcone} />
+              <Icone marginRight="0" marginLeft="4%" source={iconeLocal} />
             </CaixaNome>
             <CaixaHora>
               <ConteudoCaixa>20:20</ConteudoCaixa>
@@ -44,31 +52,27 @@ function Consultas({ navigation }) {
               <ConteudoCaixa>15-05-2002</ConteudoCaixa>
             </CaixaData>
             <CaixaNome>
-              <Icone source={botaoIcone} />
+              <Icone
+                marginRight="4%"
+                marginLeft="0"
+                source={iconeAvaliHabilitado}
+              />
               <ConteudoCaixa>Consulta de Rotina</ConteudoCaixa>
-              <Icone source={botaoIcone} />
+              <Icone marginRight="0" marginLeft="4%" source={iconeLocal} />
             </CaixaNome>
             <CaixaHora>
               <ConteudoCaixa>20:20</ConteudoCaixa>
             </CaixaHora>
           </CaixaConsulta>
         </ViewConsultas>
-        <BotaoView>
-          <BotaoCaixa
-            width="45%"
-            height="40px"
-            backgroundColor="#E9EBFC"
-            borderRadius="3px"
-            borderColor="#000000"
-            borderWidth="1px"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.3)"
-          >
+        <ViewBotao>
+          <CaixaBotao>
             <ConteudoBotao fontSize="12px" color="#151B57" width="90%">
               Marcar Nova Consulta
             </ConteudoBotao>
-            <BotaoIcone source={botaoIcone} />
-          </BotaoCaixa>
-        </BotaoView>
+            <IconeBotao source={botaoIcone} />
+          </CaixaBotao>
+        </ViewBotao>
       </Body>
     </ScrollView>
   );

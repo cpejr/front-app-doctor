@@ -83,7 +83,10 @@ export const ConteudoCaixa = styled.Text`
   font-size: 13px;
 `;
 
-export const Icone = styled.Image``;
+export const Icone = styled.Image`
+  margin-left: ${(props) => props.marginLeft};
+  margin-right: ${(props) => props.marginRight};
+`;
 
 export const CaixaTitulo = styled.View`
   display: flex;
@@ -97,31 +100,31 @@ export const CaixaTitulo = styled.View`
 export const Titulo = styled.Text`
   font-size: 30px;
 `;
-export const BotaoView = styled.View`
+export const ViewBotao= styled.View`
+  height: 12%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   width: 100%;
   margin-bottom: 5%;
 `;
-export const BotaoCaixa = styled.TouchableOpacity`
-  /*Posicao */
+export const CaixaBotao = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-left: 2%;
+  justify-content: center;
+  padding-left: 5%;
   padding-right: 5%;
-  /*Medidas*/
   margin-top: 2%;
-  height: ${(props) => props.height};
-  width: ${(props) => props.width};
-  /*cor e borda do botao*/
+  height: 100%;
+  width: 50%;
   overflow: hidden;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: #e9ebfc;
   border-style: solid;
-  border-radius: ${(props) => props.borderRadius};
-  border-color: ${(props) => props.borderColor};
-  border-width: ${(props) => props.borderWidth};
-  box-shadow: ${(props) => props.boxShadow};
+  border-radius: 3px;
+  border-color: #000000;
+  border-width: 1px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 `;
-export const BotaoIcone = styled.Image``;
+export const IconeBotao = styled.Image`
+`;
