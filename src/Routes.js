@@ -25,7 +25,6 @@ import SolicitarExame from "./pages/SolicitarExame";
 import Header from "./pages/Header";
 
 import { View, Image } from "react-native";
-import { Colors } from "react-native-paper";
 
 function HomeIcon() {
   return (

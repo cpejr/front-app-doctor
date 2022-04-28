@@ -6,11 +6,10 @@ function Home({ navigation }) {
     <View>
       <Text>Home</Text>
       <Button
-        title="Cadastro"
+        title="Go to Cadastro"
         onPress={() => navigation.navigate("Cadastro")}
       />
       <Button
-
         title="Go to Login"
         onPress={() => navigation.navigate("Login")}
       />

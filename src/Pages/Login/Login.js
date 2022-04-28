@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import api from "../../services/api";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Botao from "./../../styles/Botao";
-import ConteudoBotao from "./../../styles/ConteudoBotao";
-import Input from "./../../styles/Input";
-import AsyncStorage from "@react-native-community/async-storage";
+import Botao from "../../styles/Botao";
+import ConteudoBotao from "../../styles/ConteudoBotao";
+import Input from "../../styles/Input";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import requisicaoErro from "../../utils/HttpErros";
 import { useWindowDimensions, ScrollView } from "react-native";
 import {
@@ -27,24 +27,24 @@ function Login({ navigation }) {
   const { width, height } = useWindowDimensions();
 
   async function requisicaoLogin() {
-    if (email.length === 0 || senha.length === 0) {
+    if (email?.length === 0 || senha?.length === 0) {
       alert("Preencha os campos email e senha!");
     } else {
-      try {
-        const resposta = await api.post("/login", {
+      
+        api.post("/login", {
           email,
-          senha,
-        });
-        await AsyncStorage.setItem("@AirBnbApp:token", resposta.data.token);
-        await AsyncStorage.setItem("@AirBnbApp:email", resposta.data.email);
-        alert("Bem vindo!");
+          senha
+        }).then((res) => {
+        AsyncStorage.setItem("@AirBnbApp:token", res.data.token);
+        AsyncStorage.setItem("@AirBnbApp:email", res.data.email);
+        alert("Bem vindo!")
         navigation.navigate("Home");
-      } catch (error) {
-        setEmail(null);
-        setSenha(null);
-        requisicaoErro(error, () => navigation.navigate("Login"));
-        alert(email,senha);
-      }
+        }
+        ).catch((error) => {
+          setEmail(null);
+          setSenha(null)
+          requisicaoErro(error, () => navigation.navigate("Home"))
+        });
     }
   }
 
