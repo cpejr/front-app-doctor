@@ -6,8 +6,8 @@ export const Body = styled.View`
   width: 100%;
   height: 100%;
   background-color: #ffffff;
-  padding-right: 5%;
-  padding-left: 5%;
+  padding-right: ${(props) => props.paddingRight};
+  padding-left: ${(props) => props.paddingLeft};
 `;
 
 export const ViewConsultas = styled.View`
@@ -25,6 +25,7 @@ export const ViewConsultas = styled.View`
   padding-right: 10px;
   padding-top: 6%;
   padding-bottom: 1%;
+  
 `;
 
 export const CaixaConsulta = styled.View`
@@ -37,19 +38,18 @@ export const CaixaConsulta = styled.View`
   margin-bottom: 4%;
   background-color: #e1e4ff;
   height: 38px;
+  border-radius:5px;
+  border-style: solid;
+  border: #bbc0f4;
+  border-width: 2.5px;
 `;
 
 export const CaixaData = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 25%;
-  border-style: solid;
-  border: #bbc0f4;
-  border-width: 2.5px;
+  width: 25%;  
   height: 100%;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
 `;
 
 export const CaixaNome = styled.View`
@@ -60,8 +60,10 @@ export const CaixaNome = styled.View`
   width: 50%;
   border-style: solid;
   border: #bbc0f4;
-  border-top-width: 2.5px;
-  border-bottom-width: 2.5px;
+  border-left-width: ${(props) => props.borderLeftWidth};
+  border-right-width: ${(props) => props.borderRightWidth};
+  border-top-width: 0px;
+  border-bottom-width: 0px;
   height: 100%;
 `;
 
@@ -71,16 +73,12 @@ export const CaixaHora = styled.View`
   justify-content: center;
   width: 25%;
   border-style: solid;
-  border: #bbc0f4;
-  border-width: 2.5px;
-  height: 100%;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  height:100%;
 `;
 
 export const ConteudoCaixa = styled.Text`
   color: #151b57;
-  font-size: 13px;
+  font-size: ${(props) => props.fontSize};
 `;
 
 export const Icone = styled.Image`
@@ -117,7 +115,7 @@ export const CaixaBotao = styled.TouchableOpacity`
   padding-right: 5%;
   margin-top: 2%;
   height: 100%;
-  width: 50%;
+  width: ${(props) => props.width};
   overflow: hidden;
   background-color: #e9ebfc;
   border-style: solid;
@@ -127,4 +125,8 @@ export const CaixaBotao = styled.TouchableOpacity`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 `;
 export const IconeBotao = styled.Image`
+height: 18px;
+width: 18px;
 `;
+
+//width: ${(props) => props.width}
