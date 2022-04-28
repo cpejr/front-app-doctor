@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import api from "../../services/api";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Botao from "../../styles/Botao";
-import ConteudoBotao from "../../styles/ConteudoBotao";
-import Input from "../../styles/Input";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Botao from "./../../styles/Botao";
+import ConteudoBotao from "./../../styles/ConteudoBotao";
+import Input from "./../../styles/Input";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import requisicaoErro from "../../utils/HttpErros";
 import { useWindowDimensions, ScrollView } from "react-native";
 import {
