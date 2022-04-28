@@ -12,7 +12,7 @@ function traducaoErro(erroCodigo) {
     return mensagemErro;
   }
   
-  export default function requisicaoErro(error) {
+  export default function requisicaoErro(error, retorno = () => {}) {
     const resposta = error.response;
     const statusCodigo = resposta.status;
   

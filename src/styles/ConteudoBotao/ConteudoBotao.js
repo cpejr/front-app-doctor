@@ -12,3 +12,4 @@ export const ConteudoBotao = styled.Text`
   width: ${(props) => props.width};
 `;
 export default ConteudoBotao;
+
