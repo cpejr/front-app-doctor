@@ -39,7 +39,7 @@ function AlterarDados({ navigation }) {
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
     setComplemento(resposta.dadosEndereco.complemento);
-    setNumero(endereco.numero + " ");
+    setNumero(resposta.dadosEndereco.numero + " ");
   }
 
   useEffect(() => {
@@ -78,8 +78,8 @@ function AlterarDados({ navigation }) {
       usuario.id,
       endereco.id,
       novoEndereco,
-      estado,
-    )
+      estado
+    );
     navigation.navigate("Perfil");
   }
 

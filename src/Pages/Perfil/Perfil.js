@@ -157,7 +157,7 @@ function Perfil({ navigation }) {
               borderColor="#353964"
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
-              onPress={() => navigation.navigate("EditarPerfil")}
+              onPress={() => navigation.navigate("AlterarDados")}
             >
               <ConteudoBotaoPerfil fontSize={fontSizeDados}>
                 ALTERAR DADOS
