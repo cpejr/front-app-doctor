@@ -1,11 +1,21 @@
 import React from "react";
 import { Text, View } from "react-native";
+import ViewPadrao from "../../styles/ViewPadrao";
+import {
+  Body,
+  CaixaTitulo,
+  Titulo,
+  ConteudoView,
+  BotaoView,
+  Botao,
+  BotaoIcone
+} from "./Styles"
 
 function SolicitarConsulta() {
   return (
-    <View>
+    <ViewPadrao>
       <Text>SolicitarConsulta</Text>
-    </View>
+    </ViewPadrao>
   );
 }
 
