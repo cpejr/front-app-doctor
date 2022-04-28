@@ -15,22 +15,13 @@ import {
   CaixaBotao,
   IconeBotao,
 } from "./Styles";
+import ViewPadrao from "../../styles/ViewPadrao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import botaoIcone from "./../../assets/botaoIcone.png";
 import iconeAvaliDesabilitado from "./../../assets/iconeAvaliDesabilitado.png";
 import iconeAvaliHabilitado from "./../../assets/iconeAvaliHabilitado.png";
 import iconeLocal from "./../../assets/iconeLocal.png";
 
-
-//const larguraBotao = width < 600 ? "50%" : "50%"; 
-
-// const larguraBotoesMaior = width < 600 ? "50%" : "50px"; 
-//   const larguraBotao = width < 330 ? "60%" : larguraBotaoMaior; 
-//   const paddingBody = width < 330 ? "5%" : "10%"; 
-//   const fontSizeTitulos = fontSize < 1080 ? "20px" : "23px"; 
-//   const fontSizeDados = fontSize < 1080 ? "15px" : "18px"; 
-//   const fontSizeNascido = fontSize <1080 ? "12px" : "14px"; 
-//   const larguraViews = width < 750 ? "100%" : "70%"; 
 
 function Consultas({ navigation }) {
 
@@ -56,7 +47,10 @@ function Consultas({ navigation }) {
         <CaixaTitulo>
           <Titulo>Consultas Marcadas</Titulo>
         </CaixaTitulo>
-        <ViewConsultas>
+        <ViewPadrao
+        paddingLeft="10px"
+        paddingRight="10px"
+        >
           <CaixaConsulta>
             <CaixaData>
               <ConteudoCaixa
@@ -110,7 +104,7 @@ function Consultas({ navigation }) {
               >20:20</ConteudoCaixa>
             </CaixaHora>
           </CaixaConsulta>
-        </ViewConsultas>
+        </ViewPadrao>
         <ViewBotao>
           <CaixaBotao
           width={larguraBotao}
