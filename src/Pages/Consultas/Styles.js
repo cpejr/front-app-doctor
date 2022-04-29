@@ -114,7 +114,7 @@ export const CaixaBotao = styled.TouchableOpacity`
   padding-left: 5%;
   padding-right: 5%;
   margin-top: 2%;
-  height: 100%;
+  height: 35px;
   width: ${(props) => props.width};
   overflow: hidden;
   background-color: #e9ebfc;
@@ -125,8 +125,8 @@ export const CaixaBotao = styled.TouchableOpacity`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 `;
 export const IconeBotao = styled.Image`
-height: 18px;
-width: 18px;
+height: 18.5px;
+width: 18.5px;
 `;
 
 //width: ${(props) => props.width}

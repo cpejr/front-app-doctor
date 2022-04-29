@@ -34,8 +34,8 @@ function Consultas({ navigation }) {
   //responsividade aparelhos
   const paddingBody = width < 330 ? "1.5%" : paddingBodyMaior; 
   const larguraBotao = width < 330 ? "60%" : larguraBotaoMaior;
-  const bordaCaixaNome = width < 330 ? "0px" : "2.5px"; 
-  const fontSize = width < 330 ? "11px" : fontSizeMaior; 
+  const borderWidthCaixaNome = width < 330 ? "0px" : "2.5px"; 
+  const fontSizeConteudo = width < 330 ? "11px" : fontSizeMaior; 
   
 
   return (
@@ -54,12 +54,12 @@ function Consultas({ navigation }) {
           <CaixaConsulta>
             <CaixaData>
               <ConteudoCaixa
-              fontSize={fontSize}
+              fontSize={fontSizeConteudo}
               >15-05-2002</ConteudoCaixa>
             </CaixaData>
             <CaixaNome
-            borderRightWidth={bordaCaixaNome}
-            borderLeftWidth={bordaCaixaNome}
+            borderRightWidth={borderWidthCaixaNome}
+            borderLeftWidth={borderWidthCaixaNome}
             >
               <Icone
                 marginRight="4%"
@@ -67,13 +67,13 @@ function Consultas({ navigation }) {
                 source={iconeAvaliDesabilitado}
               />
               <ConteudoCaixa
-              fontSize={fontSize}
+              fontSize={fontSizeConteudo}
               >Consulta de Rotina</ConteudoCaixa>
               <Icone marginRight="0" marginLeft="4%" source={iconeLocal} />
             </CaixaNome>
             <CaixaHora>
               <ConteudoCaixa
-              fontSize={fontSize}
+              fontSize={fontSizeConteudo}
               >20:20</ConteudoCaixa>
             </CaixaHora>
           </CaixaConsulta>
@@ -81,7 +81,7 @@ function Consultas({ navigation }) {
           <CaixaConsulta>
             <CaixaData>
               <ConteudoCaixa
-              fontSize={fontSize}
+              fontSize={fontSizeConteudo}
               >15-05-2002</ConteudoCaixa>
             </CaixaData>
             <CaixaNome
@@ -94,13 +94,13 @@ function Consultas({ navigation }) {
                 source={iconeAvaliHabilitado}
               />
               <ConteudoCaixa
-              fontSize={fontSize}
+              fontSize={fontSizeConteudo}
               >Consulta de Rotina</ConteudoCaixa>
               <Icone marginRight="0" marginLeft="4%" source={iconeLocal} />
             </CaixaNome>
             <CaixaHora>
               <ConteudoCaixa
-              fontSize={fontSize}
+              fontSize={fontSizeConteudo}
               >20:20</ConteudoCaixa>
             </CaixaHora>
           </CaixaConsulta>
@@ -108,6 +108,7 @@ function Consultas({ navigation }) {
         <ViewBotao>
           <CaixaBotao
           width={larguraBotao}
+          onPress={() => navigation.navigate("SolicitarConsulta")}
           >
             <ConteudoBotao fontSize={fontSize} color="#151B57" width="90%">
               Marcar Nova Consulta
