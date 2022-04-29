@@ -85,8 +85,8 @@ function Consultas({ navigation }) {
               >15-05-2002</ConteudoCaixa>
             </CaixaData>
             <CaixaNome
-            borderRightWidth={bordaCaixaNome}
-            borderLeftWidth={bordaCaixaNome}
+            borderRightWidth={borderWidthCaixaNome}
+            borderLeftWidth={borderWidthCaixaNome}
             >
               <Icone
                 marginRight="4%"
@@ -110,7 +110,7 @@ function Consultas({ navigation }) {
           width={larguraBotao}
           onPress={() => navigation.navigate("SolicitarConsulta")}
           >
-            <ConteudoBotao fontSize={fontSize} color="#151B57" width="90%">
+            <ConteudoBotao fontSize={fontSizeConteudo} color="#151B57" width="90%">
               Marcar Nova Consulta
             </ConteudoBotao>
             <IconeBotao source={botaoIcone} />
