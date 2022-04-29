@@ -1,8 +1,8 @@
 import React from "react";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
-import Botao from "./../../styles/Botao";
-import ConteudoBotao from "./../../styles/ConteudoBotao";
-import Input from "./../../styles/Input";
+import Botao from "../../styles/Botao";
+import ConteudoBotao from "../../styles/ConteudoBotao";
+import Input from "../../styles/Input";
 import {
   Body,
   CaixaTitulo,
