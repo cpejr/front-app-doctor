@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 /* Endereços para cada emulador/simulador:
@@ -10,3 +11,4 @@ const api = axios.create({
 });
 
 export default api;
+
