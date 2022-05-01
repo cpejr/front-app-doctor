@@ -1,10 +1,11 @@
 import styled from "styled-components/native";
 
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: ${(props) => props.height};
   background-color: #ffffff;
   padding-right: ${(props) => props.paddingRight};
   padding-left: ${(props) => props.paddingLeft};
@@ -110,9 +111,9 @@ export const CaixaBotao = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding-left: 5%;
-  padding-right: 5%;
+  justify-content: space-around;
+  padding-left: 2%;
+  padding-right: 3%;
   margin-top: 2%;
   height: 35px;
   width: ${(props) => props.width};
