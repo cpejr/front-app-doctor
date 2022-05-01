@@ -5,7 +5,7 @@ export const ViewPadrao = styled.View`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: ${(props) => props.width};
   margin-bottom: 5%;
   border-style: solid;
   border-radius: 6px;
@@ -13,8 +13,9 @@ export const ViewPadrao = styled.View`
   border-width: 2px;
   padding-left: ${(props) => props.paddingLeft};
   padding-right: ${(props) => props.paddingRight};
-  padding-top: 6%;
+  padding-top: 20px;
   padding-bottom: 1%;
+  background-color: ${(props) => props.backgroundColor};
 `;
 
 export default ViewPadrao;
