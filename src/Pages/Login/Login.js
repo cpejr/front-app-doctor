@@ -6,7 +6,6 @@ import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import Input from "./../../styles/Input";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import requisicaoErro from "../../utils/HttpErros";
 import { useWindowDimensions, ScrollView } from "react-native";
 import {
