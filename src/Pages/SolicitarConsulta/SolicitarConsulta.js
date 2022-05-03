@@ -31,7 +31,7 @@ function SolicitarConsulta({ navigation }) {
   );
 
   const { width } = useWindowDimensions();
-  const heightTela = Dimensions.get("window").height;
+  const heightTela = `${Dimensions.get("window").height}px`;
 
   useEffect(() => {
     setUrlWhatsApp(encodeURI(urlWhatsApp));
