@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import {Picker} from '@react-native-picker/picker';
 
 export const Body = styled.View`
   display: flex;
@@ -11,12 +12,11 @@ export const Body = styled.View`
 export const CaixaTitulo = styled.View`
   display: flex;
   flex-direction: row;
-  width: 70%;
+  width:${(props) => props.width};
   align-items: center;
   justify-content: space-around;
-  margin-top: 12%;
-  margin-bottom: 6px;
-  margin-bottom:15px
+  margin-top: 35px;
+  margin-bottom:30px;
 `;
 
 export const Logo = styled.Image`
@@ -28,13 +28,39 @@ export const Titulo = styled.Text`
   font-size: 25px;
   display:flex;
   align-items: center;
-  width:50%;
+  width:${(props) => props.width};
 `;
 
 export const CaixaInputs = styled.View`
   height: auto;
   bottom: 0;
   align-items: center;
+`;
+
+export const PickerView = styled.View`
+  width: 100%;
+  background-color: #e4e6f4;
+  height: 61px;
+  border-radius: 5px;
+  border: #151b57;
+  border-width: 1.5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  display: flex;
+`
+
+export const PickerEstado = styled(Picker)`
+/* width: 100%;
+  background-color: #e4e6f4;
+  height: 40px;
+  border-radius: 5px;
+  border: #151b57;
+  border-width: 1.5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  display: flex; */
+  background-color: #e4e6f4;
+  width:100%;
 `;
 
 export const MensagemErro = styled.Text`
@@ -55,11 +81,11 @@ export const CaixaInputsMesmaLinha = styled.View`
 export const CaixaBotoes = styled.View`
   display: flex;
   flex-direction: row;
-  margin-top:6px;
+  margin-top:16px;
   justify-content: space-between;
   align-items: center;
   width: 70%;
   
-  margin-bottom: 5%;
+  margin-bottom: 30px;
 `;
 

@@ -5,12 +5,16 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import requisicaoErro from "../../utils/HttpErros";
+import { Picker } from "@react-native-picker/picker";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import {
   Body,
   CaixaTitulo,
   Logo,
   Titulo,
   CaixaInputs,
+  PickerView,
+  PickerEstado,
   MensagemErro,
   CaixaInputsMesmaLinha,
   CaixaBotoes,
@@ -41,16 +45,20 @@ function Cadastro({ navigation }) {
     complemento: "",
   });
   const [errorMessage, setErrorMessage] = useState(null);
+  const [estadoSelecionado, setEstadoSelecionado] = useState();
+  const [carregando, setCarregando] = useState(false);
 
   const { width, height } = useWindowDimensions();
 
   async function requisicaoCadastro() {
     //setErrorMessage("Campo Obrigatório!")
+    setCarregando(true);
     if (estado.senha === estado.senhaConfirmada) {
-      const aux = teste();
-      estado.data_nascimento = aux;
+      const dataFormatada = formatacaoData();
+      estado.data_nascimento = dataFormatada;
+
       try {
-        const resposta = await api.post("/enderecos", endereco).then((res) => {
+        await api.post("/enderecos", endereco).then((res) => {
           api
             .post("/usuarios", { ...estado, id_endereco: res.data.id })
             .then(() => {
@@ -67,6 +75,7 @@ function Cadastro({ navigation }) {
     } else {
       alert("As senhas digitadas são diferentes.");
     }
+    setCarregando(false);
   }
 
   function preenchendoDados(inputIdentifier, enteredValue) {
@@ -78,7 +87,7 @@ function Cadastro({ navigation }) {
     });
   }
 
-  function teste() {
+  function formatacaoData() {
     try {
       const response = brParaPadrao(estado.data_nascimento);
       return response;
@@ -95,16 +104,21 @@ function Cadastro({ navigation }) {
       };
     });
   }
-
+  //responsividade paisagem
+  const larguraCaixaTituloMaior = width < 600 ? "50%" : "60%";
+  const larguraTituloMaior = width < 600 ? "50%" : "60%";
+  //responsividade aparelhos
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const fontSizeConteudoBotao = width < 400 ? "13px" : "15px";
+  const larguraCaixaTitulo = width < 400 ? "70%" : "50%";
+  const larguraTitulo = width < 300 ? "45%" : "50%";
 
   return (
     <ScrollView>
       <Body>
-        <CaixaTitulo>
+        <CaixaTitulo width={larguraCaixaTitulo}>
           <Logo source={logoGuilherme} />
-          <Titulo>Faça seu Cadastro</Titulo>
+          <Titulo width={larguraTitulo}>Faça seu Cadastro</Titulo>
         </CaixaTitulo>
 
         <CaixaInputs width={tamanhoInputs}>
@@ -217,16 +231,51 @@ function Cadastro({ navigation }) {
             value={endereco.pais}
           />
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
-          <Input
-            placeholder="Estado:"
-            keyboardType="default"
-            width="100%"
-            label="Estado"
-            onChangeText={(text) => {
-              preenchendoEndereco("estado", text);
-            }}
-            value={endereco.estado}
-          />
+          <PickerView>
+            <PickerEstado
+              selectedValue={estadoSelecionado}
+              onValueChange={(itemValue, itemIndex) => {
+                setEstadoSelecionado(itemValue);
+                preenchendoEndereco("estado", itemValue);
+              }}
+              style={{ height: 40 }}
+              itemStyle={{
+                backgroundColor: "grey",
+                color: "blue",
+                fontSize: 17,
+              }}
+            >
+              <Picker.Item value="" label="Selecione um Estado" />
+              <Picker.Item value="AC" label="Acre" />
+              <Picker.Item value="AL" label="Alagoas" />
+              <Picker.Item value="AP" label="Amapá" />
+              <Picker.Item value="AM" label="Amazonas" />
+              <Picker.Item value="BA" label="Bahia" />
+              <Picker.Item value="CE" label="Ceará" />
+              <Picker.Item value="DF" label="Distrito Federal" />
+              <Picker.Item value="ES" label="Espírito Santo" />
+              <Picker.Item value="GO" label="Goiás" />
+              <Picker.Item value="MA" label="Maranhão" />
+              <Picker.Item value="MT" label="Mato Grosso" />
+              <Picker.Item value="MS" label="Mato Grosso do Sul" />
+              <Picker.Item value="MG" label="Minas Gerais" />
+              <Picker.Item value="PA" label="Pará" />
+              <Picker.Item value="PB" label="Paraíba" />
+              <Picker.Item value="PR" label="Paraná" />
+              <Picker.Item value="PE" label="Pernambuco" />
+              <Picker.Item value="PI" label="Piauí" />
+              <Picker.Item value="RJ" label="Rio de Janeiro" />
+              <Picker.Item value="RN" label="Rio Grande do Norte" />
+              <Picker.Item value="RS" label="Rio Grande do Sul" />
+              <Picker.Item value="RO" label="Rondônia" />
+              <Picker.Item value="RR" label="Roraima" />
+              <Picker.Item value="SC" label="Santa Catarina" />
+              <Picker.Item value="SP" label="São Paulo" />
+              <Picker.Item value="SE" label="Sergipe" />
+              <Picker.Item value="TO" label="Tocantins" />
+              <Picker.Item value="EX" label="Estrangeiro" />
+            </PickerEstado>
+          </PickerView>
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Cidade:"
@@ -321,12 +370,15 @@ function Cadastro({ navigation }) {
             borderRadius="3px"
             borderColor="rgba(255, 0, 0, 0.25)"
             borderWidth="1px"
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
           >
             <ConteudoBotao fontSize={fontSizeConteudoBotao} color="#000000">
               CANCELAR
             </ConteudoBotao>
           </Botao>
+
           <Botao
             width="42%"
             height="35px"
@@ -336,9 +388,13 @@ function Cadastro({ navigation }) {
             borderWidth="1px"
             onPress={requisicaoCadastro}
           >
-            <ConteudoBotao fontSize={fontSizeConteudoBotao} color="#ffffff">
-              CADASTRAR
-            </ConteudoBotao>
+            {carregando ? (
+              <ActivityIndicator animating={true} color={Colors.white} />
+            ) : (
+              <ConteudoBotao fontSize={fontSizeConteudoBotao} color="#ffffff">
+                CADASTRAR
+              </ConteudoBotao>
+            )}
           </Botao>
         </CaixaBotoes>
       </Body>
