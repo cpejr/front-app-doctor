@@ -47,6 +47,7 @@ function Cadastro({ navigation }) {
   const [errorMessage, setErrorMessage] = useState(null);
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
+  const [cepFormatado, setCepFormatado] = useState("");
 
   const { width, height } = useWindowDimensions();
 
@@ -56,7 +57,6 @@ function Cadastro({ navigation }) {
     if (estado.senha === estado.senhaConfirmada) {
       const dataFormatada = formatacaoData();
       estado.data_nascimento = dataFormatada;
-
       try {
         await api.post("/enderecos", endereco).then((res) => {
           api
@@ -104,14 +104,14 @@ function Cadastro({ navigation }) {
       };
     });
   }
+
   //responsividade paisagem
   const larguraCaixaTituloMaior = width < 600 ? "50%" : "60%";
   const larguraTituloMaior = width < 600 ? "50%" : "60%";
   //responsividade aparelhos
   const tamanhoInputs = width < 400 ? "85%" : "80%";
-  const fontSizeConteudoBotao = width < 400 ? "13px" : "15px";
-  const larguraCaixaTitulo = width < 400 ? "70%" : "50%";
-  const larguraTitulo = width < 300 ? "45%" : "50%";
+  const larguraCaixaTitulo = width < 400 ? "70%" : larguraCaixaTituloMaior;
+  const larguraTitulo = width < 300 ? "45%" : larguraTituloMaior;
 
   return (
     <ScrollView>
@@ -172,13 +172,15 @@ function Cadastro({ navigation }) {
             />
           </CaixaInputsMesmaLinha>
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
-          <Input
+          <InputMask
             placeholder="CPF:"
             keyboardType="default"
             width="100%"
             label="cpf"
-            onChangeText={(text) => {
-              preenchendoDados("cpf", text);
+            type={"cpf"}
+            includeRawValueInChangeText={true}
+            onChangeText={(maskedText, rawText) => {
+              preenchendoDados("cpf", rawText);
             }}
             value={estado.cpf}
           />
@@ -194,32 +196,17 @@ function Cadastro({ navigation }) {
             value={estado.email}
           />
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
-          {/* <InputMask
+        <InputMask
         placeholder="CEP:" 
         keyboardType="default"
-        type={'custom'}
-          options={{
-            mask: '99.999-999'
-          }}
+        type={'zip-code'}
         width="100%"
         label="CEP"
         includeRawValueInChangeText={true}
         onChangeText={(maskedText, rawText) => {
-          console.log(rawText, maskedText)
           preenchendoEndereco('cep', rawText)}}
         value={endereco.cep}
-        /> */}
-          <Input
-            placeholder="CEP:"
-            keyboardType="default"
-            width="100%"
-            label="CEP"
-            onChangeText={(text) => {
-              preenchendoEndereco("cep", text);
-            }}
-            value={endereco.cep}
-          />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
+        />
           <Input
             placeholder="País:"
             keyboardType="default"
@@ -231,51 +218,47 @@ function Cadastro({ navigation }) {
             value={endereco.pais}
           />
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
-          <PickerView>
+        
+            <PickerView>
             <PickerEstado
               selectedValue={estadoSelecionado}
               onValueChange={(itemValue, itemIndex) => {
                 setEstadoSelecionado(itemValue);
                 preenchendoEndereco("estado", itemValue);
               }}
-              style={{ height: 40 }}
-              itemStyle={{
-                backgroundColor: "grey",
-                color: "blue",
-                fontSize: 17,
-              }}
             >
-              <Picker.Item value="" label="Selecione um Estado" />
-              <Picker.Item value="AC" label="Acre" />
-              <Picker.Item value="AL" label="Alagoas" />
-              <Picker.Item value="AP" label="Amapá" />
-              <Picker.Item value="AM" label="Amazonas" />
-              <Picker.Item value="BA" label="Bahia" />
-              <Picker.Item value="CE" label="Ceará" />
-              <Picker.Item value="DF" label="Distrito Federal" />
-              <Picker.Item value="ES" label="Espírito Santo" />
-              <Picker.Item value="GO" label="Goiás" />
-              <Picker.Item value="MA" label="Maranhão" />
-              <Picker.Item value="MT" label="Mato Grosso" />
-              <Picker.Item value="MS" label="Mato Grosso do Sul" />
-              <Picker.Item value="MG" label="Minas Gerais" />
-              <Picker.Item value="PA" label="Pará" />
-              <Picker.Item value="PB" label="Paraíba" />
-              <Picker.Item value="PR" label="Paraná" />
-              <Picker.Item value="PE" label="Pernambuco" />
-              <Picker.Item value="PI" label="Piauí" />
-              <Picker.Item value="RJ" label="Rio de Janeiro" />
-              <Picker.Item value="RN" label="Rio Grande do Norte" />
-              <Picker.Item value="RS" label="Rio Grande do Sul" />
-              <Picker.Item value="RO" label="Rondônia" />
-              <Picker.Item value="RR" label="Roraima" />
-              <Picker.Item value="SC" label="Santa Catarina" />
-              <Picker.Item value="SP" label="São Paulo" />
-              <Picker.Item value="SE" label="Sergipe" />
-              <Picker.Item value="TO" label="Tocantins" />
-              <Picker.Item value="EX" label="Estrangeiro" />
+              <Picker.Item style={{fontSize:15, color:"grey"}} value="" label="Selecione um Estado" />
+              <Picker.Item style={{fontSize:15, color:"black", color:"black"}} value="AC" label="Acre" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="AL" label="Alagoas" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="AP" label="Amapá" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="AM" label="Amazonas" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="BA" label="Bahia" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="CE" label="Ceará" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="DF" label="Distrito Federal" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="ES" label="Espírito Santo" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="GO" label="Goiás" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="MA" label="Maranhão" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="MT" label="Mato Grosso" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="MS" label="Mato Grosso do Sul" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="MG" label="Minas Gerais" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="PA" label="Pará" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="PB" label="Paraíba" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="PR" label="Paraná" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="PE" label="Pernambuco" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="PI" label="Piauí" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="RJ" label="Rio de Janeiro" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="RN" label="Rio Grande do Norte" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="RS" label="Rio Grande do Sul" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="RO" label="Rondônia" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="RR" label="Roraima" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="SC" label="Santa Catarina" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="SP" label="São Paulo" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="SE" label="Sergipe" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="TO" label="Tocantins" />
+              <Picker.Item style={{fontSize:15, color:"black"}} value="EX" label="Estrangeiro" />
             </PickerEstado>
-          </PickerView>
+            </PickerView>
+          
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Cidade:"
@@ -374,7 +357,7 @@ function Cadastro({ navigation }) {
               navigation.navigate("Login");
             }}
           >
-            <ConteudoBotao fontSize={fontSizeConteudoBotao} color="#000000">
+            <ConteudoBotao fontSize="15px" color="#000000">
               CANCELAR
             </ConteudoBotao>
           </Botao>
@@ -391,7 +374,7 @@ function Cadastro({ navigation }) {
             {carregando ? (
               <ActivityIndicator animating={true} color={Colors.white} />
             ) : (
-              <ConteudoBotao fontSize={fontSizeConteudoBotao} color="#ffffff">
+              <ConteudoBotao fontSize="15px" color="#ffffff">
                 CADASTRAR
               </ConteudoBotao>
             )}

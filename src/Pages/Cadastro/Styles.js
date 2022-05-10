@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 
 export const Body = styled.View`
   display: flex;
@@ -38,29 +38,22 @@ export const CaixaInputs = styled.View`
 `;
 
 export const PickerView = styled.View`
+  display: flex;
   width: 100%;
   background-color: #e4e6f4;
-  height: 61px;
   border-radius: 5px;
   border: #151b57;
   border-width: 1.5px;
   margin-top: 6px;
   margin-bottom: 6px;
-  display: flex;
+  overflow: hidden;
 `
 
 export const PickerEstado = styled(Picker)`
-/* width: 100%;
-  background-color: #e4e6f4;
-  height: 40px;
-  border-radius: 5px;
-  border: #151b57;
-  border-width: 1.5px;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  display: flex; */
+  display:flex;
   background-color: #e4e6f4;
   width:100%;
+  margin-top: 0;
 `;
 
 export const MensagemErro = styled.Text`
