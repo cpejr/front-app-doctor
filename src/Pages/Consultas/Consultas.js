@@ -56,26 +56,6 @@ function Consultas({ navigation }) {
     setConsultas(resposta);
     setCarregando(false);
   }
-
-  var consultasOcorridas = [];
-  var consultasNaoOcorridas = [];
-
-  function compararData() {
-    for (var i = 0; i < consultas.length; i++) {
-      var dataAtual = new Date();
-      var dataConsulta = new Date(consultas[i].data_hora);
-
-      if (dataAtual >= dataConsulta) {
-        consultasOcorridas.push(consultas[i]);
-      }
-      if (dataAtual < dataConsulta) {
-        consultasNaoOcorridas.push(consultas[i]);
-      }
-    }
-
-    setOcorridas(consultasOcorridas);
-    setNaoOcorridas(consultasNaoOcorridas);
-  }
   function formatarDataHora(data_hora) {
     const aux = new Date(data_hora);
     const dia = aux.getUTCDate();
@@ -91,6 +71,33 @@ function Consultas({ navigation }) {
     const horaConsulta = horas + ":" + minutos;
 
     return { dataConsulta, horaConsulta };
+  }
+
+  var consultasOcorridas = [];
+  var consultasNaoOcorridas = [];
+
+  function compararData() {
+    for (var i = 0; i < consultas.length; i++) {
+      var dataAtual = new Date();
+      var dataConsulta = new Date(consultas[i].data_hora);
+
+      consultas[i].dataConsulta = formatarDataHora(
+        consultas[i].data_hora
+      ).dataConsulta;
+      consultas[i].horaConsulta = formatarDataHora(
+        consultas[i].data_hora
+      ).horaConsulta;
+
+      if (dataAtual >= dataConsulta) {
+        consultasOcorridas.push(consultas[i]);
+      }
+      if (dataAtual < dataConsulta) {
+        consultasNaoOcorridas.push(consultas[i]);
+      }
+    }
+
+    setOcorridas(consultasOcorridas);
+    setNaoOcorridas(consultasNaoOcorridas);
   }
 
   useEffect(() => {
@@ -121,7 +128,7 @@ function Consultas({ navigation }) {
                 <CaixaConsulta>
                   <CaixaData>
                     <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      {value.data_hora}
+                      {value.dataConsulta}
                     </ConteudoCaixa>
                   </CaixaData>
                   <CaixaNome
@@ -144,7 +151,7 @@ function Consultas({ navigation }) {
                   </CaixaNome>
                   <CaixaHora>
                     <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      {value.data_hora}
+                      {value.horaConsulta}
                     </ConteudoCaixa>
                   </CaixaHora>
                 </CaixaConsulta>
@@ -155,7 +162,7 @@ function Consultas({ navigation }) {
                 <CaixaConsulta>
                   <CaixaData>
                     <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      {value.data_hora}
+                      {value.dataConsulta}
                     </ConteudoCaixa>
                   </CaixaData>
                   <CaixaNome
@@ -178,7 +185,7 @@ function Consultas({ navigation }) {
                   </CaixaNome>
                   <CaixaHora>
                     <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      {value.data_hora}
+                      {value.horaConsulta}
                     </ConteudoCaixa>
                   </CaixaHora>
                 </CaixaConsulta>
