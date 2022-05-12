@@ -22,6 +22,7 @@ import {
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
 import api from "../../services/api";
+import { estados } from "./estados";
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -44,7 +45,6 @@ function Cadastro({ navigation }) {
     numero: "",
     complemento: "",
   });
-  const [errorMessage, setErrorMessage] = useState(null);
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
   const [cepFormatado, setCepFormatado] = useState("");
@@ -52,7 +52,6 @@ function Cadastro({ navigation }) {
   const { width, height } = useWindowDimensions();
 
   async function requisicaoCadastro() {
-    //setErrorMessage("Campo Obrigatório!")
     setCarregando(true);
     if (estado.senha === estado.senhaConfirmada) {
       const dataFormatada = formatacaoData();
@@ -132,8 +131,6 @@ function Cadastro({ navigation }) {
             }}
             value={estado.nome}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
-          
           <CaixaInputsMesmaLinha>
             <InputMask
               placeholder="Telefone:"
@@ -171,7 +168,6 @@ function Cadastro({ navigation }) {
               value={estado.data_nascimento}
             />
           </CaixaInputsMesmaLinha>
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <InputMask
             placeholder="CPF:"
             keyboardType="default"
@@ -184,7 +180,6 @@ function Cadastro({ navigation }) {
             }}
             value={estado.cpf}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Email:"
             keyboardType="default"
@@ -195,7 +190,6 @@ function Cadastro({ navigation }) {
             }}
             value={estado.email}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         <InputMask
         placeholder="CEP:" 
         keyboardType="default"
@@ -217,7 +211,6 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.pais}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         
           <PickerView>
             <PickerEstado
@@ -228,38 +221,12 @@ function Cadastro({ navigation }) {
               }}
             >
               <Picker.Item style={{fontSize:15, color:"grey"}} value="" label="Selecione um Estado" />
-              <Picker.Item style={{fontSize:15, color:"black", color:"black"}} value="AC" label="Acre" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="AL" label="Alagoas" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="AP" label="Amapá" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="AM" label="Amazonas" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="BA" label="Bahia" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="CE" label="Ceará" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="DF" label="Distrito Federal" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="ES" label="Espírito Santo" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="GO" label="Goiás" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="MA" label="Maranhão" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="MT" label="Mato Grosso" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="MS" label="Mato Grosso do Sul" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="MG" label="Minas Gerais" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="PA" label="Pará" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="PB" label="Paraíba" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="PR" label="Paraná" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="PE" label="Pernambuco" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="PI" label="Piauí" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="RJ" label="Rio de Janeiro" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="RN" label="Rio Grande do Norte" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="RS" label="Rio Grande do Sul" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="RO" label="Rondônia" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="RR" label="Roraima" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="SC" label="Santa Catarina" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="SP" label="São Paulo" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="SE" label="Sergipe" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="TO" label="Tocantins" />
-              <Picker.Item style={{fontSize:15, color:"black"}} value="EX" label="Estrangeiro" />
+              {estados.map( (estado) => (
+                <Picker.Item key={estado.sigla} style={{fontSize:15, color:"black"}} value={estado.sigla} label={estado.nome} />
+              ))}
             </PickerEstado>
           </PickerView>
           
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Cidade:"
             keyboardType="default"
@@ -270,7 +237,6 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.cidade}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Bairro:"
             keyboardType="default"
@@ -281,7 +247,6 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.bairro}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Rua:"
             keyboardType="default"
@@ -292,7 +257,6 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.rua}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Número:"
             keyboardType="default"
@@ -303,7 +267,6 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.numero}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Complemento:"
             keyboardType="default"
@@ -314,7 +277,6 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.complemento}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Defina sua senha:"
             keyboardType="default"
@@ -328,7 +290,6 @@ function Cadastro({ navigation }) {
             }}
             value={estado.senha}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
             placeholder="Confirme sua senha:"
             keyboardType="default"
@@ -342,7 +303,7 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.senhaConfirmada}
           />
-          {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
+
         </CaixaInputs>
 
         <CaixaBotoes>
