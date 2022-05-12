@@ -1,11 +1,20 @@
 import React from "react";
-import { Text, View, Image } from "react-native";
+import logoGuilherme from "./../../assets/logoGuilherme.png";
+import { Corpo, Perfil, Logo, Botaoo } from "./Styles";
+import { useNavigation } from '@react-navigation/native';
 
 function Header() {
+  const navigation = useNavigation();
+  
   return (
-    <View>
-      <Text>Header</Text>
-    </View>
+    <Corpo>
+      <Botaoo onPress={() => navigation.navigate("Home")}>
+        <Logo source={logoGuilherme}/>
+      </Botaoo>
+      <Botaoo onPress={() => navigation.navigate("Perfil")}>
+        <Perfil />
+      </Botaoo>
+    </Corpo>
   );
 }
 

@@ -133,7 +133,7 @@ function Cadastro({ navigation }) {
             value={estado.nome}
           />
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
-
+          
           <CaixaInputsMesmaLinha>
             <InputMask
               placeholder="Telefone:"
@@ -219,7 +219,7 @@ function Cadastro({ navigation }) {
           />
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
         
-            <PickerView>
+          <PickerView>
             <PickerEstado
               selectedValue={estadoSelecionado}
               onValueChange={(itemValue, itemIndex) => {
@@ -257,7 +257,7 @@ function Cadastro({ navigation }) {
               <Picker.Item style={{fontSize:15, color:"black"}} value="TO" label="Tocantins" />
               <Picker.Item style={{fontSize:15, color:"black"}} value="EX" label="Estrangeiro" />
             </PickerEstado>
-            </PickerView>
+          </PickerView>
           
           {errorMessage && <MensagemErro>{errorMessage}</MensagemErro>}
           <Input
@@ -357,7 +357,7 @@ function Cadastro({ navigation }) {
               navigation.navigate("Login");
             }}
           >
-            <ConteudoBotao fontSize="15px" color="#000000">
+            <ConteudoBotao fontSize="15px" color="#000000" width="100%">
               CANCELAR
             </ConteudoBotao>
           </Botao>
@@ -374,12 +374,20 @@ function Cadastro({ navigation }) {
             {carregando ? (
               <ActivityIndicator animating={true} color={Colors.white} />
             ) : (
-              <ConteudoBotao fontSize="15px" color="#ffffff">
+              <ConteudoBotao fontSize="15px" color="#ffffff" width="100%">
                 CADASTRAR
               </ConteudoBotao>
             )}
+                         
           </Botao>
         </CaixaBotoes>
+      </Body>
+    </ScrollView>
+  );
+  return (
+    <ScrollView>
+      <Body>
+        
       </Body>
     </ScrollView>
   );
