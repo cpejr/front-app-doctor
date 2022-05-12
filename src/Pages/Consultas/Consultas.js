@@ -28,7 +28,7 @@ import iconeLocal from "./../../assets/iconeLocal.png";
 
 import { Dimensions } from "react-native";
 import * as managerService from "../../services/ManagerService/managerService";
-import { ActivityIndicator, Colors } from "react-native-paper";
+import { ActivityIndicator, Button, Colors } from "react-native-paper";
 
 function Consultas({ navigation }) {
   const { width } = useWindowDimensions();
@@ -75,6 +75,22 @@ function Consultas({ navigation }) {
 
     setOcorridas(consultasOcorridas);
     setNaoOcorridas(consultasNaoOcorridas);
+  }
+  function formatarDataHora(data_hora) {
+    const aux = new Date(data_hora);
+    const dia = aux.getUTCDate();
+    const mes = aux.getUTCMonth() + 1;
+    const ano = aux.getFullYear();
+    if (mes < 10) {
+      var dataConsulta = dia + "/" + "0" + mes + "/" + ano;
+    } else if (mes >= 10) {
+      var dataConsulta = dia + "/" + mes + "/" + ano;
+    }
+    const horas = aux.getHours();
+    const minutos = aux.getMinutes();
+    const horaConsulta = horas + ":" + minutos;
+
+    return { dataConsulta, horaConsulta };
   }
 
   useEffect(() => {
