@@ -28,6 +28,7 @@ import iconeLocal from "./../../assets/iconeLocal.png";
 
 import { Dimensions } from "react-native";
 import * as managerService from "../../services/ManagerService/managerService";
+import { ActivityIndicator, Colors } from "react-native-paper";
 
 function Consultas({ navigation }) {
   const { width } = useWindowDimensions();
@@ -47,10 +48,13 @@ function Consultas({ navigation }) {
   const [consultas, setConsultas] = useState({});
   const [ocoridas, setOcorridas] = useState([]);
   const [naoOcorridas, setNaoOcorridas] = useState([]);
+  const [carregando, setCarregando] = useState(false);
 
   async function requisicaoConsultasUsuario() {
+    setCarregando(true);
     const resposta = await managerService.requisicaoConsultasUsuario();
     setConsultas(resposta);
+    setCarregando(false);
   }
 
   var consultasOcorridas = [];
@@ -68,6 +72,7 @@ function Consultas({ navigation }) {
         consultasNaoOcorridas.push(consultas[i]);
       }
     }
+
     setOcorridas(consultasOcorridas);
     setNaoOcorridas(consultasNaoOcorridas);
   }
@@ -89,68 +94,82 @@ function Consultas({ navigation }) {
         <CaixaTitulo>
           <Titulo>Consultas Marcadas</Titulo>
         </CaixaTitulo>
-        <ViewPadrao paddingLeft="10px" paddingRight="10px">
-          {ocoridas?.map((value) => (
-            <TouchableOpacity key={value.id}>
-              <CaixaConsulta>
-                <CaixaData>
-                  <ConteudoCaixa fontSize={fontSizeConteudo}>
-                    {value.data_hora}
-                  </ConteudoCaixa>
-                </CaixaData>
-                <CaixaNome
-                  borderRightWidth={borderWidthCaixaNome}
-                  borderLeftWidth={borderWidthCaixaNome}
-                >
-                  <Icone
-                    marginRight="4%"
-                    marginLeft="0"
-                    source={iconeAvaliDesabilitado}
-                  />
-                  <ConteudoCaixa fontSize={fontSizeConteudo}>
-                    Consulta de Rotina
-                  </ConteudoCaixa>
-                  <Icone marginRight="0" marginLeft="4%" source={iconeLocal} />
-                </CaixaNome>
-                <CaixaHora>
-                  <ConteudoCaixa fontSize={fontSizeConteudo}>
-                    {value.data_hora}
-                  </ConteudoCaixa>
-                </CaixaHora>
-              </CaixaConsulta>
-            </TouchableOpacity>
-          ))}
-          {naoOcorridas?.map((value) => (
-            <TouchableOpacity key={value.id}>
-              <CaixaConsulta>
-                <CaixaData>
-                  <ConteudoCaixa fontSize={fontSizeConteudo}>
-                    {value.data_hora}
-                  </ConteudoCaixa>
-                </CaixaData>
-                <CaixaNome
-                  borderRightWidth={borderWidthCaixaNome}
-                  borderLeftWidth={borderWidthCaixaNome}
-                >
-                  <Icone
-                    marginRight="4%"
-                    marginLeft="0"
-                    source={iconeAvaliHabilitado}
-                  />
-                  <ConteudoCaixa fontSize={fontSizeConteudo}>
-                    Consulta de Rotina
-                  </ConteudoCaixa>
-                  <Icone marginRight="0" marginLeft="4%" source={iconeLocal} />
-                </CaixaNome>
-                <CaixaHora>
-                  <ConteudoCaixa fontSize={fontSizeConteudo}>
-                    {value.data_hora}
-                  </ConteudoCaixa>
-                </CaixaHora>
-              </CaixaConsulta>
-            </TouchableOpacity>
-          ))}
-        </ViewPadrao>
+        {carregando ? (
+          <ViewPadrao paddingLeft="10px" paddingRight="10px">
+            <ActivityIndicator animating={true} color={Colors.black} />
+          </ViewPadrao>
+        ) : (
+          <ViewPadrao paddingLeft="10px" paddingRight="10px">
+            {ocoridas?.map((value) => (
+              <TouchableOpacity key={value.id}>
+                <CaixaConsulta>
+                  <CaixaData>
+                    <ConteudoCaixa fontSize={fontSizeConteudo}>
+                      {value.data_hora}
+                    </ConteudoCaixa>
+                  </CaixaData>
+                  <CaixaNome
+                    borderRightWidth={borderWidthCaixaNome}
+                    borderLeftWidth={borderWidthCaixaNome}
+                  >
+                    <Icone
+                      marginRight="4%"
+                      marginLeft="0"
+                      source={iconeAvaliDesabilitado}
+                    />
+                    <ConteudoCaixa fontSize={fontSizeConteudo}>
+                      Consulta de Rotina
+                    </ConteudoCaixa>
+                    <Icone
+                      marginRight="0"
+                      marginLeft="4%"
+                      source={iconeLocal}
+                    />
+                  </CaixaNome>
+                  <CaixaHora>
+                    <ConteudoCaixa fontSize={fontSizeConteudo}>
+                      {value.data_hora}
+                    </ConteudoCaixa>
+                  </CaixaHora>
+                </CaixaConsulta>
+              </TouchableOpacity>
+            ))}
+            {naoOcorridas?.map((value) => (
+              <TouchableOpacity key={value.id}>
+                <CaixaConsulta>
+                  <CaixaData>
+                    <ConteudoCaixa fontSize={fontSizeConteudo}>
+                      {value.data_hora}
+                    </ConteudoCaixa>
+                  </CaixaData>
+                  <CaixaNome
+                    borderRightWidth={borderWidthCaixaNome}
+                    borderLeftWidth={borderWidthCaixaNome}
+                  >
+                    <Icone
+                      marginRight="4%"
+                      marginLeft="0"
+                      source={iconeAvaliHabilitado}
+                    />
+                    <ConteudoCaixa fontSize={fontSizeConteudo}>
+                      Consulta de Rotina
+                    </ConteudoCaixa>
+                    <Icone
+                      marginRight="0"
+                      marginLeft="4%"
+                      source={iconeLocal}
+                    />
+                  </CaixaNome>
+                  <CaixaHora>
+                    <ConteudoCaixa fontSize={fontSizeConteudo}>
+                      {value.data_hora}
+                    </ConteudoCaixa>
+                  </CaixaHora>
+                </CaixaConsulta>
+              </TouchableOpacity>
+            ))}
+          </ViewPadrao>
+        )}
         <ViewBotao>
           <CaixaBotao
             width={larguraBotao}
