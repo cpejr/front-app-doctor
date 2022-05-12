@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useWindowDimensions, ScrollView } from "react-native";
 import {
   Body,
@@ -23,6 +23,7 @@ import iconeAvaliHabilitado from "./../../assets/iconeAvaliHabilitado.png";
 import iconeLocal from "./../../assets/iconeLocal.png";
 
 import { Dimensions } from "react-native";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Consultas({ navigation }) {
   const { width } = useWindowDimensions();
@@ -38,6 +39,14 @@ function Consultas({ navigation }) {
   const fontSizeConteudo = width < 330 ? "11px" : fontSizeMaior;
 
   const heightTela = `${Dimensions.get("window").height}px`;
+
+  async function requisicaoConsultasUsuario() {
+    const resposta = await managerService.requisicaoConsultasUsuario();
+    return resposta;
+  }
+  useEffect(() => {
+    requisicaoConsultasUsuario();
+  }, []);
 
   return (
     <ScrollView>
