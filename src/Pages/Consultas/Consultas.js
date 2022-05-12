@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useWindowDimensions, ScrollView } from "react-native";
 import {
   Body,
@@ -40,12 +40,33 @@ function Consultas({ navigation }) {
 
   const heightTela = `${Dimensions.get("window").height}px`;
 
+  const [consultas, setConsultas] = useState({});
+
   async function requisicaoConsultasUsuario() {
     const resposta = await managerService.requisicaoConsultasUsuario();
-    return resposta;
+    setConsultas(resposta);
   }
+
+  var consultasOcorridas = [];
+  var consultasNaoOcorridas = [];
+
+  function compararData() {
+    for (var i = 0; i < consultas.length; i++) {
+      var dataAtual = new Date();
+      var dataConsulta = new Date(consultas[i].data_hora);
+
+      if (dataAtual >= dataConsulta) {
+        consultasOcorridas.push(consultas[i]);
+      }
+      if (dataAtual < dataConsulta) {
+        consultasNaoOcorridas.push(consultas[i]);
+      }
+    }
+  }
+
   useEffect(() => {
     requisicaoConsultasUsuario();
+    compararData();
   }, []);
 
   return (
