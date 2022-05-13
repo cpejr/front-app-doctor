@@ -128,9 +128,9 @@ export const IconeBotao = styled.Image`
   width: 18.5px;
 `;
 export const CaixaModal = styled.View`
-  height: 70%;
+  height: ${(props) => props.height};
   width: 80%;
-  margin-top: 15%;
+  margin-top: ${(props) => props.marginTop};
   margin-bottom: 4%;
   margin-left: 10%;
   margin-right: 10%;

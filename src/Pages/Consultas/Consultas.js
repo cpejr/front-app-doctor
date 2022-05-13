@@ -54,6 +54,8 @@ function Consultas({ navigation }) {
   const paddingBodyMaior = width < 600 ? "5%" : "10%";
   const larguraBotaoMaior = width < 600 ? "50%" : "40%";
   const fontSizeMaior = width < 600 ? "12px" : "15px";
+  const heightModal = width < 600 ? "70%" : "100%";
+  const marginTopModal = width < 600 ? "15%" : "0%";
   //responsividade aparelhos
   const paddingBody = width < 330 ? "1.5%" : paddingBodyMaior;
   const larguraBotao = width < 330 ? "60%" : larguraBotaoMaior;
@@ -168,7 +170,7 @@ function Consultas({ navigation }) {
                   transparent={true}
                   visible={modalOcorrida}
                 >
-                  <CaixaModal>
+                  <CaixaModal height={heightModal} marginTop={marginTopModal}>
                     <CaixaFechar>
                       <TouchableOpacity
                         onPress={() => {
@@ -258,7 +260,7 @@ function Consultas({ navigation }) {
                   transparent={true}
                   visible={modalNaoOcorrida}
                 >
-                  <CaixaModal>
+                  <CaixaModal height={heightModal} marginTop={marginTopModal}>
                     <CaixaFechar>
                       <TouchableOpacity
                         onPress={() => {
@@ -270,7 +272,7 @@ function Consultas({ navigation }) {
                     </CaixaFechar>
                     <CaixaTituloModal>
                       <TituloModal>
-                        A sua consulta foi no {value.nomeConsultorio}
+                        A sua consulta será no {value.nomeConsultorio}
                       </TituloModal>
                     </CaixaTituloModal>
                     <CaixaDadosModal>
