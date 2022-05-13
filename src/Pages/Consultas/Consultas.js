@@ -107,6 +107,7 @@ function Consultas({ navigation }) {
   var consultasNaoOcorridas = [];
 
   async function compararData() {
+    setCarregando(true);
     for (var i = 0; i < consultas.length; i++) {
       var dataAtual = new Date();
       var dataConsulta = new Date(consultas[i].data_hora);
@@ -119,6 +120,7 @@ function Consultas({ navigation }) {
       const consultorio = await requisicaoConsultorioById(
         consultas[i].id_consultorio
       );
+
       const endereco = await requisicaoEnderecoById(consultorio.id_endereco);
       consultas[i].nomeConsultorio = consultorio.nome;
       consultas[i].enderecoConsultorio = endereco;
@@ -129,9 +131,9 @@ function Consultas({ navigation }) {
         consultasNaoOcorridas.push(consultas[i]);
       }
     }
-
     setOcorridas(consultasOcorridas);
     setNaoOcorridas(consultasNaoOcorridas);
+    setCarregando(false);
   }
 
   useEffect(() => {
