@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
 
-
 export const Body = styled.View`
   display: flex;
   align-items: center;
@@ -26,7 +25,6 @@ export const ViewConsultas = styled.View`
   padding-right: 10px;
   padding-top: 6%;
   padding-bottom: 1%;
-  
 `;
 
 export const CaixaConsulta = styled.View`
@@ -39,7 +37,7 @@ export const CaixaConsulta = styled.View`
   margin-bottom: 4%;
   background-color: #e1e4ff;
   height: 38px;
-  border-radius:5px;
+  border-radius: 5px;
   border-style: solid;
   border: #bbc0f4;
   border-width: 2.5px;
@@ -49,7 +47,7 @@ export const CaixaData = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 25%;  
+  width: 25%;
   height: 100%;
 `;
 
@@ -74,7 +72,7 @@ export const CaixaHora = styled.View`
   justify-content: center;
   width: 25%;
   border-style: solid;
-  height:100%;
+  height: 100%;
 `;
 
 export const ConteudoCaixa = styled.Text`
@@ -99,7 +97,7 @@ export const CaixaTitulo = styled.View`
 export const Titulo = styled.Text`
   font-size: 30px;
 `;
-export const ViewBotao= styled.View`
+export const ViewBotao = styled.View`
   height: 12%;
   display: flex;
   flex-direction: row;
@@ -126,8 +124,64 @@ export const CaixaBotao = styled.TouchableOpacity`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 `;
 export const IconeBotao = styled.Image`
-height: 18.5px;
-width: 18.5px;
+  height: 18.5px;
+  width: 18.5px;
+`;
+export const CaixaModal = styled.View`
+  height: 70%;
+  width: 80%;
+  margin-top: 15%;
+  margin-bottom: 4%;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  border: 4px;
+  border-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+export const CaixaFechar = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+  justify-content: flex-end;
+  padding-right: 5%;
+`;
+export const CaixaTituloModal = styled.View`
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+  justify-content: center;
+`;
+export const TituloModal = styled.Text`
+  font-size: 25px;
+  text-align: center;
+`;
+export const CaixaDadosModal = styled.View`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  justify-content: center;
+`;
+export const EnderecoModal = styled.Text`
+  font-size: 15px;
+  text-align: center;
+`;
+export const DataModal = styled.Text`
+  font-size: 15px;
+  text-align: center;
+`;
+export const CaixaAvaliacaoModal = styled.View`
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10%;
+  justify-content: center;
 `;
 
 //width: ${(props) => props.width}

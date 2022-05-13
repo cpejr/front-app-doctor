@@ -3,6 +3,10 @@ import {
   useWindowDimensions,
   ScrollView,
   TouchableOpacity,
+  Modal,
+  View,
+  Text,
+  Pressable,
 } from "react-native";
 import {
   Body,
@@ -18,6 +22,17 @@ import {
   ViewBotao,
   CaixaBotao,
   IconeBotao,
+  CaixaModal,
+  CaixaFechar,
+  CaixaEndereco,
+  CaixaTituloModal,
+  TituloModal,
+  CaixaEnderecoModal,
+  EnderecoModal,
+  CaixaDataModal,
+  DataModal,
+  CaixaDadosModal,
+  CaixaAvaliacaoModal,
 } from "./Styles";
 import ViewPadrao from "../../styles/ViewPadrao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
@@ -25,10 +40,12 @@ import botaoIcone from "./../../assets/botaoIcone.png";
 import iconeAvaliDesabilitado from "./../../assets/iconeAvaliDesabilitado.png";
 import iconeAvaliHabilitado from "./../../assets/iconeAvaliHabilitado.png";
 import iconeLocal from "./../../assets/iconeLocal.png";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import { Dimensions } from "react-native";
 import * as managerService from "../../services/ManagerService/managerService";
 import { ActivityIndicator, Button, Colors } from "react-native-paper";
+import Botao from "../../styles/Botao";
 
 function Consultas({ navigation }) {
   const { width } = useWindowDimensions();
@@ -42,6 +59,7 @@ function Consultas({ navigation }) {
   const larguraBotao = width < 330 ? "60%" : larguraBotaoMaior;
   const borderWidthCaixaNome = width < 330 ? "0px" : "2.5px";
   const fontSizeConteudo = width < 330 ? "11px" : fontSizeMaior;
+  const tamanhoIcone = width > 480 ? 20 : 25;
 
   const heightTela = `${Dimensions.get("window").height}px`;
 
@@ -49,6 +67,8 @@ function Consultas({ navigation }) {
   const [ocoridas, setOcorridas] = useState([]);
   const [naoOcorridas, setNaoOcorridas] = useState([]);
   const [carregando, setCarregando] = useState(false);
+  const [modalOcorrida, setModalOcorrida] = useState(false);
+  const [modalNaoOcorrida, setModalNaoOcorrida] = useState(false);
 
   async function requisicaoConsultasUsuario() {
     setCarregando(true);
@@ -80,7 +100,6 @@ function Consultas({ navigation }) {
     for (var i = 0; i < consultas.length; i++) {
       var dataAtual = new Date();
       var dataConsulta = new Date(consultas[i].data_hora);
-
       consultas[i].dataConsulta = formatarDataHora(
         consultas[i].data_hora
       ).dataConsulta;
@@ -117,14 +136,86 @@ function Consultas({ navigation }) {
         <CaixaTitulo>
           <Titulo>Consultas Marcadas</Titulo>
         </CaixaTitulo>
+
         {carregando ? (
           <ViewPadrao paddingLeft="10px" paddingRight="10px">
             <ActivityIndicator animating={true} color={Colors.black} />
           </ViewPadrao>
         ) : (
           <ViewPadrao paddingLeft="10px" paddingRight="10px">
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalOcorrida}
+            >
+              <CaixaModal>
+                <CaixaFechar>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalOcorrida(false);
+                    }}
+                  >
+                    <Icon name="close" size={tamanhoIcone}></Icon>
+                  </TouchableOpacity>
+                </CaixaFechar>
+                <CaixaTituloModal>
+                  <TituloModal>A sua consulta foi no consultorio x</TituloModal>
+                </CaixaTituloModal>
+                <CaixaDadosModal>
+                  <EnderecoModal>
+                    Rua Rio Grande do Norte, 77 Santa Efigenia/BeloHorizonte
+                  </EnderecoModal>
+                  <DataModal>Dia xxxx de 2022 às xx:xx</DataModal>
+                </CaixaDadosModal>
+                <CaixaAvaliacaoModal>
+                  <Botao
+                    height="40px"
+                    width="70%"
+                    backgroundColor="green"
+                    borderRadius="10px"
+                    borderWidth="1px"
+                    borderColor="#088E0E"
+                  >
+                    <ConteudoBotao fontSize="15px" color="#000000" width="100%">
+                      Avalie a Consulta
+                    </ConteudoBotao>
+                  </Botao>
+                </CaixaAvaliacaoModal>
+              </CaixaModal>
+            </Modal>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalNaoOcorrida}
+            >
+              <CaixaModal>
+                <CaixaFechar>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalNaoOcorrida(false);
+                    }}
+                  >
+                    <Icon name="close" size={tamanhoIcone}></Icon>
+                  </TouchableOpacity>
+                </CaixaFechar>
+                <CaixaTituloModal>
+                  <TituloModal>A sua consulta foi no consultorio x</TituloModal>
+                </CaixaTituloModal>
+                <CaixaDadosModal>
+                  <EnderecoModal>
+                    Rua Rio Grande do Norte, 77 Santa Efigenia/BeloHorizonte
+                  </EnderecoModal>
+                  <DataModal>Dia xxxx de 2022 às xx:xx</DataModal>
+                </CaixaDadosModal>
+              </CaixaModal>
+            </Modal>
             {ocoridas?.map((value) => (
-              <TouchableOpacity key={value.id}>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalOcorrida(true);
+                }}
+                key={value.id}
+              >
                 <CaixaConsulta>
                   <CaixaData>
                     <ConteudoCaixa fontSize={fontSizeConteudo}>
@@ -158,7 +249,12 @@ function Consultas({ navigation }) {
               </TouchableOpacity>
             ))}
             {naoOcorridas?.map((value) => (
-              <TouchableOpacity key={value.id}>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalNaoOcorrida(true);
+                }}
+                key={value.id}
+              >
                 <CaixaConsulta>
                   <CaixaData>
                     <ConteudoCaixa fontSize={fontSizeConteudo}>
