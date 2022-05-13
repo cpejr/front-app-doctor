@@ -12,3 +12,7 @@ export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
   });
 
 export const getConsultasUsuario = (id) => api.get(`/usuarioconsultas/${id}`);
+
+export const getConsultorioById = (id) => api.get(`/consultorios/${id}`);
+
+export const getEnderecoById = (id) => api.get(`/enderecos/${id}`);

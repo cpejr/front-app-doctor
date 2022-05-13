@@ -55,10 +55,33 @@ export const requisicaoConsultasUsuario = async () => {
           })
           .catch((error) => {
             requisicaoErro(error);
-            return false;
           });
       });
     }
   );
   return resposta;
 };
+
+export const requisicaoConsultorioById = async (id) => {
+  const resposta = await requesterService
+    .getConsultorioById(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return resposta;
+};
+
+export const requisicaoEnderecoById = async (id) => {
+  const resposta = await requesterService
+    .getEnderecoById(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return resposta;
+}

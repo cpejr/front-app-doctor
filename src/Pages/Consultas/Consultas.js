@@ -70,6 +70,14 @@ function Consultas({ navigation }) {
   const [modalOcorrida, setModalOcorrida] = useState(false);
   const [modalNaoOcorrida, setModalNaoOcorrida] = useState(false);
 
+  async function requisicaoEnderecoById(id) {
+    const resposta = await managerService.requisicaoEnderecoById(id);
+    return resposta;
+  }
+  async function requisicaoConsultorioById(id) {
+    const resposta = await managerService.requisicaoConsultorioById(id);
+    return resposta;
+  }
   async function requisicaoConsultasUsuario() {
     setCarregando(true);
     const resposta = await managerService.requisicaoConsultasUsuario();
@@ -96,7 +104,7 @@ function Consultas({ navigation }) {
   var consultasOcorridas = [];
   var consultasNaoOcorridas = [];
 
-  function compararData() {
+  async function compararData() {
     for (var i = 0; i < consultas.length; i++) {
       var dataAtual = new Date();
       var dataConsulta = new Date(consultas[i].data_hora);
@@ -106,7 +114,12 @@ function Consultas({ navigation }) {
       consultas[i].horaConsulta = formatarDataHora(
         consultas[i].data_hora
       ).horaConsulta;
-
+      const consultorio = await requisicaoConsultorioById(
+        consultas[i].id_consultorio
+      );
+      const endereco = await requisicaoEnderecoById(consultorio.id_endereco);
+      consultas[i].nomeConsultorio = consultorio.nome;
+      consultas[i].enderecoConsultorio = endereco;
       if (dataAtual >= dataConsulta) {
         consultasOcorridas.push(consultas[i]);
       }
@@ -143,72 +156,6 @@ function Consultas({ navigation }) {
           </ViewPadrao>
         ) : (
           <ViewPadrao paddingLeft="10px" paddingRight="10px">
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalOcorrida}
-            >
-              <CaixaModal>
-                <CaixaFechar>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setModalOcorrida(false);
-                    }}
-                  >
-                    <Icon name="close" size={tamanhoIcone}></Icon>
-                  </TouchableOpacity>
-                </CaixaFechar>
-                <CaixaTituloModal>
-                  <TituloModal>A sua consulta foi no consultorio x</TituloModal>
-                </CaixaTituloModal>
-                <CaixaDadosModal>
-                  <EnderecoModal>
-                    Rua Rio Grande do Norte, 77 Santa Efigenia/BeloHorizonte
-                  </EnderecoModal>
-                  <DataModal>Dia xxxx de 2022 às xx:xx</DataModal>
-                </CaixaDadosModal>
-                <CaixaAvaliacaoModal>
-                  <Botao
-                    height="40px"
-                    width="70%"
-                    backgroundColor="green"
-                    borderRadius="10px"
-                    borderWidth="1px"
-                    borderColor="#088E0E"
-                  >
-                    <ConteudoBotao fontSize="15px" color="#000000" width="100%">
-                      Avalie a Consulta
-                    </ConteudoBotao>
-                  </Botao>
-                </CaixaAvaliacaoModal>
-              </CaixaModal>
-            </Modal>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalNaoOcorrida}
-            >
-              <CaixaModal>
-                <CaixaFechar>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setModalNaoOcorrida(false);
-                    }}
-                  >
-                    <Icon name="close" size={tamanhoIcone}></Icon>
-                  </TouchableOpacity>
-                </CaixaFechar>
-                <CaixaTituloModal>
-                  <TituloModal>A sua consulta foi no consultorio x</TituloModal>
-                </CaixaTituloModal>
-                <CaixaDadosModal>
-                  <EnderecoModal>
-                    Rua Rio Grande do Norte, 77 Santa Efigenia/BeloHorizonte
-                  </EnderecoModal>
-                  <DataModal>Dia xxxx de 2022 às xx:xx</DataModal>
-                </CaixaDadosModal>
-              </CaixaModal>
-            </Modal>
             {ocoridas?.map((value) => (
               <TouchableOpacity
                 onPress={() => {
@@ -216,6 +163,57 @@ function Consultas({ navigation }) {
                 }}
                 key={value.id}
               >
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalOcorrida}
+                >
+                  <CaixaModal>
+                    <CaixaFechar>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setModalOcorrida(false);
+                        }}
+                      >
+                        <Icon name="close" size={tamanhoIcone}></Icon>
+                      </TouchableOpacity>
+                    </CaixaFechar>
+                    <CaixaTituloModal>
+                      <TituloModal>
+                        A sua consulta foi no {value.nomeConsultorio}
+                      </TituloModal>
+                    </CaixaTituloModal>
+                    <CaixaDadosModal>
+                      <EnderecoModal>
+                        {value.enderecoConsultorio.rua},{" "}
+                        {value.enderecoConsultorio.numero} -{" "}
+                        {value.enderecoConsultorio.bairro}{" "}
+                        {value.enderecoConsultorio.cidade}
+                      </EnderecoModal>
+                      <DataModal>
+                        {value.dataConsulta} às {value.horaConsulta}
+                      </DataModal>
+                    </CaixaDadosModal>
+                    <CaixaAvaliacaoModal>
+                      <Botao
+                        height="40px"
+                        width="70%"
+                        backgroundColor="green"
+                        borderRadius="10px"
+                        borderWidth="1px"
+                        borderColor="#088E0E"
+                      >
+                        <ConteudoBotao
+                          fontSize="15px"
+                          color="#000000"
+                          width="100%"
+                        >
+                          Avalie a Consulta
+                        </ConteudoBotao>
+                      </Botao>
+                    </CaixaAvaliacaoModal>
+                  </CaixaModal>
+                </Modal>
                 <CaixaConsulta>
                   <CaixaData>
                     <ConteudoCaixa fontSize={fontSizeConteudo}>
@@ -255,6 +253,39 @@ function Consultas({ navigation }) {
                 }}
                 key={value.id}
               >
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalNaoOcorrida}
+                >
+                  <CaixaModal>
+                    <CaixaFechar>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setModalNaoOcorrida(false);
+                        }}
+                      >
+                        <Icon name="close" size={tamanhoIcone}></Icon>
+                      </TouchableOpacity>
+                    </CaixaFechar>
+                    <CaixaTituloModal>
+                      <TituloModal>
+                        A sua consulta foi no {value.nomeConsultorio}
+                      </TituloModal>
+                    </CaixaTituloModal>
+                    <CaixaDadosModal>
+                      <EnderecoModal>
+                        {value.enderecoConsultorio.rua},{" "}
+                        {value.enderecoConsultorio.numero} -{" "}
+                        {value.enderecoConsultorio.bairro}{" "}
+                        {value.enderecoConsultorio.cidade}
+                      </EnderecoModal>
+                      <DataModal>
+                        {value.dataConsulta} às {value.horaConsulta}
+                      </DataModal>
+                    </CaixaDadosModal>
+                  </CaixaModal>
+                </Modal>
                 <CaixaConsulta>
                   <CaixaData>
                     <ConteudoCaixa fontSize={fontSizeConteudo}>
