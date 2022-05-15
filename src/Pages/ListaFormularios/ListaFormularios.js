@@ -1,6 +1,7 @@
 import React from "react";
-import { FlatList, ScrollView, TextInput } from "react-native";
+import { FlatList, ScrollView, TextInput, useWindowDimensions } from "react-native";
 import {
+  Scroll,
   Body,
   BarraPesquisa,
   InputPesquisa,
@@ -9,18 +10,19 @@ import {
   FiltroRespondido,
   FiltroNaoRespondido,
   CaixaLista,
+  CaixaItem,
   BotaoForm,
   CaixaNomeUrgencia,
   CaixaUrgenciaEstrela,
   FormNome,
   UrgenciaTexto,
+  CaixaEstrela,
   EstrelaIcon,
   CaixaTipoData,
   TextoTipoData,
 } from "./Styles";
 import Input from "../../styles/Input";
 import searchIcon from "../../assets/searchIcon.png";
-
 const dadosFormulario = [
   {
     id: 1,
@@ -30,6 +32,7 @@ const dadosFormulario = [
     data: "15/05/2002",
   },
 ];
+import Icon from "react-native-vector-icons/Entypo";
 
 // const Formulario = ({ item, onPress }) => (
 //   <CaixaLista>
@@ -50,41 +53,134 @@ const dadosFormulario = [
 // );
 
 function ListaFormularios({ navigation }) {
+  const { width } = useWindowDimensions();
+
+
+  const larguraUrgenciaEstrela = width < 400 ? "42%" : larguraUrgenciaEstrelaMaior;
+  const larguraUrgenciaEstrelaMaior = width < 600 ? "37%" : "20%";
+
   return (
-    <Body>
-      <BarraPesquisa>
-        <InputPesquisa placeholder="Pesquisar no chat" />
-        <IconPesquisa source={searchIcon} />
-      </BarraPesquisa>
+    <Scroll>
+      <Body>
+        <BarraPesquisa>
+          <InputPesquisa placeholder="Pesquisar no chat" />
+          <IconPesquisa source={searchIcon} />
+        </BarraPesquisa>
 
-      <TabView>
-        <FiltroRespondido>Respondido</FiltroRespondido>
-        <FiltroNaoRespondido>Não Respondido</FiltroNaoRespondido>
-      </TabView>
+        <TabView>
+          <FiltroRespondido>Respondido</FiltroRespondido>
+          <FiltroNaoRespondido>Não Respondido</FiltroNaoRespondido>
+        </TabView>
 
-      <CaixaLista>
-    
-      <CaixaNomeUrgencia>
-        <FormNome>Formulário Pré Consulta</FormNome>
-        <CaixaUrgenciaEstrela>
-          <UrgenciaTexto>Urgência</UrgenciaTexto>
-          <EstrelaIcon></EstrelaIcon>
-        </CaixaUrgenciaEstrela>
-      </CaixaNomeUrgencia>
-      <CaixaTipoData>
-        <TextoTipoData>Tipo</TextoTipoData>
-        <TextoTipoData>15/05/2002</TextoTipoData>
-      </CaixaTipoData>
-    
-  </CaixaLista>
-      
+        <CaixaLista>
+          <CaixaItem>
+            <CaixaNomeUrgencia>
+              <FormNome>Formulário Pré Consulta</FormNome>
+              <CaixaUrgenciaEstrela
+              width={larguraUrgenciaEstrela}
+              >
+                <UrgenciaTexto>Urgência</UrgenciaTexto>
+                <CaixaEstrela>
+                  <Icon name="star" size={18} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                </CaixaEstrela>
+              </CaixaUrgenciaEstrela>
+            </CaixaNomeUrgencia>
+            <CaixaTipoData>
+              <TextoTipoData>Tipo</TextoTipoData>
+              <TextoTipoData>15/05/2002</TextoTipoData>
+            </CaixaTipoData>
+          </CaixaItem>
 
-      {/* <FlatList
+          <CaixaItem>
+            <CaixaNomeUrgencia>
+              <FormNome>Formulário Pré Consulta de Sono</FormNome>
+              <CaixaUrgenciaEstrela
+              width={larguraUrgenciaEstrela}
+              >
+                <UrgenciaTexto>Urgência</UrgenciaTexto>
+                <CaixaEstrela>
+                  <Icon name="star" size={18} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                </CaixaEstrela>
+              </CaixaUrgenciaEstrela>
+            </CaixaNomeUrgencia>
+            <CaixaTipoData>
+              <TextoTipoData>Tipo</TextoTipoData>
+              <TextoTipoData>15/05/2002</TextoTipoData>
+            </CaixaTipoData>
+          </CaixaItem>
+
+          <CaixaItem>
+            <CaixaNomeUrgencia>
+              <FormNome>Formulário Pré Consulta de Sono e de Eplepsia na Cabeça</FormNome>
+              <CaixaUrgenciaEstrela
+              width={larguraUrgenciaEstrela}
+              >
+                <UrgenciaTexto>Urgência</UrgenciaTexto>
+                <CaixaEstrela>
+                  <Icon name="star" size={18} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                </CaixaEstrela>
+              </CaixaUrgenciaEstrela>
+            </CaixaNomeUrgencia>
+            <CaixaTipoData>
+              <TextoTipoData>Tipo</TextoTipoData>
+              <TextoTipoData>15/05/2002</TextoTipoData>
+            </CaixaTipoData>
+          </CaixaItem>
+
+        <CaixaItem>
+            <CaixaNomeUrgencia>
+              <FormNome>Formulário Pré Consulta</FormNome>
+              <CaixaUrgenciaEstrela
+              width={larguraUrgenciaEstrela}
+              >
+                <UrgenciaTexto>Urgência</UrgenciaTexto>
+                <CaixaEstrela>
+                  <Icon name="star" size={18} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                </CaixaEstrela>
+              </CaixaUrgenciaEstrela>
+            </CaixaNomeUrgencia>
+            <CaixaTipoData>
+              <TextoTipoData>Tipo</TextoTipoData>
+              <TextoTipoData>15/05/2002</TextoTipoData>
+            </CaixaTipoData>
+          </CaixaItem>
+
+          <CaixaItem>
+            <CaixaNomeUrgencia>
+              <FormNome>Formulário Pré Consulta</FormNome>
+              <CaixaUrgenciaEstrela
+              width={larguraUrgenciaEstrela}
+              >
+                <UrgenciaTexto>Urgência</UrgenciaTexto>
+                <CaixaEstrela>
+                  <Icon name="star" size={18} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                  <Icon name="star-outlined" size={20} color="#434B97" />
+                </CaixaEstrela>
+              </CaixaUrgenciaEstrela>
+            </CaixaNomeUrgencia>
+            <CaixaTipoData>
+              <TextoTipoData>Tipo</TextoTipoData>
+              <TextoTipoData>15/05/2002</TextoTipoData>
+            </CaixaTipoData>
+          </CaixaItem>
+          </CaixaLista>
+
+        {/* <FlatList
         data={dadosFormulario}
         renderItem={Formulario}
         keyExtractor={(item) => item.id}
       /> */}
-    </Body>
+      </Body>
+    </Scroll>
   );
 }
 

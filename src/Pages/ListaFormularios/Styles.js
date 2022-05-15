@@ -1,5 +1,11 @@
 import styled from "styled-components/native";
 
+export const Scroll = styled.ScrollView`
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+`;
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
@@ -12,11 +18,11 @@ export const Body = styled.View`
 `;
 
 export const BarraPesquisa = styled.View`
-display:flex;
-flex-direction: row;
-align-items: center;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
   width: 100%;
-  height: 40px;
+  height: 45px;
   background-color: #EDEDED;
   border-radius: 5px;
   padding-left: 10px;
@@ -35,6 +41,7 @@ width:90%;
 export const IconPesquisa = styled.Image`
 width:23px;
 height:23px;
+margin-right:1px;
 `;
 
 export const TabView = styled.View`
@@ -47,11 +54,6 @@ align-items: flex-end;
 height: 25px;
 border-bottom-width: 1px;
 border-color: #C6C6C6;
-`
-
-export const Linha = styled.View`
-background-color: aqua;
-height: 100%;
 `
 
 export const FiltroRespondido = styled.Text`
@@ -79,26 +81,36 @@ flex-direction: column;
 width:100%;
 `
 
+export const CaixaItem = styled.View`
+border-bottom-width: 1px;
+border-color: #C6C6C6;
+`
+
 export const CaixaNomeUrgencia = styled.View`
 display:flex;
 align-items: flex-start;
 flex-direction: row;
 justify-content: space-between;
 width:100%;
-height:50px;
+margin-bottom:15px;
 margin-top:20px;
 padding-right: 10px;
 `;
 
-export const CaixaUrgenciaEstrela = styled.View`
-
-`;
-
 export const FormNome = styled.Text`
 text-decoration: underline;
+width: 58%;
 font-size:17px;
 font-weight: 700;
 color:#0A0E3C;
+`;
+
+export const CaixaUrgenciaEstrela = styled.View`
+display:flex;
+justify-content:space-between;
+align-items: center;
+width:${(props) => props.width};
+flex-direction: row;
 `;
 
 export const UrgenciaTexto = styled.Text`
@@ -107,8 +119,14 @@ font-weight: 600;
 color:#434B97;
 `;
 
-export const EstrelaIcon = styled.Image`
+export const CaixaEstrela = styled.View`
+display: flex;
+flex-direction: row;
+`
 
+export const EstrelaIcon = styled.Image`
+width:18px;
+height:18px;
 `;
 
 export const CaixaTipoData = styled.View`
@@ -118,7 +136,7 @@ flex-direction: row;
 justify-content: space-between;
 height:60px;
 padding-left:5%;
-width:88%
+width:88%;
 `;
 
 export const TextoTipoData = styled.Text`
