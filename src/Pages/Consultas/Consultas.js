@@ -71,6 +71,10 @@ function Consultas({ navigation }) {
   const [carregando, setCarregando] = useState(false);
   const [modalOcorrida, setModalOcorrida] = useState(false);
   const [modalNaoOcorrida, setModalNaoOcorrida] = useState(false);
+  const [nomeModal, setNomeModal] = useState("");
+  const [dataModal, setDataModal] = useState("");
+  const [horaModal, setHoraModal] = useState("");
+  const [enderecoModal, setEnderecoModal] = useState({});
 
   async function requisicaoEnderecoById(id) {
     const resposta = await managerService.requisicaoEnderecoById(id);
@@ -143,6 +147,21 @@ function Consultas({ navigation }) {
     compararData();
   }, [consultas]);
 
+  function getDadosOcorridas(consulta) {
+    setNomeModal(consulta.nomeConsultorio);
+    setDataModal(consulta.dataConsulta);
+    setHoraModal(consulta.horaConsulta);
+    setEnderecoModal(consulta.enderecoConsultorio);
+    setModalOcorrida(true);
+  }
+  function getDadosNaoOcorridas(consulta) {
+    setNomeModal(consulta.nomeConsultorio);
+    setDataModal(consulta.dataConsulta);
+    setHoraModal(consulta.horaConsulta);
+    setEnderecoModal(consulta.enderecoConsultorio);
+    setModalNaoOcorrida(true);
+  }
+
   return (
     <ScrollView>
       <Body
@@ -163,7 +182,7 @@ function Consultas({ navigation }) {
             {ocoridas?.map((value) => (
               <TouchableOpacity
                 onPress={() => {
-                  setModalOcorrida(true);
+                  getDadosOcorridas(value);
                 }}
                 key={value.id}
               >
@@ -184,18 +203,16 @@ function Consultas({ navigation }) {
                     </CaixaFechar>
                     <CaixaTituloModal>
                       <TituloModal>
-                        A sua consulta foi no {value.nomeConsultorio}
+                        A sua consulta foi no {nomeModal}
                       </TituloModal>
                     </CaixaTituloModal>
                     <CaixaDadosModal>
                       <EnderecoModal>
-                        {value.enderecoConsultorio.rua},{" "}
-                        {value.enderecoConsultorio.numero} -{" "}
-                        {value.enderecoConsultorio.bairro}{" "}
-                        {value.enderecoConsultorio.cidade}
+                        {enderecoModal.rua}, {enderecoModal.numero} -{" "}
+                        {enderecoModal.bairro} {enderecoModal.cidade}
                       </EnderecoModal>
                       <DataModal>
-                        {value.dataConsulta} às {value.horaConsulta}
+                        {dataModal} às {horaModal}
                       </DataModal>
                     </CaixaDadosModal>
                     <CaixaAvaliacaoModal>
@@ -253,7 +270,7 @@ function Consultas({ navigation }) {
             {naoOcorridas?.map((value) => (
               <TouchableOpacity
                 onPress={() => {
-                  setModalNaoOcorrida(true);
+                  getDadosNaoOcorridas(value);
                 }}
                 key={value.id}
               >
@@ -274,18 +291,16 @@ function Consultas({ navigation }) {
                     </CaixaFechar>
                     <CaixaTituloModal>
                       <TituloModal>
-                        A sua consulta será no {value.nomeConsultorio}
+                        A sua consulta será no {nomeModal}
                       </TituloModal>
                     </CaixaTituloModal>
                     <CaixaDadosModal>
                       <EnderecoModal>
-                        {value.enderecoConsultorio.rua},{" "}
-                        {value.enderecoConsultorio.numero} -{" "}
-                        {value.enderecoConsultorio.bairro}{" "}
-                        {value.enderecoConsultorio.cidade}
+                        {enderecoModal.rua}, {enderecoModal.numero} -{" "}
+                        {enderecoModal.bairro} {enderecoModal.cidade}
                       </EnderecoModal>
                       <DataModal>
-                        {value.dataConsulta} às {value.horaConsulta}
+                        {dataModal} às {horaModal}
                       </DataModal>
                     </CaixaDadosModal>
                   </CaixaModal>
