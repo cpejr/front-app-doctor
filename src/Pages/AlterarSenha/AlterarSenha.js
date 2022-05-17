@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { Dimensions } from "react-native";
 
+import * as managerService from "../../services/ManagerService/managerService";
+
+import { ActivityIndicator, Colors } from "react-native-paper";
+
 import {
   Body,
   CaixaBotao,
@@ -22,6 +26,42 @@ function AlterarSenha({ navigation }) {
   const [senhaAtual, setSenhaAtual] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarNovaSenha, setConfirmarNovaSenha] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  async function requisicaoVerificarSenha() {
+    if (!senhaAtual) {
+      alert("Preencha os campos corretamente!");
+    } else {
+      setCarregando(true);
+      const resposta = await managerService.requisicaoVerificarSenha(
+        senhaAtual
+      );
+      if (resposta) {
+        setConfirmado(false);
+        alert("As senhas conferem!");
+      } else {
+        alert("As senhas não conferem");
+        navigation.push("AlterarSenha");
+      }
+      setCarregando(false);
+    }
+  }
+  async function requicaoAlterarSenha() {
+    if (!novaSenha || !confirmarNovaSenha) {
+      alert("Preencha os campos corretamente!");
+    } else {
+      if (novaSenha == confirmarNovaSenha) {
+        setCarregando(true);
+        await managerService.requisicaoAlterarSenha(novaSenha);
+        setCarregando(false);
+        alert("Senha atualizada com sucesso!");
+        navigation.navigate("Perfil");
+        setConfirmado(true);
+      } else {
+        alert("As senhas não conferem!");
+      }
+    }
+  }
 
   return (
     <ScrollView>
@@ -38,6 +78,8 @@ function AlterarSenha({ navigation }) {
               <Input
                 placeholder="Senha Atual:"
                 onChangeText={setSenhaAtual}
+                type="password"
+                secureTextEntry
               ></Input>
               <CaixaBotao>
                 <Botao
@@ -46,7 +88,7 @@ function AlterarSenha({ navigation }) {
                   backgroundColor="#ffffff"
                   borderRadius="3"
                   borderColor="#DD0D0D"
-                  borderWidth="1"
+                  borderWidth="1px"
                   onPress={() => navigation.navigate("Perfil")}
                 >
                   <ConteudoBotao width="100%" fontSize="15px" color="#000000">
@@ -59,12 +101,16 @@ function AlterarSenha({ navigation }) {
                   backgroundColor="#434B97"
                   borderRadius="3"
                   borderColor="#151B57"
-                  borderWidth="1"
-                  onPress={() => setConfirmado(false)}
+                  borderWidth="1px"
+                  onPress={requisicaoVerificarSenha}
                 >
-                  <ConteudoBotao width="100%" fontSize="15px" color="#ffffff">
-                    CONFIRMAR
-                  </ConteudoBotao>
+                  {carregando ? (
+                    <ActivityIndicator animating={true} color={Colors.white} />
+                  ) : (
+                    <ConteudoBotao width="100%" fontSize="15px" color="#ffffff">
+                      CONFIRMAR
+                    </ConteudoBotao>
+                  )}
                 </Botao>
               </CaixaBotao>
             </CaixaInputs>
@@ -73,11 +119,21 @@ function AlterarSenha({ navigation }) {
               <CaixaTitulo>
                 <Titulo fontSize="15px">Digite sua nova senha:</Titulo>
               </CaixaTitulo>
-              <Input placeholder="Nova senha:"></Input>
+              <Input
+                placeholder="Nova senha:"
+                onChangeText={setNovaSenha}
+                type="password"
+                secureTextEntry
+              ></Input>
               <CaixaTitulo>
                 <Titulo fontSize="15px">Confirme sua nova senha:</Titulo>
               </CaixaTitulo>
-              <Input placeholder="Confirmando sua nova senha:"></Input>
+              <Input
+                placeholder="Confirmando sua nova senha:"
+                onChangeText={setConfirmarNovaSenha}
+                type="password"
+                secureTextEntry
+              ></Input>
               <CaixaBotao>
                 <Botao
                   width="42%"
@@ -85,7 +141,7 @@ function AlterarSenha({ navigation }) {
                   backgroundColor="#ffffff"
                   borderRadius="3"
                   borderColor="#DD0D0D"
-                  borderWidth="1"
+                  borderWidth="1px"
                   onPress={() => setConfirmado(true)}
                 >
                   <ConteudoBotao width="100%" fontSize="15px" color="#000000">
@@ -98,11 +154,16 @@ function AlterarSenha({ navigation }) {
                   backgroundColor="#434B97"
                   borderRadius="3"
                   borderColor="#151B57"
-                  borderWidth="1"
+                  borderWidth="1px"
+                  onPress={requicaoAlterarSenha}
                 >
-                  <ConteudoBotao width="100%" fontSize="15px" color="#ffffff">
-                    CONFIRMAR
-                  </ConteudoBotao>
+                  {carregando ? (
+                    <ActivityIndicator animating={true} color={Colors.white} />
+                  ) : (
+                    <ConteudoBotao width="100%" fontSize="15px" color="#ffffff">
+                      CONFIRMAR
+                    </ConteudoBotao>
+                  )}
                 </Botao>
               </CaixaBotao>
             </CaixaInputs>
