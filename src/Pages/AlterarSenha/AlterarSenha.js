@@ -19,6 +19,9 @@ function AlterarSenha({ navigation }) {
   const heightTela = `${Dimensions.get("window").height}px`;
 
   const [confirmado, setConfirmado] = useState(true);
+  const [senhaAtual, setSenhaAtual] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
+  const [confirmarNovaSenha, setConfirmarNovaSenha] = useState("");
 
   return (
     <ScrollView>
@@ -32,7 +35,10 @@ function AlterarSenha({ navigation }) {
               <CaixaTitulo>
                 <Titulo fontSize="15px">Comfirme sua senha atual:</Titulo>
               </CaixaTitulo>
-              <Input placeholder="Senha Atual:"></Input>
+              <Input
+                placeholder="Senha Atual:"
+                onChangeText={setSenhaAtual}
+              ></Input>
               <CaixaBotao>
                 <Botao
                   width="42%"
