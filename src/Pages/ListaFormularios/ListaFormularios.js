@@ -56,8 +56,12 @@ function ListaFormularios({ navigation }) {
   const { width } = useWindowDimensions();
 
 
-  const larguraUrgenciaEstrela = width < 400 ? "42%" : larguraUrgenciaEstrelaMaior;
-  const larguraUrgenciaEstrelaMaior = width < 600 ? "37%" : "20%";
+  const larguraUrgenciaEstrelaMaior = width < 600 ? "26%" : "20%";
+  const larguraUrgenciaEstrelaMedio = width < 550 ? "37%" : larguraUrgenciaEstrelaMaior;
+  const larguraUrgenciaEstrela = width < 400 ? "39%" : larguraUrgenciaEstrelaMedio;
+  //responsividade tablet retrato
+  const larguraCaixaTipoData = width < 700 ? "88%" : "95%"
+
 
   return (
     <Scroll>
@@ -87,7 +91,9 @@ function ListaFormularios({ navigation }) {
                 </CaixaEstrela>
               </CaixaUrgenciaEstrela>
             </CaixaNomeUrgencia>
-            <CaixaTipoData>
+            <CaixaTipoData
+            width={larguraCaixaTipoData}
+            >
               <TextoTipoData>Tipo</TextoTipoData>
               <TextoTipoData>15/05/2002</TextoTipoData>
             </CaixaTipoData>
@@ -107,7 +113,9 @@ function ListaFormularios({ navigation }) {
                 </CaixaEstrela>
               </CaixaUrgenciaEstrela>
             </CaixaNomeUrgencia>
-            <CaixaTipoData>
+            <CaixaTipoData
+            width={larguraCaixaTipoData}
+            >
               <TextoTipoData>Tipo</TextoTipoData>
               <TextoTipoData>15/05/2002</TextoTipoData>
             </CaixaTipoData>
@@ -127,7 +135,9 @@ function ListaFormularios({ navigation }) {
                 </CaixaEstrela>
               </CaixaUrgenciaEstrela>
             </CaixaNomeUrgencia>
-            <CaixaTipoData>
+            <CaixaTipoData
+            width={larguraCaixaTipoData}
+            >
               <TextoTipoData>Tipo</TextoTipoData>
               <TextoTipoData>15/05/2002</TextoTipoData>
             </CaixaTipoData>
@@ -147,7 +157,9 @@ function ListaFormularios({ navigation }) {
                 </CaixaEstrela>
               </CaixaUrgenciaEstrela>
             </CaixaNomeUrgencia>
-            <CaixaTipoData>
+            <CaixaTipoData
+            width={larguraCaixaTipoData}
+            >
               <TextoTipoData>Tipo</TextoTipoData>
               <TextoTipoData>15/05/2002</TextoTipoData>
             </CaixaTipoData>
@@ -167,7 +179,9 @@ function ListaFormularios({ navigation }) {
                 </CaixaEstrela>
               </CaixaUrgenciaEstrela>
             </CaixaNomeUrgencia>
-            <CaixaTipoData>
+            <CaixaTipoData
+            width={larguraCaixaTipoData}
+            >
               <TextoTipoData>Tipo</TextoTipoData>
               <TextoTipoData>15/05/2002</TextoTipoData>
             </CaixaTipoData>

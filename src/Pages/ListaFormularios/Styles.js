@@ -36,12 +36,14 @@ export const InputPesquisa = styled.TextInput`
 height:100%;
 font-size: 17px;
 width:90%;
+background-color: green;
 `;
 
 export const IconPesquisa = styled.Image`
 width:23px;
 height:23px;
 margin-right:1px;
+background-color: green;
 `;
 
 export const TabView = styled.View`
@@ -54,19 +56,21 @@ align-items: flex-end;
 height: 25px;
 border-bottom-width: 1px;
 border-color: #C6C6C6;
+
 `
 
 export const FiltroRespondido = styled.Text`
 height: 100%;
 border-bottom-width: 1.5px;
-color:#0A0E3C
+color:#0A0E3C;
+background-color: green;
 `
 
 export const FiltroNaoRespondido = styled.Text`
 height: 100%;
-/* border-bottom-width: 1.5px; */
 margin-left: 12px;
-color:#8D8D8D
+color:#8D8D8D;
+background-color: green;
 `
 
 export const CaixaLista = styled.View`
@@ -95,6 +99,7 @@ width:100%;
 margin-bottom:15px;
 margin-top:20px;
 padding-right: 10px;
+
 `;
 
 export const FormNome = styled.Text`
@@ -103,6 +108,8 @@ width: 58%;
 font-size:17px;
 font-weight: 700;
 color:#0A0E3C;
+background-color: green;
+
 `;
 
 export const CaixaUrgenciaEstrela = styled.View`
@@ -122,6 +129,7 @@ color:#434B97;
 export const CaixaEstrela = styled.View`
 display: flex;
 flex-direction: row;
+background-color: green;
 `
 
 export const EstrelaIcon = styled.Image`
@@ -136,14 +144,14 @@ flex-direction: row;
 justify-content: space-between;
 height:60px;
 padding-left:5%;
-width:88%;
+width: ${(props) => props.width};
 `;
 
 export const TextoTipoData = styled.Text`
 font-size:16px;
 font-weight: 600;
-color:#434B97
-
+color:#434B97;
+background-color: green;
 `;
 
 
