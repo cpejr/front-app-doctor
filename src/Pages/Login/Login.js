@@ -5,8 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import Input from "./../../styles/Input";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import requisicaoErro from "../../utils/HttpErros";
+import * as managerService from "../../services/ManagerService/managerService";
 import { useWindowDimensions, ScrollView } from "react-native";
 import {
   Body,
@@ -30,21 +29,9 @@ function Login({ navigation }) {
     if (email?.length === 0 || senha?.length === 0) {
       alert("Preencha os campos email e senha!");
     } else {
-      
-        api.post("/login", {
-          email,
-          senha
-        }).then((res) => {
-        AsyncStorage.setItem("@AirBnbApp:token", res.data.token);
-        AsyncStorage.setItem("@AirBnbApp:email", res.data.email);
-        alert("Bem vindo!")
-        navigation.navigate("Home");
-        }
-        ).catch((error) => {
-          setEmail(null);
-          setSenha(null)
-          requisicaoErro(error, () => navigation.navigate("Home"))
-        });
+      await managerService.requisicaoLogin(email, senha);
+      alert("Bem vindo!");
+      navigation.navigate("Home");
     }
   }
 

@@ -1,5 +1,20 @@
 import * as requesterService from "../RequesterService/requesterService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import requisicaoErro from "../../utils/HttpErros";
+
+export const requisicaoLogin = async (email, senha) => {
+  await requesterService
+    .LoginUsuario(email, senha)
+    .then((res) => {
+      AsyncStorage.setItem("@AirBnbApp:token", res.data.token);
+      AsyncStorage.setItem("@AirBnbApp:email", res.data.email);
+    })
+    .catch((error) => {
+      setEmail(null);
+      setSenha(null);
+      requisicaoErro(error);
+    });
+};
 
 export const GetDadosUsuario = async () => {
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
