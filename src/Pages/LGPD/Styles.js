@@ -11,13 +11,14 @@ export const Body = styled.View`
 
 export const Titulo = styled.Text`
   font-family: ${(props) => props.fontFamily};
-  font-size: 30px;
+  font-size: 28px;
   color: #838ad0;
+  text-align: center;
 `;
 
 export const Subtitulo = styled.Text`
   font-family: ${(props) => props.fontFamily};
-  margin-top: 2%;
+  margin-top: 3%;
   text-align: center;
   font-size: 20px;
   color: #717171;
@@ -25,7 +26,7 @@ export const Subtitulo = styled.Text`
 
 export const TituloPrimeiroTopico = styled.Text`
   font-family: ${(props) => props.fontFamily};
-  margin-top: 2%;
+  margin-top: 3%;
   font-size: 25px;
   color: #838ad0;
   align-self: flex-start;
@@ -33,7 +34,7 @@ export const TituloPrimeiroTopico = styled.Text`
 
 export const TextoPrimeiroTopico = styled.Text`
   font-family: ${(props) => props.fontFamily};
-  margin-top: 2%;
+  margin-top: 3%;
   font-size: 20px;
   text-align: justify;
   color: #8A8181;
