@@ -45,7 +45,10 @@ function Home({ navigation }) {
         title="Go to AlterarSenha"
         onPress={() => navigation.navigate("AlterarSenha")}
       />
-
+      <Button
+        title="Go to LGPD"
+        onPress={() => navigation.navigate("LGPD")}
+      />
     </View>
   );
 }
