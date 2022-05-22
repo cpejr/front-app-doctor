@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useWindowDimensions, ScrollView } from "react-native";
 import Botao from "../../styles/Botao";
-import logoGuilherme from "./../../assets/logoGuilherme.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //import AsyncStorage from "react-native";
 
@@ -25,6 +24,7 @@ import {
   CaixaBotoes,
   ExcluirConta,
 } from "./Styles";
+import { Cores } from "../../variaveis";
 
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -104,10 +104,10 @@ function Perfil({ navigation }) {
           <Botao
             width={larguraBotoes}
             height="30px"
-            //backgroundColor="#A7ADE8" -- Estatico
+            //backgroundColor={Cores.lilas[3]} -- Estatico
             backgroundColor="green"
             borderRadius="3px"
-            borderColor="#353964"
+            borderColor={Cores.lilas[2]}
             borderWidth="2px"
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
             onPress={() => navigation.navigate("Emergencia")}
@@ -119,7 +119,7 @@ function Perfil({ navigation }) {
         </CaixaBotao>
         <CaixaViews>
           <ViewFotoNome width={larguraViews}>
-            <Foto source={logoGuilherme} />
+            <Foto />
             <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
             <CaixaDataCpf>
               <CaixaNascidoData>
@@ -151,10 +151,10 @@ function Perfil({ navigation }) {
             <Botao
               width={larguraBotoes}
               height="30px"
-              //backgroundColor="#A7ADE8" -- Estatico
+              //backgroundColor={Cores.lilas[3]} -- Estatico
               backgroundColor="green"
               borderRadius="3px"
-              borderColor="#353964"
+              borderColor={Cores.lilas[2]}
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
               onPress={() => navigation.navigate("AlterarDados")}
@@ -166,10 +166,10 @@ function Perfil({ navigation }) {
             <Botao
               width={larguraBotoes}
               height="30px"
-              //backgroundColor="#A7ADE8" -- Estatico
+              //backgroundColor={Cores.lilas[3]} -- Estatico
               backgroundColor="green"
               borderRadius="3px"
-              borderColor="#353964"
+              borderColor={Cores.lilas[2]}
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
               onPress={() => navigation.navigate("AlterarSenha")}

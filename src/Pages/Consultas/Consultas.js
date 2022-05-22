@@ -15,33 +15,34 @@ import {
   CaixaBotao,
   IconeBotao,
 } from "./Styles";
-import ViewPadrao from "../../styles/ViewPadrao";
+// import ViewPadrao from "../../styles/ViewPadrao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import botaoIcone from "./../../assets/botaoIcone.png";
 import iconeAvaliDesabilitado from "./../../assets/iconeAvaliDesabilitado.png";
 import iconeAvaliHabilitado from "./../../assets/iconeAvaliHabilitado.png";
 import iconeLocal from "./../../assets/iconeLocal.png";
+import { Cores } from "../../variaveis";
 
 import { Dimensions } from "react-native";
 
 function Consultas({ navigation }) {
-  const { width } = useWindowDimensions();
+  // const { width } = useWindowDimensions();
 
-  //responsividade paisagem
-  const paddingBodyMaior = width < 600 ? "5%" : "10%";
-  const larguraBotaoMaior = width < 600 ? "50%" : "40%";
-  const fontSizeMaior = width < 600 ? "12px" : "15px";
-  //responsividade aparelhos
-  const paddingBody = width < 330 ? "1.5%" : paddingBodyMaior;
-  const larguraBotao = width < 330 ? "60%" : larguraBotaoMaior;
-  const borderWidthCaixaNome = width < 330 ? "0px" : "2.5px";
-  const fontSizeConteudo = width < 330 ? "11px" : fontSizeMaior;
+  // //responsividade paisagem
+  // const paddingBodyMaior = width < 600 ? "5%" : "10%";
+  // const larguraBotaoMaior = width < 600 ? "50%" : "40%";
+  // const fontSizeMaior = width < 600 ? "12px" : "15px";
+  // //responsividade aparelhos
+  // const paddingBody = width < 330 ? "1.5%" : paddingBodyMaior;
+  // const larguraBotao = width < 330 ? "60%" : larguraBotaoMaior;
+  // const borderWidthCaixaNome = width < 330 ? "0px" : "2.5px";
+  // const fontSizeConteudo = width < 330 ? "11px" : fontSizeMaior;
 
-  const heightTela = `${Dimensions.get("window").height}px`;
+  // const heightTela = `${Dimensions.get("window").height}px`;
 
   return (
     <ScrollView>
-      <Body
+      {/* <Body
         paddingLeft={paddingBody}
         paddingRight={paddingBody}
         height={heightTela}
@@ -107,7 +108,7 @@ function Consultas({ navigation }) {
           >
             <ConteudoBotao
               fontSize={fontSizeConteudo}
-              color="#151B57"
+              color={Cores.azul}
               width="90%"
             >
               Marcar Nova Consulta
@@ -115,7 +116,7 @@ function Consultas({ navigation }) {
             <IconeBotao source={botaoIcone} />
           </CaixaBotao>
         </ViewBotao>
-      </Body>
+      </Body> */}
     </ScrollView>
   );
 }
