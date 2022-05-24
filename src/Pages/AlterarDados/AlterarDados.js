@@ -12,96 +12,96 @@ import {
   CaixaBotoes,
 } from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import * as managerService from "../../service/ManagerService/managerService";
-import {Cores} from "../../variaveis"
+import * as managerService from "../../services/ManagerService/managerService";
+import { Cores } from "../../variaveis"
 
 function AlterarDados({ navigation }) {
-  // const [usuario, setUsuario] = useState({});
-  // const [endereco, setEndereco] = useState({});
-  // const [telefone, setTelefone] = useState("");
-  // const [cpf, setCpf] = useState("");
-  // const [complemento, setComplemento] = useState("");
-  // const [dataNascimento, setDataNascimento] = useState("");
-  // const [numero, setNumero] = useState("");
+  const [usuario, setUsuario] = useState({});
+  const [endereco, setEndereco] = useState({});
+  const [telefone, setTelefone] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [numero, setNumero] = useState("");
 
-  // const [estado, setEstado] = useState({});
-  // const [novoEndereco, setNovoEndereco] = useState({});
+  const [estado, setEstado] = useState({});
+  const [novoEndereco, setNovoEndereco] = useState({});
 
-  // const [cpfMasked, setCpfMasked] = useState("");
-  // const [dataMasked, setDataMasked] = useState("");
-  // const [telMasked, setTelMasked] = useState("");
+  const [cpfMasked, setCpfMasked] = useState("");
+  const [dataMasked, setDataMasked] = useState("");
+  const [telMasked, setTelMasked] = useState("");
 
-  // async function pegandoDados() {
-  //   const email = await AsyncStorage.getItem("@AirBnbApp:email");
-  //   const resposta = await managerService.GetDadosUsuario(email);
-  //   setUsuario(resposta.dadosUsuario);
-  //   setTelefone(resposta.dadosUsuario.telefone);
-  //   setCpf(resposta.dadosUsuario.cpf);
-  //   setDataNascimento(resposta.dadosUsuario.data_nascimento);
-  //   setEndereco(resposta.dadosEndereco);
-  //   setComplemento(resposta.dadosEndereco.complemento);
-  //   setNumero(resposta.dadosEndereco.numero + " ");
-  // }
+  async function pegandoDados() {
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    const resposta = await managerService.GetDadosUsuario(email);
+    setUsuario(resposta.dadosUsuario);
+    setTelefone(resposta.dadosUsuario.telefone);
+    setCpf(resposta.dadosUsuario.cpf);
+    setDataNascimento(resposta.dadosUsuario.data_nascimento);
+    setEndereco(resposta.dadosEndereco);
+    setComplemento(resposta.dadosEndereco.complemento);
+    setNumero(resposta.dadosEndereco.numero + " ");
+  }
 
-  // useEffect(() => {
-  //   setCpfMasked(
-  //     cpf.slice(+0, -8) +
-  //       "." +
-  //       cpf.slice(+3, -5) +
-  //       "." +
-  //       cpf.slice(+6, -2) +
-  //       "-" +
-  //       cpf.slice(-2)
-  //   );
-  // }, [cpf]);
-  // useEffect(() => {
-  //   setTelMasked(
-  //     "(" +
-  //       telefone.slice(0, -9) +
-  //       ")" +
-  //       telefone.slice(2, -4) +
-  //       "-" +
-  //       telefone.slice(-4)
-  //   );
-  // }, [telefone]);
-  // useEffect(() => {
-  //   setDataMasked(
-  //     dataNascimento.slice(8, -14) +
-  //       "/" +
-  //       dataNascimento.slice(5, -17) +
-  //       "/" +
-  //       dataNascimento.slice(0, -20)
-  //   );
-  // }, [dataNascimento]);
+  useEffect(() => {
+    setCpfMasked(
+      cpf.slice(+0, -8) +
+        "." +
+        cpf.slice(+3, -5) +
+        "." +
+        cpf.slice(+6, -2) +
+        "-" +
+        cpf.slice(-2)
+    );
+  }, [cpf]);
+  useEffect(() => {
+    setTelMasked(
+      "(" +
+        telefone.slice(0, -9) +
+        ")" +
+        telefone.slice(2, -4) +
+        "-" +
+        telefone.slice(-4)
+    );
+  }, [telefone]);
+  useEffect(() => {
+    setDataMasked(
+      dataNascimento.slice(8, -14) +
+        "/" +
+        dataNascimento.slice(5, -17) +
+        "/" +
+        dataNascimento.slice(0, -20)
+    );
+  }, [dataNascimento]);
 
-  // async function atualizarDados() {
-  //   await managerService.UpdateDadosUsuario(
-  //     usuario.id,
-  //     endereco.id,
-  //     novoEndereco,
-  //     estado
-  //   );
-  //   navigation.navigate("Perfil");
-  // }
+  async function atualizarDados() {
+    await managerService.UpdateDadosUsuario(
+      usuario.id,
+      endereco.id,
+      novoEndereco,
+      estado
+    );
+    navigation.navigate("Perfil");
+  }
 
-  // function preenchendoDados(identificador, valor) {
-  //   setEstado({ ...estado, [identificador]: valor });
-  // }
+  function preenchendoDados(identificador, valor) {
+    setEstado({ ...estado, [identificador]: valor });
+  }
 
-  // function preenchendoEndereco(identificador, valor) {
-  //   setNovoEndereco({ ...novoEndereco, [identificador]: valor });
-  // }
+  function preenchendoEndereco(identificador, valor) {
+    setNovoEndereco({ ...novoEndereco, [identificador]: valor });
+  }
 
-  // useEffect(() => {
-  //   pegandoDados();
-  // }, []);
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
-  // const { width } = useWindowDimensions();
-  // const tamanhoInputs = width < 400 ? "85%" : "80%";
-  // const tamanhoFonte = width > 500 ? "18px" : "11px";
+  const { width } = useWindowDimensions();
+  const tamanhoInputs = width < 400 ? "85%" : "80%";
+  const tamanhoFonte = width > 500 ? "18px" : "11px";
   return (
     <ScrollView>
-      {/* <Body>
+      <Body>
         <CaixaAlterarDados>
           <CaixaTitulo>
             <Titulo>Alterar Dados:</Titulo>
@@ -269,7 +269,7 @@ function AlterarDados({ navigation }) {
             <Botao
               width="40%"
               height="40px"
-              backgroundColor={Cores.lis[1]}
+              backgroundColor={Cores.lilas[1]}
               borderRadius="4px"
               borderColor={Cores.azul}
               borderWidth="3px"
@@ -286,7 +286,7 @@ function AlterarDados({ navigation }) {
             </Botao>
           </CaixaBotoes>
         </CaixaAlterarDados>
-      </Body> */}
+      </Body>
     </ScrollView>
   );
 }
