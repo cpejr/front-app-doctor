@@ -1,7 +1,3 @@
-export const FontWeight = {
-
-};
-
 export const Cores = {
   cinza: {
     // 1: "#807D7D",
@@ -33,8 +29,3 @@ export const Cores = {
   // amarelo: "#fdf1d1",
 };
 
-export const Fontes = {
-  roboto: "Roboto, sans-serif",
-  barlow: "Barlow, sans-serif",
-
-};
