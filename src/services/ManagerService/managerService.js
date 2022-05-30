@@ -1,5 +1,6 @@
 import * as requesterService from "../RequesterService/requesterService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import requisicaoErro from "../../utils/HttpErros";
 
 export const GetDadosUsuario = async (emailUrl) => {
   let dadosUsuario = {};
