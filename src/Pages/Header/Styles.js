@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { Cores } from "../../variaveis"
 
 export const Corpo = styled.View`
   display: flex;
@@ -7,17 +8,17 @@ export const Corpo = styled.View`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #151B57;
+  background-color: ${Cores.azul};
 `;
 export const Botaoo = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #151B57;
+  background-color: ${Cores.azul};
   border-style: solid;
   border-radius: 25px;
-  border: #000000;
+  border: ${Cores.preto};
   border-width: 0px;
   width: 50px;
   height: 50px;
@@ -38,7 +39,9 @@ export const Perfil = styled.View`
   height: 85%;
   border-style: solid;
   border-radius: 25px;
-  border: #000000;
+  border: ${Cores.preto};
   border-width: 0px;
-  background-color: green; /* background-color: #c4c4c4; */
+  background-color: green;
+  /*background-color: ${Cores.cinza[3]};*/
+
 `;

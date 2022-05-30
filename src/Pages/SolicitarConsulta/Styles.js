@@ -1,10 +1,11 @@
 import styled from "styled-components/native"; 
+import {Cores} from "../../variaveis"
  
 export const Body = styled.View` 
   flex:1;
   align-items: center; 
   width: 100%; 
-  background-color: #ffffff;
+  background-color: ${Cores.branco};
   height:${(props) => props.height};
 `; 
 
@@ -27,13 +28,13 @@ width:28px;
 
 export const Titulo = styled.Text` 
   font-size: ${(props) => props.fontSize};
-  color: #0A0E3C;
+  color: ${Cores.azulEscuro};
   font-weight: 600;
   width:81%;
 `; 
 
 export const ConteudoView = styled.Text` 
-   color: #0A0E3C;
+   color: ${Cores.azulEscuro};
    font-size: ${(props) => props.fontSize};
    width:94%;
    font-weight: 300;
@@ -59,10 +60,10 @@ export const Botao = styled.TouchableOpacity`
   height: 100%; 
   width: ${(props) => props.width};
   overflow: hidden; 
-  background-color: #FFFFFF; 
+  background-color: ${Cores.branco}; 
   border-style: solid; 
   border-radius: 3px; 
-  border-color: #000000; 
+  border-color: ${Cores.preto}; 
   border-width: 1px; 
 `; 
 
