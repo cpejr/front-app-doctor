@@ -108,6 +108,7 @@ function Cadastro({ navigation }) {
   const larguraCaixaTituloMaior = width < 600 ? "50%" : "60%";
   const larguraTituloMaior = width < 600 ? "50%" : "60%";
   //responsividade aparelhos
+  const margemSuperior = height < 200 ? "5px" : "100px";
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const larguraCaixaTitulo = width < 400 ? "70%" : larguraCaixaTituloMaior;
   const larguraTitulo = width < 300 ? "45%" : larguraTituloMaior;
@@ -115,7 +116,7 @@ function Cadastro({ navigation }) {
   return (
     <ScrollView>
       <Body>
-        <CaixaTitulo width={larguraCaixaTitulo}>
+        <CaixaTitulo marginTop={margemSuperior} width={larguraCaixaTitulo}>
           <Logo source={logoGuilherme} />
           <Titulo width={larguraTitulo}>Faça seu Cadastro</Titulo>
         </CaixaTitulo>

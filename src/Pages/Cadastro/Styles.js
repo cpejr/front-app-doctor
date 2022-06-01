@@ -15,7 +15,7 @@ export const CaixaTitulo = styled.View`
   width:${(props) => props.width};
   align-items: center;
   justify-content: space-around;
-  margin-top: 35px;
+  margin-top: ${(props) => props.marginTop};
   margin-bottom:30px;
 `;
 
