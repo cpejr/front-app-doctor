@@ -346,13 +346,6 @@ function Cadastro({ navigation }) {
       </Body>
     </ScrollView>
   );
-  return (
-    <ScrollView>
-      <Body>
-        
-      </Body>
-    </ScrollView>
-  );
 }
 
 export default Cadastro;
