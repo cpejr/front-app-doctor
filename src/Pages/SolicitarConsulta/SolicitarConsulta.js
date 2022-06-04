@@ -21,6 +21,7 @@ import {
   Botao,
   BotaoIcone,
 } from "./Styles";
+import { Cores } from "../../variaveis"
 
 function SolicitarConsulta({ navigation }) {
   const mensagemPadrao =
@@ -72,7 +73,7 @@ function SolicitarConsulta({ navigation }) {
           width={larguraView}
           paddingLeft="3%"
           paddingRight="3%"
-          backgroundColor="#E9EBFC"
+          backgroundColor={Cores.cinza[7]}
         >
           <ConteudoView fontSize={fontSizeConteudoView}>
             Entre em contato conosco pelo WhatsApp para marcarmos sua consulta:
@@ -82,7 +83,7 @@ function SolicitarConsulta({ navigation }) {
               <BotaoIcone source={whatsappIcon} />
               <ConteudoBotao
                 fontSize={fontSizeBotao}
-                color="#0A0E3C"
+                color={Cores.azulEscuro}
                 width={"90%"}
               >
                 FALE CONOSCO

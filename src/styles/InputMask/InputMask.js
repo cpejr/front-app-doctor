@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
+import { TextInputMask } from "react-native-masked-text"
+import { TextInput } from "react-native";
 
-export const Input = styled.TextInput`
+export const InputMask = styled(TextInputMask)`
   width: ${(props) => props.width};
   height: 50px;
   background-color: #e4e6f4;
@@ -13,4 +15,4 @@ export const Input = styled.TextInput`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
   font-size: 15px;
 `;
-export default Input;
+export default InputMask;

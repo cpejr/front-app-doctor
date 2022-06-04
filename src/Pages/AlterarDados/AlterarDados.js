@@ -13,6 +13,7 @@ import {
 } from "./Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as managerService from "../../services/ManagerService/managerService";
+import { Cores } from "../../variaveis"
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -250,7 +251,7 @@ function AlterarDados({ navigation }) {
             <Botao
               width="40%"
               height="40px"
-              backgroundColor="#ffffff"
+              backgroundColor={Cores.branco}
               borderRadius="3px"
               borderColor="rgba(255, 0, 0, 0.25)"
               borderWidth="3px"
@@ -260,7 +261,7 @@ function AlterarDados({ navigation }) {
               <ConteudoBotao
                 width="100%"
                 fontSize={tamanhoFonte}
-                color="#000000"
+                color={Cores.preto}
               >
                 CANCELAR
               </ConteudoBotao>
@@ -268,9 +269,9 @@ function AlterarDados({ navigation }) {
             <Botao
               width="40%"
               height="40px"
-              backgroundColor="#434B97"
+              backgroundColor={Cores.lilas[1]}
               borderRadius="4px"
-              borderColor="#151B57"
+              borderColor={Cores.azul}
               borderWidth="3px"
               boxShadow="none"
               onPress={() => atualizarDados()}
@@ -278,7 +279,7 @@ function AlterarDados({ navigation }) {
               <ConteudoBotao
                 width="100%"
                 fontSize={tamanhoFonte}
-                color="#ffffff"
+                color={Cores.branco}
               >
                 CONFIRMAR
               </ConteudoBotao>

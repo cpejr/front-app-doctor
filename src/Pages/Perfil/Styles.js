@@ -1,11 +1,12 @@
 import styled from "styled-components/native";
+import { Cores } from "../../variaveis";
 
 export const Body = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: ${Cores.branco};
   padding-left: ${(props) => props.paddingLeft};;
   padding-right: ${(props) => props.paddingRight};
 `;
@@ -38,8 +39,8 @@ export const ViewFotoNome = styled.View`
   align-items: center;
   justify-content: center;
   width: ${(props) => props.width};
-  background-color: #f7f7f7;
-  border: 2px solid #5a5d76;
+  background-color: ${Cores.cinza[9]};
+  border: 2px solid ${Cores.cinza[6]};
   border-radius: 4px;
   padding-top: 30px;
   padding-bottom: 5px;
@@ -50,12 +51,13 @@ export const Foto = styled.Image`
   width: 100px;
   height: 100px;
   margin-bottom: 20px;
+  background-color: green;
 `;
 
 export const Nome = styled.Text`
   margin-bottom: 20px;
   font-size: ${(props) => props.fontSize};
-  color: #151b57;
+  color: ${Cores.azul};
   font-weight: 700;
 `;
 
@@ -75,7 +77,7 @@ export const CaixaNascidoData = styled.View`
 `;
 
 export const TextNascido = styled.Text`
-  color: #151b57;
+  color: ${Cores.azul};
   margin-bottom: 15px;
   font-weight: normal;
   margin-bottom: 1px;
@@ -83,7 +85,7 @@ export const TextNascido = styled.Text`
 `;
 
 export const TextData = styled.Text`
-  color: #151b57;
+  color:${Cores.azul};
   margin-bottom: 15px;
   font-weight: normal;
   font-size: ${(props) => props.fontSize};
@@ -95,8 +97,8 @@ export const ViewContatoEndereco = styled.View`
   justify-content: center;
   padding-left: 8%;
   width:  ${(props) => props.width};
-  background-color: #f7f7f7;
-  border: 2px solid #5a5d76;
+  background-color: ${Cores.cinza[9]};
+  border: 2px solid ${Cores.cinza[6]};
   border-radius: 4px;
   padding-top: 25px;
   padding-bottom: 5px;
@@ -106,12 +108,12 @@ export const ViewContatoEndereco = styled.View`
 export const Titulo = styled.Text`
   margin-bottom: 20px;
   font-size: ${(props) => props.fontSize};
-  color: #151b57;
+  color: ${Cores.azul};
   font-weight: 700;
 `;
 
 export const Dados = styled.Text`
-  color: #151b57;
+  color: ${Cores.azul};
   margin-bottom: 15px;
   font-weight: normal;
   font-size: ${(props) => props.fontSize};
