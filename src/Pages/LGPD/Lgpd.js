@@ -1,15 +1,19 @@
 import React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, TouchableOpacity, Text } from "react-native";
 import {
   Body,
   Titulo,
   Subtitulo,
   TituloPrimeiroTopico,
   TextoPrimeiroTopico,
+  CheckboxTexto,
+  Lgpd,
 } from "./Styles";
+import { Checkbox } from "react-native-paper";
 import { useFonts } from "expo-font";
 
 function LGPD() {
+  const [checked, setChecked] = React.useState(false);
   const [loaded] = useFonts({
     BarlowSemibold: require("../../assets/fonts/Barlow-SemiBold.ttf"),
     BarlowMedium: require("../../assets/fonts/Barlow-Medium.ttf"),
@@ -29,7 +33,9 @@ function LGPD() {
           formulário de contratação do iFood (o “Formulário” e, emconjunto com a
           Condições Gerais, o “Contrato”).
         </Subtitulo>
-        <TituloPrimeiroTopico fontFamily="BarlowSemibold">1) O que é Lorem Ipsum?</TituloPrimeiroTopico>
+        <TituloPrimeiroTopico fontFamily="BarlowSemibold">
+          1) O que é Lorem Ipsum?
+        </TituloPrimeiroTopico>
         <TextoPrimeiroTopico fontFamily="BarlowMedium">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -41,6 +47,15 @@ function LGPD() {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </TextoPrimeiroTopico>
+        <CheckboxTexto>
+        <Checkbox
+          status={checked ? "checked" : "unchecked"}
+          onPress={() => {
+            setChecked(!checked);
+          }}
+        />
+        <TouchableOpacity ><Lgpd fontFamily="BarlowMedium">Aqui</Lgpd></TouchableOpacity>
+        </CheckboxTexto>
       </Body>
     </ScrollView>
   );
