@@ -39,16 +39,3 @@ export const TextoPrimeiroTopico = styled.Text`
   text-align: justify;
   color: #8A8181;
 `;
-
-export const CheckboxTexto = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-export const Lgpd = styled.Text`
-  font-family: ${(props) => props.fontFamily};
-  font-size: 20px;
-  text-align: justify;
-  color: #8A8181;
-`;

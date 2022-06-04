@@ -6,14 +6,11 @@ import {
   Subtitulo,
   TituloPrimeiroTopico,
   TextoPrimeiroTopico,
-  CheckboxTexto,
-  Lgpd,
 } from "./Styles";
 import { Checkbox } from "react-native-paper";
 import { useFonts } from "expo-font";
 
 function LGPD() {
-  const [checked, setChecked] = React.useState(false);
   const [loaded] = useFonts({
     BarlowSemibold: require("../../assets/fonts/Barlow-SemiBold.ttf"),
     BarlowMedium: require("../../assets/fonts/Barlow-Medium.ttf"),
@@ -47,15 +44,6 @@ function LGPD() {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </TextoPrimeiroTopico>
-        <CheckboxTexto>
-        <Checkbox
-          status={checked ? "checked" : "unchecked"}
-          onPress={() => {
-            setChecked(!checked);
-          }}
-        />
-        <TouchableOpacity ><Lgpd fontFamily="BarlowMedium">Aqui</Lgpd></TouchableOpacity>
-        </CheckboxTexto>
       </Body>
     </ScrollView>
   );
