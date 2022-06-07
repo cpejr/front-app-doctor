@@ -63,6 +63,7 @@ function Cadastro({ navigation }) {
     setCarregando(true);
     if (!checked) {
       alert("É obrigatório concordar com os termos de uso.");
+      setCarregando(false);
     } else {
       requisicaoCadastro();
     }

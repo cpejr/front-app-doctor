@@ -9,8 +9,10 @@ import {
 } from "./Styles";
 import { Checkbox } from "react-native-paper";
 import { useFonts } from "expo-font";
+import Botao from "../../styles/Botao";
+import ConteudoBotao from "../../styles/ConteudoBotao";
 
-function LGPD() {
+function LGPD({navigation}) {
   const [loaded] = useFonts({
     BarlowSemibold: require("../../assets/fonts/Barlow-SemiBold.ttf"),
     BarlowMedium: require("../../assets/fonts/Barlow-Medium.ttf"),
@@ -44,6 +46,21 @@ function LGPD() {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </TextoPrimeiroTopico>
+        <Botao
+          width="20%"
+          height="35px"
+          backgroundColor="#838ad0"
+          borderRadius="3px"
+          borderColor="#151B57"
+          borderWidth="1px"
+          onPress={() => {
+            navigation.navigate("Cadastro");
+          }}
+        >
+          <ConteudoBotao fontSize="15px" color="#151B57" width="100%">
+            CONFIRMAR
+          </ConteudoBotao>
+        </Botao>
       </Body>
     </ScrollView>
   );
