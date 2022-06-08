@@ -47,7 +47,7 @@ function LGPD({navigation}) {
           including versions of Lorem Ipsum.
         </TextoPrimeiroTopico>
         <Botao
-          width="20%"
+          width="30%"
           height="35px"
           backgroundColor="#838ad0"
           borderRadius="3px"
