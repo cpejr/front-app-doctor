@@ -1,12 +1,17 @@
 import React, { useState, useCallback, useRef } from "react";
-import { ScrollView, Alert, useWindowDimensions } from "react-native";
+import {
+  ScrollView,
+  Alert,
+  useWindowDimensions,
+  TouchableOpacity,
+} from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import requisicaoErro from "../../utils/HttpErros";
 import { Picker } from "@react-native-picker/picker";
-import { ActivityIndicator, Colors } from "react-native-paper";
+import { ActivityIndicator, Colors, Checkbox } from "react-native-paper";
 import {
   Body,
   CaixaTitulo,
@@ -18,11 +23,14 @@ import {
   MensagemErro,
   CaixaInputsMesmaLinha,
   CaixaBotoes,
+  CheckboxTexto,
+  Lgpd,
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
 import api from "../../services/api";
 import { estados } from "./estados";
+import { useFonts } from "expo-font";
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -51,29 +59,39 @@ function Cadastro({ navigation }) {
 
   const { width, height } = useWindowDimensions();
 
-  async function requisicaoCadastro() {
+  async function verificacaoTermosUso() {
     setCarregando(true);
-    if (estado.senha === estado.senhaConfirmada) {
-      const dataFormatada = formatacaoData();
-      estado.data_nascimento = dataFormatada;
-      try {
-        await api.post("/enderecos", endereco).then((res) => {
-          api
-            .post("/usuarios", { ...estado, id_endereco: res.data.id })
-            .then(() => {
-              alert("Usuário cadastrado com sucesso.");
-              navigation.navigate("Home");
-            })
-            .catch((error) => {
-              requisicaoErro(error, () => navigation.push("Cadastro"));
-            });
-        });
-      } catch (error) {
-        requisicaoErro(error, () => navigation.push("Cadastro"));
-      }
+    if (!checked) {
+      alert("É obrigatório concordar com os termos de uso.");
+      setCarregando(false);
     } else {
-      alert("As senhas digitadas são diferentes.");
+      requisicaoCadastro();
     }
+  }
+
+  async function requisicaoCadastro() {
+      if (estado.senha === estado.senhaConfirmada) {
+        const dataFormatada = formatacaoData();
+        estado.data_nascimento = dataFormatada;
+        try {
+          await api.post("/enderecos", endereco).then((res) => {
+            api
+              .post("/usuarios", { ...estado, id_endereco: res.data.id })
+              .then(() => {
+                alert("Usuário cadastrado com sucesso.");
+                navigation.navigate("Home");
+              })
+              .catch((error) => {
+                requisicaoErro(error, () => navigation.push("Cadastro"));
+              });
+          });
+        } catch (error) {
+          requisicaoErro(error, () => navigation.push("Cadastro"));
+        }
+      } else {
+        alert("As senhas digitadas são diferentes.");
+      }
+    
     setCarregando(false);
   }
 
@@ -112,6 +130,15 @@ function Cadastro({ navigation }) {
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const larguraCaixaTitulo = width < 400 ? "70%" : larguraCaixaTituloMaior;
   const larguraTitulo = width < 300 ? "45%" : larguraTituloMaior;
+
+  const [checked, setChecked] = useState(false);
+  const [loaded] = useFonts({
+    BarlowSemibold: require("../../assets/fonts/Barlow-SemiBold.ttf"),
+    BarlowMedium: require("../../assets/fonts/Barlow-Medium.ttf"),
+  });
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <ScrollView>
@@ -191,17 +218,18 @@ function Cadastro({ navigation }) {
             }}
             value={estado.email}
           />
-        <InputMask
-        placeholder="CEP:" 
-        keyboardType="default"
-        type={'zip-code'}
-        width="100%"
-        label="CEP"
-        includeRawValueInChangeText={true}
-        onChangeText={(maskedText, rawText) => {
-          preenchendoEndereco('cep', rawText)}}
-        value={endereco.cep}
-        />
+          <InputMask
+            placeholder="CEP:"
+            keyboardType="default"
+            type={"zip-code"}
+            width="100%"
+            label="CEP"
+            includeRawValueInChangeText={true}
+            onChangeText={(maskedText, rawText) => {
+              preenchendoEndereco("cep", rawText);
+            }}
+            value={endereco.cep}
+          />
           <Input
             placeholder="País:"
             keyboardType="default"
@@ -212,7 +240,7 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.pais}
           />
-        
+
           <PickerView>
             <PickerEstado
               selectedValue={estadoSelecionado}
@@ -221,13 +249,22 @@ function Cadastro({ navigation }) {
                 preenchendoEndereco("estado", itemValue);
               }}
             >
-              <Picker.Item style={{fontSize:15, color:"grey"}} value="" label="Selecione um Estado" />
-              {estados.map( (estado) => (
-                <Picker.Item key={estado.sigla} style={{fontSize:15, color:"black"}} value={estado.sigla} label={estado.nome} />
+              <Picker.Item
+                style={{ fontSize: 15, color: "grey" }}
+                value=""
+                label="Selecione um Estado"
+              />
+              {estados.map((estado) => (
+                <Picker.Item
+                  key={estado.sigla}
+                  style={{ fontSize: 15, color: "black" }}
+                  value={estado.sigla}
+                  label={estado.nome}
+                />
               ))}
             </PickerEstado>
           </PickerView>
-          
+
           <Input
             placeholder="Cidade:"
             keyboardType="default"
@@ -304,8 +341,25 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.senhaConfirmada}
           />
-
         </CaixaInputs>
+
+        <CheckboxTexto>
+          <Checkbox
+            status={checked ? "checked" : "unchecked"}
+            onPress={() => {
+              setChecked(!checked);
+            }}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("LGPD");
+            }}
+          >
+            <Lgpd fontFamily="BarlowMedium">
+              Li e concordo com os Termos de Uso
+            </Lgpd>
+          </TouchableOpacity>
+        </CheckboxTexto>
 
         <CaixaBotoes>
           <Botao
@@ -331,7 +385,7 @@ function Cadastro({ navigation }) {
             borderRadius="3px"
             borderColor="#151B57"
             borderWidth="1px"
-            onPress={requisicaoCadastro}
+            onPress={verificacaoTermosUso}
           >
             {carregando ? (
               <ActivityIndicator animating={true} color={Colors.white} />
@@ -340,7 +394,6 @@ function Cadastro({ navigation }) {
                 CADASTRAR
               </ConteudoBotao>
             )}
-                         
           </Botao>
         </CaixaBotoes>
       </Body>

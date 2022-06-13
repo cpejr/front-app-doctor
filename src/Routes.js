@@ -23,6 +23,7 @@ import SobreMim from "./pages/SobreMim";
 import SolicitarConsulta from "./pages/SolicitarConsulta";
 import SolicitarExame from "./pages/SolicitarExame";
 import Header from "./pages/Header";
+import LGPD from "./pages/LGPD/Lgpd";
 
 import { View, Image } from "react-native";
 
@@ -79,6 +80,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="SobreMim" component={SobreMim} />
       <HomeStack.Screen name="AlterarDados" component={AlterarDados} />
       <HomeStack.Screen name="AlterarSenha" component={AlterarSenha} />
+      <HomeStack.Screen name="LGPD" component={LGPD} />
     </HomeStack.Navigator>
   );
 }

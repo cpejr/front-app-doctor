@@ -82,3 +82,16 @@ export const CaixaBotoes = styled.View`
   margin-bottom: 30px;
 `;
 
+export const CheckboxTexto = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const Lgpd = styled.Text`
+  font-family: ${(props) => props.fontFamily};
+  font-size: 16px;
+  text-align: right;
+  color: #151B57;
+  text-decoration: underline;
+`;
