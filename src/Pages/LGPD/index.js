@@ -1,2 +1,2 @@
-import ListaFormularios from "./ListaFormularios";
-export default ListaFormularios;
+import LGPD from "./Lgpd";
+export default LGPD;
