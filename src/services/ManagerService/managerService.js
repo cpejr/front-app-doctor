@@ -26,6 +26,27 @@ export const GetDadosUsuario = async (emailUrl) => {
   return { dadosEndereco, dadosUsuario };
 };
 
+export const GetFormulariosPaciente = async () => {
+  let formulariosPaciente;
+  const email = await AsyncStorage.getItem("@AirBnbApp:email");
+  const id_usuario = await GetDadosUsuario(email)
+    .then((res) => {
+      return res.dadosUsuario.id;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  await requesterService
+    .requisicaoFormulariosPaciente(id_usuario)
+    .then((res) => {
+      formulariosPaciente = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return formulariosPaciente;
+};
+
 export const UpdateDadosUsuario = async (
   id_usuario,
   id_endereco,

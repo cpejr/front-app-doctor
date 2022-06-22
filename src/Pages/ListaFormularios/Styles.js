@@ -61,16 +61,17 @@ border-color: #C6C6C6;
 
 export const FiltroRespondido = styled.Text`
 height: 100%;
-border-bottom-width: 1.5px;
-color:#0A0E3C;
-background-color: green;
+border-bottom-width: ${(props) => props.borderBottomWidth};
+color:${(props) => props.color};
+/* background-color: green; */
 `
 
 export const FiltroNaoRespondido = styled.Text`
 height: 100%;
 margin-left: 12px;
-color:#8D8D8D;
-background-color: green;
+color:${(props) => props.color};
+border-bottom-width:${(props) => props.borderBottomWidth};
+/* background-color: green; */
 `
 
 export const CaixaLista = styled.View`
@@ -108,7 +109,7 @@ width: 58%;
 font-size:17px;
 font-weight: 700;
 color:#0A0E3C;
-background-color: green;
+/* background-color: green; */
 
 `;
 
@@ -129,7 +130,7 @@ color:#434B97;
 export const CaixaEstrela = styled.View`
 display: flex;
 flex-direction: row;
-background-color: green;
+/* background-color: green; */
 `
 
 export const EstrelaIcon = styled.Image`
@@ -151,7 +152,7 @@ export const TextoTipoData = styled.Text`
 font-size:16px;
 font-weight: 600;
 color:#434B97;
-background-color: green;
+/* background-color: green; */
 `;
 
 
