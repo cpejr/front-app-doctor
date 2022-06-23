@@ -29,6 +29,7 @@ import {
   EstrelaIcon,
   CaixaTipoData,
   TextoTipoData,
+  CaixaLoading,
 } from "./Styles";
 import Input from "../../styles/Input";
 import searchIcon from "../../assets/searchIcon.png";
@@ -76,24 +77,25 @@ function ListaFormularios({ navigation }) {
     return data;
   }
 
-  function estrelaPreenchida(numPreenchido) {
+  function renderizarEstrelaPreenchida(numPreenchido) {
     if (numPreenchido !== 0) {
       return (
         <>
           <Icon name="star" size={18} color="#434B97" />
-          {estrelaPreenchida(numPreenchido - 1)}
+          {renderizarEstrelaPreenchida(numPreenchido - 1)}
         </>
       );
     } else {
       return;
     }
   }
-  function estrelaNaoPreenchida(numNaoPreenchido) {
+  
+  function renderizarEstrelaNaoPreenchida(numNaoPreenchido) {
     if (numNaoPreenchido !== 0) {
       return (
         <>
           <Icon name="star-outlined" size={20} color="#434B97" />
-          {estrelaNaoPreenchida(numNaoPreenchido - 1)}
+          {renderizarEstrelaNaoPreenchida(numNaoPreenchido - 1)}
         </>
       );
     } else {
@@ -149,24 +151,26 @@ function ListaFormularios({ navigation }) {
           </TouchableOpacity>
         </TabView>
         {formulariosPaciente?.map((valor) => (
-          <>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={"#8D8D8D"} />
-            ) : (
-              <CaixaLista key={valor.id}>
-                <TouchableOpacity
-                  onPress={() => {
-                    abrirFormularioEspecifico(valor);
-                  }}
-                >
-                  <CaixaItem>
+          <CaixaLista key={valor.id}>
+            <TouchableOpacity
+              onPress={() => {
+                abrirFormularioEspecifico(valor);
+              }}
+            >
+              <CaixaItem>
+                {carregando ? (
+                  <CaixaLoading>
+                    <ActivityIndicator animating={true} color={"#8D8D8D"} />
+                  </CaixaLoading>
+                ) : (
+                  <>
                     <CaixaNomeUrgencia>
                       <FormNome>{valor.titulo}</FormNome>
                       <CaixaUrgenciaEstrela width={larguraUrgenciaEstrela}>
                         <UrgenciaTexto>Urgência</UrgenciaTexto>
                         <CaixaEstrela>
-                          {estrelaPreenchida(valor.urgencia)}
-                          {estrelaNaoPreenchida(3 - valor.urgencia)}
+                          {renderizarEstrelaPreenchida(valor.urgencia)}
+                          {renderizarEstrelaNaoPreenchida(3 - valor.urgencia)}
                         </CaixaEstrela>
                       </CaixaUrgenciaEstrela>
                     </CaixaNomeUrgencia>
@@ -176,11 +180,11 @@ function ListaFormularios({ navigation }) {
                         {formatandoData(valor.data_criacao)}
                       </TextoTipoData>
                     </CaixaTipoData>
-                  </CaixaItem>
-                </TouchableOpacity>
-              </CaixaLista>
-            )}
-          </>
+                  </>
+                )}
+              </CaixaItem>
+            </TouchableOpacity>
+          </CaixaLista>
         ))}
       </Body>
     </Scroll>

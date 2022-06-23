@@ -78,13 +78,20 @@ border-bottom-width:${(props) => props.borderBottomWidth};
 export const CaixaLista = styled.View`
 flex:1;
 width:95%;
-margin-top:8px;
+
 `;
 
 export const BotaoForm = styled.View`
 align-items: center;
 flex-direction: column;
 width:100%;
+`
+
+export const CaixaLoading = styled.View`
+display:flex;
+/* height:50px; */
+padding-top:30px;
+padding-bottom: 30px;
 `
 
 export const CaixaItem = styled.View`
