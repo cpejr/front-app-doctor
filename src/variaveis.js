@@ -1,7 +1,7 @@
 export const Cores = {
   cinza: {
     // 1: "#807D7D",
-    // 2: "#8D8D8D",
+    2: "#8D8D8D",
     // 3: "#c4c4c4",
     // 4: "#dcdff9",
     // 5: "#eaebf8",
@@ -9,6 +9,8 @@ export const Cores = {
     7: "#E9EBFC", 
     8: "#e1e4ff", 
     9: "#f7f7f7", 
+    10: "#EDEDED",
+    11: "#C6C6C6"
     // 10: "#e5e5e5",
     // 11: "#E4E6F4",
  
@@ -18,6 +20,7 @@ export const Cores = {
     2: "#353964", 
     3: "#A7ADE8", 
     4: "#bbc0f4",
+    5: "#636AB4"
     // 5: "#cfd3f8",
   },
 

@@ -1,9 +1,10 @@
 import styled from "styled-components/native";
+import { Cores } from "../../variaveis";
 
 export const Scroll = styled.ScrollView`
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: ${Cores.branco};
 `;
 
 export const Body = styled.View`
@@ -11,7 +12,7 @@ export const Body = styled.View`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: ${Cores.branco};
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 10px;
@@ -23,11 +24,11 @@ export const BarraPesquisa = styled.View`
   align-items: center;
   width: 100%;
   height: 45px;
-  background-color: #EDEDED;
+  background-color: ${Cores.cinza[10]};
   border-radius: 5px;
   padding-left: 10px;
   margin-top: 10px;
-  border: #636AB4;
+  border: ${Cores.lilas[5]};
   border-width: 1.5px;
   font-size: 12px;
 `;
@@ -55,7 +56,7 @@ margin-bottom: 5px;
 align-items: flex-end;
 height: 25px;
 border-bottom-width: 1px;
-border-color: #C6C6C6;
+border-color: ${Cores.cinza[11]};
 
 `
 
@@ -88,7 +89,7 @@ width:100%;
 
 export const CaixaItem = styled.View`
 border-bottom-width: 1px;
-border-color: #C6C6C6;
+border-color: ${Cores.cinza[11]};
 `
 
 export const CaixaNomeUrgencia = styled.View`
@@ -108,7 +109,7 @@ text-decoration: underline;
 width: 58%;
 font-size:17px;
 font-weight: 700;
-color:#0A0E3C;
+color:${Cores.azulEscuro};
 /* background-color: green; */
 
 `;
@@ -124,7 +125,7 @@ flex-direction: row;
 export const UrgenciaTexto = styled.Text`
 font-size:16px;
 font-weight: 600;
-color:#434B97;
+color:${Cores.lilas[1]};
 `;
 
 export const CaixaEstrela = styled.View`
@@ -151,7 +152,7 @@ width: ${(props) => props.width};
 export const TextoTipoData = styled.Text`
 font-size:16px;
 font-weight: 600;
-color:#434B97;
+color:${Cores.lilas[1]};
 /* background-color: green; */
 `;
 
