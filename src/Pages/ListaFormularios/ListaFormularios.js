@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  FlatList,
-  ScrollView,
-  TextInput,
   useWindowDimensions,
-  Button,
-  Text,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
@@ -20,18 +15,15 @@ import {
   FiltroNaoRespondido,
   CaixaLista,
   CaixaItem,
-  BotaoForm,
   CaixaNomeUrgencia,
   CaixaUrgenciaEstrela,
   FormNome,
   UrgenciaTexto,
   CaixaEstrela,
-  EstrelaIcon,
   CaixaTipoData,
   TextoTipoData,
   CaixaLoading,
 } from "./Styles";
-import Input from "../../styles/Input";
 import searchIcon from "../../assets/searchIcon.png";
 import * as managerService from "../../services/ManagerService/managerService";
 import Icon from "react-native-vector-icons/Entypo";
@@ -54,16 +46,17 @@ function ListaFormularios({ navigation }) {
   const [telaRespondido, setTelaRespondido] = useState(true);
 
   async function pegandoFormulariosPaciente() {
+    listaFormPendente.length = 0;
+    listaFormRespondido.length = 0;
     const resposta = await managerService.GetFormulariosPaciente();
-    if (listaFormRespondido.length === 0 && listaFormPendente.length === 0) {
-      resposta.forEach((formulario) => {
-        if (formulario.status === true) {
-          listaFormRespondido.push(formulario);
-        } else {
-          listaFormPendente.push(formulario);
-        }
-      });
-    }
+    resposta.forEach((formulario) => {
+      if (formulario.status === true) {
+        listaFormRespondido.push(formulario);
+      } else {
+        listaFormPendente.push(formulario);
+      }
+    });
+
     setFormulariosPaciente(listaFormRespondido);
     setCarregando(false);
   }
@@ -89,7 +82,7 @@ function ListaFormularios({ navigation }) {
       return;
     }
   }
-  
+
   function renderizarEstrelaNaoPreenchida(numNaoPreenchido) {
     if (numNaoPreenchido !== 0) {
       return (
@@ -160,7 +153,10 @@ function ListaFormularios({ navigation }) {
               <CaixaItem>
                 {carregando ? (
                   <CaixaLoading>
-                    <ActivityIndicator animating={true} color={"#8D8D8D"} />
+                    <ActivityIndicator
+                      animating={true}
+                      color={Cores.cinza[2]}
+                    />
                   </CaixaLoading>
                 ) : (
                   <>
