@@ -39,31 +39,48 @@ function ListaFormularios({ navigation }) {
     width < 400 ? "39%" : larguraUrgenciaEstrelaMedio;
   const larguraCaixaTipoData = width < 700 ? "88%" : "95%";
 
+  const [listaOriginal, setListaOriginal] = useState([]);
   const [formulariosPaciente, setFormulariosPaciente] = useState([]);
   const [listaFormRespondido, setListaFormRespondido] = useState([]);
   const [listaFormPendente, setListaFormPendente] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [telaRespondido, setTelaRespondido] = useState(true);
+  const aux = [];
 
   async function pegandoFormulariosPaciente() {
-    listaFormPendente.length = 0;
-    listaFormRespondido.length = 0;
-    const resposta = await managerService.GetFormulariosPaciente();
-    resposta.forEach((formulario) => {
-      if (formulario.status === true) {
-        listaFormRespondido.push(formulario);
-      } else {
-        listaFormPendente.push(formulario);
-      }
-    });
+    // listaFormPendente.length = 0;
+    // listaFormRespondido.length = 0;
+    // setListaFormPendente(aux)
+    // setListaFormRespondido(aux)
+    const resposta = await managerService.GetFormulariosPaciente().then((res) => {
+      console.log(res)
+      res.forEach((formulario) => {
+        if (formulario.status === true) {
+          listaFormRespondido.push(formulario);
+        } else {
+          listaFormPendente.push(formulario);
+        }
+      })
+      setFormulariosPaciente(listaFormRespondido);
+      setCarregando(false);
+    }
 
-    setFormulariosPaciente(listaFormRespondido);
-    setCarregando(false);
+    )
+    
+    // if (listaFormPendente.length === 0 && listaFormRespondido.length === 0){
+    //   console.log("oi")
+    
+    // }
+    // setListaOriginal(resposta);
   }
 
   useEffect(() => {
     pegandoFormulariosPaciente();
   }, []);
+
+  // useEffect(() => {
+  //   dividindoListaForm();
+  // }, [listaOriginal]);
 
   function formatandoData(dataCriacao) {
     const data = new Date(dataCriacao).toLocaleDateString();
