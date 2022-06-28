@@ -11,7 +11,7 @@ export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
   });
 
-export const getConsultasUsuario = (id) => api.get(`/usuarioconsultas/${id}`);
+export const getConsultasUsuario = (id) => api.get(`/consultasusuario/${id}`);
 
 export const getConsultorioById = (id) => api.get(`/consultorios/${id}`);
 
