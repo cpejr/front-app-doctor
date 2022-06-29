@@ -15,3 +15,11 @@ export const LoginUsuario = (email, senha) =>
     email,
     senha,
   });
+
+export const verificarSenha = (email, senha) =>
+  api.post("/verificar", {
+    email,
+    senha,
+  });
+export const alterarSenha = (id, senha) =>
+  api.put(`/usuarios/${id}`, { senha: senha });

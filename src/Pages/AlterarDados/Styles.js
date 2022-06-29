@@ -1,11 +1,12 @@
 import styled from "styled-components/native";
+import { Cores } from "../../variaveis";
 
 export const Body = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
+  background-color: ${Cores.branco};
 `;
 
 export const CaixaAlterarDados = styled.View`
@@ -41,7 +42,7 @@ export const CaixaInputs = styled.View`
   padding-right: 10%;
   height: auto;
   bottom: 0;
-  background-color: #fff;
+  background-color: ${Cores.branco};
   align-items: center;
 `;
 

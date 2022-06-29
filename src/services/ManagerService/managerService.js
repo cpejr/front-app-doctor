@@ -59,3 +59,18 @@ export const UpdateDadosUsuario = async (
 
   return false;
 };
+
+export const requisicaoAlterarSenha = async (senha) => {
+  const resposta = await AsyncStorage.getItem("@AirBnbApp:email").then(
+    (res) => {
+      return GetDadosUsuario(res)
+        .then((res) => {
+          return requesterService.alterarSenha(res.dadosUsuario.id, senha);
+        })
+        .catch((error) => {
+        });
+          requisicaoErro(error);
+    }
+  );
+  return resposta.data;
+};

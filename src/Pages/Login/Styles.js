@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { Cores } from "../../variaveis"
 
 export const Body = styled.View`
   display: flex;
@@ -41,8 +42,8 @@ export const SenhaCadastro = styled.View`
 `;
 
 export const BarraEstetica = styled.View`
-  color: #434b97;
-  background-color: #434b97;
+  color: ${Cores.lilas[1]};
+  background-color: ${Cores.lilas[1]};
   height: 4px;
   width: 75%;
   margin-top: 2%;

@@ -1,12 +1,12 @@
 import styled from "styled-components/native";
-
+import { Cores } from "../../variaveis";
 
 export const Body = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
   height: ${(props) => props.height};
-  background-color: #ffffff;
+  background-color: ${Cores.branco};
   padding-right: ${(props) => props.paddingRight};
   padding-left: ${(props) => props.paddingLeft};
 `;
@@ -20,7 +20,7 @@ export const ViewConsultas = styled.View`
   margin-bottom: 5%;
   border-style: solid;
   border-radius: 6px;
-  border: #151b57;
+  border: ${Cores.azul};
   border-width: 2px;
   padding-left: 10px;
   padding-right: 10px;
@@ -37,11 +37,11 @@ export const CaixaConsulta = styled.View`
   width: 100%;
   border-radius: 5px;
   margin-bottom: 4%;
-  background-color: #e1e4ff;
+  background-color: ${Cores.cinza[8]};
   height: 38px;
   border-radius:5px;
   border-style: solid;
-  border: #bbc0f4;
+  border: ${Cores.lilas[4]};
   border-width: 2.5px;
 `;
 
@@ -60,7 +60,7 @@ export const CaixaNome = styled.View`
   justify-content: center;
   width: 50%;
   border-style: solid;
-  border: #bbc0f4;
+  border: ${Cores.lilas[4]};
   border-left-width: ${(props) => props.borderLeftWidth};
   border-right-width: ${(props) => props.borderRightWidth};
   border-top-width: 0px;
@@ -78,7 +78,7 @@ export const CaixaHora = styled.View`
 `;
 
 export const ConteudoCaixa = styled.Text`
-  color: #151b57;
+  color: ${Cores.azul};
   font-size: ${(props) => props.fontSize};
 `;
 
@@ -118,10 +118,10 @@ export const CaixaBotao = styled.TouchableOpacity`
   height: 35px;
   width: ${(props) => props.width};
   overflow: hidden;
-  background-color: #e9ebfc;
+  background-color: ${Cores.cinza[7]};
   border-style: solid;
   border-radius: 3px;
-  border-color: #000000;
+  border-color: ${Cores.preto};
   border-width: 1px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 `;
