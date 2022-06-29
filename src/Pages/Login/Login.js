@@ -106,7 +106,7 @@ function Login({ navigation }) {
             borderRadius="3px"
             borderWidth="3px"
             boxShadow="none"
-            onPress={() => navigation.navigate("Cadastro")}
+            onPress={() => navigation.push("Cadastro")}
           >
             <ConteudoBotao width="100%" fontSize={tamanhoFonte} color="#000000">
               Cadastre-se

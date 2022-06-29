@@ -2,6 +2,18 @@ import * as requesterService from "../RequesterService/requesterService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 
+export const requisicaoCriarUsuario = async (estado, endereco) => {
+  const resposta = await requesterService.CriarEndereco(endereco).then((res) =>
+    requesterService.CriarUsuario(estado, res.data.id).then((res) => {
+      return true;
+    }).catch((error) => {
+      // requisicaoErro(error);
+      return false
+    })
+  );
+  return resposta;
+};
+
 export const requisicaoLogin = async (email, senha) => {
   await requesterService
     .LoginUsuario(email, senha)
@@ -67,9 +79,8 @@ export const requisicaoAlterarSenha = async (senha) => {
         .then((res) => {
           return requesterService.alterarSenha(res.dadosUsuario.id, senha);
         })
-        .catch((error) => {
-        });
-          requisicaoErro(error);
+        .catch((error) => {});
+      requisicaoErro(error);
     }
   );
   return resposta.data;
