@@ -22,6 +22,13 @@ export const LoginUsuario = (email, senha) =>
     senha,
   });
 
+
+export const getConsultasUsuario = (id) => api.get(`/consultasusuario/${id}`);
+
+export const getConsultorioById = (id) => api.get(`/consultorios/${id}`);
+
+export const getEnderecoById = (id) => api.get(`/enderecos/${id}`);
+
 export const verificarSenha = (email, senha) =>
   api.post("/verificar", {
     email,
@@ -29,3 +36,4 @@ export const verificarSenha = (email, senha) =>
   });
 export const alterarSenha = (id, senha) =>
   api.put(`/usuarios/${id}`, { senha: senha });
+
