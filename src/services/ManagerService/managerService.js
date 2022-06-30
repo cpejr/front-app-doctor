@@ -100,6 +100,11 @@ export const requisicaoConsultorioById = async (id) => {
     .getConsultorioById(id)
     .then((res) => {
       return res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return resposta;}
 
 export const requisicaoVerificarSenha = async (senha) => {
   const resposta = await AsyncStorage.getItem("@AirBnbApp:email")
@@ -134,7 +139,6 @@ export const requisicaoAlterarSenha = async (senha) => {
           return requesterService.alterarSenha(res.dadosUsuario.id, senha);
         })
         .catch((error) => {});
-      requisicaoErro(error);
     }
   );
   return resposta.data;
