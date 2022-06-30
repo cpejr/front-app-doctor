@@ -30,9 +30,16 @@ function Login({ navigation }) {
     if (email?.length === 0 || senha?.length === 0) {
       alert("Preencha os campos email e senha!");
     } else {
-      await managerService.requisicaoLogin(email, senha);
-      alert("Bem vindo!");
-      navigation.navigate("Home");
+      const resposta = await managerService.requisicaoLogin(email, senha);
+      if (resposta) {
+        alert("Bem vindo!");
+        navigation.navigate("Home");
+      } else {
+        setEmail(null);
+        setSenha(null);
+        alert("Erro ao realizar Login!")
+        navigation.push("Login");
+      }
     }
   }
 
@@ -94,7 +101,11 @@ function Login({ navigation }) {
             borderWidth="3px"
             boxShadow="none"
           >
-            <ConteudoBotao width="100%" fontSize={tamanhoFonte} color={Cores.preto}>
+            <ConteudoBotao
+              width="100%"
+              fontSize={tamanhoFonte}
+              color={Cores.preto}
+            >
               Esqueceu a senha?
             </ConteudoBotao>
           </Botao>

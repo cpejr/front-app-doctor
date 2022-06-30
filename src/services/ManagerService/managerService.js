@@ -4,28 +4,32 @@ import requisicaoErro from "../../utils/HttpErros";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
   const resposta = await requesterService.CriarEndereco(endereco).then((res) =>
-    requesterService.CriarUsuario(estado, res.data.id).then((res) => {
-      return true;
-    }).catch((error) => {
-      // requisicaoErro(error);
-      return false
-    })
+    requesterService
+      .CriarUsuario(estado, res.data.id)
+      .then((res) => {
+        return true;
+      })
+      .catch((error) => {
+        // requisicaoErro(error);
+        return false;
+      })
   );
   return resposta;
 };
 
 export const requisicaoLogin = async (email, senha) => {
-  await requesterService
+  const resposta = await requesterService
     .LoginUsuario(email, senha)
     .then((res) => {
       AsyncStorage.setItem("@AirBnbApp:token", res.data.token);
       AsyncStorage.setItem("@AirBnbApp:email", res.data.email);
+      return true;
     })
     .catch((error) => {
-      setEmail(null);
-      setSenha(null);
-      requisicaoErro(error);
+      // requisicaoErro(error);
+      return false;
     });
+  return resposta;
 };
 
 export const GetDadosUsuario = async () => {
