@@ -45,6 +45,7 @@ export const UpdateDadosUsuario = async (
   return false;
 };
 
+
 export const requisicaoConsultasUsuario = async () => {
   const resposta = await AsyncStorage.getItem("@AirBnbApp:email").then(
     (res) => {
@@ -68,12 +69,19 @@ export const requisicaoConsultorioById = async (id) => {
     .getConsultorioById(id)
     .then((res) => {
       return res.data;
+
+export const requisicaoVerificarSenha = async (senha) => {
+  const resposta = await AsyncStorage.getItem("@AirBnbApp:email")
+    .then((res) => {
+      return requesterService.verificarSenha(res, senha);
+
     })
     .catch((error) => {
       requisicaoErro(error);
     });
   return resposta;
 };
+
 
 export const requisicaoEnderecoById = async (id) => {
   const resposta = await requesterService
@@ -86,3 +94,19 @@ export const requisicaoEnderecoById = async (id) => {
     });
   return resposta;
 }
+
+export const requisicaoAlterarSenha = async (senha) => {
+  const resposta = await AsyncStorage.getItem("@AirBnbApp:email").then(
+    (res) => {
+      return GetDadosUsuario(res)
+        .then((res) => {
+          return requesterService.alterarSenha(res.dadosUsuario.id, senha);
+        })
+        .catch((error) => {
+          requisicaoErro(error);
+        });
+    }
+  );
+  return resposta.data;
+};
+

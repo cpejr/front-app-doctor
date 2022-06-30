@@ -40,7 +40,10 @@ import botaoIcone from "./../../assets/botaoIcone.png";
 import iconeAvaliDesabilitado from "./../../assets/iconeAvaliDesabilitado.png";
 import iconeAvaliHabilitado from "./../../assets/iconeAvaliHabilitado.png";
 import iconeLocal from "./../../assets/iconeLocal.png";
+
 import Icon from "react-native-vector-icons/FontAwesome";
+import { Cores } from "../../variaveis";
+
 
 import { Dimensions } from "react-native";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -346,7 +349,7 @@ function Consultas({ navigation }) {
           >
             <ConteudoBotao
               fontSize={fontSizeConteudo}
-              color="#151B57"
+              color={Cores.azul}
               width="90%"
             >
               Marcar Nova Consulta

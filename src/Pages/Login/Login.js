@@ -19,6 +19,7 @@ import {
   ConteudoIcone,
   Icone,
 } from "./Styles";
+import { Cores } from "../../variaveis";
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -80,9 +81,9 @@ function Login({ navigation }) {
         <Botao
           width="32%"
           height="40px"
-          backgroundColor="#434B97"
+          backgroundColor={Cores.lilas[1]}
           borderRadius="3px"
-          borderColor="#151B57"
+          borderColor={Cores.azul}
           borderWidth="3px"
           boxShadow="none"
           onPress={() => requisicaoLogin()}
@@ -90,7 +91,7 @@ function Login({ navigation }) {
           <ConteudoBotao
             width={larguraConteudoBotaoEntrar}
             fontSize={tamanhoFonte}
-            color="#ffffff"
+            color={Cores.branco}
           >
             ENTRAR
           </ConteudoBotao>
@@ -106,7 +107,7 @@ function Login({ navigation }) {
             borderWidth="3px"
             boxShadow="none"
           >
-            <ConteudoBotao width="100%" fontSize={tamanhoFonte} color="#000000">
+            <ConteudoBotao width="100%" fontSize={tamanhoFonte} color={Cores.preto}>
               Esqueceu a senha?
             </ConteudoBotao>
           </Botao>
@@ -131,9 +132,9 @@ function Login({ navigation }) {
           <Botao
             width={larguraBotaoAlternativo}
             height="40px"
-            backgroundColor="#ffffff"
+            backgroundColor={Cores.branco}
             borderRadius="3px"
-            borderColor="#434B97"
+            borderColor={Cores.lilas[1]}
             borderWidth="3px"
             boxShadow="none"
           >
@@ -144,7 +145,7 @@ function Login({ navigation }) {
               <ConteudoBotao
                 width="80%"
                 fontSize={tamanhoFonte}
-                color="#000000"
+                color={Cores.preto}
               >
                 Continuar com o Google
               </ConteudoBotao>
@@ -153,9 +154,9 @@ function Login({ navigation }) {
           <Botao
             width={larguraBotaoAlternativo}
             height="40px"
-            backgroundColor="#ffffff"
+            backgroundColor={Cores.branco}
             borderRadius="3px"
-            borderColor="#434B97"
+            borderColor={Cores.lilas[1]}
             borderWidth="3px"
             boxShadow="none"
           >
@@ -166,7 +167,7 @@ function Login({ navigation }) {
               <ConteudoBotao
                 width="80%"
                 fontSize={tamanhoFonte}
-                color="#000000"
+                color={Cores.preto}
               >
                 Continuar com o Facebook
               </ConteudoBotao>
