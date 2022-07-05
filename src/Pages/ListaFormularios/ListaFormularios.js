@@ -28,6 +28,7 @@ import searchIcon from "../../assets/searchIcon.png";
 import * as managerService from "../../services/ManagerService/managerService";
 import Icon from "react-native-vector-icons/Entypo";
 import { Cores } from "../../variaveis";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function ListaFormularios({ navigation }) {
   const { width } = useWindowDimensions();
@@ -52,19 +53,21 @@ function ListaFormularios({ navigation }) {
     // listaFormRespondido.length = 0;
     // setListaFormPendente(aux)
     // setListaFormRespondido(aux)
-    const resposta = await managerService.GetFormulariosPaciente().then((res) => {
-      console.log(res)
-      res.forEach((formulario) => {
-        if (formulario.status === true) {
-          listaFormRespondido.push(formulario);
-        } else {
-          listaFormPendente.push(formulario);
-        }
+    await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
+      managerService.GetFormulariosPaciente(res).then((resposta) => {
+        resposta.forEach((formulario) => {
+          if (formulario.status === true) {
+            listaFormRespondido.push(formulario);
+          } else {
+            listaFormPendente.push(formulario);
+          }
+        })
+        setFormulariosPaciente(listaFormRespondido);
+        setCarregando(false);
       })
-      setFormulariosPaciente(listaFormRespondido);
-      setCarregando(false);
     }
-
+    ).catch((error) => 
+    alert(error)
     )
     
     // if (listaFormPendente.length === 0 && listaFormRespondido.length === 0){
