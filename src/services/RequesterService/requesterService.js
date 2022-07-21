@@ -4,7 +4,7 @@ export const CriarEndereco = (endereco) =>
   api.post("/enderecos", endereco);
 
 export const CriarUsuario = (estado, id_endereco) =>
-  api.post("/usuarios", { ...estado, id_endereco });
+  api.post("/usuarios", { ...estado, id_endereco: id_endereco });
 
 export const requisicaoDadosUsuario = (emailUrl) =>
   api.get(`/usuarios/${emailUrl}`);

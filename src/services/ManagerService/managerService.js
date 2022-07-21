@@ -3,17 +3,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
-  const resposta = await requesterService.CriarEndereco(endereco).then((res) =>
-    requesterService
-      .CriarUsuario(estado, res.data.id)
-      .then((res) => {
-        return true;
-      })
-      .catch((error) => {
-        // requisicaoErro(error);
-        return false;
-      })
-  );
+  const resposta = await requesterService
+    .CriarEndereco(endereco)
+    .then((res) => {
+      return requesterService
+        .CriarUsuario(estado, res.data.id)
+        .then((res) => {
+          return true;
+        })
+        .catch((error) => {
+          requisicaoErro(error);
+          return false;
+        });
+    });
   return resposta;
 };
 
@@ -26,7 +28,7 @@ export const requisicaoLogin = async (email, senha) => {
       return true;
     })
     .catch((error) => {
-      // requisicaoErro(error);
+      requisicaoErro(error);
       return false;
     });
   return resposta;
@@ -76,7 +78,6 @@ export const UpdateDadosUsuario = async (
   return false;
 };
 
-
 export const requisicaoConsultasUsuario = async () => {
   const resposta = await AsyncStorage.getItem("@AirBnbApp:email").then(
     (res) => {
@@ -104,20 +105,19 @@ export const requisicaoConsultorioById = async (id) => {
     .catch((error) => {
       requisicaoErro(error);
     });
-  return resposta;}
+  return resposta;
+};
 
 export const requisicaoVerificarSenha = async (senha) => {
   const resposta = await AsyncStorage.getItem("@AirBnbApp:email")
     .then((res) => {
       return requesterService.verificarSenha(res, senha);
-
     })
     .catch((error) => {
       requisicaoErro(error);
     });
   return resposta;
 };
-
 
 export const requisicaoEnderecoById = async (id) => {
   const resposta = await requesterService
@@ -129,7 +129,7 @@ export const requisicaoEnderecoById = async (id) => {
       requisicaoErro(error);
     });
   return resposta;
-}
+};
 
 export const requisicaoAlterarSenha = async (senha) => {
   const resposta = await AsyncStorage.getItem("@AirBnbApp:email").then(
@@ -143,4 +143,3 @@ export const requisicaoAlterarSenha = async (senha) => {
   );
   return resposta.data;
 };
-

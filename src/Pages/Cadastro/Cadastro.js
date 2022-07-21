@@ -74,21 +74,6 @@ function Cadastro({ navigation }) {
     if (estado.senha === estado.senhaConfirmada) {
       const dataFormatada = formatacaoData();
       estado.data_nascimento = dataFormatada;
-      // try {
-      //   await api.post("/enderecos", endereco).then((res) => {
-      //     api
-      //       .post("/usuarios", { ...estado, id_endereco: res.data.id })
-      //       .then(() => {
-      //         alert("Usuário cadastrado com sucesso.");
-      //         navigation.navigate("Login");
-      //       })
-      //       .catch((error) => {
-      //         requisicaoErro(error, () => navigation.push("Cadastro"));
-      //       });
-      //   });
-      // } catch (error) {
-      //   requisicaoErro(error, () => navigation.push("Cadastro"));
-      // }
       const resposta = await managerService.requisicaoCriarUsuario(
         estado,
         endereco
