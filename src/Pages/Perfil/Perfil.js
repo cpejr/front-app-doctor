@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useWindowDimensions, ScrollView } from "react-native";
 import Botao from "../../styles/Botao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-//import AsyncStorage from "react-native";
 
 import * as managerService from "../../services/ManagerService/managerService";
 
