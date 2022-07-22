@@ -31,6 +31,7 @@ import { brParaPadrao } from "../../utils/date";
 import api from "../../services/api";
 import { estados } from "./estados";
 import { useFonts } from "expo-font";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -70,28 +71,24 @@ function Cadastro({ navigation }) {
   }
 
   async function requisicaoCadastro() {
-      if (estado.senha === estado.senhaConfirmada) {
-        const dataFormatada = formatacaoData();
-        estado.data_nascimento = dataFormatada;
-        try {
-          await api.post("/enderecos", endereco).then((res) => {
-            api
-              .post("/usuarios", { ...estado, id_endereco: res.data.id })
-              .then(() => {
-                alert("Usuário cadastrado com sucesso.");
-                navigation.navigate("Home");
-              })
-              .catch((error) => {
-                requisicaoErro(error, () => navigation.push("Cadastro"));
-              });
-          });
-        } catch (error) {
-          requisicaoErro(error, () => navigation.push("Cadastro"));
-        }
+    if (estado.senha === estado.senhaConfirmada) {
+      const dataFormatada = formatacaoData();
+      estado.data_nascimento = dataFormatada;
+      const resposta = await managerService.requisicaoCriarUsuario(
+        estado,
+        endereco
+      );
+      if (resposta) {
+        alert("Usuário cadastrado com sucesso.");
+        navigation.navigate("Login");
       } else {
-        alert("As senhas digitadas são diferentes.");
+        alert("Erro ao cadastrar usuario!");
+        navigation.push("Cadastro");
       }
-    
+    } else {
+      alert("As senhas digitadas são diferentes.");
+    }
+
     setCarregando(false);
   }
 

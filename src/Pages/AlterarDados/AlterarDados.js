@@ -11,7 +11,6 @@ import {
   Titulo,
   CaixaBotoes,
 } from "./Styles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis"
 
@@ -32,8 +31,7 @@ function AlterarDados({ navigation }) {
   const [telMasked, setTelMasked] = useState("");
 
   async function pegandoDados() {
-    const email = await AsyncStorage.getItem("@AirBnbApp:email");
-    const resposta = await managerService.GetDadosUsuario(email);
+    const resposta = await managerService.GetDadosUsuario();
     setUsuario(resposta.dadosUsuario);
     setTelefone(resposta.dadosUsuario.telefone);
     setCpf(resposta.dadosUsuario.cpf);

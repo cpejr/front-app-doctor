@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useWindowDimensions, ScrollView } from "react-native";
 import Botao from "../../styles/Botao";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-//import AsyncStorage from "react-native";
+import logoGuilherme from "./../../assets/logoGuilherme.png";
 
-import api from "../../services/api";
+import * as managerService from "../../services/ManagerService/managerService";
 
 import {
   Body,
@@ -29,32 +28,24 @@ import { Cores } from "../../variaveis";
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
-  const [dataNascimento, setDataNascimento] = useState("");
-  const [dataMasked, setDataMasked] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [telMasked, setTelMasked] = useState("");
   const [cpf, setCpf] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
+
   const [cpfMasked, setCpfMasked] = useState("");
+  const [dataMasked, setDataMasked] = useState("");
+  const [telMasked, setTelMasked] = useState("");
 
   const { width, height, fontSize } = useWindowDimensions();
 
-  async function getEmail() {
-    await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
-      api.get(`/usuarios/${res}`).then((res) => {
-        setUsuario(res.data);
-        setTelefone(res.data.telefone);
-        setDataNascimento(res.data.data_nascimento);
-        setCpf(res.data.cpf);
-        api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
-          setEndereco(res.data);
-        });
-      });
-    });
+  async function pegandoDados() {
+    const resposta = await managerService.GetDadosUsuario();
+    setUsuario(resposta.dadosUsuario);
+    setTelefone(resposta.dadosUsuario.telefone);
+    setCpf(resposta.dadosUsuario.cpf);
+    setDataNascimento(resposta.dadosUsuario.data_nascimento);
+    setEndereco(resposta.dadosEndereco);
   }
-
-  useEffect(() => {
-    getEmail();
-  }, []);
 
   useEffect(() => {
     setCpfMasked(
@@ -67,18 +58,16 @@ function Perfil({ navigation }) {
         cpf.slice(-2)
     );
   }, [cpf]);
-
   useEffect(() => {
     setTelMasked(
       "(" +
         telefone.slice(0, -9) +
-        ") " +
+        ")" +
         telefone.slice(2, -4) +
         "-" +
         telefone.slice(-4)
     );
   }, [telefone]);
-
   useEffect(() => {
     setDataMasked(
       dataNascimento.slice(8, -14) +
@@ -88,6 +77,10 @@ function Perfil({ navigation }) {
         dataNascimento.slice(0, -20)
     );
   }, [dataNascimento]);
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
   const larguraBotoesMaior = width < 600 ? "50%" : "35%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
