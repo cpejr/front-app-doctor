@@ -82,7 +82,7 @@ function Perfil({ navigation }) {
     pegandoDados();
   }, []);
 
-  const larguraBotoesMaior = width < 600 ? "50%" : "35%";
+  const larguraBotoesMaior = width < 600 ? "60%" : "35%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
   const paddingBody = width < 330 ? "5%" : "10%";
   const fontSizeTitulos = fontSize < 1080 ? "20px" : "23px";
@@ -131,21 +131,20 @@ function Perfil({ navigation }) {
           </ViewContatoEndereco>
           <ViewContatoEndereco width={larguraViews}>
             <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
-            <Dados fontSize={fontSizeDados}>{endereco.pais}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.estado}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.cidade}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.cep}</Dados>
+            <Dados fontSize={fontSizeDados}>País:  {endereco.pais}</Dados>
+            <Dados fontSize={fontSizeDados}>Estado(ED):  {endereco.estado}</Dados>
+            <Dados fontSize={fontSizeDados}>Cidade:  {endereco.cidade}</Dados>
+            <Dados fontSize={fontSizeDados}>CEP:  {endereco.cep}</Dados>
             <Dados fontSize={fontSizeDados}>
-              {endereco.rua}, {endereco.numero}
+              Rua {endereco.rua}, {endereco.numero}
             </Dados>
             <Dados fontSize={fontSizeDados}>{endereco.complemento}</Dados>
           </ViewContatoEndereco>
           <CaixaBotoes>
             <Botao
               width={larguraBotoes}
-              height="30px"
-              //backgroundColor={Cores.lilas[3]} -- Estatico
-              backgroundColor="green"
+              height="35px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -158,9 +157,8 @@ function Perfil({ navigation }) {
             </Botao>
             <Botao
               width={larguraBotoes}
-              height="30px"
-              //backgroundColor={Cores.lilas[3]} -- Estatico
-              backgroundColor="green"
+              height="35px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"

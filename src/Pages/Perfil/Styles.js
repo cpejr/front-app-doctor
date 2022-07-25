@@ -67,6 +67,7 @@ export const CaixaDataCpf = styled.View`
   justify-content: space-around;
   width: 90%;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 export const CaixaNascidoData = styled.View`
