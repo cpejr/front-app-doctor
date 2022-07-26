@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useWindowDimensions, ScrollView } from "react-native";
+import { useWindowDimensions, ScrollView, Alert } from "react-native";
 import Botao from "../../styles/Botao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 
@@ -82,6 +82,24 @@ function Perfil({ navigation }) {
     pegandoDados();
   }, []);
 
+  const confirmacaoExcluir = () =>
+    Alert.alert(
+      "",
+      "Tem certeza que quer excluir sua conta?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel"
+        },
+        { text: "Confirmar", onPress: () => deletarUsuario() }
+      ]
+    );
+
+  async function deletarUsuario() {
+    await managerService.DeletarUsuario(usuario.id);
+    navigation.navigate("Login");
+  }
+
   const larguraBotoesMaior = width < 600 ? "60%" : "35%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
   const paddingBody = width < 330 ? "5%" : "10%";
@@ -132,7 +150,7 @@ function Perfil({ navigation }) {
           <ViewContatoEndereco width={larguraViews}>
             <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
             <Dados fontSize={fontSizeDados}>País:  {endereco.pais}</Dados>
-            <Dados fontSize={fontSizeDados}>Estado(ED):  {endereco.estado}</Dados>
+            <Dados fontSize={fontSizeDados}>Estado (ED):  {endereco.estado}</Dados>
             <Dados fontSize={fontSizeDados}>Cidade:  {endereco.cidade}</Dados>
             <Dados fontSize={fontSizeDados}>CEP:  {endereco.cep}</Dados>
             <Dados fontSize={fontSizeDados}>
@@ -169,7 +187,18 @@ function Perfil({ navigation }) {
                 ALTERAR SENHA
               </ConteudoBotaoPerfil>
             </Botao>
-            <ExcluirConta>Excluir conta</ExcluirConta>
+            <Botao
+            width={larguraBotoes}
+            height="35px"
+            backgroundColor={Cores.branco}
+            borderRadius="3px"
+            borderColor={Cores.branco}
+            borderWidth="2px"
+            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
+            onPress={() => confirmacaoExcluir()}
+            >
+            <ExcluirConta onPress={() => confirmacaoExcluir()}>Excluir conta</ExcluirConta>
+            </Botao>
           </CaixaBotoes>
         </CaixaViews>
       </Body>

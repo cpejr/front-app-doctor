@@ -128,7 +128,7 @@ export const CaixaBotoes = styled.View`
 `;
 
 export const ExcluirConta = styled.Text`
-  color: green;
+  color: ${Cores.azul};
   margin-top: 2%;
   text-decoration: underline;
   font-size:15px
