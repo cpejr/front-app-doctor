@@ -191,19 +191,9 @@ function TabScreen() {
         component={FormulariosStackScreen}
       />
       <Tab.Screen
-        name="botao3"
-        options={{ tabBarIcon: ExamesIcon, title: "Exames" }}
-        component={ExamesStackScreen}
-      />
-      <Tab.Screen
         name="botao4"
         options={{ tabBarIcon: ConsultasIcon, title: "Consultas" }}
         component={ConsultasStackScreen}
-      />
-      <Tab.Screen
-        name="botao5"
-        options={{ tabBarIcon: ChatIcon, title: "Chat" }}
-        component={ChatStackScreen}
       />
     </Tab.Navigator>
   );
@@ -215,9 +205,8 @@ function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
+        screenOptions={{ headerShown: false }}
+        initialRouteName="Login"
       >
         <Stack.Screen name="Tabs" component={TabScreen} />
         <Stack.Screen name="Login" component={Login} />

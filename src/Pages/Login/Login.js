@@ -6,7 +6,7 @@ import Botao from "./../../styles/Botao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
 import Input from "./../../styles/Input";
 import * as managerService from "../../services/ManagerService/managerService";
-import { useWindowDimensions, ScrollView } from "react-native";
+import { useWindowDimensions, ScrollView, Alert } from "react-native";
 import {
   Body,
   CaixaTitulo,
@@ -31,14 +31,24 @@ function Login({ navigation }) {
       alert("Preencha os campos email e senha!");
     } else {
       const resposta = await managerService.requisicaoLogin(email, senha);
-      if (resposta) {
+      const verificaTipo = await managerService.GetDadosUsuario(email);
+      if (resposta === true && verificaTipo.dadosUsuario.tipo === "PACIENTE") {
         alert("Bem vindo!");
-        navigation.navigate("Home");
+        navigation.navigate("Tabs");
       } else {
-        setEmail(null);
-        setSenha(null);
-        alert("Erro ao realizar Login!")
-        navigation.push("Login");
+        if (verificaTipo.dadosUsuario.tipo !== "PACIENTE"){
+          setEmail(null);
+          setSenha(null);
+          Alert.alert("Usuário não permitido no sistema!");
+          navigation.push("Login");
+        }
+
+        if (resposta === false) {
+          setEmail(null);
+          setSenha(null);
+          alert("Erro ao realizar Login!");
+          navigation.push("Login");
+        }
       }
     }
   }
