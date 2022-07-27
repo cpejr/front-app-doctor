@@ -33,20 +33,20 @@ function Login({ navigation }) {
       const resposta = await managerService.requisicaoLogin(email, senha);
       const verificaTipo = await managerService.GetDadosUsuario(email);
       if (resposta === true && verificaTipo.dadosUsuario.tipo === "PACIENTE") {
-        alert("Bem vindo!");
+        Alert.alert("Bem vindo!", "Login efetuado com sucesso");
         navigation.navigate("Tabs");
       } else {
         if (verificaTipo.dadosUsuario.tipo !== "PACIENTE"){
           setEmail(null);
           setSenha(null);
-          Alert.alert("Usuário não permitido no sistema!");
+          Alert.alert("Erro","Usuário não permitido no sistema!");
           navigation.push("Login");
         }
 
         if (resposta === false) {
           setEmail(null);
           setSenha(null);
-          alert("Erro ao realizar Login!");
+          Alert.alert("Erro","Erro ao realizar Login!");
           navigation.push("Login");
         }
       }
