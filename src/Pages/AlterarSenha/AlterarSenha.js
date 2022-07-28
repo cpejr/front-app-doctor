@@ -38,7 +38,6 @@ function AlterarSenha({ navigation }) {
       );
       if (resposta) {
         setConfirmado(false);
-        alert("As senhas conferem!");
       } else {
         navigation.push("AlterarSenha");
       }
@@ -60,6 +59,11 @@ function AlterarSenha({ navigation }) {
         alert("As senhas não conferem!");
       }
     }
+  }
+
+  function cancelaAlterarSenha(){
+    setConfirmado(true);
+    setSenhaAtual("");
   }
 
   return (
@@ -141,7 +145,7 @@ function AlterarSenha({ navigation }) {
                   borderRadius="3"
                   borderColor="#DD0D0D"
                   borderWidth="1px"
-                  onPress={() => setConfirmado(true)}
+                  onPress={() => cancelaAlterarSenha()}
                 >
                   <ConteudoBotao width="100%" fontSize="15px" color="#000000">
                     CANCELAR
