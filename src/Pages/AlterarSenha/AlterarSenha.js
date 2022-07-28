@@ -12,7 +12,11 @@ import {
   CaixaInputs,
   CaixaTitulo,
   CaixaView,
+  Rotulo,
+  TextoRotulo,
   Titulo,
+  InputNovaSenha,
+  InputConfirmacaoNovaSenha,
 } from "./Styles";
 
 import Input from "../../styles/Input/Input";
@@ -122,21 +126,39 @@ function AlterarSenha({ navigation }) {
               <CaixaTitulo>
                 <Titulo fontSize="15px">Digite sua nova senha:</Titulo>
               </CaixaTitulo>
-              <Input
+              <InputNovaSenha
                 placeholder="Nova senha:"
                 onChangeText={setNovaSenha}
+                novaSenha = {novaSenha}
                 type="password"
                 secureTextEntry
-              ></Input>
+              ></InputNovaSenha>
+              {novaSenha.length > 0 && novaSenha.length < 8  ? (
+                <Rotulo>
+                  <TextoRotulo>Senha inválida</TextoRotulo> 
+                </Rotulo>
+              ) : (
+
+                <></>
+              )}
               <CaixaTitulo>
                 <Titulo fontSize="15px">Confirme sua nova senha:</Titulo>
               </CaixaTitulo>
-              <Input
+              <InputConfirmacaoNovaSenha
                 placeholder="Confirmando sua nova senha:"
                 onChangeText={setConfirmarNovaSenha}
+                confirmarNovaSenha = {confirmarNovaSenha}
                 type="password"
                 secureTextEntry
-              ></Input>
+              ></InputConfirmacaoNovaSenha>
+               {confirmarNovaSenha.length > 0 && confirmarNovaSenha.length < 8  ? (
+                <Rotulo>
+                  <TextoRotulo>Senha inválida</TextoRotulo> 
+                </Rotulo>
+              ) : (
+
+                <></>
+              )}
               <CaixaBotao>
                 <Botao
                   width="42%"
