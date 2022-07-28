@@ -49,6 +49,10 @@ function AlterarSenha({ navigation }) {
     }
   }
   async function requisicaoAlterarSenha() {
+    if(novaSenha.length < 8){
+      alert("Preencha uma senha válida.");
+      return
+    }
     if (!novaSenha || !confirmarNovaSenha) {
       alert("Preencha os campos corretamente!");
     } else {
