@@ -40,13 +40,12 @@ function AlterarSenha({ navigation }) {
         setConfirmado(false);
         alert("As senhas conferem!");
       } else {
-        alert("As senhas não conferem");
         navigation.push("AlterarSenha");
       }
       setCarregando(false);
     }
   }
-  async function requicaoAlterarSenha() {
+  async function requisicaoAlterarSenha() {
     if (!novaSenha || !confirmarNovaSenha) {
       alert("Preencha os campos corretamente!");
     } else {
@@ -155,7 +154,7 @@ function AlterarSenha({ navigation }) {
                   borderRadius="3"
                   borderColor="#151B57"
                   borderWidth="1px"
-                  onPress={requicaoAlterarSenha}
+                  onPress={requisicaoAlterarSenha}
                 >
                   {carregando ? (
                     <ActivityIndicator animating={true} color={Colors.white} />
