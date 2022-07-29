@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { Dimensions } from "react-native";
 
 import * as managerService from "../../services/ManagerService/managerService";
@@ -34,7 +34,7 @@ function AlterarSenha({ navigation }) {
 
   async function requisicaoVerificarSenha() {
     if (!senhaAtual) {
-      alert("Preencha os campos corretamente!");
+      Alert.alert("ATENÇÃO","Preencha os campos corretamente!");
     } else {
       setCarregando(true);
       const resposta = await managerService.requisicaoVerificarSenha(
@@ -49,29 +49,29 @@ function AlterarSenha({ navigation }) {
     }
   }
   async function requisicaoAlterarSenha() {
+
     if(novaSenha.length < 8){
-      alert("Preencha uma senha válida.");
+      Alert.alert("ATENÇÃO","Preencha os campos corretamente!");
       return
     }
     if (!novaSenha || !confirmarNovaSenha) {
-      alert("Preencha os campos corretamente!");
+      Alert.alert("ATENÇÃO","Preencha os campos corretamente!");
     } else {
       if (novaSenha == confirmarNovaSenha) {
         setCarregando(true);
         await managerService.requisicaoAlterarSenha(novaSenha);
         setCarregando(false);
-        alert("Senha atualizada com sucesso!");
+        Alert.alert("PARABÉNS", "Senha atualizada com sucesso!");
         navigation.navigate("Perfil");
         setConfirmado(true);
       } else {
-        alert("As senhas não conferem!");
+        Alert.alert("ATENÇÃO", "As senhas não conferem!");
       }
     }
   }
 
   function cancelaAlterarSenha(){
-    setConfirmado(true);
-    setSenhaAtual("");
+    navigation.navigate("Perfil");
   }
 
   return (
@@ -84,7 +84,7 @@ function AlterarSenha({ navigation }) {
           {confirmado ? (
             <CaixaInputs>
               <CaixaTitulo>
-                <Titulo fontSize="15px">Comfirme sua senha atual:</Titulo>
+                <Titulo fontSize="15px">Confirme sua senha atual:</Titulo>
               </CaixaTitulo>
               <Input
                 placeholder="Senha Atual:"
@@ -139,7 +139,7 @@ function AlterarSenha({ navigation }) {
               ></InputNovaSenha>
               {novaSenha.length > 0 && novaSenha.length < 8  ? (
                 <Rotulo>
-                  <TextoRotulo>Senha inválida</TextoRotulo> 
+                  <TextoRotulo>Digite no mínimo 8 caractéres.</TextoRotulo> 
                 </Rotulo>
               ) : (
 
@@ -157,7 +157,7 @@ function AlterarSenha({ navigation }) {
               ></InputConfirmacaoNovaSenha>
                {confirmarNovaSenha.length > 0 && confirmarNovaSenha.length < 8  ? (
                 <Rotulo>
-                  <TextoRotulo>Senha inválida</TextoRotulo> 
+                  <TextoRotulo>Digite no mínimo 8 caractéres.</TextoRotulo> 
                 </Rotulo>
               ) : (
 

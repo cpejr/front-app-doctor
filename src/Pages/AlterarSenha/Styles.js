@@ -53,7 +53,7 @@ export const CaixaBotao = styled.View`
 
 export const Rotulo = styled.View`
   width: 100%;
-  height: 20px;
+  height: 22px;
   margin-bottom: 20px;
 `;
 
@@ -66,6 +66,7 @@ export const TextoRotulo = styled.Text`
 export const InputNovaSenha = styled.TextInput`
   width: 100%;
   height: 50px;
+  background-color: #e4e6f4;
   border-radius: 5px;
   padding-left: 10px;
   margin-top: 6px;
@@ -90,6 +91,7 @@ export const InputNovaSenha = styled.TextInput`
 export const InputConfirmacaoNovaSenha = styled.TextInput`
   width: 100%;
   height: 50px;
+  background-color: #e4e6f4;
   border-radius: 5px;
   padding-left: 10px;
   margin-top: 6px;
