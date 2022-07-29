@@ -88,7 +88,8 @@ export const requisicaoConsultasUsuario = async () => {
             return res.data;
           })
           .catch((error) => {
-            requisicaoErro(error);
+            // requisicaoErro(error);
+            return;
           });
       });
     }
