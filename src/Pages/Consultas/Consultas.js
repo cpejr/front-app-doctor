@@ -114,9 +114,7 @@ function Consultas({ navigation }) {
 
   async function compararData() {
     setCarregando(true);
-    if (consultas === undefined) {
-      
-    } else {
+    if (consultas !== undefined) {
       for (var i = 0; i < consultas.length; i++) {
         var dataAtual = new Date();
         var dataConsulta = new Date(consultas[i].data_hora);
