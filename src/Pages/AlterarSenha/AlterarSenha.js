@@ -50,8 +50,12 @@ function AlterarSenha({ navigation }) {
   }
   async function requisicaoAlterarSenha() {
 
-    if(novaSenha.length < 8){
+    if (novaSenha.length == 0 || confirmarNovaSenha == 0){
       Alert.alert("ATENÇÃO","Preencha os campos corretamente!");
+      return
+    }
+    if(novaSenha.length < 8){
+      Alert.alert("ATENÇÃO","Insira uma senha válida!");
       return
     }
     if (!novaSenha || !confirmarNovaSenha) {
