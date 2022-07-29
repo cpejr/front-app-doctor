@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -19,13 +19,25 @@ import {
   Icone,
 } from "./Styles";
 import { Cores } from "../../variaveis";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
   const { width, height } = useWindowDimensions();
-
+  
+  
+  async function verificacaoLogado() {
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    if (email !== undefined) {
+      navigation.push("Tabs");
+    }
+  }
+  useEffect(() => {
+    verificacaoLogado();
+  }, []);
   async function requisicaoLogin() {
     if (email?.length === 0 || senha?.length === 0) {
       alert("Preencha os campos email e senha!");
@@ -36,17 +48,17 @@ function Login({ navigation }) {
         Alert.alert("Bem vindo!", "Login efetuado com sucesso");
         navigation.navigate("Tabs");
       } else {
-        if (verificaTipo.dadosUsuario.tipo !== "PACIENTE"){
+        if (verificaTipo.dadosUsuario.tipo !== "PACIENTE") {
           setEmail(null);
           setSenha(null);
-          Alert.alert("Erro","Usuário não permitido no sistema!");
+          Alert.alert("Erro", "Usuário não permitido no sistema!");
           navigation.push("Login");
         }
 
         if (resposta === false) {
           setEmail(null);
           setSenha(null);
-          Alert.alert("Erro","Erro ao realizar Login!");
+          Alert.alert("Erro", "Erro ao realizar Login!");
           navigation.push("Login");
         }
       }
