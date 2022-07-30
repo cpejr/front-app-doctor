@@ -18,6 +18,9 @@ import {
   Logo,
   Titulo,
   CaixaInputs,
+  CaixaRotulo,
+  CaixaRotuloMesmaLinha,
+  Rotulo,
   PickerView,
   PickerEstado,
   MensagemErro,
@@ -54,11 +57,17 @@ function Cadastro({ navigation }) {
     numero: "",
     complemento: "",
   });
+  const [erro, setErro] = useState(false);
+
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
   const [cepFormatado, setCepFormatado] = useState("");
 
   const { width, height } = useWindowDimensions();
+
+  const apenasLetras = (value) => {
+    return value.replace(/[0-9!@#¨$%^&*){}/,(+=._-]+/g, "");
+  };
 
   async function verificacaoTermosUso() {
     setCarregando(true);
@@ -68,31 +77,64 @@ function Cadastro({ navigation }) {
     } else {
       requisicaoCadastro();
     }
+    //já usada na requisicaoCadastro
+    const dataFormatada = formatacaoData();
+    estado.data_nascimento = dataFormatada;
   }
 
-  async function requisicaoCadastro() {
-    if (estado.senha === estado.senhaConfirmada) {
-      const dataFormatada = formatacaoData();
-      estado.data_nascimento = dataFormatada;
-      const resposta = await managerService.requisicaoCriarUsuario(
-        estado,
-        endereco
-      );
-      if (resposta) {
-        alert("Usuário cadastrado com sucesso.");
-        navigation.navigate("Login");
-      } else {
-        alert("Erro ao cadastrar usuario!");
-        navigation.push("Cadastro");
-      }
-    } else {
-      alert("As senhas digitadas são diferentes.");
-    }
+  // async function requisicaoCadastro() {
+  //   if (estado.senha === estado.senhaConfirmada) {
+  //     const dataFormatada = formatacaoData();
+  //     estado.data_nascimento = dataFormatada;
+  //     const resposta = await managerService.requisicaoCriarUsuario(
+  //       estado,
+  //       endereco
+  //     );
+  //     if (resposta) {
+  //       alert("Usuário cadastrado com sucesso.");
+  //       //navigation.navigate("Login");
+  //     } else {
+  //       alert("Erro ao cadastrar usuario!");
+  //       //navigation.push("Cadastro");
+  //     }
+  //   } else {
+  //     alert("As senhas digitadas são diferentes.");
+  //   }
 
-    setCarregando(false);
-  }
+  //   setCarregando(false);
+  // }
 
   function preenchendoDados(inputIdentifier, enteredValue) {
+    if (inputIdentifier === "nome") {
+      enteredValue = apenasLetras(enteredValue);
+    }
+    if (
+      (inputIdentifier === "telefone" && enteredValue.length < 11) ||
+      (inputIdentifier === "cpf" && enteredValue.length < 11)
+    ) {
+      setErro({ ...erro, [inputIdentifier]: true });
+    } else {
+      setErro({ ...erro, [inputIdentifier]: false });
+    }
+
+    setEstado((curEstado) => {
+      return {
+        ...curEstado,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
+
+  function preenchendoEmail(inputIdentifier, enteredValue) {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    if (inputIdentifier === "email") {
+      if (!regEx.test(enteredValue)) {
+        setErro({ ...erro, [inputIdentifier]: true });
+      } else {
+        setErro({ ...erro, [inputIdentifier]: false });
+      }
+    }
+
     setEstado((curEstado) => {
       return {
         ...curEstado,
@@ -111,6 +153,15 @@ function Cadastro({ navigation }) {
   }
 
   function preenchendoEndereco(inputIdentifier, enteredValue) {
+    if (inputIdentifier === "cidade" || inputIdentifier === "pais") {
+      enteredValue = apenasLetras(enteredValue);
+    }
+    if (inputIdentifier === "cep" && enteredValue.length < 8) {
+      setErro({ ...erro, [inputIdentifier]: true });
+    } else {
+      setErro({ ...erro, [inputIdentifier]: false });
+    }
+
     setEndereco((curEndereco) => {
       return {
         ...curEndereco,
@@ -157,76 +208,110 @@ function Cadastro({ navigation }) {
             value={estado.nome}
           />
           <CaixaInputsMesmaLinha>
+            <CaixaRotuloMesmaLinha>
+              <InputMask
+                placeholder="Telefone:"
+                keyboardType="numeric"
+                width="100%"
+                type={"cel-phone"}
+                options={{
+                  maskType: "BRL",
+                  withDDD: true,
+                  dddMask: "(99) ",
+                }}
+                textContentType="telephoneNumber"
+                dataDetectorTypes="phoneNumber"
+                label="Telefone"
+                includeRawValueInChangeText={true}
+                onChangeText={(maskedText, rawText) => {
+                  preenchendoDados("telefone", rawText);
+                }}
+                value={estado.telefone}
+                erro={erro.telefone}
+              />
+              {erro.telefone && (
+                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+              )}
+            </CaixaRotuloMesmaLinha>
+            <CaixaRotuloMesmaLinha>
+              <InputMask
+                placeholder="Data de Nascimento:"
+                keyboardType="numeric"
+                type={"datetime"}
+                options={{
+                  format: "DD/MM/YYYY",
+                }}
+                width="100%"
+                maxLenght="10"
+                label="data_nascimento"
+                includeRawValueInChangeText={true}
+                onChangeText={(text) => {
+                  preenchendoDados("data_nascimento", text);
+                }}
+                value={estado.data_nascimento}
+                erro={erro.data_nascimento}
+              />
+              {erro.data_nascimento && (
+                <>
+                  {erroDataBack ? (
+                    <Rotulo>Digite uma data válida.</Rotulo>
+                  ) : (
+                    <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
+                  )}
+                </>
+              )}
+            </CaixaRotuloMesmaLinha>
+          </CaixaInputsMesmaLinha>
+          <CaixaRotulo>
             <InputMask
-              placeholder="Telefone:"
+              placeholder="CPF:"
               keyboardType="numeric"
-              width="48%"
-              type={"cel-phone"}
-              options={{
-                maskType: "BRL",
-                withDDD: true,
-                dddMask: "(99) ",
-              }}
-              textContentType="telephoneNumber"
-              dataDetectorTypes="phoneNumber"
-              label="Telefone"
+              width="100%"
+              label="cpf"
+              type={"cpf"}
               includeRawValueInChangeText={true}
               onChangeText={(maskedText, rawText) => {
-                preenchendoDados("telefone", rawText);
+                preenchendoDados("cpf", rawText);
               }}
-              value={estado.telefone}
+              value={estado.cpf}
+              erro={erro.cpf}
             />
-            <InputMask
-              placeholder="Data de Nascimento:"
-              keyboardType="numeric"
-              type={"datetime"}
-              options={{
-                format: "DD-MM-YYYY",
-              }}
-              width="48%"
-              maxLenght="10"
-              label="data_nascimento"
-              includeRawValueInChangeText={true}
+            {erro.cpf && (
+              <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
+            )}
+          </CaixaRotulo>
+          <CaixaRotulo>
+            <Input
+              placeholder="Email:"
+              keyboardType="default"
+              width="100%"
+              label="email"
               onChangeText={(text) => {
-                preenchendoDados("data_nascimento", text);
+                preenchendoEmail("email", text);
               }}
-              value={estado.data_nascimento}
+              value={estado.email}
+              erro={erro.email}
             />
-          </CaixaInputsMesmaLinha>
-          <InputMask
-            placeholder="CPF:"
-            keyboardType="default"
-            width="100%"
-            label="cpf"
-            type={"cpf"}
-            includeRawValueInChangeText={true}
-            onChangeText={(maskedText, rawText) => {
-              preenchendoDados("cpf", rawText);
-            }}
-            value={estado.cpf}
-          />
-          <Input
-            placeholder="Email:"
-            keyboardType="default"
-            width="100%"
-            label="email"
-            onChangeText={(text) => {
-              preenchendoDados("email", text);
-            }}
-            value={estado.email}
-          />
-          <InputMask
-            placeholder="CEP:"
-            keyboardType="default"
-            type={"zip-code"}
-            width="100%"
-            label="CEP"
-            includeRawValueInChangeText={true}
-            onChangeText={(maskedText, rawText) => {
-              preenchendoEndereco("cep", rawText);
-            }}
-            value={endereco.cep}
-          />
+            {erro.email && (
+              <Rotulo>Digite um email no formato email@email.com</Rotulo>
+            )}
+          </CaixaRotulo>
+          <CaixaRotulo>
+            <InputMask
+              placeholder="CEP:"
+              keyboardType="numeric"
+              type={"zip-code"}
+              width="100%"
+              label="CEP"
+              includeRawValueInChangeText={true}
+              onChangeText={(maskedText, rawText) => {
+                preenchendoEndereco("cep", rawText);
+              }}
+              value={endereco.cep}
+              erro={erro.cep}
+            />
+            {erro.cep && <Rotulo>Digite um CEP no formato xxxxx-xxx</Rotulo>}
+          </CaixaRotulo>
           <Input
             placeholder="País:"
             keyboardType="default"
@@ -292,9 +377,11 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.rua}
           />
-          <Input
+          <InputMask
+            type={"only-numbers"}
+            pattern="[0-9]*"
             placeholder="Número:"
-            keyboardType="default"
+            keyboardType="numeric"
             width="100%"
             label="Numero"
             onChangeText={(text) => {

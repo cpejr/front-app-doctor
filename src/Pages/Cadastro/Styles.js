@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { Picker } from '@react-native-picker/picker';
+import { Cores } from "../../variaveis";
 
 export const Body = styled.View`
   display: flex;
@@ -35,6 +36,26 @@ export const CaixaInputs = styled.View`
   height: auto;
   bottom: 0;
   align-items: center;
+`;
+
+export const CaixaRotuloMesmaLinha = styled.View`
+  display:flex;
+  flex-direction: column;
+  width: 48%;
+`;
+
+export const CaixaRotulo = styled.View`
+  display:flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const Rotulo = styled.Text`
+  font-size: 12px;
+  color: ${Cores.vermelho};
+  text-align: justify;
+  line-height: 12px;
+  margin-bottom: 1%;
 `;
 
 export const PickerView = styled.View`
