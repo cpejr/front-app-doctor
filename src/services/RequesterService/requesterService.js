@@ -23,7 +23,7 @@ export const LoginUsuario = (email, senha) =>
   });
 
 
-export const getConsultasUsuario = (id) => api.get(`/consultasusuario/${id}`);
+export const getConsultasUsuario = (id) => api.get(`/consultas/${id}`);
 
 export const getConsultorioById = (id) => api.get(`/consultorios/${id}`);
 
@@ -36,4 +36,3 @@ export const verificarSenha = (email, senha) =>
   });
 export const alterarSenha = (id, senha) =>
   api.put(`/usuarios/${id}`, { senha: senha });
-
