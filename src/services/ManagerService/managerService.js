@@ -1,6 +1,7 @@
 import * as requesterService from "../RequesterService/requesterService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
+import { Alert } from "react-native";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
   const resposta = await requesterService
@@ -148,7 +149,10 @@ export const DeletarUsuario = async (id) => {
   await requesterService
     .deletarUsuario(id)
     .then(() => {
-      alert("Usuário deletado com sucesso.")
+      Alert.alert(
+        "",
+        "Usuario deletado com sucesso!",
+      );
     })
     .catch((error) => {
       requisicaoErro(error);

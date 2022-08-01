@@ -62,7 +62,7 @@ function Perfil({ navigation }) {
     setTelMasked(
       "(" +
         telefone.slice(0, -9) +
-        ")" +
+        ") " +
         telefone.slice(2, -4) +
         "-" +
         telefone.slice(-4)
@@ -88,7 +88,7 @@ function Perfil({ navigation }) {
       "Tem certeza que quer excluir sua conta?",
       [
         {
-          text: "Cancelar",
+          text: "Não",
           style: "cancel"
         },
         { text: "Confirmar", onPress: () => deletarUsuario() }
@@ -139,24 +139,29 @@ function Perfil({ navigation }) {
                 </TextNascido>
                 <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
               </CaixaNascidoData>
+              <CaixaNascidoData>
+              <TextNascido fontSize={fontSizeNascido}>
+                  CPF:
+                </TextNascido>
               <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
+              </CaixaNascidoData>
             </CaixaDataCpf>
           </ViewFotoNome>
-          <ViewContatoEndereco width={larguraViews}>
+          <ViewContatoEndereco paddingRight={paddingBody} width={larguraViews}>
             <Titulo fontSize={fontSizeTitulos}>Contato</Titulo>
             <Dados fontSize={fontSizeDados}>{telMasked}</Dados>
             <Dados fontSize={fontSizeDados}>{usuario.email}</Dados>
           </ViewContatoEndereco>
-          <ViewContatoEndereco width={larguraViews}>
+          <ViewContatoEndereco paddingRight={paddingBody} width={larguraViews}>
             <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
             <Dados fontSize={fontSizeDados}>País:  {endereco.pais}</Dados>
-            <Dados fontSize={fontSizeDados}>Estado (ED):  {endereco.estado}</Dados>
+            <Dados fontSize={fontSizeDados}>Estado: {endereco.estado}</Dados>
             <Dados fontSize={fontSizeDados}>Cidade:  {endereco.cidade}</Dados>
             <Dados fontSize={fontSizeDados}>CEP:  {endereco.cep}</Dados>
             <Dados fontSize={fontSizeDados}>
-              Rua {endereco.rua}, {endereco.numero}
+              Rua: {endereco.rua}, {endereco.numero}
             </Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.complemento}</Dados>
+            <Dados fontSize={fontSizeDados}>Complemento: {endereco.complemento}</Dados>
           </ViewContatoEndereco>
           <CaixaBotoes>
             <Botao

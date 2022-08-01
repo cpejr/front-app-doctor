@@ -67,7 +67,7 @@ export const CaixaDataCpf = styled.View`
   justify-content: space-around;
   width: 90%;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 `;
 
 export const CaixaNascidoData = styled.View`
@@ -98,6 +98,7 @@ export const ViewContatoEndereco = styled.View`
   justify-content: center;
   padding-left: 8%;
   width:  ${(props) => props.width};
+  padding-right: ${(props) => props.paddingRight};
   background-color: ${Cores.cinza[9]};
   border: 2px solid ${Cores.cinza[6]};
   border-radius: 4px;
