@@ -69,10 +69,6 @@ function AlterarSenha({ navigation }) {
     }
   }
 
-  function cancelaAlterarSenha() {
-    navigation.navigate("Perfil");
-  }
-
   return (
     <ScrollView>
       <Body height={heightTela}>
@@ -182,7 +178,7 @@ function AlterarSenha({ navigation }) {
                   borderRadius="3"
                   borderColor="#151B57"
                   borderWidth="1px"
-                  onPress={requisicaoAlterarSenha}
+                  onPress={() => navigation.navigate("Perfil")}
                 >
                   {carregando ? (
                     <ActivityIndicator animating={true} color={Colors.white} />
