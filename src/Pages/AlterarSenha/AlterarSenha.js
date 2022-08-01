@@ -165,7 +165,7 @@ function AlterarSenha({ navigation }) {
                   borderRadius="3"
                   borderColor="#DD0D0D"
                   borderWidth="1px"
-                  onPress={() => cancelaAlterarSenha()}
+                  onPress={() => navigation.navigate("Perfil")}
                 >
                   <ConteudoBotao width="100%" fontSize="15px" color="#000000">
                     CANCELAR
@@ -178,7 +178,7 @@ function AlterarSenha({ navigation }) {
                   borderRadius="3"
                   borderColor="#151B57"
                   borderWidth="1px"
-                  onPress={() => navigation.navigate("Perfil")}
+                  onPress={requisicaoAlterarSenha}
                 >
                   {carregando ? (
                     <ActivityIndicator animating={true} color={Colors.white} />
