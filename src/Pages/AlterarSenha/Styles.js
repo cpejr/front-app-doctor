@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { Cores } from "../../variaveis";
 
 
 export const Body = styled.View`
@@ -78,9 +79,9 @@ export const InputNovaSenha = styled.TextInput`
   border-color: ${(props) => {
     let cor;
       if((props.novaSenha).length > 0 && (props.novaSenha).length < 8){
-        cor = "red";
+        cor = `${Cores.vermelho}`;
       } else {
-        cor = "blue";
+        cor = `${Cores.azul}`;
       }
     return cor;
   }};
@@ -103,9 +104,9 @@ export const InputConfirmacaoNovaSenha = styled.TextInput`
   border-color: ${(props) => {
     let cor;
       if((props.confirmarNovaSenha).length > 0 && (props.confirmarNovaSenha).length < 8){
-        cor = "red";
+        cor = `${Cores.vermelho}`;
       } else {
-        cor = "blue";
+        cor = `${Cores.azul}`;
       }
     return cor;
   }};
