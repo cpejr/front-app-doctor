@@ -19,33 +19,26 @@ import {
   Icone,
 } from "./Styles";
 import { Cores } from "../../variaveis";
-import { ActivityIndicator, Colors } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator, Colors } from "react-native-paper";
+import { sleep } from "../../utils/sleep";
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [carregando, setCarregando] = useState(false);
 
   const { width, height } = useWindowDimensions();
 
-  async function verificacaoLogado() {
-    setCarregando(true);
-    const email = await AsyncStorage.getItem("@AirBnbApp:email");
-    if (email !== undefined) {
-      navigation.push("Tabs");
-    }
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    setCarregando(true);
-    verificacaoLogado();
-  }, []);
+  const [carregando, setCarregando] = useState();
 
   async function requisicaoLogin() {
-    if (email?.length === 0 || senha?.length === 0) {
-      alert("Preencha os campos email e senha!");
+    if (
+      email?.length === 0 ||
+      senha?.length === 0 ||
+      email === null ||
+      senha === null
+    ) {
+      Alert.alert("Erro", "Preencha os campos email e senha!");
     } else {
       const resposta = await managerService.requisicaoLogin(email, senha);
       const verificaTipo = await managerService.GetDadosUsuario(email);
@@ -57,18 +50,28 @@ function Login({ navigation }) {
           setEmail(null);
           setSenha(null);
           Alert.alert("Erro", "Usuário não permitido no sistema!");
-          navigation.push("Login");
         }
 
         if (resposta === false) {
           setEmail(null);
           setSenha(null);
-          Alert.alert("Erro", "Erro ao realizar Login!");
-          navigation.push("Login");
         }
       }
     }
   }
+
+  async function verificacaoLogado() {
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    if (email !== undefined && email !== null) {
+      navigation.push("Tabs");
+    }
+    await sleep(1500);
+    setCarregando(false);
+  }
+  useEffect(() => {
+    setCarregando(true);
+    verificacaoLogado();
+  }, []);
 
   const margemSuperior = height < 200 ? "5px" : "100px";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
@@ -78,12 +81,14 @@ function Login({ navigation }) {
 
   return (
     <>
-      {carregando ? (
-        <ActivityIndicator animating={true} color={Colors.black} />
-      ) : (
-        <>
-          <ScrollView>
-            <Body>
+      <ScrollView>
+        <Body>
+          {carregando ? (
+            <>
+            <ActivityIndicator animating={true} color={Colors.black} />
+            </>
+            ) : (
+            <>
               <CaixaTitulo marginTop={margemSuperior}>
                 <Logo source={logoGuilherme} />
               </CaixaTitulo>
@@ -208,10 +213,10 @@ function Login({ navigation }) {
                   </ConteudoIcone>
                 </Botao>
               </BotoesAlternativos>
-            </Body>
-          </ScrollView>
-        </>
-      )}
+            </>
+          )}
+        </Body>
+      </ScrollView>
     </>
   );
 }

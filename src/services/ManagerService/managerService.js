@@ -1,6 +1,7 @@
 import * as requesterService from "../RequesterService/requesterService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
+import { Alert } from "react-native";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
   const resposta = await requesterService
@@ -28,7 +29,7 @@ export const requisicaoLogin = async (email, senha) => {
       return true;
     })
     .catch((error) => {
-      requisicaoErro(error);
+      Alert.alert("Erro", "Digite email e senha válidos!");
       return false;
     });
   return resposta;
