@@ -35,6 +35,8 @@ import api from "../../services/api";
 import { estados } from "./estados";
 import { useFonts } from "expo-font";
 import * as managerService from "../../services/ManagerService/managerService";
+import { isEqual } from "date-fns";
+import DatePicker from "react-native-datepicker";
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -62,6 +64,8 @@ function Cadastro({ navigation }) {
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
   const [cepFormatado, setCepFormatado] = useState("");
+  const [data, setData] = useState();
+  const [abrirModalData, setAbrirModalData] = useState(false);
 
   const { width, height } = useWindowDimensions();
 
@@ -80,6 +84,7 @@ function Cadastro({ navigation }) {
     //já usada na requisicaoCadastro
     const dataFormatada = formatacaoData();
     estado.data_nascimento = dataFormatada;
+    console.log(estado);
   }
 
   // async function requisicaoCadastro() {
@@ -141,6 +146,11 @@ function Cadastro({ navigation }) {
         [inputIdentifier]: enteredValue,
       };
     });
+  }
+
+  const preenchendoData = (event, enteredValue) => {
+    setData(enteredValue);
+
   }
 
   function formatacaoData() {
@@ -234,7 +244,7 @@ function Cadastro({ navigation }) {
               )}
             </CaixaRotuloMesmaLinha>
             <CaixaRotuloMesmaLinha>
-              <InputMask
+              {/* <InputMask
                 placeholder="Data de Nascimento:"
                 keyboardType="numeric"
                 type={"datetime"}
@@ -246,11 +256,22 @@ function Cadastro({ navigation }) {
                 label="data_nascimento"
                 includeRawValueInChangeText={true}
                 onChangeText={(text) => {
-                  preenchendoDados("data_nascimento", text);
+                  preenchendoData("data_nascimento", text);
                 }}
                 value={estado.data_nascimento}
                 erro={erro.data_nascimento}
-              />
+              /> */}
+              <DatePicker
+                placeholder="Data de Nascimento:"
+                maxDate={new Date()}
+                format="DD/MM/YYYY"
+                mode='date'
+                showIcon={false}
+                date={data}
+                onDateChange={(data) => {
+                  setData(data);
+                }}
+                />
               {erro.data_nascimento && (
                 <>
                   {erroDataBack ? (
