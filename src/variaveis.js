@@ -10,7 +10,7 @@ export const Cores = {
     8: "#e1e4ff", 
     9: "#f7f7f7", 
     // 10: "#e5e5e5",
-    // 11: "#E4E6F4",
+    11: "#e4e6f4",
  
   },
   lilas: {

@@ -1,6 +1,7 @@
 import * as requesterService from "../RequesterService/requesterService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
+import { Alert } from "react-native";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
   const resposta = await requesterService
@@ -114,7 +115,7 @@ export const requisicaoVerificarSenha = async (senha) => {
       return requesterService.verificarSenha(res, senha);
     })
     .catch((error) => {
-      requisicaoErro(error);
+      Alert.alert("ATENÇÃO","As senhas não conferem");
     });
   return resposta;
 };

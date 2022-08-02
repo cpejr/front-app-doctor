@@ -165,7 +165,7 @@ function Perfil({ navigation }) {
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
-              onPress={() => navigation.navigate("AlterarSenha")}
+              onPress={() => navigation.push("AlterarSenha")}
             >
               <ConteudoBotaoPerfil fontSize={fontSizeDados}>
                 ALTERAR SENHA
