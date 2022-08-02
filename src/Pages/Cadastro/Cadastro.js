@@ -21,6 +21,7 @@ import {
   CaixaRotulo,
   CaixaRotuloMesmaLinha,
   Rotulo,
+  Data,
   PickerView,
   PickerEstado,
   MensagemErro,
@@ -35,8 +36,7 @@ import api from "../../services/api";
 import { estados } from "./estados";
 import { useFonts } from "expo-font";
 import * as managerService from "../../services/ManagerService/managerService";
-import { isEqual } from "date-fns";
-import DatePicker from "react-native-datepicker";
+import _ from "lodash";
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -59,18 +59,36 @@ function Cadastro({ navigation }) {
     numero: "",
     complemento: "",
   });
+
+  const errors = {};
+  const teste = {
+    nome: false,
+    telefone: false,
+    email: false,
+    cep: false,
+    pais: false,
+    estado: false,
+    cidade: false,
+    rua: false,
+    numero: false,
+    cpf: false,
+    data_nascimento: false,
+    bairro: false,
+    senha: false,
+    senhaConfirmada: false,
+  };
+
   const [erro, setErro] = useState(false);
 
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
   const [cepFormatado, setCepFormatado] = useState("");
-  const [data, setData] = useState();
-  const [abrirModalData, setAbrirModalData] = useState(false);
+  const [camposVazios, setCamposVazios] = useState(false);
 
   const { width, height } = useWindowDimensions();
 
   const apenasLetras = (value) => {
-    return value.replace(/[0-9!@#¨$%^&*){}/,(+=._-]+/g, "");
+   return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g,"");
   };
 
   async function verificacaoTermosUso() {
@@ -81,33 +99,66 @@ function Cadastro({ navigation }) {
     } else {
       requisicaoCadastro();
     }
-    //já usada na requisicaoCadastro
-    const dataFormatada = formatacaoData();
-    estado.data_nascimento = dataFormatada;
-    console.log(estado);
   }
 
-  // async function requisicaoCadastro() {
-  //   if (estado.senha === estado.senhaConfirmada) {
-  //     const dataFormatada = formatacaoData();
-  //     estado.data_nascimento = dataFormatada;
-  //     const resposta = await managerService.requisicaoCriarUsuario(
-  //       estado,
-  //       endereco
-  //     );
-  //     if (resposta) {
-  //       alert("Usuário cadastrado com sucesso.");
-  //       //navigation.navigate("Login");
-  //     } else {
-  //       alert("Erro ao cadastrar usuario!");
-  //       //navigation.push("Cadastro");
-  //     }
-  //   } else {
-  //     alert("As senhas digitadas são diferentes.");
-  //   }
+  async function requisicaoCadastro() {
+    if (!estado.nome) errors.nome = true;
+    if (!estado.telefone) errors.telefone = true;
+    if (!estado.tipo) errors.tipo = true;
+    if (!estado.data_nascimento) errors.data_nascimento = true;
+    if (!estado.cpf) errors.cpf = true;
+    if (!estado.email) errors.email = true;
+    if (!endereco.cep) errors.cep = true;
+    if (!endereco.pais) errors.pais = true;
+    if (!endereco.estado) errors.estado = true;
+    if (!endereco.cidade) errors.cidade = true;
+    if (!endereco.bairro) errors.bairro = true;
+    if (!endereco.rua) errors.rua = true;
+    if (!endereco.numero) errors.numero = true;
+    if (!estado.senha) errors.senha = true;
+    if (!estado.senhaConfirmada) errors.senhaConfirmada = true;
+    if (erro.email === true) errors.email = true;
 
-  //   setCarregando(false);
-  // }
+    setCamposVazios({ ...camposVazios, ...errors });
+
+    if (_.isEqual(camposVazios, teste)) {
+      if (estado.senha === estado.senhaConfirmada) {
+        const dataFormatada = formatacaoData();
+        estado.data_nascimento = dataFormatada;
+        const resposta = await managerService.requisicaoCriarUsuario(
+          estado,
+          endereco
+        );
+        if (resposta) {
+          Alert.alert("Bem vindo(a)","Usuário cadastrado com sucesso!");
+          navigation.navigate("Login");
+        } else {
+          Alert.alert("Erro","Não foi possível cadastrar o usuario!");
+          navigation.push("Cadastro");
+        }
+      } else {
+        Alert.alert("Erro","As senhas digitadas são diferentes!");
+      }
+    } else {
+      Alert.alert("Erro","Preencha todos os campos obrigatórios!");
+    }
+
+    setCarregando(false);
+  }
+
+  function setandoCamposNulos(inputIdentifier, enteredValue) {
+    if (inputIdentifier !== "complemento") {
+      if (
+        enteredValue === "" ||
+        enteredValue === undefined ||
+        enteredValue === null
+      ) {
+        setCamposVazios({ ...camposVazios, [inputIdentifier]: true });
+      } else {
+        setCamposVazios({ ...camposVazios, [inputIdentifier]: false });
+      }
+    }
+  }
 
   function preenchendoDados(inputIdentifier, enteredValue) {
     if (inputIdentifier === "nome") {
@@ -121,6 +172,8 @@ function Cadastro({ navigation }) {
     } else {
       setErro({ ...erro, [inputIdentifier]: false });
     }
+
+    setandoCamposNulos(inputIdentifier, enteredValue);
 
     setEstado((curEstado) => {
       return {
@@ -140,17 +193,14 @@ function Cadastro({ navigation }) {
       }
     }
 
+    setandoCamposNulos(inputIdentifier, enteredValue);
+
     setEstado((curEstado) => {
       return {
         ...curEstado,
         [inputIdentifier]: enteredValue,
       };
     });
-  }
-
-  const preenchendoData = (event, enteredValue) => {
-    setData(enteredValue);
-
   }
 
   function formatacaoData() {
@@ -171,6 +221,8 @@ function Cadastro({ navigation }) {
     } else {
       setErro({ ...erro, [inputIdentifier]: false });
     }
+
+    setandoCamposNulos(inputIdentifier, enteredValue);
 
     setEndereco((curEndereco) => {
       return {
@@ -216,6 +268,7 @@ function Cadastro({ navigation }) {
               preenchendoDados("nome", text);
             }}
             value={estado.nome}
+            camposVazios={camposVazios.nome}
           />
           <CaixaInputsMesmaLinha>
             <CaixaRotuloMesmaLinha>
@@ -238,49 +291,26 @@ function Cadastro({ navigation }) {
                 }}
                 value={estado.telefone}
                 erro={erro.telefone}
+                camposVazios={camposVazios.telefone}
               />
               {erro.telefone && (
                 <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
               )}
             </CaixaRotuloMesmaLinha>
             <CaixaRotuloMesmaLinha>
-              {/* <InputMask
-                placeholder="Data de Nascimento:"
-                keyboardType="numeric"
-                type={"datetime"}
-                options={{
-                  format: "DD/MM/YYYY",
-                }}
-                width="100%"
-                maxLenght="10"
-                label="data_nascimento"
-                includeRawValueInChangeText={true}
-                onChangeText={(text) => {
-                  preenchendoData("data_nascimento", text);
-                }}
-                value={estado.data_nascimento}
-                erro={erro.data_nascimento}
-              /> */}
-              <DatePicker
+              <Data
+                customStyles={{dateInput: { borderWidth: 0 },  placeholderText: {color: "#90929B"}}}
                 placeholder="Data de Nascimento:"
                 maxDate={new Date()}
                 format="DD/MM/YYYY"
-                mode='date'
+                mode="date"
                 showIcon={false}
-                date={data}
+                date={estado.data_nascimento}
                 onDateChange={(data) => {
-                  setData(data);
+                  preenchendoDados("data_nascimento", data);
                 }}
-                />
-              {erro.data_nascimento && (
-                <>
-                  {erroDataBack ? (
-                    <Rotulo>Digite uma data válida.</Rotulo>
-                  ) : (
-                    <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
-                  )}
-                </>
-              )}
+                camposVazios={camposVazios.data_nascimento}
+              />
             </CaixaRotuloMesmaLinha>
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
@@ -296,6 +326,7 @@ function Cadastro({ navigation }) {
               }}
               value={estado.cpf}
               erro={erro.cpf}
+              camposVazios={camposVazios.cpf}
             />
             {erro.cpf && (
               <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
@@ -312,6 +343,7 @@ function Cadastro({ navigation }) {
               }}
               value={estado.email}
               erro={erro.email}
+              camposVazios={camposVazios.email}
             />
             {erro.email && (
               <Rotulo>Digite um email no formato email@email.com</Rotulo>
@@ -330,6 +362,7 @@ function Cadastro({ navigation }) {
               }}
               value={endereco.cep}
               erro={erro.cep}
+              camposVazios={camposVazios.cep}
             />
             {erro.cep && <Rotulo>Digite um CEP no formato xxxxx-xxx</Rotulo>}
           </CaixaRotulo>
@@ -342,9 +375,12 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("pais", text);
             }}
             value={endereco.pais}
+            camposVazios={camposVazios.pais}
           />
 
-          <PickerView>
+          <PickerView
+          camposVazios={camposVazios.estado}
+          >
             <PickerEstado
               selectedValue={estadoSelecionado}
               onValueChange={(itemValue, itemIndex) => {
@@ -377,6 +413,7 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("cidade", text);
             }}
             value={endereco.cidade}
+            camposVazios={camposVazios.cidade}
           />
           <Input
             placeholder="Bairro:"
@@ -387,6 +424,7 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("bairro", text);
             }}
             value={endereco.bairro}
+            camposVazios={camposVazios.bairro}
           />
           <Input
             placeholder="Rua:"
@@ -397,6 +435,7 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("rua", text);
             }}
             value={endereco.rua}
+            camposVazios={camposVazios.rua}
           />
           <InputMask
             type={"only-numbers"}
@@ -409,6 +448,7 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("numero", text);
             }}
             value={endereco.numero}
+            camposVazios={camposVazios.numero}
           />
           <Input
             placeholder="Complemento:"
@@ -432,6 +472,7 @@ function Cadastro({ navigation }) {
               preenchendoDados("senha", text);
             }}
             value={estado.senha}
+            camposVazios={camposVazios.senha}
           />
           <Input
             placeholder="Confirme sua senha:"
@@ -445,6 +486,7 @@ function Cadastro({ navigation }) {
               preenchendoDados("senhaConfirmada", text);
             }}
             value={endereco.senhaConfirmada}
+            camposVazios={camposVazios.senhaConfirmada}
           />
         </CaixaInputs>
 

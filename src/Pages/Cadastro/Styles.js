@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
-import { Picker } from '@react-native-picker/picker';
+import { Picker } from "@react-native-picker/picker";
 import { Cores } from "../../variaveis";
+import DatePicker from "react-native-datepicker";
 
 export const Body = styled.View`
   display: flex;
@@ -13,11 +14,11 @@ export const Body = styled.View`
 export const CaixaTitulo = styled.View`
   display: flex;
   flex-direction: row;
-  width:${(props) => props.width};
+  width: ${(props) => props.width};
   align-items: center;
   justify-content: space-around;
   margin-top: ${(props) => props.marginTop};
-  margin-bottom:30px;
+  margin-bottom: 30px;
 `;
 
 export const Logo = styled.Image`
@@ -27,9 +28,9 @@ export const Logo = styled.Image`
 
 export const Titulo = styled.Text`
   font-size: 25px;
-  display:flex;
+  display: flex;
   align-items: center;
-  width:${(props) => props.width};
+  width: ${(props) => props.width};
 `;
 
 export const CaixaInputs = styled.View`
@@ -39,13 +40,13 @@ export const CaixaInputs = styled.View`
 `;
 
 export const CaixaRotuloMesmaLinha = styled.View`
-  display:flex;
+  display: flex;
   flex-direction: column;
   width: 48%;
 `;
 
 export const CaixaRotulo = styled.View`
-  display:flex;
+  display: flex;
   flex-direction: column;
   width: 100%;
 `;
@@ -58,48 +59,83 @@ export const Rotulo = styled.Text`
   margin-bottom: 1%;
 `;
 
+export const Data = styled(DatePicker)`
+  width: 100%;
+  height: 50px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  background-color: #e4e6f4;
+  border-width: 1.5px;
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if (props.camposVazios) {
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+  border-radius: 5px;
+  justify-content: center;
+`;
+
 export const PickerView = styled.View`
   display: flex;
   width: 100%;
   background-color: #e4e6f4;
   border-radius: 5px;
-  border: #151b57;
+  border: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if (props.camposVazios) {
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
   border-width: 1.5px;
   margin-top: 6px;
   margin-bottom: 6px;
   overflow: hidden;
-`
+`;
 
 export const PickerEstado = styled(Picker)`
-  display:flex;
+  display: flex;
   background-color: #e4e6f4;
-  width:100%;
+  width: 100%;
   margin-top: 0;
 `;
 
 export const MensagemErro = styled.Text`
-color: #d90429;
-width:100%;
-font-size: 11px;
-padding-left: 10px;
+  color: #d90429;
+  width: 100%;
+  font-size: 11px;
+  padding-left: 10px;
 `;
-
 
 export const CaixaInputsMesmaLinha = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width:100%;
+  width: 100%;
 `;
 
 export const CaixaBotoes = styled.View`
   display: flex;
   flex-direction: row;
-  margin-top:16px;
+  margin-top: 16px;
   justify-content: space-between;
   align-items: center;
   width: 70%;
-  
+
   margin-bottom: 30px;
 `;
 
@@ -113,6 +149,6 @@ export const Lgpd = styled.Text`
   font-family: ${(props) => props.fontFamily};
   font-size: 16px;
   text-align: right;
-  color: #151B57;
+  color: #151b57;
   text-decoration: underline;
 `;
