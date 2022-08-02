@@ -116,7 +116,7 @@ export const requisicaoVerificarSenha = async (senha) => {
       return requesterService.verificarSenha(res, senha);
     })
     .catch((error) => {
-      requisicaoErro(error);
+      Alert.alert("ATENÇÃO","As senhas não conferem");
     });
   return resposta;
 };
