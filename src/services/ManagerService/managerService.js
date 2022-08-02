@@ -155,7 +155,11 @@ export const DeletarUsuario = async (id) => {
       );
     })
     .catch((error) => {
-      requisicaoErro(error);
+      //requisicaoErro(error);
+      Alert.alert(
+        "",
+        "Erro ao deletar usuario.",
+      );
       return false;
     });
 

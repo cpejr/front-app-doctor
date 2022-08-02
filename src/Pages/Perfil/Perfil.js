@@ -156,7 +156,7 @@ function Perfil({ navigation }) {
             <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
             <Dados fontSize={fontSizeDados}>País:  {endereco.pais}</Dados>
             <Dados fontSize={fontSizeDados}>Estado: {endereco.estado}</Dados>
-            <Dados fontSize={fontSizeDados}>Cidade:  {endereco.cidade}</Dados>
+            <Dados fontSize={fontSizeDados}>Cidade: {endereco.cidade}</Dados>
             <Dados fontSize={fontSizeDados}>CEP:  {endereco.cep}</Dados>
             <Dados fontSize={fontSizeDados}>
               Rua: {endereco.rua}, {endereco.numero}
