@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView} from "react-native";
 import { Dimensions } from "react-native";
-
-import * as managerService from "../../services/ManagerService/managerService";
-
 import { ActivityIndicator, Colors } from "react-native-paper";
-
 import {
   Body,
   CaixaBotao,
   CaixaInputs,
   CaixaTitulo,
   CaixaView,
+  Rotulo,
+  TextoRotulo,
   Titulo,
+  InputNovaSenha,
+  InputConfirmacaoNovaSenha,
 } from "./Styles";
-
 import Input from "../../styles/Input/Input";
 import Botao from "../../styles/Botao/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function AlterarSenha({ navigation }) {
   const heightTela = `${Dimensions.get("window").height}px`;
@@ -30,7 +30,7 @@ function AlterarSenha({ navigation }) {
 
   async function requisicaoVerificarSenha() {
     if (!senhaAtual) {
-      alert("Preencha os campos corretamente!");
+      Alert.alert("ATENÇÃO", "Preencha os campos corretamente!");
     } else {
       setCarregando(true);
       const resposta = await managerService.requisicaoVerificarSenha(
@@ -38,27 +38,33 @@ function AlterarSenha({ navigation }) {
       );
       if (resposta) {
         setConfirmado(false);
-        alert("As senhas conferem!");
       } else {
-        alert("As senhas não conferem");
         navigation.push("AlterarSenha");
       }
       setCarregando(false);
     }
   }
-  async function requicaoAlterarSenha() {
+  async function requisicaoAlterarSenha() {
+    if (novaSenha.length == 0 || confirmarNovaSenha == 0) {
+      Alert.alert("ATENÇÃO", "Preencha os campos corretamente!");
+      return;
+    }
+    if (novaSenha.length < 8) {
+      Alert.alert("ATENÇÃO", "Insira uma senha válida!");
+      return;
+    }
     if (!novaSenha || !confirmarNovaSenha) {
-      alert("Preencha os campos corretamente!");
+      Alert.alert("ATENÇÃO", "Preencha os campos corretamente!");
     } else {
       if (novaSenha == confirmarNovaSenha) {
         setCarregando(true);
         await managerService.requisicaoAlterarSenha(novaSenha);
         setCarregando(false);
-        alert("Senha atualizada com sucesso!");
+        Alert.alert("PARABÉNS", "Senha atualizada com sucesso!");
         navigation.navigate("Perfil");
         setConfirmado(true);
       } else {
-        alert("As senhas não conferem!");
+        Alert.alert("ATENÇÃO", "As senhas não conferem!");
       }
     }
   }
@@ -73,7 +79,7 @@ function AlterarSenha({ navigation }) {
           {confirmado ? (
             <CaixaInputs>
               <CaixaTitulo>
-                <Titulo fontSize="15px">Comfirme sua senha atual:</Titulo>
+                <Titulo fontSize="15px">Confirme sua senha atual:</Titulo>
               </CaixaTitulo>
               <Input
                 placeholder="Senha Atual:"
@@ -119,21 +125,38 @@ function AlterarSenha({ navigation }) {
               <CaixaTitulo>
                 <Titulo fontSize="15px">Digite sua nova senha:</Titulo>
               </CaixaTitulo>
-              <Input
+              <InputNovaSenha
                 placeholder="Nova senha:"
                 onChangeText={setNovaSenha}
+                novaSenha={novaSenha}
                 type="password"
                 secureTextEntry
-              ></Input>
+              ></InputNovaSenha>
+              {novaSenha.length > 0 && novaSenha.length < 8 ? (
+                <Rotulo>
+                  <TextoRotulo>Digite no mínimo 8 caractéres.</TextoRotulo>
+                </Rotulo>
+              ) : (
+                <></>
+              )}
               <CaixaTitulo>
                 <Titulo fontSize="15px">Confirme sua nova senha:</Titulo>
               </CaixaTitulo>
-              <Input
+              <InputConfirmacaoNovaSenha
                 placeholder="Confirmando sua nova senha:"
                 onChangeText={setConfirmarNovaSenha}
+                confirmarNovaSenha={confirmarNovaSenha}
                 type="password"
                 secureTextEntry
-              ></Input>
+              ></InputConfirmacaoNovaSenha>
+              {confirmarNovaSenha.length > 0 &&
+              confirmarNovaSenha.length < 8 ? (
+                <Rotulo>
+                  <TextoRotulo>Digite no mínimo 8 caractéres.</TextoRotulo>
+                </Rotulo>
+              ) : (
+                <></>
+              )}
               <CaixaBotao>
                 <Botao
                   width="42%"
@@ -142,7 +165,7 @@ function AlterarSenha({ navigation }) {
                   borderRadius="3"
                   borderColor="#DD0D0D"
                   borderWidth="1px"
-                  onPress={() => setConfirmado(true)}
+                  onPress={() => navigation.navigate("Perfil")}
                 >
                   <ConteudoBotao width="100%" fontSize="15px" color="#000000">
                     CANCELAR
@@ -155,7 +178,7 @@ function AlterarSenha({ navigation }) {
                   borderRadius="3"
                   borderColor="#151B57"
                   borderWidth="1px"
-                  onPress={requicaoAlterarSenha}
+                  onPress={requisicaoAlterarSenha}
                 >
                   {carregando ? (
                     <ActivityIndicator animating={true} color={Colors.white} />
