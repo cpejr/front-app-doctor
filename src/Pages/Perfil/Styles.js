@@ -67,6 +67,7 @@ export const CaixaDataCpf = styled.View`
   justify-content: space-around;
   width: 90%;
   align-items: center;
+  margin-bottom: 15px;
 `;
 
 export const CaixaNascidoData = styled.View`
@@ -97,6 +98,7 @@ export const ViewContatoEndereco = styled.View`
   justify-content: center;
   padding-left: 8%;
   width:  ${(props) => props.width};
+  padding-right: ${(props) => props.paddingRight};
   background-color: ${Cores.cinza[9]};
   border: 2px solid ${Cores.cinza[6]};
   border-radius: 4px;
@@ -127,7 +129,7 @@ export const CaixaBotoes = styled.View`
 `;
 
 export const ExcluirConta = styled.Text`
-  color: green;
+  color: ${Cores.azul};
   margin-top: 2%;
   text-decoration: underline;
   font-size:15px
