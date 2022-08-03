@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScrollView,
   Alert,
@@ -84,7 +84,22 @@ function Cadastro({ navigation }) {
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
   const [cepFormatado, setCepFormatado] = useState("");
-  const [camposVazios, setCamposVazios] = useState(false);
+  const [camposVazios, setCamposVazios] = useState({
+    nome: null,
+    telefone: null,
+    email: null,
+    cep: null,
+    pais: null,
+    estado: null,
+    cidade: null,
+    rua: null,
+    numero: null,
+    cpf: null,
+    data_nascimento: null,
+    bairro: null,
+    senha: null,
+    senhaConfirmada: null,
+  });
   const [data_nascimentoFront, setData_nascimentoFront] = useState();
   const [camposCorretos, setCamposCorretos] = useState();
 
@@ -101,9 +116,7 @@ function Cadastro({ navigation }) {
       setCarregando(false);
     } else {
       verificandoErros();
-      console.log("Campos Vazios - VerificacaoTermosUso: ", camposVazios);
-      console.log("Errors - VerificacaoTermosUso: ", errors);
-      console.log("Campos Corretos - VerificacaoTermosUso: ", camposCorretos);
+      
       if (camposCorretos === true) {
         requisicaoCadastro();
       } else {
@@ -134,15 +147,20 @@ function Cadastro({ navigation }) {
     if (!estado.senhaConfirmada) errors.senhaConfirmada = true;
     if (erro.email === true) errors.email = true;
 
-    setCamposVazios({ ...camposVazios, ...errors });
-    console.log("Campos Vazios - Verificando Errors: ", camposVazios);
-    console.log("Errors - Verificando Errors: ", errors);
-    console.log("Campos Corretos - Verificando Errors: ", camposCorretos);
-
+    for (const propriedade_errors in errors) {
+      if (errors[propriedade_errors] === true) {
+        for (const propriedade_campos in camposVazios) {
+          if (propriedade_campos === propriedade_errors) {
+            camposVazios[propriedade_campos] = true;
+          }
+        }
+      }
+    }
     if (_.isEqual(camposVazios, teste)) {
       setCamposCorretos(true);
     } else {
       setCamposCorretos(false);
+      setCarregando(false);
     }
   }
 
@@ -261,9 +279,18 @@ function Cadastro({ navigation }) {
   }
 
   function consolando() {
-    console.log("Campos Vazios: ", camposVazios);
-    console.log("Errors: ", errors);
-    console.log("Campos Corretos: ", camposCorretos);
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 265 ~ Consolando ~ camposVazios",
+      camposVazios
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 266 ~ Consolando ~ errors",
+      errors
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 267 ~ Consolando ~ camposCorretos",
+      camposCorretos
+    );
   }
 
   //responsividade paisagem
