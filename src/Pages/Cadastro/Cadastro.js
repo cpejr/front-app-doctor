@@ -122,8 +122,10 @@ function Cadastro({ navigation }) {
 
     setCamposVazios({ ...camposVazios, ...errors });
 
+
     if (_.isEqual(camposVazios, teste)) {
       if (estado.senha === estado.senhaConfirmada) {
+
         const dataFormatada = formatacaoData();
         estado.data_nascimento = dataFormatada;
         const resposta = await managerService.requisicaoCriarUsuario(
@@ -142,6 +144,7 @@ function Cadastro({ navigation }) {
       }
     } else {
       Alert.alert("Erro", "Preencha todos os campos obrigatórios!");
+   
     }
 
     setCarregando(false);
@@ -165,9 +168,10 @@ function Cadastro({ navigation }) {
     if (inputIdentifier === "nome") {
       enteredValue = apenasLetras(enteredValue);
     }
-    // if(inputIdentifier === "data_nascimento"){
-    //   setData_nascimentoFront(enteredValue);
-    // }
+
+    if(inputIdentifier === "data_nascimento"){
+      setData_nascimentoFront(enteredValue);
+     }
 
     if (
       (inputIdentifier === "telefone" && enteredValue.length < 11) ||
@@ -212,7 +216,7 @@ function Cadastro({ navigation }) {
 
   function formatacaoData() {
     try {
-      const response = brParaPadrao(estado.data_nascimento);
+      const response = brParaPadrao(data_nascimentoFront);
       return response;
     } catch {
       alert("Data inválida.");
