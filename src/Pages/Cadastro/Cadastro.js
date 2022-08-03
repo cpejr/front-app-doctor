@@ -84,11 +84,12 @@ function Cadastro({ navigation }) {
   const [carregando, setCarregando] = useState(false);
   const [cepFormatado, setCepFormatado] = useState("");
   const [camposVazios, setCamposVazios] = useState(false);
+  const [data_nascimentoFront, setData_nascimentoFront] = useState();
 
   const { width, height } = useWindowDimensions();
 
   const apenasLetras = (value) => {
-   return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g,"");
+    return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g, "");
   };
 
   async function verificacaoTermosUso() {
@@ -130,17 +131,17 @@ function Cadastro({ navigation }) {
           endereco
         );
         if (resposta) {
-          Alert.alert("Bem vindo(a)","Usuário cadastrado com sucesso!");
+          Alert.alert("Bem vindo(a)", "Usuário cadastrado com sucesso!");
           navigation.navigate("Login");
         } else {
-          Alert.alert("Erro","Não foi possível cadastrar o usuario!");
+          Alert.alert("Erro", "Não foi possível cadastrar o usuario!");
           navigation.push("Cadastro");
         }
       } else {
-        Alert.alert("Erro","As senhas digitadas são diferentes!");
+        Alert.alert("Erro", "As senhas digitadas são diferentes!");
       }
     } else {
-      Alert.alert("Erro","Preencha todos os campos obrigatórios!");
+      Alert.alert("Erro", "Preencha todos os campos obrigatórios!");
     }
 
     setCarregando(false);
@@ -164,9 +165,15 @@ function Cadastro({ navigation }) {
     if (inputIdentifier === "nome") {
       enteredValue = apenasLetras(enteredValue);
     }
+    // if(inputIdentifier === "data_nascimento"){
+    //   setData_nascimentoFront(enteredValue);
+    // }
+
     if (
       (inputIdentifier === "telefone" && enteredValue.length < 11) ||
-      (inputIdentifier === "cpf" && enteredValue.length < 11)
+      (inputIdentifier === "cpf" && enteredValue.length < 11) ||
+      (inputIdentifier === "senha" && enteredValue.length < 8) ||
+      (inputIdentifier === "senhaConfirmada" && enteredValue.length < 8)
     ) {
       setErro({ ...erro, [inputIdentifier]: true });
     } else {
@@ -299,7 +306,10 @@ function Cadastro({ navigation }) {
             </CaixaRotuloMesmaLinha>
             <CaixaRotuloMesmaLinha>
               <Data
-                customStyles={{dateInput: { borderWidth: 0 },  placeholderText: {color: "#90929B"}}}
+                customStyles={{
+                  dateInput: { borderWidth: 0 },
+                  placeholderText: { color: "#90929B" },
+                }}
                 placeholder="Data de Nascimento:"
                 maxDate={new Date()}
                 format="DD/MM/YYYY"
@@ -378,9 +388,7 @@ function Cadastro({ navigation }) {
             camposVazios={camposVazios.pais}
           />
 
-          <PickerView
-          camposVazios={camposVazios.estado}
-          >
+          <PickerView camposVazios={camposVazios.estado}>
             <PickerEstado
               selectedValue={estadoSelecionado}
               onValueChange={(itemValue, itemIndex) => {
@@ -460,34 +468,46 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.complemento}
           />
-          <Input
-            placeholder="Defina sua senha:"
-            keyboardType="default"
-            width="100%"
-            id="senha"
-            type="password"
-            secureTextEntry
-            label="Senha"
-            onChangeText={(text) => {
-              preenchendoDados("senha", text);
-            }}
-            value={estado.senha}
-            camposVazios={camposVazios.senha}
-          />
-          <Input
-            placeholder="Confirme sua senha:"
-            keyboardType="default"
-            width="100%"
-            id="senhaConfirmada"
-            secureTextEntry
-            type="password"
-            label="Senha Confirmada"
-            onChangeText={(text) => {
-              preenchendoDados("senhaConfirmada", text);
-            }}
-            value={endereco.senhaConfirmada}
-            camposVazios={camposVazios.senhaConfirmada}
-          />
+          <CaixaRotulo>
+            <Input
+              placeholder="Defina sua senha:"
+              keyboardType="default"
+              width="100%"
+              id="senha"
+              type="password"
+              secureTextEntry
+              label="Senha"
+              onChangeText={(text) => {
+                preenchendoDados("senha", text);
+              }}
+              value={estado.senha}
+              camposVazios={camposVazios.senha}
+              erro={erro.senha}
+            />
+            {erro.senha && (
+              <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
+            )}
+          </CaixaRotulo>
+          <CaixaRotulo>
+            <Input
+              placeholder="Confirme sua senha:"
+              keyboardType="default"
+              width="100%"
+              id="senhaConfirmada"
+              secureTextEntry
+              type="password"
+              label="Senha Confirmada"
+              onChangeText={(text) => {
+                preenchendoDados("senhaConfirmada", text);
+              }}
+              value={endereco.senhaConfirmada}
+              camposVazios={camposVazios.senhaConfirmada}
+              erro={erro.senhaConfirmada}
+            />
+            {erro.senhaConfirmada && (
+              <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
+            )}
+          </CaixaRotulo>
         </CaixaInputs>
 
         <CheckboxTexto>
