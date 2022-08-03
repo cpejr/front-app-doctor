@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useWindowDimensions, ScrollView, Alert } from "react-native";
-import Botao from "../../styles/Botao";
-import logoGuilherme from "./../../assets/logoGuilherme.png";
-
-import * as managerService from "../../services/ManagerService/managerService";
-
 import {
   Body,
   CaixaBotao,
@@ -23,7 +18,9 @@ import {
   CaixaBotoes,
   ExcluirConta,
 } from "./Styles";
+import Botao from "../../styles/Botao";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -31,11 +28,9 @@ function Perfil({ navigation }) {
   const [telefone, setTelefone] = useState("");
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
-
   const [cpfMasked, setCpfMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
-
   const { width, height, fontSize } = useWindowDimensions();
 
   async function pegandoDados() {
@@ -46,6 +41,10 @@ function Perfil({ navigation }) {
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
   }
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
   useEffect(() => {
     setCpfMasked(
@@ -78,9 +77,7 @@ function Perfil({ navigation }) {
     );
   }, [dataNascimento]);
 
-  useEffect(() => {
-    pegandoDados();
-  }, []);
+  
 
   const confirmacaoExcluir = () =>
     Alert.alert(
@@ -115,7 +112,6 @@ function Perfil({ navigation }) {
           <Botao
             width={larguraBotoes}
             height="30px"
-            //backgroundColor={Cores.lilas[3]} -- Estatico
             backgroundColor="green"
             borderRadius="3px"
             borderColor={Cores.lilas[2]}
