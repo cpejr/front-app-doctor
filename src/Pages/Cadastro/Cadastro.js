@@ -37,6 +37,7 @@ import { estados } from "./estados";
 import { useFonts } from "expo-font";
 import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
+import { isEqual } from "lodash";
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -85,6 +86,7 @@ function Cadastro({ navigation }) {
   const [cepFormatado, setCepFormatado] = useState("");
   const [camposVazios, setCamposVazios] = useState(false);
   const [data_nascimentoFront, setData_nascimentoFront] = useState();
+  const [camposCorretos, setCamposCorretos] = useState();
 
   const { width, height } = useWindowDimensions();
 
@@ -92,17 +94,29 @@ function Cadastro({ navigation }) {
     return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g, "");
   };
 
-  async function verificacaoTermosUso() {
+  function verificacaoTermosUso() {
     setCarregando(true);
     if (!checked) {
       alert("É obrigatório concordar com os termos de uso.");
       setCarregando(false);
     } else {
-      requisicaoCadastro();
+      verificandoErros();
+      console.log("Campos Vazios - VerificacaoTermosUso: ", camposVazios);
+      console.log("Errors - VerificacaoTermosUso: ", errors);
+      console.log("Campos Corretos - VerificacaoTermosUso: ", camposCorretos);
+      if (camposCorretos === true) {
+        requisicaoCadastro();
+      } else {
+        Alert.alert(
+          "Erro",
+          "Preencha todos os campos obrigatórios corretamente!"
+        );
+        setCarregando(false);
+      }
     }
   }
 
-  async function requisicaoCadastro() {
+  function verificandoErros() {
     if (!estado.nome) errors.nome = true;
     if (!estado.telefone) errors.telefone = true;
     if (!estado.tipo) errors.tipo = true;
@@ -121,32 +135,35 @@ function Cadastro({ navigation }) {
     if (erro.email === true) errors.email = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
-
+    console.log("Campos Vazios - Verificando Errors: ", camposVazios);
+    console.log("Errors - Verificando Errors: ", errors);
+    console.log("Campos Corretos - Verificando Errors: ", camposCorretos);
 
     if (_.isEqual(camposVazios, teste)) {
-      if (estado.senha === estado.senhaConfirmada) {
+      setCamposCorretos(true);
+    } else {
+      setCamposCorretos(false);
+    }
+  }
 
-        const dataFormatada = formatacaoData();
-        estado.data_nascimento = dataFormatada;
-        const resposta = await managerService.requisicaoCriarUsuario(
-          estado,
-          endereco
-        );
-        if (resposta) {
-          Alert.alert("Bem vindo(a)", "Usuário cadastrado com sucesso!");
-          navigation.navigate("Login");
-        } else {
-          Alert.alert("Erro", "Não foi possível cadastrar o usuario!");
-          navigation.push("Cadastro");
-        }
+  async function requisicaoCadastro() {
+    if (estado.senha === estado.senhaConfirmada) {
+      const dataFormatada = formatacaoData();
+      estado.data_nascimento = dataFormatada;
+      const resposta = await managerService.requisicaoCriarUsuario(
+        estado,
+        endereco
+      );
+      if (resposta) {
+        Alert.alert("Bem vindo(a)", "Usuário cadastrado com sucesso!");
+        navigation.navigate("Login");
       } else {
-        Alert.alert("Erro", "As senhas digitadas são diferentes!");
+        Alert.alert("Erro", "Não foi possível cadastrar o usuario!");
+        navigation.push("Cadastro");
       }
     } else {
-      Alert.alert("Erro", "Preencha todos os campos obrigatórios!");
-   
+      Alert.alert("Erro", "As senhas digitadas são diferentes!");
     }
-
     setCarregando(false);
   }
 
@@ -169,9 +186,9 @@ function Cadastro({ navigation }) {
       enteredValue = apenasLetras(enteredValue);
     }
 
-    if(inputIdentifier === "data_nascimento"){
+    if (inputIdentifier === "data_nascimento") {
       setData_nascimentoFront(enteredValue);
-     }
+    }
 
     if (
       (inputIdentifier === "telefone" && enteredValue.length < 11) ||
@@ -241,6 +258,12 @@ function Cadastro({ navigation }) {
         [inputIdentifier]: enteredValue,
       };
     });
+  }
+
+  function consolando() {
+    console.log("Campos Vazios: ", camposVazios);
+    console.log("Errors: ", errors);
+    console.log("Campos Corretos: ", camposCorretos);
   }
 
   //responsividade paisagem
@@ -565,6 +588,19 @@ function Cadastro({ navigation }) {
                 CADASTRAR
               </ConteudoBotao>
             )}
+          </Botao>
+          <Botao
+            width="42%"
+            height="35px"
+            backgroundColor="#434B97"
+            borderRadius="3px"
+            borderColor="#151B57"
+            borderWidth="1px"
+            onPress={consolando}
+          >
+            <ConteudoBotao fontSize="15px" color="#ffffff" width="100%">
+              Console
+            </ConteudoBotao>
           </Botao>
         </CaixaBotoes>
       </Body>
