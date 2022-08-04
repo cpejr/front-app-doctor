@@ -257,7 +257,7 @@ function Cadastro({ navigation }) {
       const response = brParaPadrao(data_nascimentoFront);
       return response;
     } catch {
-      alert("Data inválida.");
+      Alert.alert("Erro", "Data inválida.");
     }
   }
 
