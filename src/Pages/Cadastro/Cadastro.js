@@ -38,6 +38,7 @@ import { useFonts } from "expo-font";
 import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
 import { isEqual } from "lodash";
+import { sleep } from "../../utils/sleep"; 
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -109,7 +110,6 @@ function Cadastro({ navigation }) {
     return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g, "");
   };
 
-  let validacaoErrors = false;
   
   function verificacaoTermosUso() {
     setCarregando(true);
@@ -118,18 +118,13 @@ function Cadastro({ navigation }) {
       alert("É obrigatório concordar com os termos de uso.");
       setCarregando(false);
     } else {
+      verificandoErros(); 
       
-      verificandoErros();
-      if( validacaoErrors === true){
-        requisicaoCadastro();
-      } else{
-        Alert.alert("Erro", "Preencha todos os campos obrigatórios corretamente!");
-        setCarregando(false);
-      }
     }
+    
   }
-
-    function verificandoErros() {
+   
+    async function verificandoErros() {
     if (!estado.nome) errors.nome = true;
     if (!estado.telefone) errors.telefone = true;
     if (!estado.tipo) errors.tipo = true;
@@ -163,8 +158,10 @@ function Cadastro({ navigation }) {
     }
     
     if (_.isEqual(camposVazios, teste)) {
-      validacaoErrors = true;
+      requisicaoCadastro();
     } else {
+      Alert.alert("Erro", "Preencha todos os campos obrigatórios corretamente!");
+      await sleep(1500);
       setCarregando(false);
     }
   }
