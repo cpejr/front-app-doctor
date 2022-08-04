@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
+import InputMask from "../../styles/InputMask/InputMask";
 import { useWindowDimensions, ScrollView } from "react-native";
+import { brParaPadrao } from "../../utils/date";
 import {
   Body,
   CaixaAlterarDados,
@@ -29,6 +31,21 @@ function AlterarDados({ navigation }) {
   const [cpfMasked, setCpfMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
+  const [camposNulos, setCamposNulos] = useState({
+    nome: "",
+    telefone: "",
+    data_nascimento: "",
+    cpf: "",
+    email: "",
+    cep: "",
+    pais: "",
+    estado: "",
+    cidade: "",
+    bairro: "",
+    rua: "",
+    numero: "",
+    complemento: "",
+  });
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario();
@@ -39,6 +56,7 @@ function AlterarDados({ navigation }) {
     setEndereco(resposta.dadosEndereco);
     setComplemento(resposta.dadosEndereco.complemento);
     setNumero(resposta.dadosEndereco.numero + " ");
+    
   }
 
   useEffect(() => {
@@ -72,6 +90,15 @@ function AlterarDados({ navigation }) {
     );
   }, [dataNascimento]);
 
+  function formatacaoData() {
+    try {
+      const response = brParaPadrao(estado.data_nascimento);
+      return response;
+    } catch {
+      alert("Data inválida.");
+    }
+  }
+
   async function atualizarDados() {
     await managerService.UpdateDadosUsuario(
       usuario.id,
@@ -79,7 +106,9 @@ function AlterarDados({ navigation }) {
       novoEndereco,
       estado
     );
-    navigation.push("Perfil");
+    const dataFormatada = formatacaoData();
+    estado.data_nascimento = dataFormatada;
+    navigation.push("Perfil")
   }
 
   function preenchendoDados(identificador, valor) {
@@ -115,32 +144,50 @@ function AlterarDados({ navigation }) {
                 preenchendoDados("nome", text);
               }}
             />
-            <Input
+            <InputMask
               placeholder={telMasked}
-              keyboardType="default"
-              width="100%"
-              label="telefone"
-              onChangeText={(text) => {
-                preenchendoDados("telefone", text);
+              keyboardType="numeric"
+              width="48%"
+              type={"cel-phone"}
+              options={{
+                maskType: "BRL",
+                withDDD: true,
+                dddMask: "(99) ",
+              }}
+              textContentType="telephoneNumber"
+              dataDetectorTypes="phoneNumber"
+              label="Telefone"
+              includeRawValueInChangeText={true}
+              onChangeText={(maskedText, rawText) => {
+                preenchendoDados("telefone", rawText);
               }}
             />
-            <Input
+            <InputMask
               placeholder={dataMasked}
-              keyboardType="default"
-              width="100%"
+              keyboardType="numeric"
+              type={"datetime"}
+              options={{
+                format: "DD-MM-YYYY",
+              }}
+              width="48%"
+              maxLenght="10"
               label="data_nascimento"
+              includeRawValueInChangeText={true}
               onChangeText={(text) => {
                 preenchendoDados("data_nascimento", text);
               }}
+              value={estado.data_nascimento}
             />
 
-            <Input
+            <InputMask
               placeholder={cpfMasked}
               keyboardType="default"
               width="100%"
               label="cpf"
-              onChangeText={(text) => {
-                preenchendoDados("cpf", text);
+              type={"cpf"}
+              includeRawValueInChangeText={true}
+              onChangeText={(maskedText, rawText) => {
+                preenchendoDados("cpf", rawText);
               }}
             />
 
@@ -154,13 +201,15 @@ function AlterarDados({ navigation }) {
               }}
             />
 
-            <Input
-              placeholder={endereco.cep}
+            <InputMask
+              placeholder="CEP:"
               keyboardType="default"
+              type={"zip-code"}
               width="100%"
-              label="cep"
-              onChangeText={(text) => {
-                preenchendoEndereco("cep", text);
+              label="CEP"
+              includeRawValueInChangeText={true}
+              onChangeText={(maskedText, rawText) => {
+                preenchendoEndereco("cep", rawText);
               }}
             />
 
