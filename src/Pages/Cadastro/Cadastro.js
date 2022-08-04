@@ -83,53 +83,53 @@ function Cadastro({ navigation }) {
 
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
-  const [cepFormatado, setCepFormatado] = useState("");
   const [camposVazios, setCamposVazios] = useState({
-    nome: null,
-    telefone: null,
-    email: null,
-    cep: null,
-    pais: null,
-    estado: null,
-    cidade: null,
-    rua: null,
-    numero: null,
-    cpf: null,
-    data_nascimento: null,
-    bairro: null,
-    senha: null,
-    senhaConfirmada: null,
+    nome: false,
+    telefone: false,
+    email: false,
+    cep: false,
+    pais: false,
+    estado: false,
+    cidade: false,
+    rua: false,
+    numero: false,
+    cpf: false,
+    data_nascimento: false,
+    bairro: false,
+    senha: false,
+    senhaConfirmada: false,
   });
   const [data_nascimentoFront, setData_nascimentoFront] = useState();
-  const [camposCorretos, setCamposCorretos] = useState();
 
   const { width, height } = useWindowDimensions();
+
+  
 
   const apenasLetras = (value) => {
     return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g, "");
   };
 
+  let validacaoErrors = false;
+  
   function verificacaoTermosUso() {
     setCarregando(true);
+
     if (!checked) {
       alert("É obrigatório concordar com os termos de uso.");
       setCarregando(false);
     } else {
-      verificandoErros();
       
-      if (camposCorretos === true) {
+      verificandoErros();
+      if( validacaoErrors === true){
         requisicaoCadastro();
-      } else {
-        Alert.alert(
-          "Erro",
-          "Preencha todos os campos obrigatórios corretamente!"
-        );
+      } else{
+        Alert.alert("Erro", "Preencha todos os campos obrigatórios corretamente!");
         setCarregando(false);
       }
     }
   }
 
-  function verificandoErros() {
+    function verificandoErros() {
     if (!estado.nome) errors.nome = true;
     if (!estado.telefone) errors.telefone = true;
     if (!estado.tipo) errors.tipo = true;
@@ -146,6 +146,11 @@ function Cadastro({ navigation }) {
     if (!estado.senha) errors.senha = true;
     if (!estado.senhaConfirmada) errors.senhaConfirmada = true;
     if (erro.email === true) errors.email = true;
+    if (erro.cpf === true) errors.email = true;
+    if (erro.cep === true) errors.cep = true;
+    if (erro.telefone === true) errors.telefone = true;
+    if (erro.senha === true) errors.senha = true;
+    if (erro.senhaConfirmada === true) errors.senhaConfirmada = true;
 
     for (const propriedade_errors in errors) {
       if (errors[propriedade_errors] === true) {
@@ -156,15 +161,16 @@ function Cadastro({ navigation }) {
         }
       }
     }
+    
     if (_.isEqual(camposVazios, teste)) {
-      setCamposCorretos(true);
+      validacaoErrors = true;
     } else {
-      setCamposCorretos(false);
       setCarregando(false);
     }
   }
 
   async function requisicaoCadastro() {
+   
     if (estado.senha === estado.senhaConfirmada) {
       const dataFormatada = formatacaoData();
       estado.data_nascimento = dataFormatada;
@@ -277,22 +283,8 @@ function Cadastro({ navigation }) {
       };
     });
   }
-
-  function consolando() {
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 265 ~ Consolando ~ camposVazios",
-      camposVazios
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 266 ~ Consolando ~ errors",
-      errors
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 267 ~ Consolando ~ camposCorretos",
-      camposCorretos
-    );
-  }
-
+  
+  
   //responsividade paisagem
   const larguraCaixaTituloMaior = width < 600 ? "50%" : "60%";
   const larguraTituloMaior = width < 600 ? "50%" : "60%";
@@ -615,19 +607,6 @@ function Cadastro({ navigation }) {
                 CADASTRAR
               </ConteudoBotao>
             )}
-          </Botao>
-          <Botao
-            width="42%"
-            height="35px"
-            backgroundColor="#434B97"
-            borderRadius="3px"
-            borderColor="#151B57"
-            borderWidth="1px"
-            onPress={consolando}
-          >
-            <ConteudoBotao fontSize="15px" color="#ffffff" width="100%">
-              Console
-            </ConteudoBotao>
           </Botao>
         </CaixaBotoes>
       </Body>
