@@ -4,7 +4,6 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
 import InputMask from "../../styles/InputMask/InputMask";
 import { useWindowDimensions, ScrollView } from "react-native";
-import { brParaPadrao } from "../../utils/date";
 import {
   Body,
   CaixaAlterarDados,
@@ -12,6 +11,8 @@ import {
   CaixaTitulo,
   Titulo,
   CaixaBotoes,
+  Data,
+  
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis"
@@ -32,19 +33,19 @@ function AlterarDados({ navigation }) {
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
   const [camposNulos, setCamposNulos] = useState({
-    nome: "",
-    telefone: "",
-    data_nascimento: "",
-    cpf: "",
-    email: "",
-    cep: "",
-    pais: "",
-    estado: "",
-    cidade: "",
-    bairro: "",
-    rua: "",
-    numero: "",
-    complemento: "",
+    nome: true,
+    telefone: true,
+    data_nascimento: true,
+    cpf: true,
+    email: true,
+    cep: true,
+    pais: true,
+    estado: true,
+    cidade: true,
+    bairro: true,
+    rua: true,
+    numero: true,
+    complemento: true,
   });
 
   async function pegandoDados() {
@@ -90,14 +91,6 @@ function AlterarDados({ navigation }) {
     );
   }, [dataNascimento]);
 
-  function formatacaoData() {
-    try {
-      const response = brParaPadrao(estado.data_nascimento);
-      return response;
-    } catch {
-      alert("Data inválida.");
-    }
-  }
 
   async function atualizarDados() {
     await managerService.UpdateDadosUsuario(
@@ -106,8 +99,7 @@ function AlterarDados({ navigation }) {
       novoEndereco,
       estado
     );
-    const dataFormatada = formatacaoData();
-    estado.data_nascimento = dataFormatada;
+   // const isEmpty = Object.values(camposNulos).every(x => x === null || x === '');
     navigation.push("Perfil")
   }
 
@@ -147,7 +139,7 @@ function AlterarDados({ navigation }) {
             <InputMask
               placeholder={telMasked}
               keyboardType="numeric"
-              width="48%"
+              width="100%"
               type={"cel-phone"}
               options={{
                 maskType: "BRL",
@@ -162,22 +154,22 @@ function AlterarDados({ navigation }) {
                 preenchendoDados("telefone", rawText);
               }}
             />
-            <InputMask
-              placeholder={dataMasked}
-              keyboardType="numeric"
-              type={"datetime"}
-              options={{
-                format: "DD-MM-YYYY",
-              }}
-              width="48%"
-              maxLenght="10"
-              label="data_nascimento"
-              includeRawValueInChangeText={true}
-              onChangeText={(text) => {
-                preenchendoDados("data_nascimento", text);
-              }}
-              value={estado.data_nascimento}
-            />
+            <Data
+                customStyles={{
+                  dateInput: { borderWidth: 0 },
+                  placeholderText: { color: "#90929B" },
+                }}
+                placeholder="Data de Nascimento:"
+                maxDate={new Date()}
+                format="DD/MM/YYYY"
+                mode="date"
+                showIcon={false}
+                date={estado.data_nascimento}
+                onDateChange={(data) => {
+                  preenchendoDados("data_nascimento", data);
+                }}
+        
+              />
 
             <InputMask
               placeholder={cpfMasked}
