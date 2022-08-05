@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useWindowDimensions, ScrollView } from "react-native";
-import Botao from "../../styles/Botao";
-import logoGuilherme from "./../../assets/logoGuilherme.png";
-
-import * as managerService from "../../services/ManagerService/managerService";
-
+import { useWindowDimensions, ScrollView, Alert } from "react-native";
 import {
   Body,
   CaixaBotao,
@@ -23,7 +18,9 @@ import {
   CaixaBotoes,
   ExcluirConta,
 } from "./Styles";
+import Botao from "../../styles/Botao";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -31,11 +28,9 @@ function Perfil({ navigation }) {
   const [telefone, setTelefone] = useState("");
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
-
   const [cpfMasked, setCpfMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
-
   const { width, height, fontSize } = useWindowDimensions();
 
   async function pegandoDados() {
@@ -46,6 +41,10 @@ function Perfil({ navigation }) {
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
   }
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
   useEffect(() => {
     setCpfMasked(
@@ -62,7 +61,7 @@ function Perfil({ navigation }) {
     setTelMasked(
       "(" +
         telefone.slice(0, -9) +
-        ")" +
+        ") " +
         telefone.slice(2, -4) +
         "-" +
         telefone.slice(-4)
@@ -78,11 +77,27 @@ function Perfil({ navigation }) {
     );
   }, [dataNascimento]);
 
-  useEffect(() => {
-    pegandoDados();
-  }, []);
+  
 
-  const larguraBotoesMaior = width < 600 ? "50%" : "35%";
+  const confirmacaoExcluir = () =>
+    Alert.alert(
+      "",
+      "Tem certeza que quer excluir sua conta?",
+      [
+        {
+          text: "Não",
+          style: "cancel"
+        },
+        { text: "Confirmar", onPress: () => deletarUsuario() }
+      ]
+    );
+
+  async function deletarUsuario() {
+    await managerService.DeletarUsuario(usuario.id);
+    navigation.navigate("Login");
+  }
+
+  const larguraBotoesMaior = width < 600 ? "60%" : "35%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
   const paddingBody = width < 330 ? "5%" : "10%";
   const fontSizeTitulos = fontSize < 1080 ? "20px" : "23px";
@@ -97,7 +112,6 @@ function Perfil({ navigation }) {
           <Botao
             width={larguraBotoes}
             height="30px"
-            //backgroundColor={Cores.lilas[3]} -- Estatico
             backgroundColor="green"
             borderRadius="3px"
             borderColor={Cores.lilas[2]}
@@ -121,31 +135,35 @@ function Perfil({ navigation }) {
                 </TextNascido>
                 <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
               </CaixaNascidoData>
+              <CaixaNascidoData>
+              <TextNascido fontSize={fontSizeNascido}>
+                  CPF:
+                </TextNascido>
               <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
+              </CaixaNascidoData>
             </CaixaDataCpf>
           </ViewFotoNome>
-          <ViewContatoEndereco width={larguraViews}>
+          <ViewContatoEndereco paddingRight={paddingBody} width={larguraViews}>
             <Titulo fontSize={fontSizeTitulos}>Contato</Titulo>
             <Dados fontSize={fontSizeDados}>{telMasked}</Dados>
             <Dados fontSize={fontSizeDados}>{usuario.email}</Dados>
           </ViewContatoEndereco>
-          <ViewContatoEndereco width={larguraViews}>
+          <ViewContatoEndereco paddingRight={paddingBody} width={larguraViews}>
             <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
-            <Dados fontSize={fontSizeDados}>{endereco.pais}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.estado}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.cidade}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.cep}</Dados>
+            <Dados fontSize={fontSizeDados}>País:  {endereco.pais}</Dados>
+            <Dados fontSize={fontSizeDados}>Estado: {endereco.estado}</Dados>
+            <Dados fontSize={fontSizeDados}>Cidade: {endereco.cidade}</Dados>
+            <Dados fontSize={fontSizeDados}>CEP:  {endereco.cep}</Dados>
             <Dados fontSize={fontSizeDados}>
-              {endereco.rua}, {endereco.numero}
+              Rua: {endereco.rua}, {endereco.numero}
             </Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.complemento}</Dados>
+            <Dados fontSize={fontSizeDados}>Complemento: {endereco.complemento}</Dados>
           </ViewContatoEndereco>
           <CaixaBotoes>
             <Botao
               width={larguraBotoes}
-              height="30px"
-              //backgroundColor={Cores.lilas[3]} -- Estatico
-              backgroundColor="green"
+              height="35px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -158,9 +176,8 @@ function Perfil({ navigation }) {
             </Botao>
             <Botao
               width={larguraBotoes}
-              height="30px"
-              //backgroundColor={Cores.lilas[3]} -- Estatico
-              backgroundColor="green"
+              height="35px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -171,7 +188,18 @@ function Perfil({ navigation }) {
                 ALTERAR SENHA
               </ConteudoBotaoPerfil>
             </Botao>
-            <ExcluirConta>Excluir conta</ExcluirConta>
+            <Botao
+            width={larguraBotoes}
+            height="35px"
+            backgroundColor={Cores.branco}
+            borderRadius="3px"
+            borderColor={Cores.branco}
+            borderWidth="2px"
+            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
+            onPress={() => confirmacaoExcluir()}
+            >
+            <ExcluirConta onPress={() => confirmacaoExcluir()}>Excluir conta</ExcluirConta>
+            </Botao>
           </CaixaBotoes>
         </CaixaViews>
       </Body>

@@ -79,7 +79,7 @@ function AlterarDados({ navigation }) {
       novoEndereco,
       estado
     );
-    navigation.navigate("Perfil");
+    navigation.push("Perfil");
   }
 
   function preenchendoDados(identificador, valor) {

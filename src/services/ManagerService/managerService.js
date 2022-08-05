@@ -145,3 +145,24 @@ export const requisicaoAlterarSenha = async (senha) => {
   );
   return resposta.data;
 };
+
+export const DeletarUsuario = async (id) => {
+  await requesterService
+    .deletarUsuario(id)
+    .then(() => {
+      Alert.alert(
+        "",
+        "Usuario deletado com sucesso!",
+      );
+    })
+    .catch((error) => {
+      //requisicaoErro(error);
+      Alert.alert(
+        "",
+        "Erro ao deletar usuario.",
+      );
+      return false;
+    });
+
+  return false;
+};
