@@ -159,6 +159,15 @@ function AlterarDados({ navigation }) {
     pegandoDados();
   }, []);
 
+  function setandoPlaceholder(){
+    const placeholderCEP = "CEP: " + endereco.cep;
+    const placeholderNOME = "NOME: " + {nome};
+  }
+
+  useEffect(() => {
+    setandoPlaceholder();
+  }, [usuario,endereco]);
+
   const { width } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
@@ -237,7 +246,7 @@ function AlterarDados({ navigation }) {
             />
 
             <InputMask
-              placeholder="CEP:"
+              placeholder = {placeholderCEP}
               keyboardType="default"
               type={"zip-code"}
               width="100%"
