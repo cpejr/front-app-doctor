@@ -15,9 +15,10 @@ import {
   CaixaBotoes,
   Data,
 } from "./Styles";
-
+import { cep } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import { sleep } from "../../utils/sleep";
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -30,7 +31,7 @@ function AlterarDados({ navigation }) {
 
   const [estado, setEstado] = useState({});
   const [novoEndereco, setNovoEndereco] = useState({});
-
+  const [placeholders, setPlaceholders] = useState({});
   const [cpfMasked, setCpfMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
@@ -49,7 +50,6 @@ function AlterarDados({ navigation }) {
     numero: true,
     complemento: true,
   });
-
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario();
     setUsuario(resposta.dadosUsuario);
@@ -141,8 +141,6 @@ function AlterarDados({ navigation }) {
     } else {
       Alert.alert("Erro", "Preencha Algum Campo.");
     }
-
-    // const isEmpty = Object.values(camposNulos).every(x => x === null || x === '');
   }
 
   function preenchendoDados(identificador, valor) {
@@ -159,14 +157,28 @@ function AlterarDados({ navigation }) {
     pegandoDados();
   }, []);
 
- /* function setandoPlaceholder(){
-    const placeholderCEP = "CEP: " + endereco.cep;
-    const placeholderNOME = "NOME: " + {nome};
+  function setandoPlaceholder() {
+    setPlaceholders({
+      ...placeholders,
+      nome: "Nome: " + usuario.nome,
+      telefone: "Telefone: " + telMasked,
+      data_nascimento: "Data de Nascimento: " + dataMasked,
+      cpf: "CPF: " + cpfMasked,
+      email: "Email: " + usuario.email,
+      cep: "CEP: " + cep(endereco.cep),
+      pais: "País: " + endereco.pais,
+      estado: "Estado: " + endereco.estado,
+      cidade: "Cidade: " + endereco.cidade,
+      bairro: "Bairro: " + endereco.bairro,
+      rua: "Rua: " + endereco.rua,
+      numero: "Número: " + endereco.numero,
+      complemento: "Complemento: " + endereco.complemento,
+    });
   }
 
   useEffect(() => {
     setandoPlaceholder();
-  }, [usuario,endereco]);*/
+  }, [endereco]);
 
   const { width } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
@@ -181,7 +193,7 @@ function AlterarDados({ navigation }) {
 
           <CaixaInputs width={tamanhoInputs}>
             <Input
-              placeholder={usuario.nome}
+              placeholder={placeholders.nome}
               keyboardType="default"
               width="100%"
               label="nome"
@@ -190,7 +202,7 @@ function AlterarDados({ navigation }) {
               }}
             />
             <InputMask
-              placeholder={telMasked}
+              placeholder={placeholders.telefone}
               keyboardType="numeric"
               width="100%"
               type={"cel-phone"}
@@ -209,15 +221,14 @@ function AlterarDados({ navigation }) {
             />
             <Data
               customStyles={{
-                dateInput: { 
-                  borderWidth: 0, 
+                dateInput: {
+                  borderWidth: 0,
                   alignItems: "flex-start",
-                  paddingLeft: 10 
+                  paddingLeft: 10,
                 },
                 placeholderText: { color: "#90929B" },
-                
               }}
-              placeholder="Data de Nascimento:"
+              placeholder={placeholders.data_nascimento}
               maxDate={new Date()}
               format="DD/MM/YYYY"
               mode="date"
@@ -229,7 +240,7 @@ function AlterarDados({ navigation }) {
             />
 
             <InputMask
-              placeholder={cpfMasked}
+              placeholder={placeholders.cpf}
               keyboardType="default"
               width="100%"
               label="cpf"
@@ -241,7 +252,7 @@ function AlterarDados({ navigation }) {
             />
 
             <Input
-              placeholder={usuario.email}
+              placeholder={placeholders.email}
               keyboardType="default"
               width="100%"
               label="email"
@@ -251,7 +262,7 @@ function AlterarDados({ navigation }) {
             />
 
             <InputMask
-              placeholder = "Cep: "
+              placeholder={placeholders.cep}
               keyboardType="default"
               type={"zip-code"}
               width="100%"
@@ -263,7 +274,7 @@ function AlterarDados({ navigation }) {
             />
 
             <Input
-              placeholder={endereco.pais}
+              placeholder={placeholders.pais}
               keyboardType="default"
               width="100%"
               label="pais"
@@ -273,7 +284,7 @@ function AlterarDados({ navigation }) {
             />
 
             <Input
-              placeholder={endereco.estado}
+              placeholder={placeholders.estado}
               keyboardType="default"
               width="100%"
               label="estado"
@@ -283,7 +294,7 @@ function AlterarDados({ navigation }) {
             />
 
             <Input
-              placeholder={endereco.cidade}
+              placeholder={placeholders.cidade}
               keyboardType="default"
               width="100%"
               label="cidade"
@@ -293,7 +304,7 @@ function AlterarDados({ navigation }) {
             />
 
             <Input
-              placeholder={endereco.bairro}
+              placeholder={placeholders.bairro}
               keyboardType="default"
               width="100%"
               label="bairro"
@@ -303,7 +314,7 @@ function AlterarDados({ navigation }) {
             />
 
             <Input
-              placeholder={endereco.rua}
+              placeholder={placeholders.rua}
               keyboardType="default"
               width="100%"
               label="rua"
@@ -312,7 +323,7 @@ function AlterarDados({ navigation }) {
               }}
             />
             <Input
-              placeholder={numero}
+              placeholder={placeholders.numero}
               keyboardType="default"
               width="100%"
               label="numero"
@@ -332,7 +343,7 @@ function AlterarDados({ navigation }) {
               />
             ) : (
               <Input
-                placeholder={complemento}
+                placeholder={placeholders.complemento}
                 keyboardType="default"
                 width="100%"
                 label="complemento"
