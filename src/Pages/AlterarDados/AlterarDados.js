@@ -159,14 +159,14 @@ function AlterarDados({ navigation }) {
     pegandoDados();
   }, []);
 
-  function setandoPlaceholder(){
+ /* function setandoPlaceholder(){
     const placeholderCEP = "CEP: " + endereco.cep;
     const placeholderNOME = "NOME: " + {nome};
   }
 
   useEffect(() => {
     setandoPlaceholder();
-  }, [usuario,endereco]);
+  }, [usuario,endereco]);*/
 
   const { width } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
@@ -209,8 +209,13 @@ function AlterarDados({ navigation }) {
             />
             <Data
               customStyles={{
-                dateInput: { borderWidth: 0 },
+                dateInput: { 
+                  borderWidth: 0, 
+                  alignItems: "flex-start",
+                  paddingLeft: 10 
+                },
                 placeholderText: { color: "#90929B" },
+                
               }}
               placeholder="Data de Nascimento:"
               maxDate={new Date()}
@@ -246,7 +251,7 @@ function AlterarDados({ navigation }) {
             />
 
             <InputMask
-              placeholder = {placeholderCEP}
+              placeholder = "Cep: "
               keyboardType="default"
               type={"zip-code"}
               width="100%"
