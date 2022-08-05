@@ -3,7 +3,9 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
 import InputMask from "../../styles/InputMask/InputMask";
+import { brParaPadrao } from "../../utils/date";
 import { useWindowDimensions, ScrollView } from "react-native";
+import { Alert } from "react-native";
 import {
   Body,
   CaixaAlterarDados,
@@ -12,10 +14,10 @@ import {
   Titulo,
   CaixaBotoes,
   Data,
-  
 } from "./Styles";
+
 import * as managerService from "../../services/ManagerService/managerService";
-import { Cores } from "../../variaveis"
+import { Cores } from "../../variaveis";
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -57,7 +59,6 @@ function AlterarDados({ navigation }) {
     setEndereco(resposta.dadosEndereco);
     setComplemento(resposta.dadosEndereco.complemento);
     setNumero(resposta.dadosEndereco.numero + " ");
-    
   }
 
   useEffect(() => {
@@ -91,24 +92,67 @@ function AlterarDados({ navigation }) {
     );
   }, [dataNascimento]);
 
+  function formatacaoData(data) {
+    try {
+      const response = brParaPadrao(data);
+      return response;
+    } catch {
+      Alert.alert("Erro", "Data inválida.");
+    }
+  }
 
   async function atualizarDados() {
-    await managerService.UpdateDadosUsuario(
-      usuario.id,
-      endereco.id,
-      novoEndereco,
-      estado
-    );
-   // const isEmpty = Object.values(camposNulos).every(x => x === null || x === '');
-    navigation.push("Perfil")
+    if (camposNulos.data_nascimento === false) {
+      estado.data_nascimento = formatacaoData(estado.data_nascimento);
+    }
+
+    for (const propriedade_errors in estado) {
+      if (!estado[propriedade_errors]) {
+        for (const propriedade_campos in camposNulos) {
+          if (propriedade_campos === propriedade_errors) {
+            camposNulos[propriedade_campos] = true;
+          }
+        }
+      }
+    }
+    for (const propriedade_errors in novoEndereco) {
+      if (!novoEndereco[propriedade_errors]) {
+        for (const propriedade_campos in camposNulos) {
+          if (propriedade_campos === propriedade_errors) {
+            camposNulos[propriedade_campos] = true;
+          }
+        }
+      }
+    }
+    let validacao = false;
+    for (const propriedade in camposNulos) {
+      if (camposNulos[propriedade] === false) {
+        validacao = true;
+      }
+    }
+    if (validacao) {
+      await managerService.UpdateDadosUsuario(
+        usuario.id,
+        endereco.id,
+        novoEndereco,
+        estado
+      );
+      navigation.push("Perfil");
+    } else {
+      Alert.alert("Erro", "Preencha Algum Campo.");
+    }
+
+    // const isEmpty = Object.values(camposNulos).every(x => x === null || x === '');
   }
 
   function preenchendoDados(identificador, valor) {
     setEstado({ ...estado, [identificador]: valor });
+    setCamposNulos({ ...camposNulos, [identificador]: false });
   }
 
   function preenchendoEndereco(identificador, valor) {
     setNovoEndereco({ ...novoEndereco, [identificador]: valor });
+    setCamposNulos({ ...camposNulos, [identificador]: false });
   }
 
   useEffect(() => {
@@ -155,21 +199,20 @@ function AlterarDados({ navigation }) {
               }}
             />
             <Data
-                customStyles={{
-                  dateInput: { borderWidth: 0 },
-                  placeholderText: { color: "#90929B" },
-                }}
-                placeholder="Data de Nascimento:"
-                maxDate={new Date()}
-                format="DD/MM/YYYY"
-                mode="date"
-                showIcon={false}
-                date={estado.data_nascimento}
-                onDateChange={(data) => {
-                  preenchendoDados("data_nascimento", data);
-                }}
-        
-              />
+              customStyles={{
+                dateInput: { borderWidth: 0 },
+                placeholderText: { color: "#90929B" },
+              }}
+              placeholder="Data de Nascimento:"
+              maxDate={new Date()}
+              format="DD/MM/YYYY"
+              mode="date"
+              showIcon={false}
+              date={estado.data_nascimento}
+              onDateChange={(data) => {
+                preenchendoDados("data_nascimento", data);
+              }}
+            />
 
             <InputMask
               placeholder={cpfMasked}
