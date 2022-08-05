@@ -10,9 +10,10 @@ export const Body = styled.View`
 `;
 
 export const PaginaCarregando = styled.View`
-  display: flex;
+  flex: 1;
   justify-content: center;
   align-items: center;
+  padding: 100%;
 `;
 
 export const CaixaTitulo = styled.View`

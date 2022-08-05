@@ -85,9 +85,11 @@ function Login({ navigation }) {
       <ScrollView>
         <Body>
           {carregando ? (
+            <>
             <PaginaCarregando>
-            <ActivityIndicator animating={true} color={Colors.black} />
+            <ActivityIndicator animating={true} color={Colors.black}/>
             </PaginaCarregando>
+            </>
             ) : (
             <>
               <CaixaTitulo marginTop={margemSuperior}>
