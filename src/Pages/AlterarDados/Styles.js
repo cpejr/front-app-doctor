@@ -88,3 +88,18 @@ export const Data = styled(DatePicker)`
   justify-content: center;
   align-items: flex-start;
 `;
+
+export const TituloRotulos = styled.Text`
+  font-size: 13px;
+  color: ${Cores.cinza[6]};
+  
+`;
+
+export const CaixaTitulosRotulos = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 2%;
+`;

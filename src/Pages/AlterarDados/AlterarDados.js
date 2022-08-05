@@ -14,6 +14,8 @@ import {
   Titulo,
   CaixaBotoes,
   Data,
+  TituloRotulos,
+  CaixaTitulosRotulos,
 } from "./Styles";
 import { cep } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -169,6 +171,10 @@ function AlterarDados({ navigation }) {
           </CaixaTitulo>
 
           <CaixaInputs width={tamanhoInputs}>
+            <CaixaTitulosRotulos>
+              <TituloRotulos>Nome:</TituloRotulos>
+            </CaixaTitulosRotulos>
+
             <Input
               placeholder={usuario.nome}
               keyboardType="default"
@@ -178,6 +184,9 @@ function AlterarDados({ navigation }) {
                 preenchendoDados("nome", text);
               }}
             />
+            <CaixaTitulosRotulos>
+              <TituloRotulos>Telefone:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <InputMask
               placeholder={telMasked}
               keyboardType="numeric"
@@ -196,6 +205,9 @@ function AlterarDados({ navigation }) {
                 preenchendoDados("telefone", rawText);
               }}
             />
+            <CaixaTitulosRotulos>
+              <TituloRotulos>Data de nascimento:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <Data
               customStyles={{
                 dateInput: {
@@ -215,7 +227,9 @@ function AlterarDados({ navigation }) {
                 preenchendoDados("data_nascimento", data);
               }}
             />
-
+            <CaixaTitulosRotulos>
+              <TituloRotulos>CPF:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <InputMask
               placeholder={cpfMasked}
               keyboardType="default"
@@ -228,7 +242,7 @@ function AlterarDados({ navigation }) {
               }}
             />
 
-            <Input
+            {/*<Input
               placeholder={usuario.email}
               keyboardType="default"
               width="100%"
@@ -236,8 +250,10 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoDados("email", text);
               }}
-            />
-
+            />*/}
+            <CaixaTitulosRotulos>
+              <TituloRotulos>CEP:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <InputMask
               placeholder={cep(endereco.cep)}
               keyboardType="default"
@@ -250,6 +266,9 @@ function AlterarDados({ navigation }) {
               }}
             />
 
+            <CaixaTitulosRotulos>
+              <TituloRotulos>País:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <Input
               placeholder={endereco.pais}
               keyboardType="default"
@@ -260,6 +279,9 @@ function AlterarDados({ navigation }) {
               }}
             />
 
+            <CaixaTitulosRotulos>
+              <TituloRotulos>Estado:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <Input
               placeholder={endereco.estado}
               keyboardType="default"
@@ -269,7 +291,9 @@ function AlterarDados({ navigation }) {
                 preenchendoEndereco("estado", text);
               }}
             />
-
+          <CaixaTitulosRotulos>
+              <TituloRotulos>Cidade:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <Input
               placeholder={endereco.cidade}
               keyboardType="default"
@@ -280,6 +304,9 @@ function AlterarDados({ navigation }) {
               }}
             />
 
+            <CaixaTitulosRotulos>
+              <TituloRotulos>Bairro:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <Input
               placeholder={endereco.bairro}
               keyboardType="default"
@@ -289,7 +316,9 @@ function AlterarDados({ navigation }) {
                 preenchendoEndereco("bairro", text);
               }}
             />
-
+            <CaixaTitulosRotulos>
+              <TituloRotulos>Rua:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <Input
               placeholder={endereco.rua}
               keyboardType="default"
@@ -299,6 +328,9 @@ function AlterarDados({ navigation }) {
                 preenchendoEndereco("rua", text);
               }}
             />
+            <CaixaTitulosRotulos>
+              <TituloRotulos>Número:</TituloRotulos>
+            </CaixaTitulosRotulos>
             <Input
               placeholder={numero}
               keyboardType="default"
@@ -309,6 +341,10 @@ function AlterarDados({ navigation }) {
               }}
             />
             {complemento === null ? (
+              <>
+              <CaixaTitulosRotulos>
+                <TituloRotulos>Complemento:</TituloRotulos>
+              </CaixaTitulosRotulos>
               <Input
                 placeholder="Complemento: "
                 keyboardType="default"
@@ -317,8 +353,12 @@ function AlterarDados({ navigation }) {
                 onChangeText={(text) => {
                   preenchendoEndereco("complemento", text);
                 }}
-              />
+              /></>
             ) : (
+              <>
+              <CaixaTitulosRotulos>
+                <TituloRotulos>Complemento:</TituloRotulos>
+              </CaixaTitulosRotulos>
               <Input
                 placeholder={complemento}
                 keyboardType="default"
@@ -327,7 +367,7 @@ function AlterarDados({ navigation }) {
                 onChangeText={(text) => {
                   preenchendoEndereco("complemento", text);
                 }}
-              />
+              /></>
             )}
           </CaixaInputs>
 
