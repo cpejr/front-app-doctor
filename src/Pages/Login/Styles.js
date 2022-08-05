@@ -9,6 +9,12 @@ export const Body = styled.View`
   overflow: scroll;
 `;
 
+export const PaginaCarregando = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const CaixaTitulo = styled.View`
   display: flex;
   flex-direction: row;

@@ -9,6 +9,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { useWindowDimensions, ScrollView, Alert } from "react-native";
 import {
   Body,
+  PaginaCarregando,
   CaixaTitulo,
   Logo,
   CaixaInputs,
@@ -84,9 +85,9 @@ function Login({ navigation }) {
       <ScrollView>
         <Body>
           {carregando ? (
-            <>
+            <PaginaCarregando>
             <ActivityIndicator animating={true} color={Colors.black} />
-            </>
+            </PaginaCarregando>
             ) : (
             <>
               <CaixaTitulo marginTop={margemSuperior}>
