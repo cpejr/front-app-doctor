@@ -67,7 +67,6 @@ export const CaixaDataCpf = styled.View`
   justify-content: space-around;
   width: 90%;
   align-items: center;
-  margin-bottom: 15px;
 `;
 
 export const CaixaNascidoData = styled.View`
@@ -98,7 +97,6 @@ export const ViewContatoEndereco = styled.View`
   justify-content: center;
   padding-left: 8%;
   width:  ${(props) => props.width};
-  padding-right: ${(props) => props.paddingRight};
   background-color: ${Cores.cinza[9]};
   border: 2px solid ${Cores.cinza[6]};
   border-radius: 4px;
@@ -121,17 +119,37 @@ export const Dados = styled.Text`
   font-size: ${(props) => props.fontSize};
 `;
 
-export const CaixaBotoes = styled.View`
+export const CaixaBotoesAlterar = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
+  margin-bottom: 4%;
+`;
+
+export const CaixaBotoesExcluirESair = styled.View`
+  display: flex;
+  flex-direction: row;
+  padding-right: 3%;
+  padding-left: 3%;
+  justify-content: space-between;
+  width: 50%;
   margin-bottom: 8%;
 `;
 
+
 export const ExcluirConta = styled.Text`
-  color: ${Cores.azul};
+  color: green;
   margin-top: 2%;
   text-decoration: underline;
   font-size:15px
 `;
-//color:#151B57;
+
+export const Sair = styled.Text`
+  color: green;
+  margin-top: 2%;
+  text-decoration: underline;
+  font-size:15px
+  color: ${Cores.azul};
+  
+`;
+
