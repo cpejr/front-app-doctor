@@ -31,12 +31,15 @@ function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
+  const [telefoneCuidador, setTelefoneCuidador] = useState("");
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
 
   const [cpfMasked, setCpfMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
+  const [telCuidadorMasked, setTelCuidadorMasked] = useState("");
+
 
   const { width, height, fontSize } = useWindowDimensions();
 
@@ -47,6 +50,7 @@ function Perfil({ navigation }) {
     setCpf(resposta.dadosUsuario.cpf);
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
+    setTelefoneCuidador(resposta.dadosUsuario.telefone_cuidador);
   }
 
   useEffect(() => {
@@ -71,6 +75,18 @@ function Perfil({ navigation }) {
     );
   }, [telefone]);
   useEffect(() => {
+    if(telefoneCuidador != null){
+      setTelCuidadorMasked(
+        "(" +
+          telefoneCuidador.slice(0, -9) +
+          ")" +
+          telefoneCuidador.slice(2, -4) +
+          "-" +
+          telefoneCuidador.slice(-4)
+      );
+    }
+  }, [telefoneCuidador]);
+  useEffect(() => {
     setDataMasked(
       dataNascimento.slice(8, -14) +
         "/" +
@@ -78,6 +94,7 @@ function Perfil({ navigation }) {
         "/" +
         dataNascimento.slice(0, -20)
     );
+    console.log(usuario);
   }, [dataNascimento]);
 
   useEffect(() => {
@@ -130,6 +147,23 @@ function Perfil({ navigation }) {
             <Titulo fontSize={fontSizeTitulos}>Contato</Titulo>
             <Dados fontSize={fontSizeDados}>{telMasked}</Dados>
             <Dados fontSize={fontSizeDados}>{usuario.email}</Dados>
+            {usuario.nome_cuidador != null ? (
+              <>
+             <Dados fontSize={fontSizeDados}>Nome do cuidador: {usuario.nome_cuidador}</Dados>
+             <Dados fontSize={fontSizeDados}>{telCuidadorMasked}</Dados>
+              </>
+            ) : (
+              <></>
+            )}
+            {usuario.convenio != null ? (
+              <>
+              <Dados fontSize={fontSizeDados}>Convênio: {usuario.convenio}</Dados>
+              </>
+            ) : (
+              <></>
+            )}
+
+
           </ViewContatoEndereco>
           <ViewContatoEndereco width={larguraViews}>
             <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
