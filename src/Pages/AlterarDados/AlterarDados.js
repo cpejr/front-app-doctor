@@ -3,7 +3,6 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
 import InputMask from "../../styles/InputMask/InputMask";
-import { brParaPadrao } from "../../utils/date";
 import { useWindowDimensions, ScrollView } from "react-native";
 import { Alert } from "react-native";
 import {
@@ -17,9 +16,10 @@ import {
   TituloRotulos,
   CaixaTitulosRotulos,
 } from "./Styles";
+import { brParaPadrao } from "../../utils/date";
 import { cep } from "../../utils/masks";
-import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -29,7 +29,6 @@ function AlterarDados({ navigation }) {
   const [complemento, setComplemento] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [numero, setNumero] = useState("");
-
   const [estado, setEstado] = useState({});
   const [novoEndereco, setNovoEndereco] = useState({});
   const [cpfMasked, setCpfMasked] = useState("");
