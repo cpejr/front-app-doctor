@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useWindowDimensions, ScrollView } from "react-native";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import Botao from "../../styles/Botao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 
@@ -23,7 +24,8 @@ import {
   CaixaBotoesAlterar,
   ExcluirConta,
   CaixaBotoesExcluirESair,
-  Sair
+  Sair,
+  AnimacaoCarregando
 } from "./Styles";
 import { Cores } from "../../variaveis";
 
@@ -35,6 +37,8 @@ function Perfil({ navigation }) {
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
 
+  const [carregando, setCarregando] = useState(false);
+
   const [cpfMasked, setCpfMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
@@ -44,6 +48,7 @@ function Perfil({ navigation }) {
   const { width, height, fontSize } = useWindowDimensions();
 
   async function pegandoDados() {
+    setCarregando(true);
     const resposta = await managerService.GetDadosUsuario();
     setUsuario(resposta.dadosUsuario);
     setTelefone(resposta.dadosUsuario.telefone);
@@ -51,6 +56,7 @@ function Perfil({ navigation }) {
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
     setTelefoneCuidador(resposta.dadosUsuario.telefone_cuidador);
+    setCarregando(false);
   }
 
   useEffect(() => {
@@ -94,7 +100,6 @@ function Perfil({ navigation }) {
         "/" +
         dataNascimento.slice(0, -20)
     );
-    console.log(usuario);
   }, [dataNascimento]);
 
   useEffect(() => {
@@ -131,50 +136,75 @@ function Perfil({ navigation }) {
         </CaixaBotao>
         <CaixaViews>
           <ViewFotoNome width={larguraViews}>
-            <Foto />
-            <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
-            <CaixaDataCpf>
-              <CaixaNascidoData>
-                <TextNascido fontSize={fontSizeNascido}>
-                  Nascido em:
-                </TextNascido>
-                <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
-              </CaixaNascidoData>
-              <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
-            </CaixaDataCpf>
+            {carregando? (
+              <ActivityIndicator animating={true} color={Colors.blue900}/>
+            ):(
+              <>
+              <Foto />
+              <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
+              <CaixaDataCpf>
+                <CaixaNascidoData>
+                  <TextNascido fontSize={fontSizeNascido}>
+                    Nascido em:
+                  </TextNascido>
+                  <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
+                </CaixaNascidoData>
+                <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
+              </CaixaDataCpf>
+             </>
+            )}
+           
           </ViewFotoNome>
           <ViewContatoEndereco width={larguraViews}>
-            <Titulo fontSize={fontSizeTitulos}>Contato</Titulo>
-            <Dados fontSize={fontSizeDados}>{telMasked}</Dados>
-            <Dados fontSize={fontSizeDados}>{usuario.email}</Dados>
-            {usuario.nome_cuidador != null ? (
-              <>
-             <Dados fontSize={fontSizeDados}>Nome do cuidador: {usuario.nome_cuidador}</Dados>
-             <Dados fontSize={fontSizeDados}>{telCuidadorMasked}</Dados>
-              </>
+            {carregando ? (
+              <AnimacaoCarregando>
+                <ActivityIndicator animating={true} color={Colors.blue900}/>
+              </AnimacaoCarregando>
             ) : (
-              <></>
-            )}
-            {usuario.convenio != null ? (
               <>
-              <Dados fontSize={fontSizeDados}>Convênio: {usuario.convenio}</Dados>
+              <Titulo fontSize={fontSizeTitulos}>Contato</Titulo>
+              <Dados fontSize={fontSizeDados}>{telMasked}</Dados>
+              <Dados fontSize={fontSizeDados}>{usuario.email}</Dados>
+              {usuario.nome_cuidador != null ? (
+                <>
+              <Dados fontSize={fontSizeDados}>Nome do cuidador: {usuario.nome_cuidador}</Dados>
+              <Dados fontSize={fontSizeDados}>{telCuidadorMasked}</Dados>
+                </>
+              ) : (
+                <></>
+              )}
+              {usuario.convenio != null ? (
+                <>
+                <Dados fontSize={fontSizeDados}>Convênio: {usuario.convenio}</Dados>
+                </>
+              ) : (
+                <></>
+              )}
               </>
-            ) : (
-              <></>
-            )}
 
+            )}
+            
 
           </ViewContatoEndereco>
           <ViewContatoEndereco width={larguraViews}>
-            <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
-            <Dados fontSize={fontSizeDados}>{endereco.pais}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.estado}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.cidade}</Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.cep}</Dados>
-            <Dados fontSize={fontSizeDados}>
-              {endereco.rua}, {endereco.numero}
-            </Dados>
-            <Dados fontSize={fontSizeDados}>{endereco.complemento}</Dados>
+            {carregando ? (
+              <AnimacaoCarregando>
+                <ActivityIndicator animating={true} color={Colors.blue900}/>
+              </AnimacaoCarregando>
+            ) : (
+             <>
+              <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
+              <Dados fontSize={fontSizeDados}>{endereco.pais}</Dados>
+              <Dados fontSize={fontSizeDados}>{endereco.estado}</Dados>
+              <Dados fontSize={fontSizeDados}>{endereco.cidade}</Dados>
+              <Dados fontSize={fontSizeDados}>{endereco.cep}</Dados>
+              <Dados fontSize={fontSizeDados}>
+                {endereco.rua}, {endereco.numero}
+              </Dados>
+              <Dados fontSize={fontSizeDados}>{endereco.complemento}</Dados>
+            </>
+            )}
+            
           </ViewContatoEndereco>
           <CaixaBotoesAlterar>
             <Botao

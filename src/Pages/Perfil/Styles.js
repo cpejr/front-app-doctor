@@ -153,3 +153,9 @@ export const Sair = styled.Text`
   
 `;
 
+export const AnimacaoCarregando = styled.View`
+  position: relative;
+  left: 42.5%;
+  
+`;
+
