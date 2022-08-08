@@ -123,30 +123,27 @@ export const CaixaBotoesAlterar = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: 4%;
+  margin-bottom: 2%;
 `;
 
 export const CaixaBotoesExcluirESair = styled.View`
   display: flex;
   flex-direction: row;
-  padding-right: 3%;
-  padding-left: 3%;
   justify-content: space-between;
   width: 50%;
+  padding-right: 3%;
+  padding-left: 3%;
   margin-bottom: 8%;
 `;
 
 
 export const ExcluirConta = styled.Text`
   color: green;
-  margin-top: 2%;
   text-decoration: underline;
   font-size:15px
 `;
 
 export const Sair = styled.Text`
-  color: green;
-  margin-top: 2%;
   text-decoration: underline;
   font-size:15px
   color: ${Cores.azul};

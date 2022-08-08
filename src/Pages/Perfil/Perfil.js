@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useWindowDimensions, ScrollView } from "react-native";
+import { useWindowDimensions, ScrollView, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import Botao from "../../styles/Botao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
@@ -35,11 +36,13 @@ function Perfil({ navigation }) {
   const [telefone, setTelefone] = useState("");
   const [telefoneCuidador, setTelefoneCuidador] = useState("");
   const [cpf, setCpf] = useState("");
+  const [cep, setCep] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
 
   const [carregando, setCarregando] = useState(false);
 
   const [cpfMasked, setCpfMasked] = useState("");
+  const [cepMasked, setCepMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
   const [telCuidadorMasked, setTelCuidadorMasked] = useState("");
@@ -55,11 +58,24 @@ function Perfil({ navigation }) {
     setCpf(resposta.dadosUsuario.cpf);
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
+    setCep(resposta.dadosEndereco.cep);
     setTelefoneCuidador(resposta.dadosUsuario.telefone_cuidador);
     setCarregando(false);
   }
 
+  async function handleLogout() {
+    try {
+      AsyncStorage.removeItem("@AirBnbApp:token");
+      AsyncStorage.removeItem("@AirBnbApp:email");
+      new Alert.alert("", "Usuário deslogado com sucesso!");
+      navigation.navigate("Login")
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   useEffect(() => {
+    if(cpf != null && cpf != undefined){
     setCpfMasked(
       cpf.slice(+0, -8) +
         "." +
@@ -69,19 +85,34 @@ function Perfil({ navigation }) {
         "-" +
         cpf.slice(-2)
     );
+  }
   }, [cpf]);
+
   useEffect(() => {
-    setTelMasked(
-      "(" +
-        telefone.slice(0, -9) +
-        ")" +
-        telefone.slice(2, -4) +
-        "-" +
-        telefone.slice(-4)
+    if(cep != null && cep != undefined){
+    setCepMasked(
+      cep.slice(0,5) +
+      "-" + 
+      cep.slice(5,8)
     );
-  }, [telefone]);
+  }
+  }, [cep]);
+
   useEffect(() => {
-    if(telefoneCuidador != null){
+    if(telefone != null && telefone != undefined){
+      setTelMasked(
+        "(" +
+          telefone.slice(0, -9) +
+          ")" +
+          telefone.slice(2, -4) +
+          "-" +
+          telefone.slice(-4)
+      );
+    }
+  }, [telefone]);
+  
+  useEffect(() => {
+    if(telefoneCuidador != null && telefoneCuidador != undefined){
       setTelCuidadorMasked(
         "(" +
           telefoneCuidador.slice(0, -9) +
@@ -92,7 +123,9 @@ function Perfil({ navigation }) {
       );
     }
   }, [telefoneCuidador]);
+
   useEffect(() => {
+    if(dataNascimento != null && dataNascimento != undefined){
     setDataMasked(
       dataNascimento.slice(8, -14) +
         "/" +
@@ -100,6 +133,7 @@ function Perfil({ navigation }) {
         "/" +
         dataNascimento.slice(0, -20)
     );
+    }
   }, [dataNascimento]);
 
   useEffect(() => {
@@ -197,7 +231,7 @@ function Perfil({ navigation }) {
               <Dados fontSize={fontSizeDados}>{endereco.pais}</Dados>
               <Dados fontSize={fontSizeDados}>{endereco.estado}</Dados>
               <Dados fontSize={fontSizeDados}>{endereco.cidade}</Dados>
-              <Dados fontSize={fontSizeDados}>{endereco.cep}</Dados>
+              <Dados fontSize={fontSizeDados}>{cepMasked}</Dados>
               <Dados fontSize={fontSizeDados}>
                 {endereco.rua}, {endereco.numero}
               </Dados>
@@ -240,8 +274,42 @@ function Perfil({ navigation }) {
             </Botao>
           </CaixaBotoesAlterar>
           <CaixaBotoesExcluirESair>
-            <ExcluirConta>Excluir conta</ExcluirConta>
+          <Botao
+              width="100px"
+              height="30px"
+              //backgroundColor={Cores.lilas[3]} -- Estatico
+              backgroundColor="white"
+              borderRadius="0px"
+              borderColor="white"
+              borderWidth="0px"
+            >
+              <ExcluirConta>Excluir conta</ExcluirConta>
+          </Botao>
+            <Botao
+              width="30px"
+              height="30px"
+              //backgroundColor={Cores.lilas[3]} -- Estatico
+              backgroundColor="white"
+              borderRadius="0px"
+              borderColor="white"
+              borderWidth="0px"
+              onPress={() => Alert.alert(
+                "",
+                "Tem certeza que quer sair da sua conta?",
+                [
+                  {
+                    text:"Não",
+                    style: "cancel"
+                  },
+                  {
+                    text: "Confirmar",
+                    onPress: () => handleLogout()
+                  }
+                ]
+              )}
+            >
             <Sair>Sair</Sair>
+            </Botao>
 
           </CaixaBotoesExcluirESair>
         </CaixaViews>
