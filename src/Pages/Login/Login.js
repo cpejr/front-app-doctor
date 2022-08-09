@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-import api from "../../services/api";
-import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Botao from "./../../styles/Botao";
-import ConteudoBotao from "./../../styles/ConteudoBotao";
-import Input from "./../../styles/Input";
-import * as managerService from "../../services/ManagerService/managerService";
 import { useWindowDimensions, ScrollView, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import {
   Body,
   PaginaCarregando,
@@ -20,16 +16,17 @@ import {
   Icone,
 } from "./Styles";
 import { Cores } from "../../variaveis";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { sleep } from "../../utils/sleep";
+import Botao from "./../../styles/Botao";
+import ConteudoBotao from "./../../styles/ConteudoBotao";
+import Input from "./../../styles/Input";
+import logoGuilherme from "./../../assets/logoGuilherme.png";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
   const { width, height } = useWindowDimensions();
-
   const [carregando, setCarregando] = useState();
 
   async function requisicaoLogin() {
@@ -86,11 +83,11 @@ function Login({ navigation }) {
         <Body>
           {carregando ? (
             <>
-            <PaginaCarregando>
-            <ActivityIndicator animating={true} color={Colors.black}/>
-            </PaginaCarregando>
+              <PaginaCarregando>
+                <ActivityIndicator animating={true} color={Colors.black} />
+              </PaginaCarregando>
             </>
-            ) : (
+          ) : (
             <>
               <CaixaTitulo marginTop={margemSuperior}>
                 <Logo source={logoGuilherme} />

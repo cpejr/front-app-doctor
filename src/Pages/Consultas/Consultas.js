@@ -4,10 +4,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  View,
   Text,
-  Pressable,
 } from "react-native";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import {
   Body,
   CaixaTitulo,
@@ -40,14 +39,11 @@ import botaoIcone from "./../../assets/botaoIcone.png";
 import iconeAvaliDesabilitado from "./../../assets/iconeAvaliDesabilitado.png";
 import iconeAvaliHabilitado from "./../../assets/iconeAvaliHabilitado.png";
 import iconeLocal from "./../../assets/iconeLocal.png";
-
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Cores } from "../../variaveis";
-
 import { Dimensions } from "react-native";
-import * as managerService from "../../services/ManagerService/managerService";
-import { ActivityIndicator, Button, Colors } from "react-native-paper";
 import Botao from "../../styles/Botao";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Consultas({ navigation }) {
   const { width } = useWindowDimensions();
