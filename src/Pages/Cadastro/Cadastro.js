@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScrollView,
   Alert,
@@ -18,6 +18,10 @@ import {
   Logo,
   Titulo,
   CaixaInputs,
+  CaixaRotulo,
+  CaixaRotuloMesmaLinha,
+  Rotulo,
+  Data,
   PickerView,
   PickerEstado,
   MensagemErro,
@@ -32,6 +36,9 @@ import api from "../../services/api";
 import { estados } from "./estados";
 import { useFonts } from "expo-font";
 import * as managerService from "../../services/ManagerService/managerService";
+import _ from "lodash";
+import { isEqual } from "lodash";
+import { sleep } from "../../utils/sleep"; 
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -54,23 +61,113 @@ function Cadastro({ navigation }) {
     numero: "",
     complemento: "",
   });
+
+  const errors = {};
+  const teste = {
+    nome: false,
+    telefone: false,
+    email: false,
+    cep: false,
+    pais: false,
+    estado: false,
+    cidade: false,
+    rua: false,
+    numero: false,
+    cpf: false,
+    data_nascimento: false,
+    bairro: false,
+    senha: false,
+    senhaConfirmada: false,
+  };
+
+  const [erro, setErro] = useState(false);
+
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
-  const [cepFormatado, setCepFormatado] = useState("");
+  const [camposVazios, setCamposVazios] = useState({
+    nome: false,
+    telefone: false,
+    email: false,
+    cep: false,
+    pais: false,
+    estado: false,
+    cidade: false,
+    rua: false,
+    numero: false,
+    cpf: false,
+    data_nascimento: false,
+    bairro: false,
+    senha: false,
+    senhaConfirmada: false,
+  });
+  const [data_nascimentoFront, setData_nascimentoFront] = useState();
 
   const { width, height } = useWindowDimensions();
 
-  async function verificacaoTermosUso() {
+  
+
+  const apenasLetras = (value) => {
+    return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g, "");
+  };
+
+  
+  function verificacaoTermosUso() {
     setCarregando(true);
+
     if (!checked) {
       alert("É obrigatório concordar com os termos de uso.");
       setCarregando(false);
     } else {
+      verificandoErros(); 
+      
+    }
+    
+  }
+   
+    async function verificandoErros() {
+    if (!estado.nome) errors.nome = true;
+    if (!estado.telefone) errors.telefone = true;
+    if (!estado.tipo) errors.tipo = true;
+    if (!estado.data_nascimento) errors.data_nascimento = true;
+    if (!estado.cpf) errors.cpf = true;
+    if (!estado.email) errors.email = true;
+    if (!endereco.cep) errors.cep = true;
+    if (!endereco.pais) errors.pais = true;
+    if (!endereco.estado) errors.estado = true;
+    if (!endereco.cidade) errors.cidade = true;
+    if (!endereco.bairro) errors.bairro = true;
+    if (!endereco.rua) errors.rua = true;
+    if (!endereco.numero) errors.numero = true;
+    if (!estado.senha) errors.senha = true;
+    if (!estado.senhaConfirmada) errors.senhaConfirmada = true;
+    if (erro.email === true) errors.email = true;
+    if (erro.cpf === true) errors.email = true;
+    if (erro.cep === true) errors.cep = true;
+    if (erro.telefone === true) errors.telefone = true;
+    if (erro.senha === true) errors.senha = true;
+    if (erro.senhaConfirmada === true) errors.senhaConfirmada = true;
+
+    for (const propriedade_errors in errors) {
+      if (errors[propriedade_errors] === true) {
+        for (const propriedade_campos in camposVazios) {
+          if (propriedade_campos === propriedade_errors) {
+            camposVazios[propriedade_campos] = true;
+          }
+        }
+      }
+    }
+    
+    if (_.isEqual(camposVazios, teste)) {
       requisicaoCadastro();
+    } else {
+      Alert.alert("Erro", "Preencha todos os campos obrigatórios corretamente!");
+      await sleep(1500);
+      setCarregando(false);
     }
   }
 
   async function requisicaoCadastro() {
+   
     if (estado.senha === estado.senhaConfirmada) {
       const dataFormatada = formatacaoData();
       estado.data_nascimento = dataFormatada;
@@ -79,20 +176,74 @@ function Cadastro({ navigation }) {
         endereco
       );
       if (resposta) {
-        alert("Usuário cadastrado com sucesso.");
+        Alert.alert("Bem vindo(a)", "Usuário cadastrado com sucesso!");
         navigation.navigate("Login");
       } else {
-        alert("Erro ao cadastrar usuario!");
+        Alert.alert("Erro", "Não foi possível cadastrar o usuario!");
         navigation.push("Cadastro");
       }
     } else {
-      alert("As senhas digitadas são diferentes.");
+      Alert.alert("Erro", "As senhas digitadas são diferentes!");
     }
-
     setCarregando(false);
   }
 
+  function setandoCamposNulos(inputIdentifier, enteredValue) {
+    if (inputIdentifier !== "complemento") {
+      if (
+        enteredValue === "" ||
+        enteredValue === undefined ||
+        enteredValue === null
+      ) {
+        setCamposVazios({ ...camposVazios, [inputIdentifier]: true });
+      } else {
+        setCamposVazios({ ...camposVazios, [inputIdentifier]: false });
+      }
+    }
+  }
+
   function preenchendoDados(inputIdentifier, enteredValue) {
+    if (inputIdentifier === "nome") {
+      enteredValue = apenasLetras(enteredValue);
+    }
+
+    if (inputIdentifier === "data_nascimento") {
+      setData_nascimentoFront(enteredValue);
+    }
+
+    if (
+      (inputIdentifier === "telefone" && enteredValue.length < 11) ||
+      (inputIdentifier === "cpf" && enteredValue.length < 11) ||
+      (inputIdentifier === "senha" && enteredValue.length < 8) ||
+      (inputIdentifier === "senhaConfirmada" && enteredValue.length < 8)
+    ) {
+      setErro({ ...erro, [inputIdentifier]: true });
+    } else {
+      setErro({ ...erro, [inputIdentifier]: false });
+    }
+
+    setandoCamposNulos(inputIdentifier, enteredValue);
+
+    setEstado((curEstado) => {
+      return {
+        ...curEstado,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
+
+  function preenchendoEmail(inputIdentifier, enteredValue) {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    if (inputIdentifier === "email") {
+      if (!regEx.test(enteredValue)) {
+        setErro({ ...erro, [inputIdentifier]: true });
+      } else {
+        setErro({ ...erro, [inputIdentifier]: false });
+      }
+    }
+
+    setandoCamposNulos(inputIdentifier, enteredValue);
+
     setEstado((curEstado) => {
       return {
         ...curEstado,
@@ -103,14 +254,25 @@ function Cadastro({ navigation }) {
 
   function formatacaoData() {
     try {
-      const response = brParaPadrao(estado.data_nascimento);
+      const response = brParaPadrao(data_nascimentoFront);
       return response;
     } catch {
-      alert("Data inválida.");
+      Alert.alert("Erro", "Data inválida.");
     }
   }
 
   function preenchendoEndereco(inputIdentifier, enteredValue) {
+    if (inputIdentifier === "cidade" || inputIdentifier === "pais") {
+      enteredValue = apenasLetras(enteredValue);
+    }
+    if (inputIdentifier === "cep" && enteredValue.length < 8) {
+      setErro({ ...erro, [inputIdentifier]: true });
+    } else {
+      setErro({ ...erro, [inputIdentifier]: false });
+    }
+
+    setandoCamposNulos(inputIdentifier, enteredValue);
+
     setEndereco((curEndereco) => {
       return {
         ...curEndereco,
@@ -118,7 +280,8 @@ function Cadastro({ navigation }) {
       };
     });
   }
-
+  
+  
   //responsividade paisagem
   const larguraCaixaTituloMaior = width < 600 ? "50%" : "60%";
   const larguraTituloMaior = width < 600 ? "50%" : "60%";
@@ -155,78 +318,107 @@ function Cadastro({ navigation }) {
               preenchendoDados("nome", text);
             }}
             value={estado.nome}
+            camposVazios={camposVazios.nome}
           />
           <CaixaInputsMesmaLinha>
+            <CaixaRotuloMesmaLinha>
+              <InputMask
+                placeholder="Telefone:"
+                keyboardType="numeric"
+                width="100%"
+                type={"cel-phone"}
+                options={{
+                  maskType: "BRL",
+                  withDDD: true,
+                  dddMask: "(99) ",
+                }}
+                textContentType="telephoneNumber"
+                dataDetectorTypes="phoneNumber"
+                label="Telefone"
+                includeRawValueInChangeText={true}
+                onChangeText={(maskedText, rawText) => {
+                  preenchendoDados("telefone", rawText);
+                }}
+                value={estado.telefone}
+                erro={erro.telefone}
+                camposVazios={camposVazios.telefone}
+              />
+              {erro.telefone && (
+                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+              )}
+            </CaixaRotuloMesmaLinha>
+            <CaixaRotuloMesmaLinha>
+              <Data
+                customStyles={{
+                  dateInput: { borderWidth: 0 },
+                  placeholderText: { color: "#90929B" },
+                }}
+                placeholder="Data de Nascimento:"
+                maxDate={new Date()}
+                format="DD/MM/YYYY"
+                mode="date"
+                showIcon={false}
+                date={estado.data_nascimento}
+                onDateChange={(data) => {
+                  preenchendoDados("data_nascimento", data);
+                }}
+                camposVazios={camposVazios.data_nascimento}
+              />
+            </CaixaRotuloMesmaLinha>
+          </CaixaInputsMesmaLinha>
+          <CaixaRotulo>
             <InputMask
-              placeholder="Telefone:"
+              placeholder="CPF:"
               keyboardType="numeric"
-              width="48%"
-              type={"cel-phone"}
-              options={{
-                maskType: "BRL",
-                withDDD: true,
-                dddMask: "(99) ",
-              }}
-              textContentType="telephoneNumber"
-              dataDetectorTypes="phoneNumber"
-              label="Telefone"
+              width="100%"
+              label="cpf"
+              type={"cpf"}
               includeRawValueInChangeText={true}
               onChangeText={(maskedText, rawText) => {
-                preenchendoDados("telefone", rawText);
+                preenchendoDados("cpf", rawText);
               }}
-              value={estado.telefone}
+              value={estado.cpf}
+              erro={erro.cpf}
+              camposVazios={camposVazios.cpf}
             />
-            <InputMask
-              placeholder="Data de Nascimento:"
-              keyboardType="numeric"
-              type={"datetime"}
-              options={{
-                format: "DD-MM-YYYY",
-              }}
-              width="48%"
-              maxLenght="10"
-              label="data_nascimento"
-              includeRawValueInChangeText={true}
+            {erro.cpf && (
+              <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
+            )}
+          </CaixaRotulo>
+          <CaixaRotulo>
+            <Input
+              placeholder="Email:"
+              keyboardType="default"
+              width="100%"
+              label="email"
               onChangeText={(text) => {
-                preenchendoDados("data_nascimento", text);
+                preenchendoEmail("email", text);
               }}
-              value={estado.data_nascimento}
+              value={estado.email}
+              erro={erro.email}
+              camposVazios={camposVazios.email}
             />
-          </CaixaInputsMesmaLinha>
-          <InputMask
-            placeholder="CPF:"
-            keyboardType="default"
-            width="100%"
-            label="cpf"
-            type={"cpf"}
-            includeRawValueInChangeText={true}
-            onChangeText={(maskedText, rawText) => {
-              preenchendoDados("cpf", rawText);
-            }}
-            value={estado.cpf}
-          />
-          <Input
-            placeholder="Email:"
-            keyboardType="default"
-            width="100%"
-            label="email"
-            onChangeText={(text) => {
-              preenchendoDados("email", text);
-            }}
-            value={estado.email}
-          />
-          <InputMask
-            placeholder="CEP:"
-            keyboardType="default"
-            type={"zip-code"}
-            width="100%"
-            label="CEP"
-            includeRawValueInChangeText={true}
-            onChangeText={(maskedText, rawText) => {
-              preenchendoEndereco("cep", rawText);
-            }}
-            value={endereco.cep}
-          />
+            {erro.email && (
+              <Rotulo>Digite um email no formato email@email.com</Rotulo>
+            )}
+          </CaixaRotulo>
+          <CaixaRotulo>
+            <InputMask
+              placeholder="CEP:"
+              keyboardType="numeric"
+              type={"zip-code"}
+              width="100%"
+              label="CEP"
+              includeRawValueInChangeText={true}
+              onChangeText={(maskedText, rawText) => {
+                preenchendoEndereco("cep", rawText);
+              }}
+              value={endereco.cep}
+              erro={erro.cep}
+              camposVazios={camposVazios.cep}
+            />
+            {erro.cep && <Rotulo>Digite um CEP no formato xxxxx-xxx</Rotulo>}
+          </CaixaRotulo>
           <Input
             placeholder="País:"
             keyboardType="default"
@@ -236,9 +428,10 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("pais", text);
             }}
             value={endereco.pais}
+            camposVazios={camposVazios.pais}
           />
 
-          <PickerView>
+          <PickerView camposVazios={camposVazios.estado}>
             <PickerEstado
               selectedValue={estadoSelecionado}
               onValueChange={(itemValue, itemIndex) => {
@@ -271,6 +464,7 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("cidade", text);
             }}
             value={endereco.cidade}
+            camposVazios={camposVazios.cidade}
           />
           <Input
             placeholder="Bairro:"
@@ -281,6 +475,7 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("bairro", text);
             }}
             value={endereco.bairro}
+            camposVazios={camposVazios.bairro}
           />
           <Input
             placeholder="Rua:"
@@ -291,16 +486,20 @@ function Cadastro({ navigation }) {
               preenchendoEndereco("rua", text);
             }}
             value={endereco.rua}
+            camposVazios={camposVazios.rua}
           />
-          <Input
+          <InputMask
+            type={"only-numbers"}
+            pattern="[0-9]*"
             placeholder="Número:"
-            keyboardType="default"
+            keyboardType="numeric"
             width="100%"
             label="Numero"
             onChangeText={(text) => {
               preenchendoEndereco("numero", text);
             }}
             value={endereco.numero}
+            camposVazios={camposVazios.numero}
           />
           <Input
             placeholder="Complemento:"
@@ -312,32 +511,46 @@ function Cadastro({ navigation }) {
             }}
             value={endereco.complemento}
           />
-          <Input
-            placeholder="Defina sua senha:"
-            keyboardType="default"
-            width="100%"
-            id="senha"
-            type="password"
-            secureTextEntry
-            label="Senha"
-            onChangeText={(text) => {
-              preenchendoDados("senha", text);
-            }}
-            value={estado.senha}
-          />
-          <Input
-            placeholder="Confirme sua senha:"
-            keyboardType="default"
-            width="100%"
-            id="senhaConfirmada"
-            secureTextEntry
-            type="password"
-            label="Senha Confirmada"
-            onChangeText={(text) => {
-              preenchendoDados("senhaConfirmada", text);
-            }}
-            value={endereco.senhaConfirmada}
-          />
+          <CaixaRotulo>
+            <Input
+              placeholder="Defina sua senha:"
+              keyboardType="default"
+              width="100%"
+              id="senha"
+              type="password"
+              secureTextEntry
+              label="Senha"
+              onChangeText={(text) => {
+                preenchendoDados("senha", text);
+              }}
+              value={estado.senha}
+              camposVazios={camposVazios.senha}
+              erro={erro.senha}
+            />
+            {erro.senha && (
+              <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
+            )}
+          </CaixaRotulo>
+          <CaixaRotulo>
+            <Input
+              placeholder="Confirme sua senha:"
+              keyboardType="default"
+              width="100%"
+              id="senhaConfirmada"
+              secureTextEntry
+              type="password"
+              label="Senha Confirmada"
+              onChangeText={(text) => {
+                preenchendoDados("senhaConfirmada", text);
+              }}
+              value={endereco.senhaConfirmada}
+              camposVazios={camposVazios.senhaConfirmada}
+              erro={erro.senhaConfirmada}
+            />
+            {erro.senhaConfirmada && (
+              <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
+            )}
+          </CaixaRotulo>
         </CaixaInputs>
 
         <CheckboxTexto>
