@@ -29,6 +29,10 @@ export const getConsultorioById = (id) => api.get(`/consultorios/${id}`);
 
 export const getEnderecoById = (id) => api.get(`/enderecos/${id}`);
 
+export const getDadosReceitas = () => api.get(`/receitas`);
+
+export const getListaReceitasPorId = (id) => api.get(`/receitas/${id}`);
+
 export const verificarSenha = (email, senha) =>
   api.post("/verificar", {
     email,

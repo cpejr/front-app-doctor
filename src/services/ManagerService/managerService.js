@@ -166,3 +166,29 @@ export const DeletarUsuario = async (id) => {
 
   return false;
 };
+
+export const GetDadosReceitas = async (id_usuario) => {
+  let dadosReceitas = {};
+  let dadosUsuario = {};
+
+  await requesterService
+    .getDadosReceitas()
+    .then((res) => {
+      dadosReceitas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  await requesterService
+    .requisicaoDadosUsuario(id_usuario)
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return { dadosReceitas, dadosUsuario};
+};
+

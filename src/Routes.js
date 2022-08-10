@@ -14,6 +14,7 @@ import FormaPagamento from "./pages/FormaPagamento";
 import GrupoAMIE from "./pages/GrupoAMIE";
 import Home from "./pages/Home";
 import ListaFormularios from "./pages/ListaFormularios";
+import ListaReceitas from "./pages/ListaReceitas";
 import Login from "./pages/Login";
 import Perfil from "./pages/Perfil";
 import PreencherFormulario from "./pages/PreencherFormulario";
@@ -80,6 +81,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="SobreMim" component={SobreMim} />
       <HomeStack.Screen name="AlterarDados" component={AlterarDados} />
       <HomeStack.Screen name="AlterarSenha" component={AlterarSenha} />
+      <HomeStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
     </HomeStack.Navigator>
   );
@@ -187,7 +189,7 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao2"
-        options={{ tabBarIcon: FormulariosIcon, title: "Formulários" }}
+        options={{ tabBarIcon: FormulariosIcon, title: "Arquivos" }}
         component={FormulariosStackScreen}
       />
       <Tab.Screen
