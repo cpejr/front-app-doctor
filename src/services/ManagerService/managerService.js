@@ -173,7 +173,7 @@ export const GetDadosReceitas= async () => {
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
   let dadosUsuario = {};
   
-  let dadosReceitas = [];
+  let dadosReceitas = {};
   
   await requesterService
     .requisicaoDadosUsuario(email)

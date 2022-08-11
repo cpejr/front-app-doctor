@@ -32,8 +32,8 @@ function ListaReceitas({ navigation }) {
 
   async function pegandoReceitas() {
     const resposta = await managerService.GetDadosReceitas();
-    //setReceitas(resposta.dadosReceitas.receita);
-    console.log("teste aqui", resposta.dadosReceitas);
+    setReceitas(resposta.dadosReceitas[0].receita);
+    //console.log("teste aquiiiii", resposta.dadosReceitas[0].receita);
   }
   
   useEffect(() => {
@@ -50,12 +50,12 @@ function ListaReceitas({ navigation }) {
             </BarraPesquisa>
         </ContainerCima>
         <ContainerTodasReceitas>
-          
-            <ContainerReceitas>
+        {receitas?.map((value) => (
             
-                <TituloReceitas></TituloReceitas>
+            <ContainerReceitas key = {value.id}>
+                <TituloReceitas>{value.titulo}</TituloReceitas>
                 <TextoData>XX/XX/XXXX</TextoData>
-            </ContainerReceitas>
+            </ContainerReceitas>))}
 
             <ContainerReceitas>
                 <TituloReceitas>Receita Numero2 Receita</TituloReceitas>
