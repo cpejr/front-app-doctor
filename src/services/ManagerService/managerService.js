@@ -44,6 +44,7 @@ export const GetDadosUsuario = async () => {
     .requisicaoDadosUsuario(email)
     .then((res) => {
       dadosUsuario = res.data;
+      //console.log(res.data)
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -167,28 +168,31 @@ export const DeletarUsuario = async (id) => {
   return false;
 };
 
-export const GetDadosReceitas = async (id_usuario) => {
-  let dadosReceitas = {};
+
+export const GetDadosReceitas= async () => {
+  const email = await AsyncStorage.getItem("@AirBnbApp:email");
   let dadosUsuario = {};
+  
+  let dadosReceitas = [];
+  
+  await requesterService
+    .requisicaoDadosUsuario(email)
+    .then((res) => {
+      dadosUsuario = res.data;
+      //console.log(dadosUsuario)
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
 
   await requesterService
-    .getDadosReceitas()
+    .requisicaoDadosReceita(dadosUsuario)
     .then((res) => {
       dadosReceitas = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
-
-  await requesterService
-    .requisicaoDadosUsuario(id_usuario)
-    .then((res) => {
-      dadosUsuario = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-
-  return { dadosReceitas, dadosUsuario};
+  return { dadosReceitas, dadosUsuario };
 };
-

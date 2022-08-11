@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Alert, ScrollView, Text, View} from "react-native";
+import { sleep } from "../../utils/sleep";
+import { Alert, ScrollView, Text, View, useWindowDimensions} from "react-native";
 import { 
     ContainerBody, 
     ContainerCima, 
@@ -12,31 +13,32 @@ import {
     InputPesquisa,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
+import Botao from "../../styles/Botao";
+import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 
 
 function ListaReceitas({ navigation }) {
 
     const [ receitas, setReceitas ] = useState([]);
-    const [ idUsuario, setIdUsuario ] = useState({});
+    const [ idUsuario, setIdUsuario ] = useState("");
 
-    useEffect(() => {
-    pegandoDadosReceitas();
-  }, []);
-  useEffect(() => {
-    pegandoDados();
-  }, []);
 
-  async function pegandoDados() {
+  /*async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario();
-    setIdUsuario(resposta.dadosUsuario.id_usuario);
+    setIdUsuario(resposta.dadosUsuario.id);
+    console.log("Id usuario é tatnatnatna ", resposta);
+  }*/
+
+  async function pegandoReceitas() {
+    const resposta = await managerService.GetDadosReceitas();
+    //setReceitas(resposta.dadosReceitas.receita);
+    console.log("teste aqui", resposta.dadosReceitas);
   }
   
-  async function pegandoDadosReceitas() {
-    const resposta = await managerService.GetDadosReceitas(idUsuario);
-    setReceitas(resposta);
-    console.log(receitas);
-  }
+  useEffect(() => {
+    pegandoReceitas();
+  }, []);
 
 
     return(
@@ -48,10 +50,12 @@ function ListaReceitas({ navigation }) {
             </BarraPesquisa>
         </ContainerCima>
         <ContainerTodasReceitas>
+          
             <ContainerReceitas>
-                <TituloReceitas>{receitas.titulo}</TituloReceitas>
+            
+                <TituloReceitas></TituloReceitas>
                 <TextoData>XX/XX/XXXX</TextoData>
-            </ContainerReceitas> 
+            </ContainerReceitas>
 
             <ContainerReceitas>
                 <TituloReceitas>Receita Numero2 Receita</TituloReceitas>

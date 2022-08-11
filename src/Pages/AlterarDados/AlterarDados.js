@@ -39,6 +39,7 @@ function AlterarDados({ navigation }) {
     setEndereco(resposta.dadosEndereco);
     setComplemento(resposta.dadosEndereco.complemento);
     setNumero(resposta.dadosEndereco.numero + " ");
+    console.log("numero: ", numero);
   }
 
   useEffect(() => {
