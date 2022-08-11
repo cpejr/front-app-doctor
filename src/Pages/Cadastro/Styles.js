@@ -169,6 +169,7 @@ export const TituloInput = styled.Text`
 
 export const PossuiConvenio = styled.View`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   width: 100%;
   padding: 2% 10% 0% 10%;
@@ -181,4 +182,10 @@ export const PossuiConvenio = styled.View`
 
 export const Texto = styled.Text`
   font-size: 12px;
+`;
+
+
+export const CaixaTextoConvenioCuidador = styled.View`
+  margin-top: 5%;
+  
 `;

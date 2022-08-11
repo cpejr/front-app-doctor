@@ -4,7 +4,8 @@ import {
   Alert,
   useWindowDimensions,
   TouchableOpacity,
-  Switch
+  Switch,
+  View
 } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao";
@@ -34,6 +35,7 @@ import {
   TituloInput,
   PossuiConvenio,
   Texto,
+  CaixaTextoConvenioCuidador,
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
@@ -43,7 +45,7 @@ import { useFonts } from "expo-font";
 import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
 import { isEqual } from "lodash";
-import { sleep } from "../../utils/sleep"; 
+import { sleep } from "../../utils/sleep";
 
 function Cadastro({ navigation }) {
   const [estado, setEstado] = useState({
@@ -110,23 +112,27 @@ function Cadastro({ navigation }) {
   const { width, height } = useWindowDimensions();
 
   const [convenio, setConvenio] = useState(false);
+  const [cuidador, setCuidador] = useState(false);
 
-  const [aux, setAux] = useState(false);
 
-  const alternarSwitch = ()=>{setAux(aux=>!aux)}
 
   function funcaoConvenio() {
     setConvenio(!convenio);
     setEstado({ ...estado, convenio: null });
   }
 
-  
+  function funcaoCuidador() {
+    setCuidador(!cuidador);
+    setEstado({ ...estado, nome_cuidador: null, telefone_cuidador: null });
+  }
+
+
 
   const apenasLetras = (value) => {
     return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g, "");
   };
 
-  
+
   function verificacaoTermosUso() {
     setCarregando(true);
 
@@ -134,13 +140,13 @@ function Cadastro({ navigation }) {
       alert("É obrigatório concordar com os termos de uso.");
       setCarregando(false);
     } else {
-      verificandoErros(); 
-      
+      verificandoErros();
+
     }
-    
+
   }
-   
-    async function verificandoErros() {
+
+  async function verificandoErros() {
     if (!estado.nome) errors.nome = true;
     if (!estado.telefone) errors.telefone = true;
     if (!estado.tipo) errors.tipo = true;
@@ -163,6 +169,12 @@ function Cadastro({ navigation }) {
     if (erro.senha === true) errors.senha = true;
     if (erro.senhaConfirmada === true) errors.senhaConfirmada = true;
 
+
+    if (convenio !== null) {
+      setCamposVazios({ ...camposVazios, convenio: false })
+      teste.convenio = false;
+    }
+
     for (const propriedade_errors in errors) {
       if (errors[propriedade_errors] === true) {
         for (const propriedade_campos in camposVazios) {
@@ -172,7 +184,7 @@ function Cadastro({ navigation }) {
         }
       }
     }
-    
+
     if (_.isEqual(camposVazios, teste)) {
       requisicaoCadastro();
     } else {
@@ -183,7 +195,8 @@ function Cadastro({ navigation }) {
   }
 
   async function requisicaoCadastro() {
-   
+
+
     if (estado.senha === estado.senhaConfirmada) {
       const dataFormatada = formatacaoData();
       estado.data_nascimento = dataFormatada;
@@ -296,8 +309,8 @@ function Cadastro({ navigation }) {
       };
     });
   }
-  
-  
+
+
   //responsividade paisagem
   const larguraCaixaTituloMaior = width < 600 ? "50%" : "60%";
   const larguraTituloMaior = width < 600 ? "50%" : "60%";
@@ -341,9 +354,9 @@ function Cadastro({ navigation }) {
           />
           <CaixaInputsMesmaLinha>
             <CaixaRotuloMesmaLinha>
-            <CaixaTituloInput>
-            <TituloInput>Telefone: </TituloInput>
-          </CaixaTituloInput>
+              <CaixaTituloInput>
+                <TituloInput>Telefone: </TituloInput>
+              </CaixaTituloInput>
               <InputMask
                 placeholder="Telefone:"
                 keyboardType="numeric"
@@ -370,9 +383,9 @@ function Cadastro({ navigation }) {
               )}
             </CaixaRotuloMesmaLinha>
             <CaixaRotuloMesmaLinha>
-            <CaixaTituloInput>
-            <TituloInput>Data de nascimento: </TituloInput>
-          </CaixaTituloInput>
+              <CaixaTituloInput>
+                <TituloInput>Data de nascimento: </TituloInput>
+              </CaixaTituloInput>
               <Data
                 customStyles={{
                   dateInput: { borderWidth: 0 },
@@ -392,9 +405,9 @@ function Cadastro({ navigation }) {
             </CaixaRotuloMesmaLinha>
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
-          <CaixaTituloInput>
-            <TituloInput>CPF:</TituloInput>
-          </CaixaTituloInput>
+            <CaixaTituloInput>
+              <TituloInput>CPF:</TituloInput>
+            </CaixaTituloInput>
             <InputMask
               placeholder="CPF:"
               keyboardType="numeric"
@@ -414,9 +427,9 @@ function Cadastro({ navigation }) {
             )}
           </CaixaRotulo>
           <CaixaRotulo>
-          <CaixaTituloInput>
-            <TituloInput>Email:</TituloInput>
-          </CaixaTituloInput>
+            <CaixaTituloInput>
+              <TituloInput>Email:</TituloInput>
+            </CaixaTituloInput>
             <Input
               placeholder="Email:"
               keyboardType="default"
@@ -433,13 +446,22 @@ function Cadastro({ navigation }) {
               <Rotulo>Digite um email no formato email@email.com</Rotulo>
             )}
           </CaixaRotulo>
-            <PossuiConvenio>
-             <Texto>
-              Possui Convênio?
+          <PossuiConvenio>
+            <CaixaTextoConvenioCuidador>
+              <Texto>
+                Possui Convênio?
               </Texto>
-              <Switch onValueChange={alternarSwitch}></Switch>
-            </PossuiConvenio>
-            {convenio && (
+            </CaixaTextoConvenioCuidador>
+            <Switch
+              value={convenio}
+              onChange={funcaoConvenio}>
+            </Switch>
+          </PossuiConvenio>
+          {convenio && (
+            <>
+              <CaixaTituloInput>
+                <TituloInput>Nome do Convênio</TituloInput>
+              </CaixaTituloInput>
               <Input
                 placeholder="Nome do Convênio"
                 width="100%"
@@ -450,14 +472,65 @@ function Cadastro({ navigation }) {
                 }}
                 camposVazios={camposVazios.convenio}
               ></Input>
-            )}
-            
+            </>
+          )}
+
+          <PossuiConvenio>
+            <CaixaTextoConvenioCuidador>
+              <Texto>
+                Possui Cuidador(a)?
+              </Texto>
+            </CaixaTextoConvenioCuidador>
+            <Switch
+              value={cuidador}
+              onChange={funcaoCuidador}>
+            </Switch>
+          </PossuiConvenio>
+          {cuidador && (
+            <>
+              <CaixaTituloInput>
+                <TituloInput>Nome do cuidador</TituloInput>
+              </CaixaTituloInput>
+              <Input
+                placeholder="Nome do cuidador"
+                width="100%"
+                label="nome_cuidador"
+                value={estado.nome_cuidador}
+                onChangeText={(text) => {
+                  preenchendoDados("nome_cuidador", text)
+                }}
+                camposVazios={camposVazios.cuidador}
+              ></Input>
+              <CaixaTituloInput>
+                <TituloInput>Telefone do cuidador</TituloInput>
+              </CaixaTituloInput>
+              <InputMask
+                placeholder="Telefone do cuidador(a)"
+                width="100%"
+                keyboardType="numeric"
+                label="telefone_cuidador"
+                value={estado.telefone_cuidador}
+                type={"cel-phone"}
+                options={{
+                  maskType: "BRL",
+                  withDDD: true,
+                  dddMask: "(99) ",
+                }}
+                textContentType="telephoneNumber"
+                dataDetectorTypes="phoneNumber"
+                onChangeText={(maskedText, rawText) => {
+                  preenchendoDados("telefone_cuidador", rawText);
+                }}
+                camposVazios={camposVazios.telefone_cuidador}
+              ></InputMask>
+            </>
+          )}
 
 
           <CaixaRotulo>
-          <CaixaTituloInput>
-            <TituloInput>CEP:</TituloInput>
-          </CaixaTituloInput>
+            <CaixaTituloInput>
+              <TituloInput>CEP:</TituloInput>
+            </CaixaTituloInput>
             <InputMask
               placeholder="CEP:"
               keyboardType="numeric"
@@ -488,7 +561,7 @@ function Cadastro({ navigation }) {
             value={endereco.pais}
             camposVazios={camposVazios.pais}
           />
-            <CaixaTituloInput>
+          <CaixaTituloInput>
             <TituloInput>Estado:</TituloInput>
           </CaixaTituloInput>
           <PickerView camposVazios={camposVazios.estado}>
@@ -528,7 +601,7 @@ function Cadastro({ navigation }) {
             value={endereco.cidade}
             camposVazios={camposVazios.cidade}
           />
-           <CaixaTituloInput>
+          <CaixaTituloInput>
             <TituloInput>Bairro:</TituloInput>
           </CaixaTituloInput>
           <Input
@@ -542,7 +615,7 @@ function Cadastro({ navigation }) {
             value={endereco.bairro}
             camposVazios={camposVazios.bairro}
           />
-           <CaixaTituloInput>
+          <CaixaTituloInput>
             <TituloInput>Rua:</TituloInput>
           </CaixaTituloInput>
           <Input
@@ -556,7 +629,7 @@ function Cadastro({ navigation }) {
             value={endereco.rua}
             camposVazios={camposVazios.rua}
           />
-           <CaixaTituloInput>
+          <CaixaTituloInput>
             <TituloInput>Número:</TituloInput>
           </CaixaTituloInput>
           <InputMask
@@ -572,7 +645,7 @@ function Cadastro({ navigation }) {
             value={endereco.numero}
             camposVazios={camposVazios.numero}
           />
-           <CaixaTituloInput>
+          <CaixaTituloInput>
             <TituloInput>Complemento:</TituloInput>
           </CaixaTituloInput>
           <Input
@@ -586,9 +659,9 @@ function Cadastro({ navigation }) {
             value={endereco.complemento}
           />
           <CaixaRotulo>
-          <CaixaTituloInput>
-            <TituloInput>Senha</TituloInput>
-          </CaixaTituloInput>
+            <CaixaTituloInput>
+              <TituloInput>Senha</TituloInput>
+            </CaixaTituloInput>
             <Input
               placeholder="Defina sua senha:"
               keyboardType="default"
@@ -609,9 +682,9 @@ function Cadastro({ navigation }) {
             )}
           </CaixaRotulo>
           <CaixaRotulo>
-          <CaixaTituloInput>
-            <TituloInput>Confirme sua senha:</TituloInput>
-          </CaixaTituloInput>
+            <CaixaTituloInput>
+              <TituloInput>Confirme sua senha:</TituloInput>
+            </CaixaTituloInput>
             <Input
               placeholder="Confirme sua senha:"
               keyboardType="default"
