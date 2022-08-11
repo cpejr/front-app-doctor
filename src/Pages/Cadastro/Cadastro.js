@@ -170,9 +170,14 @@ function Cadastro({ navigation }) {
     if (erro.senhaConfirmada === true) errors.senhaConfirmada = true;
 
 
-    if (convenio !== null) {
-      setCamposVazios({ ...camposVazios, convenio: false })
+    if (convenio === true) {
       teste.convenio = false;
+    }
+
+    if(cuidador === true){
+      teste.nome_cuidador = false;
+      teste.telefone_cuidador = false;
+    
     }
 
     for (const propriedade_errors in errors) {
@@ -505,11 +510,9 @@ function Cadastro({ navigation }) {
                 <TituloInput>Telefone do cuidador</TituloInput>
               </CaixaTituloInput>
               <InputMask
-                placeholder="Telefone do cuidador(a)"
-                width="100%"
+                placeholder="Telefone do Cuidador:"
                 keyboardType="numeric"
-                label="telefone_cuidador"
-                value={estado.telefone_cuidador}
+                width="100%"
                 type={"cel-phone"}
                 options={{
                   maskType: "BRL",
@@ -518,11 +521,14 @@ function Cadastro({ navigation }) {
                 }}
                 textContentType="telephoneNumber"
                 dataDetectorTypes="phoneNumber"
+                label="telefone_cuidador"
+                includeRawValueInChangeText={true}
                 onChangeText={(maskedText, rawText) => {
                   preenchendoDados("telefone_cuidador", rawText);
                 }}
+                value={estado.telefone_cuidador}
                 camposVazios={camposVazios.telefone_cuidador}
-              ></InputMask>
+              />
             </>
           )}
 
