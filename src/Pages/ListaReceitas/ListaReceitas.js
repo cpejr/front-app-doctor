@@ -21,19 +21,11 @@ import * as managerService from "../../services/ManagerService/managerService";
 function ListaReceitas({ navigation }) {
 
     const [ receitas, setReceitas ] = useState([]);
-    const [ idUsuario, setIdUsuario ] = useState("");
 
-
-  /*async function pegandoDados() {
-    const resposta = await managerService.GetDadosUsuario();
-    setIdUsuario(resposta.dadosUsuario.id);
-    console.log("Id usuario é tatnatnatna ", resposta);
-  }*/
 
   async function pegandoReceitas() {
     const resposta = await managerService.GetDadosReceitas();
     setReceitas(resposta.dadosReceitas[0].receita);
-    //console.log("teste aquiiiii", resposta.dadosReceitas[0].receita);
   }
   
   useEffect(() => {
@@ -51,17 +43,10 @@ function ListaReceitas({ navigation }) {
         </ContainerCima>
         <ContainerTodasReceitas>
         {receitas?.map((value) => (
-            
             <ContainerReceitas key = {value.id}>
                 <TituloReceitas>{value.titulo}</TituloReceitas>
-                <TextoData>XX/XX/XXXX</TextoData>
+                <TextoData>{value.data_criacao}</TextoData>
             </ContainerReceitas>))}
-
-            <ContainerReceitas>
-                <TituloReceitas>Receita Numero2 Receita</TituloReceitas>
-                <TextoData>XX/XX/XXXX</TextoData> 
-            </ContainerReceitas> 
-
         </ContainerTodasReceitas>
     </ContainerBody> );
 

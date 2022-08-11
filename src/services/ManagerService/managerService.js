@@ -179,7 +179,6 @@ export const GetDadosReceitas= async () => {
     .requisicaoDadosUsuario(email)
     .then((res) => {
       dadosUsuario = res.data;
-      //console.log(dadosUsuario)
       
     })
     .catch((error) => {
