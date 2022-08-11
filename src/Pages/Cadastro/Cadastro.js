@@ -4,6 +4,7 @@ import {
   Alert,
   useWindowDimensions,
   TouchableOpacity,
+  Switch
 } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao";
@@ -29,6 +30,10 @@ import {
   CaixaBotoes,
   CheckboxTexto,
   Lgpd,
+  CaixaTituloInput,
+  TituloInput,
+  PossuiConvenio,
+  Texto,
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
@@ -103,6 +108,17 @@ function Cadastro({ navigation }) {
   const [data_nascimentoFront, setData_nascimentoFront] = useState();
 
   const { width, height } = useWindowDimensions();
+
+  const [convenio, setConvenio] = useState(false);
+
+  const [aux, setAux] = useState(false);
+
+  const alternarSwitch = ()=>{setAux(aux=>!aux)}
+
+  function funcaoConvenio() {
+    setConvenio(!convenio);
+    setEstado({ ...estado, convenio: null });
+  }
 
   
 
@@ -309,6 +325,9 @@ function Cadastro({ navigation }) {
         </CaixaTitulo>
 
         <CaixaInputs width={tamanhoInputs}>
+          <CaixaTituloInput>
+            <TituloInput>Nome completo: </TituloInput>
+          </CaixaTituloInput>
           <Input
             placeholder="Nome Completo:"
             keyboardType="default"
@@ -322,6 +341,9 @@ function Cadastro({ navigation }) {
           />
           <CaixaInputsMesmaLinha>
             <CaixaRotuloMesmaLinha>
+            <CaixaTituloInput>
+            <TituloInput>Telefone: </TituloInput>
+          </CaixaTituloInput>
               <InputMask
                 placeholder="Telefone:"
                 keyboardType="numeric"
@@ -348,6 +370,9 @@ function Cadastro({ navigation }) {
               )}
             </CaixaRotuloMesmaLinha>
             <CaixaRotuloMesmaLinha>
+            <CaixaTituloInput>
+            <TituloInput>Data de nascimento: </TituloInput>
+          </CaixaTituloInput>
               <Data
                 customStyles={{
                   dateInput: { borderWidth: 0 },
@@ -367,6 +392,9 @@ function Cadastro({ navigation }) {
             </CaixaRotuloMesmaLinha>
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
+          <CaixaTituloInput>
+            <TituloInput>CPF:</TituloInput>
+          </CaixaTituloInput>
             <InputMask
               placeholder="CPF:"
               keyboardType="numeric"
@@ -386,6 +414,9 @@ function Cadastro({ navigation }) {
             )}
           </CaixaRotulo>
           <CaixaRotulo>
+          <CaixaTituloInput>
+            <TituloInput>Email:</TituloInput>
+          </CaixaTituloInput>
             <Input
               placeholder="Email:"
               keyboardType="default"
@@ -402,7 +433,31 @@ function Cadastro({ navigation }) {
               <Rotulo>Digite um email no formato email@email.com</Rotulo>
             )}
           </CaixaRotulo>
+            <PossuiConvenio>
+             <Texto>
+              Possui Convênio?
+              </Texto>
+              <Switch onValueChange={alternarSwitch}></Switch>
+            </PossuiConvenio>
+            {convenio && (
+              <Input
+                placeholder="Nome do Convênio"
+                width="100%"
+                label="convenio"
+                value={estado.convenio}
+                onChangeText={(text) => {
+                  preenchendoDados("convenio", text)
+                }}
+                camposVazios={camposVazios.convenio}
+              ></Input>
+            )}
+            
+
+
           <CaixaRotulo>
+          <CaixaTituloInput>
+            <TituloInput>CEP:</TituloInput>
+          </CaixaTituloInput>
             <InputMask
               placeholder="CEP:"
               keyboardType="numeric"
@@ -419,6 +474,9 @@ function Cadastro({ navigation }) {
             />
             {erro.cep && <Rotulo>Digite um CEP no formato xxxxx-xxx</Rotulo>}
           </CaixaRotulo>
+          <CaixaTituloInput>
+            <TituloInput>País:</TituloInput>
+          </CaixaTituloInput>
           <Input
             placeholder="País:"
             keyboardType="default"
@@ -430,7 +488,9 @@ function Cadastro({ navigation }) {
             value={endereco.pais}
             camposVazios={camposVazios.pais}
           />
-
+            <CaixaTituloInput>
+            <TituloInput>Estado:</TituloInput>
+          </CaixaTituloInput>
           <PickerView camposVazios={camposVazios.estado}>
             <PickerEstado
               selectedValue={estadoSelecionado}
@@ -454,7 +514,9 @@ function Cadastro({ navigation }) {
               ))}
             </PickerEstado>
           </PickerView>
-
+          <CaixaTituloInput>
+            <TituloInput>Cidade:</TituloInput>
+          </CaixaTituloInput>
           <Input
             placeholder="Cidade:"
             keyboardType="default"
@@ -466,6 +528,9 @@ function Cadastro({ navigation }) {
             value={endereco.cidade}
             camposVazios={camposVazios.cidade}
           />
+           <CaixaTituloInput>
+            <TituloInput>Bairro:</TituloInput>
+          </CaixaTituloInput>
           <Input
             placeholder="Bairro:"
             keyboardType="default"
@@ -477,6 +542,9 @@ function Cadastro({ navigation }) {
             value={endereco.bairro}
             camposVazios={camposVazios.bairro}
           />
+           <CaixaTituloInput>
+            <TituloInput>Rua:</TituloInput>
+          </CaixaTituloInput>
           <Input
             placeholder="Rua:"
             keyboardType="default"
@@ -488,6 +556,9 @@ function Cadastro({ navigation }) {
             value={endereco.rua}
             camposVazios={camposVazios.rua}
           />
+           <CaixaTituloInput>
+            <TituloInput>Número:</TituloInput>
+          </CaixaTituloInput>
           <InputMask
             type={"only-numbers"}
             pattern="[0-9]*"
@@ -501,6 +572,9 @@ function Cadastro({ navigation }) {
             value={endereco.numero}
             camposVazios={camposVazios.numero}
           />
+           <CaixaTituloInput>
+            <TituloInput>Complemento:</TituloInput>
+          </CaixaTituloInput>
           <Input
             placeholder="Complemento:"
             keyboardType="default"
@@ -512,6 +586,9 @@ function Cadastro({ navigation }) {
             value={endereco.complemento}
           />
           <CaixaRotulo>
+          <CaixaTituloInput>
+            <TituloInput>Senha</TituloInput>
+          </CaixaTituloInput>
             <Input
               placeholder="Defina sua senha:"
               keyboardType="default"
@@ -532,6 +609,9 @@ function Cadastro({ navigation }) {
             )}
           </CaixaRotulo>
           <CaixaRotulo>
+          <CaixaTituloInput>
+            <TituloInput>Confirme sua senha:</TituloInput>
+          </CaixaTituloInput>
             <Input
               placeholder="Confirme sua senha:"
               keyboardType="default"
