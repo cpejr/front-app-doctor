@@ -177,14 +177,16 @@ function AlterarDados({ navigation }) {
           <CaixaTitulo>
             <Titulo>Alterar Dados:</Titulo>
           </CaixaTitulo>
+          {carregando ? (
+            <>
+              <ActivityIndicator animating={true} color={Colors.black} />
+            </>) : ( 
           <CaixaInputs width={tamanhoInputs}>
           
             <CaixaTitulosRotulos>
               <TituloRotulos>Nome:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
             <Input
               
               placeholder={usuario.nome}
@@ -195,13 +197,11 @@ function AlterarDados({ navigation }) {
                 preenchendoDados("nome", text);
               }}
               
-            /> )}
+            /> 
             <CaixaTitulosRotulos>
               <TituloRotulos>Telefone:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
             <InputMask
               placeholder={telMasked}
               keyboardType="numeric"
@@ -219,13 +219,11 @@ function AlterarDados({ navigation }) {
               onChangeText={(maskedText, rawText) => {
                 preenchendoDados("telefone", rawText);
               }}
-            /> )}
+            /> 
             <CaixaTitulosRotulos>
               <TituloRotulos>Data de nascimento:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
             <Data
               customStyles={{
                 dateInput: {
@@ -244,13 +242,11 @@ function AlterarDados({ navigation }) {
               onDateChange={(data) => {
                 preenchendoDados("data_nascimento", data);
               }}
-            />)}
+            />
             <CaixaTitulosRotulos>
               <TituloRotulos>CPF:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
             <InputMask
               placeholder={cpfMasked}
               keyboardType="default"
@@ -261,13 +257,11 @@ function AlterarDados({ navigation }) {
               onChangeText={(maskedText, rawText) => {
                 preenchendoDados("cpf", rawText);
               }}
-            /> )}
+            /> 
             <CaixaTitulosRotulos>
               <TituloRotulos>CEP:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
             <InputMask
               placeholder={cep(endereco.cep)}
               keyboardType="default"
@@ -278,14 +272,12 @@ function AlterarDados({ navigation }) {
               onChangeText={(maskedText, rawText) => {
                 preenchendoEndereco("cep", rawText);
               }}
-            />)}
+            />
 
             <CaixaTitulosRotulos>
               <TituloRotulos>País:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
             <Input
               placeholder={endereco.pais}
               keyboardType="default"
@@ -294,14 +286,12 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoEndereco("pais", text);
               }}
-            /> )}
+            /> 
 
             <CaixaTitulosRotulos>
               <TituloRotulos>Estado:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+           
             <Input
               placeholder={endereco.estado}
               keyboardType="default"
@@ -310,13 +300,11 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoEndereco("estado", text);
               }}
-            /> )}
+            /> 
           <CaixaTitulosRotulos>
               <TituloRotulos>Cidade:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
             <Input
               placeholder={endereco.cidade}
               keyboardType="default"
@@ -325,14 +313,12 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoEndereco("cidade", text);
               }}
-            /> )}
+            /> 
 
             <CaixaTitulosRotulos>
               <TituloRotulos>Bairro:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
             <Input
               placeholder={endereco.bairro}
               keyboardType="default"
@@ -341,13 +327,13 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoEndereco("bairro", text);
               }}
-            /> )}
+            /> 
             <CaixaTitulosRotulos>
               <TituloRotulos>Rua:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
+              
+            
             <Input
               placeholder={endereco.rua}
               keyboardType="default"
@@ -356,13 +342,13 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoEndereco("rua", text);
               }}
-            /> )}
+            /> 
             <CaixaTitulosRotulos>
               <TituloRotulos>Número:</TituloRotulos>
             </CaixaTitulosRotulos>
-            {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+            
+              
+          
             <Input
               placeholder={numero}
               keyboardType="default"
@@ -371,15 +357,14 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoEndereco("numero", text);
               }}
-            /> )}
+            /> 
             {complemento === null ? (
               <>
               <CaixaTitulosRotulos>
                 <TituloRotulos>Complemento:</TituloRotulos>
               </CaixaTitulosRotulos>
-              {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+
+            
               <Input
                 placeholder="Complemento: "
                 keyboardType="default"
@@ -388,15 +373,13 @@ function AlterarDados({ navigation }) {
                 onChangeText={(text) => {
                   preenchendoEndereco("complemento", text);
                 }}
-              />)}</>
+              /></>
             ) : (
               <>
               <CaixaTitulosRotulos>
                 <TituloRotulos>Complemento:</TituloRotulos>
               </CaixaTitulosRotulos>
-              {carregando ? (
-              <ActivityIndicator animating={true} color={Colors.black} />
-            ) : ( 
+
               <Input
                 placeholder={complemento}
                 keyboardType="default"
@@ -405,9 +388,9 @@ function AlterarDados({ navigation }) {
                 onChangeText={(text) => {
                   preenchendoEndereco("complemento", text);
                 }}
-              />)}</>
+              /></>
             )}
-          </CaixaInputs>
+          </CaixaInputs> )}
 
           <CaixaBotoes>
             <Botao
