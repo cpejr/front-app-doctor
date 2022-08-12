@@ -83,3 +83,9 @@ width:23px;
 height:23px;
 margin-right:1px;
 `;
+
+export const PaginaCarregando = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
