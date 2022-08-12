@@ -166,6 +166,7 @@ function Cadastro({ navigation }) {
     if (erro.cpf === true) errors.email = true;
     if (erro.cep === true) errors.cep = true;
     if (erro.telefone === true) errors.telefone = true;
+    if (erro.telefone_cuidador === true) errors.telefone_cuidador = true;
     if (erro.senha === true) errors.senha = true;
     if (erro.senhaConfirmada === true) errors.senhaConfirmada = true;
 
@@ -255,6 +256,14 @@ function Cadastro({ navigation }) {
     } else {
       setErro({ ...erro, [inputIdentifier]: false });
     }
+
+    if (cuidador === true){
+      if (inputIdentifier === "telefone_cuidador" && enteredValue.length < 11){
+        setErro({ ...erro, [inputIdentifier]: true });
+      } else { 
+        setErro({ ...erro, [inputIdentifier]: false });
+      }
+      }
 
     setandoCamposNulos(inputIdentifier, enteredValue);
 
@@ -528,7 +537,11 @@ function Cadastro({ navigation }) {
                 }}
                 value={estado.telefone_cuidador}
                 camposVazios={camposVazios.telefone_cuidador}
+                erro={erro.telefone_cuidador}
               />
+              {erro.telefone_cuidador && (
+                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+              )}
             </>
           )}
 
