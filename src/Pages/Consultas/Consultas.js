@@ -4,10 +4,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  View,
   Text,
-  Pressable,
 } from "react-native";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import {
   Body,
   CaixaTitulo,
@@ -40,15 +39,11 @@ import botaoIcone from "./../../assets/botaoIcone.png";
 import iconeAvaliDesabilitado from "./../../assets/iconeAvaliDesabilitado.png";
 import iconeAvaliHabilitado from "./../../assets/iconeAvaliHabilitado.png";
 import iconeLocal from "./../../assets/iconeLocal.png";
-
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Cores } from "../../variaveis";
-
-
 import { Dimensions } from "react-native";
-import * as managerService from "../../services/ManagerService/managerService";
-import { ActivityIndicator, Button, Colors } from "react-native-paper";
 import Botao from "../../styles/Botao";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Consultas({ navigation }) {
   const { width } = useWindowDimensions();
@@ -115,31 +110,34 @@ function Consultas({ navigation }) {
 
   async function compararData() {
     setCarregando(true);
-    for (var i = 0; i < consultas.length; i++) {
-      var dataAtual = new Date();
-      var dataConsulta = new Date(consultas[i].data_hora);
-      consultas[i].dataConsulta = formatarDataHora(
-        consultas[i].data_hora
-      ).dataConsulta;
-      consultas[i].horaConsulta = formatarDataHora(
-        consultas[i].data_hora
-      ).horaConsulta;
-      const consultorio = await requisicaoConsultorioById(
-        consultas[i].id_consultorio
-      );
+    if (consultas !== undefined) {
+      for (var i = 0; i < consultas.length; i++) {
+        var dataAtual = new Date();
+        var dataConsulta = new Date(consultas[i].data_hora);
+        consultas[i].dataConsulta = formatarDataHora(
+          consultas[i].data_hora
+        ).dataConsulta;
+        consultas[i].horaConsulta = formatarDataHora(
+          consultas[i].data_hora
+        ).horaConsulta;
+        const consultorio = await requisicaoConsultorioById(
+          consultas[i].id_consultorio
+        );
 
-      const endereco = await requisicaoEnderecoById(consultorio.id_endereco);
-      consultas[i].nomeConsultorio = consultorio.nome;
-      consultas[i].enderecoConsultorio = endereco;
-      if (dataAtual >= dataConsulta) {
-        consultasOcorridas.push(consultas[i]);
+        const endereco = await requisicaoEnderecoById(consultorio.id_endereco);
+        consultas[i].nomeConsultorio = consultorio.nome;
+        consultas[i].enderecoConsultorio = endereco;
+        if (dataAtual >= dataConsulta) {
+          consultasOcorridas.push(consultas[i]);
+        }
+        if (dataAtual < dataConsulta) {
+          consultasNaoOcorridas.push(consultas[i]);
+        }
       }
-      if (dataAtual < dataConsulta) {
-        consultasNaoOcorridas.push(consultas[i]);
-      }
+      setOcorridas(consultasOcorridas);
+      setNaoOcorridas(consultasNaoOcorridas);
     }
-    setOcorridas(consultasOcorridas);
-    setNaoOcorridas(consultasNaoOcorridas);
+
     setCarregando(false);
   }
 
@@ -182,164 +180,176 @@ function Consultas({ navigation }) {
           </ViewPadrao>
         ) : (
           <ViewPadrao paddingLeft="10px" paddingRight="10px">
-            {ocoridas?.map((value) => (
-              <TouchableOpacity
-                onPress={() => {
-                  getDadosOcorridas(value);
-                }}
-                key={value.id}
-              >
-                <Modal
-                  animationType="slide"
-                  transparent={true}
-                  visible={modalOcorrida}
-                >
-                  <CaixaModal height={heightModal} marginTop={marginTopModal}>
-                    <CaixaFechar>
-                      <TouchableOpacity
-                        onPress={() => {
-                          setModalOcorrida(false);
-                        }}
-                      >
-                        <Icon name="close" size={tamanhoIcone}></Icon>
-                      </TouchableOpacity>
-                    </CaixaFechar>
-                    <CaixaTituloModal>
-                      <TituloModal>
-                        A sua consulta foi no {nomeModal}
-                      </TituloModal>
-                    </CaixaTituloModal>
-                    <CaixaDadosModal>
-                      <EnderecoModal>
-                        {enderecoModal.rua}, {enderecoModal.numero} -{" "}
-                        {enderecoModal.bairro} {enderecoModal.cidade}
-                      </EnderecoModal>
-                      <DataModal>
-                        {dataModal} às {horaModal}
-                      </DataModal>
-                    </CaixaDadosModal>
-                    <CaixaAvaliacaoModal>
-                      <Botao
-                        height="40px"
-                        width="70%"
-                        backgroundColor="green"
-                        borderRadius="10px"
-                        borderWidth="1px"
-                        borderColor="#088E0E"
-                      >
-                        <ConteudoBotao
-                          fontSize="15px"
-                          color="#000000"
-                          width="100%"
-                        >
-                          Avalie a Consulta
-                        </ConteudoBotao>
-                      </Botao>
-                    </CaixaAvaliacaoModal>
-                  </CaixaModal>
-                </Modal>
-                <CaixaConsulta>
-                  <CaixaData>
-                    <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      {value.dataConsulta}
-                    </ConteudoCaixa>
-                  </CaixaData>
-                  <CaixaNome
-                    borderRightWidth={borderWidthCaixaNome}
-                    borderLeftWidth={borderWidthCaixaNome}
+            {consultas ? (
+              <>
+                {ocoridas?.map((value) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      getDadosOcorridas(value);
+                    }}
+                    key={value.id}
                   >
-                    <Icone
-                      marginRight="4%"
-                      marginLeft="0"
-                      source={iconeAvaliDesabilitado}
-                    />
-                    <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      Consulta de Rotina
-                    </ConteudoCaixa>
-                    <Icone
-                      marginRight="0"
-                      marginLeft="4%"
-                      source={iconeLocal}
-                    />
-                  </CaixaNome>
-                  <CaixaHora>
-                    <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      {value.horaConsulta}
-                    </ConteudoCaixa>
-                  </CaixaHora>
-                </CaixaConsulta>
-              </TouchableOpacity>
-            ))}
-            {naoOcorridas?.map((value) => (
-              <TouchableOpacity
-                onPress={() => {
-                  getDadosNaoOcorridas(value);
-                }}
-                key={value.id}
-              >
-                <Modal
-                  animationType="slide"
-                  transparent={true}
-                  visible={modalNaoOcorrida}
-                >
-                  <CaixaModal height={heightModal} marginTop={marginTopModal}>
-                    <CaixaFechar>
-                      <TouchableOpacity
-                        onPress={() => {
-                          setModalNaoOcorrida(false);
-                        }}
+                    <Modal
+                      animationType="slide"
+                      transparent={true}
+                      visible={modalOcorrida}
+                    >
+                      <CaixaModal
+                        height={heightModal}
+                        marginTop={marginTopModal}
                       >
-                        <Icon name="close" size={tamanhoIcone}></Icon>
-                      </TouchableOpacity>
-                    </CaixaFechar>
-                    <CaixaTituloModal>
-                      <TituloModal>
-                        A sua consulta será no {nomeModal}
-                      </TituloModal>
-                    </CaixaTituloModal>
-                    <CaixaDadosModal>
-                      <EnderecoModal>
-                        {enderecoModal.rua}, {enderecoModal.numero} -{" "}
-                        {enderecoModal.bairro} {enderecoModal.cidade}
-                      </EnderecoModal>
-                      <DataModal>
-                        {dataModal} às {horaModal}
-                      </DataModal>
-                    </CaixaDadosModal>
-                  </CaixaModal>
-                </Modal>
-                <CaixaConsulta>
-                  <CaixaData>
-                    <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      {value.dataConsulta}
-                    </ConteudoCaixa>
-                  </CaixaData>
-                  <CaixaNome
-                    borderRightWidth={borderWidthCaixaNome}
-                    borderLeftWidth={borderWidthCaixaNome}
+                        <CaixaFechar>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setModalOcorrida(false);
+                            }}
+                          >
+                            <Icon name="close" size={tamanhoIcone}></Icon>
+                          </TouchableOpacity>
+                        </CaixaFechar>
+                        <CaixaTituloModal>
+                          <TituloModal>
+                            A sua consulta foi no {nomeModal}
+                          </TituloModal>
+                        </CaixaTituloModal>
+                        <CaixaDadosModal>
+                          <EnderecoModal>
+                            {enderecoModal.rua}, {enderecoModal.numero} -{" "}
+                            {enderecoModal.bairro} {enderecoModal.cidade}
+                          </EnderecoModal>
+                          <DataModal>
+                            {dataModal} às {horaModal}
+                          </DataModal>
+                        </CaixaDadosModal>
+                        <CaixaAvaliacaoModal>
+                          <Botao
+                            height="40px"
+                            width="70%"
+                            backgroundColor="green"
+                            borderRadius="10px"
+                            borderWidth="1px"
+                            borderColor="#088E0E"
+                          >
+                            <ConteudoBotao
+                              fontSize="15px"
+                              color="#000000"
+                              width="100%"
+                            >
+                              Avalie a Consulta
+                            </ConteudoBotao>
+                          </Botao>
+                        </CaixaAvaliacaoModal>
+                      </CaixaModal>
+                    </Modal>
+                    <CaixaConsulta>
+                      <CaixaData>
+                        <ConteudoCaixa fontSize={fontSizeConteudo}>
+                          {value.dataConsulta}
+                        </ConteudoCaixa>
+                      </CaixaData>
+                      <CaixaNome
+                        borderRightWidth={borderWidthCaixaNome}
+                        borderLeftWidth={borderWidthCaixaNome}
+                      >
+                        <Icone
+                          marginRight="4%"
+                          marginLeft="0"
+                          source={iconeAvaliDesabilitado}
+                        />
+                        <ConteudoCaixa fontSize={fontSizeConteudo}>
+                          Consulta de Rotina
+                        </ConteudoCaixa>
+                        <Icone
+                          marginRight="0"
+                          marginLeft="4%"
+                          source={iconeLocal}
+                        />
+                      </CaixaNome>
+                      <CaixaHora>
+                        <ConteudoCaixa fontSize={fontSizeConteudo}>
+                          {value.horaConsulta}
+                        </ConteudoCaixa>
+                      </CaixaHora>
+                    </CaixaConsulta>
+                  </TouchableOpacity>
+                ))}
+                {naoOcorridas?.map((value) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      getDadosNaoOcorridas(value);
+                    }}
+                    key={value.id}
                   >
-                    <Icone
-                      marginRight="4%"
-                      marginLeft="0"
-                      source={iconeAvaliHabilitado}
-                    />
-                    <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      Consulta de Rotina
-                    </ConteudoCaixa>
-                    <Icone
-                      marginRight="0"
-                      marginLeft="4%"
-                      source={iconeLocal}
-                    />
-                  </CaixaNome>
-                  <CaixaHora>
-                    <ConteudoCaixa fontSize={fontSizeConteudo}>
-                      {value.horaConsulta}
-                    </ConteudoCaixa>
-                  </CaixaHora>
-                </CaixaConsulta>
-              </TouchableOpacity>
-            ))}
+                    <Modal
+                      animationType="slide"
+                      transparent={true}
+                      visible={modalNaoOcorrida}
+                    >
+                      <CaixaModal
+                        height={heightModal}
+                        marginTop={marginTopModal}
+                      >
+                        <CaixaFechar>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setModalNaoOcorrida(false);
+                            }}
+                          >
+                            <Icon name="close" size={tamanhoIcone}></Icon>
+                          </TouchableOpacity>
+                        </CaixaFechar>
+                        <CaixaTituloModal>
+                          <TituloModal>
+                            A sua consulta será no {nomeModal}
+                          </TituloModal>
+                        </CaixaTituloModal>
+                        <CaixaDadosModal>
+                          <EnderecoModal>
+                            {enderecoModal.rua}, {enderecoModal.numero} -{" "}
+                            {enderecoModal.bairro} {enderecoModal.cidade}
+                          </EnderecoModal>
+                          <DataModal>
+                            {dataModal} às {horaModal}
+                          </DataModal>
+                        </CaixaDadosModal>
+                      </CaixaModal>
+                    </Modal>
+                    <CaixaConsulta>
+                      <CaixaData>
+                        <ConteudoCaixa fontSize={fontSizeConteudo}>
+                          {value.dataConsulta}
+                        </ConteudoCaixa>
+                      </CaixaData>
+                      <CaixaNome
+                        borderRightWidth={borderWidthCaixaNome}
+                        borderLeftWidth={borderWidthCaixaNome}
+                      >
+                        <Icone
+                          marginRight="4%"
+                          marginLeft="0"
+                          source={iconeAvaliHabilitado}
+                        />
+                        <ConteudoCaixa fontSize={fontSizeConteudo}>
+                          Consulta de Rotina
+                        </ConteudoCaixa>
+                        <Icone
+                          marginRight="0"
+                          marginLeft="4%"
+                          source={iconeLocal}
+                        />
+                      </CaixaNome>
+                      <CaixaHora>
+                        <ConteudoCaixa fontSize={fontSizeConteudo}>
+                          {value.horaConsulta}
+                        </ConteudoCaixa>
+                      </CaixaHora>
+                    </CaixaConsulta>
+                  </TouchableOpacity>
+                ))}
+              </>
+            ) : (
+              <Text>Não há consultas marcadas no momento!</Text>
+            )}
           </ViewPadrao>
         )}
         <ViewBotao>
