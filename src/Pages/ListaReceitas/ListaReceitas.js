@@ -55,13 +55,12 @@ function ListaReceitas({ navigation }) {
     <ContainerBody>
         <ContainerCima>   
             <BarraPesquisa>
-            <Searchbar
-              style= {{ width: 410} }
-              placeholder="BUSCAR"
-              value={busca}
-              onChangeText={onChangeBusca}
-            />
-            </BarraPesquisa>
+              <InputPesquisa
+                placeholder= "BUSCAR"
+                onChangeText={onChangeBusca}
+                value={busca} />
+              <IconPesquisa source = { searchIcon }/>
+              </BarraPesquisa>
         </ContainerCima>
         {carregando ? (
             <PaginaCarregando>
@@ -75,8 +74,8 @@ function ListaReceitas({ navigation }) {
             </ContainerReceitas>))}
             
         </ContainerTodasReceitas>)}
-    </ContainerBody> );
-
+    </ContainerBody> 
+    );
 }
 
 export default ListaReceitas;
