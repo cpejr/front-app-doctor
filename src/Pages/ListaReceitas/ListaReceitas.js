@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { sleep } from "../../utils/sleep";
-import { ActivityIndicator, Colors } from 'react-native-paper';
+import { ActivityIndicator, Colors, Searchbar } from 'react-native-paper';
 import { Alert, ScrollView, Text, View, useWindowDimensions} from "react-native";
 import { 
     ContainerBody, 
@@ -22,8 +22,13 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaReceitas({ navigation }) {
 
+  
     const [ receitas, setReceitas ] = useState([]);
     const [carregando, setCarregando] = useState(false);
+    const [busca, setBusca] = useState("");
+    const lowerBusca = busca.toLowerCase();
+
+  const onChangeBusca = busca => setBusca(busca);
 
   async function pegandoReceitas() {
     setCarregando(true);
@@ -37,12 +42,25 @@ function ListaReceitas({ navigation }) {
   }, []);
 
 
+  const receitasFiltradas = receitas.filter((receita) => {
+    if (lowerBusca === "") 
+      return receitas;
+    else 
+      return(
+        (receita?.titulo?.toLowerCase().includes(lowerBusca))
+      );
+    }); 
+
     return(
     <ContainerBody>
         <ContainerCima>   
             <BarraPesquisa>
-            <InputPesquisa placeholder="Pesquisar no chat" />
-            <IconPesquisa source={searchIcon} />
+            <Searchbar
+              style= {{ width: 410} }
+              placeholder="BUSCAR"
+              value={busca}
+              onChangeText={onChangeBusca}
+            />
             </BarraPesquisa>
         </ContainerCima>
         {carregando ? (
@@ -50,7 +68,7 @@ function ListaReceitas({ navigation }) {
               <ActivityIndicator animating={true} color={Colors.black} />
             </PaginaCarregando>) : ( 
         <ContainerTodasReceitas>         
-        {receitas?.map((value) => (
+        {receitasFiltradas?.map((value) => (
             <ContainerReceitas key = {value.id}>
                 <TituloReceitas>{value.titulo}</TituloReceitas>
                 <TextoData>{value.data_criacao}</TextoData>
