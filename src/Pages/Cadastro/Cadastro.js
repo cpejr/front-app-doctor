@@ -174,11 +174,17 @@ function Cadastro({ navigation }) {
     if (convenio === true) {
       teste.convenio = false;
     }
+    else if(convenio === false && camposVazios.convenio != undefined) { 
+      delete camposVazios.convenio
+    }
 
     if(cuidador === true){
       teste.nome_cuidador = false;
       teste.telefone_cuidador = false;
-    
+    }
+    else if (cuidador === false && (camposVazios.nome_cuidador != undefined || camposVazios.telefone_cuidador != undefined)){
+      delete camposVazios.nome_cuidador;
+      delete camposVazios.telefone_cuidador;
     }
 
     for (const propriedade_errors in errors) {
@@ -191,9 +197,13 @@ function Cadastro({ navigation }) {
       }
     }
 
+  
+
     if (_.isEqual(camposVazios, teste)) {
       requisicaoCadastro();
     } else {
+      console.log(camposVazios);
+      console.log(teste);
       Alert.alert("Erro", "Preencha todos os campos obrigatórios corretamente!");
       await sleep(1500);
       setCarregando(false);
