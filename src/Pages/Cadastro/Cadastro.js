@@ -202,8 +202,6 @@ function Cadastro({ navigation }) {
     if (_.isEqual(camposVazios, teste)) {
       requisicaoCadastro();
     } else {
-      console.log(camposVazios);
-      console.log(teste);
       Alert.alert("Erro", "Preencha todos os campos obrigatórios corretamente!");
       await sleep(1500);
       setCarregando(false);
@@ -263,12 +261,13 @@ function Cadastro({ navigation }) {
       (inputIdentifier === "senhaConfirmada" && enteredValue.length < 8)
     ) {
       setErro({ ...erro, [inputIdentifier]: true });
+      
     } else {
       setErro({ ...erro, [inputIdentifier]: false });
     }
 
-    if (cuidador === true){
-      if (inputIdentifier === "telefone_cuidador" && enteredValue.length < 11){
+    if (cuidador === true && inputIdentifier === "telefone_cuidador"){
+      if (enteredValue.length < 11){
         setErro({ ...erro, [inputIdentifier]: true });
       } else { 
         setErro({ ...erro, [inputIdentifier]: false });
@@ -528,30 +527,32 @@ function Cadastro({ navigation }) {
               <CaixaTituloInput>
                 <TituloInput>Telefone do cuidador</TituloInput>
               </CaixaTituloInput>
-              <InputMask
-                placeholder="Telefone do Cuidador:"
-                keyboardType="numeric"
-                width="100%"
-                type={"cel-phone"}
-                options={{
-                  maskType: "BRL",
-                  withDDD: true,
-                  dddMask: "(99) ",
-                }}
-                textContentType="telephoneNumber"
-                dataDetectorTypes="phoneNumber"
-                label="telefone_cuidador"
-                includeRawValueInChangeText={true}
-                onChangeText={(maskedText, rawText) => {
-                  preenchendoDados("telefone_cuidador", rawText);
-                }}
-                value={estado.telefone_cuidador}
-                camposVazios={camposVazios.telefone_cuidador}
-                erro={erro.telefone_cuidador}
-              />
-              {erro.telefone_cuidador && (
-                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-              )}
+              <CaixaRotulo>
+                <InputMask
+                  placeholder="Telefone do Cuidador:"
+                  keyboardType="numeric"
+                  width="100%"
+                  type={"cel-phone"}
+                  options={{
+                    maskType: "BRL",
+                    withDDD: true,
+                    dddMask: "(99) ",
+                  }}
+                  textContentType="telephoneNumber"
+                  dataDetectorTypes="phoneNumber"
+                  label="telefone_cuidador"
+                  includeRawValueInChangeText={true}
+                  onChangeText={(maskedText, rawText) => {
+                    preenchendoDados("telefone_cuidador", rawText);
+                  }}
+                  value={estado.telefone_cuidador}
+                  camposVazios={camposVazios.telefone_cuidador}
+                  erro={erro.telefone_cuidador}
+                />
+                {erro.telefone_cuidador && (
+                  <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+                )}
+                </CaixaRotulo>
             </>
           )}
 
