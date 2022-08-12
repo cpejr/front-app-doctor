@@ -497,7 +497,7 @@ function Cadastro({ navigation }) {
           {convenio && (
             <>
               <CaixaTituloInput>
-                <TituloInput>Nome do Convênio</TituloInput>
+                <TituloInput>Nome do Convênio:</TituloInput>
               </CaixaTituloInput>
               <Input
                 placeholder="Nome do Convênio:"
@@ -526,7 +526,7 @@ function Cadastro({ navigation }) {
           {cuidador && (
             <>
               <CaixaTituloInput>
-                <TituloInput>Nome do cuidador</TituloInput>
+                <TituloInput>Nome do cuidador:</TituloInput>
               </CaixaTituloInput>
               <Input
                 placeholder="Nome do cuidador:"
@@ -539,7 +539,7 @@ function Cadastro({ navigation }) {
                 camposVazios={camposVazios.nome_cuidador}
               ></Input>
               <CaixaTituloInput>
-                <TituloInput>Telefone do cuidador</TituloInput>
+                <TituloInput>Telefone do cuidador:</TituloInput>
               </CaixaTituloInput>
               <CaixaRotulo>
                 <InputMask
