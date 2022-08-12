@@ -182,6 +182,7 @@ export const PossuiConvenio = styled.View`
 
 export const Texto = styled.Text`
   font-size: 12px;
+  color: ${Cores.azulEscuro};
 `;
 
 

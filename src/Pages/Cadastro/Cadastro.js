@@ -119,11 +119,13 @@ function Cadastro({ navigation }) {
   function funcaoConvenio() {
     setConvenio(!convenio);
     setEstado({ ...estado, convenio: null });
+    setCamposVazios({...camposVazios, convenio: false});
   }
 
   function funcaoCuidador() {
     setCuidador(!cuidador);
     setEstado({ ...estado, nome_cuidador: null, telefone_cuidador: null });
+    setCamposVazios({...camposVazios, nome_cuidador: false, telefone_cuidador: false});
   }
 
 
@@ -162,6 +164,16 @@ function Cadastro({ navigation }) {
     if (!endereco.numero) errors.numero = true;
     if (!estado.senha) errors.senha = true;
     if (!estado.senhaConfirmada) errors.senhaConfirmada = true;
+    if (cuidador === true){
+      if(!estado.nome_cuidador)
+        errors.nome_cuidador = true;
+      if(!estado.telefone_cuidador)
+        errors.telefone_cuidador = true;
+    }
+    if (convenio === true){
+      if(!estado.convenio)
+      errors.convenio = true;
+    }
     if (erro.email === true) errors.email = true;
     if (erro.cpf === true) errors.email = true;
     if (erro.cep === true) errors.cep = true;
@@ -187,9 +199,14 @@ function Cadastro({ navigation }) {
       delete camposVazios.telefone_cuidador;
     }
 
+    console.log("-=-=-=-=-=--=-=-=--")
+    console.log("                    ")
+    console.log("                    ")
+
     for (const propriedade_errors in errors) {
       if (errors[propriedade_errors] === true) {
         for (const propriedade_campos in camposVazios) {
+          console.log(propriedade_campos);
           if (propriedade_campos === propriedade_errors) {
             camposVazios[propriedade_campos] = true;
           }
@@ -239,6 +256,7 @@ function Cadastro({ navigation }) {
         enteredValue === null
       ) {
         setCamposVazios({ ...camposVazios, [inputIdentifier]: true });
+
       } else {
         setCamposVazios({ ...camposVazios, [inputIdentifier]: false });
       }
@@ -272,7 +290,7 @@ function Cadastro({ navigation }) {
       } else { 
         setErro({ ...erro, [inputIdentifier]: false });
       }
-      }
+    }
 
     setandoCamposNulos(inputIdentifier, enteredValue);
 
@@ -486,7 +504,7 @@ function Cadastro({ navigation }) {
                 <TituloInput>Nome do Convênio</TituloInput>
               </CaixaTituloInput>
               <Input
-                placeholder="Nome do Convênio"
+                placeholder="Nome do Convênio:"
                 width="100%"
                 label="convenio"
                 value={estado.convenio}
@@ -515,14 +533,14 @@ function Cadastro({ navigation }) {
                 <TituloInput>Nome do cuidador</TituloInput>
               </CaixaTituloInput>
               <Input
-                placeholder="Nome do cuidador"
+                placeholder="Nome do cuidador:"
                 width="100%"
                 label="nome_cuidador"
                 value={estado.nome_cuidador}
                 onChangeText={(text) => {
                   preenchendoDados("nome_cuidador", text)
                 }}
-                camposVazios={camposVazios.cuidador}
+                camposVazios={camposVazios.nome_cuidador}
               ></Input>
               <CaixaTituloInput>
                 <TituloInput>Telefone do cuidador</TituloInput>
