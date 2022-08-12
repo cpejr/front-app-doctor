@@ -199,14 +199,10 @@ function Cadastro({ navigation }) {
       delete camposVazios.telefone_cuidador;
     }
 
-    console.log("-=-=-=-=-=--=-=-=--")
-    console.log("                    ")
-    console.log("                    ")
 
     for (const propriedade_errors in errors) {
       if (errors[propriedade_errors] === true) {
         for (const propriedade_campos in camposVazios) {
-          console.log(propriedade_campos);
           if (propriedade_campos === propriedade_errors) {
             camposVazios[propriedade_campos] = true;
           }
