@@ -23,7 +23,7 @@ function Arquivos({ navigation }) {
             </ContainerCima>
             <ContainerBotoes>
                 <CaixaBotao
-                     onPress={() => navigation.navigate("FormulariosStackScreen")}
+                     onPress={() => navigation.navigate("ListaFormularios")}
                    >
                     <TextoBotao>Formulários</TextoBotao>
                 </CaixaBotao>

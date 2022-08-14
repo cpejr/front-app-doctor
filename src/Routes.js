@@ -193,7 +193,7 @@ function TabScreen() {
       <Tab.Screen
         name="botao2"
         options={{ tabBarIcon: FormulariosIcon, title: "Arquivos" }}
-        component={FormulariosStackScreen}
+        component={Arquivos}
       />
       <Tab.Screen
         name="botao4"
