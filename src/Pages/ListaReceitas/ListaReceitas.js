@@ -45,6 +45,17 @@ function ListaReceitas({ navigation }) {
     pegandoReceitas();
   }, []);
 
+  function comparaData(a, b){
+    var data1 = new Date(a.data_criacao);
+    var data2 = new Date(b.data_criacao);
+    if (data1 > data2){
+        return 1;
+    }
+    else {
+        return -1;
+    }
+}
+
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "") return receitas;
     else return receita?.titulo?.toLowerCase().includes(lowerBusca);
@@ -69,7 +80,7 @@ function ListaReceitas({ navigation }) {
       ) : (
         <ScrollView>
           <ContainerTodasReceitas>
-            {receitasFiltradas?.map((value) => (
+            {receitasFiltradas?.sort(comparaData).map((value) => (
               <ContainerReceitas key={value.id}>
                 <TituloReceitas>{value.titulo}</TituloReceitas>
                 <TextoData>
