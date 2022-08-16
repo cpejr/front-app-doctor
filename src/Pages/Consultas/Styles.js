@@ -11,7 +11,6 @@ export const Body = styled.View`
   padding-right: ${(props) => props.paddingRight};
   padding-left: ${(props) => props.paddingLeft};
 `;
-
 export const ViewConsultas = styled.View`
   display: flex;
   flex-direction: column;
@@ -36,7 +35,8 @@ export const CaixaConsulta = styled.View`
   align-items: center;
   width: 100%;
   border-radius: 5px;
-  margin-bottom: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
   background-color: ${Cores.cinza[8]};
   height: 38px;
   border-radius: 5px;
@@ -176,6 +176,13 @@ export const EnderecoModal = styled.Text`
 export const DataModal = styled.Text`
   font-size: 15px;
   text-align: center;
+`;
+export const TextoSemConsulta = styled.Text`
+  font-size: 14px;
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  color: ${Cores.azul};
 `;
 export const CaixaAvaliacaoModal = styled.View`
   width: 80%;
