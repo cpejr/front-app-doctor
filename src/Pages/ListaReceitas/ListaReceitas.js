@@ -70,9 +70,14 @@ function ListaReceitas({ navigation }) {
         {receitasFiltradas?.map((value) => (
             <ContainerReceitas key = {value.id}>
                 <TituloReceitas>{value.titulo}</TituloReceitas>
-                <TextoData>{value.data_criacao}</TextoData>
+                <TextoData>
+                  {parseInt(value.data_criacao.slice(11, 13)) < 12 ? (
+                    value.data_criacao.slice(8, 10) + "/" + value.data_criacao.slice(5, 7) + "/" + value.data_criacao.slice(0, 4)
+                  ) : (
+                    value.data_criacao.slice(8, 10) + "/" + value.data_criacao.slice(5, 7) + "/" + value.data_criacao.slice(0, 4)
+                  )}
+                </TextoData>
             </ContainerReceitas>))}
-            
         </ContainerTodasReceitas>)}
     </ContainerBody> 
     );
