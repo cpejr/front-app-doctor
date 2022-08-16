@@ -30,7 +30,7 @@ export const ContainerTodasReceitas = styled.View `
 
 `;
 
-//PRECISA ESTAR DENTRO DE SCROLVIEW 
+
 export const ContainerReceitas = styled.View ` 
 
     height: 130px;
@@ -47,6 +47,7 @@ export const ContainerReceitas = styled.View `
 `;
 
 export const TituloReceitas = styled.Text ` 
+    width: 50%;
     font-size: 16px;
     font-weight: 800;
     color: ${Cores.azulEscuro};

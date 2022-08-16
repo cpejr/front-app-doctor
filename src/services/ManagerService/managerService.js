@@ -44,7 +44,6 @@ export const GetDadosUsuario = async () => {
     .requisicaoDadosUsuario(email)
     .then((res) => {
       dadosUsuario = res.data;
-      //console.log(res.data)
     })
     .catch((error) => {
       requisicaoErro(error);

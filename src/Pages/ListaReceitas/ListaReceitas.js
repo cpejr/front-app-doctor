@@ -58,7 +58,7 @@ function ListaReceitas({ navigation }) {
 
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "") return receitas;
-    else return receita?.titulo?.toLowerCase().includes(lowerBusca);
+    else return(receita?.titulo?.toLowerCase().includes(lowerBusca));
   });
 
   return (
