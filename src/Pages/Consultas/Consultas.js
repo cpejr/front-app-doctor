@@ -52,7 +52,7 @@ function Consultas({ navigation }) {
   const paddingBodyMaior = width < 600 ? "5%" : "10%";
   const larguraBotaoMaior = width < 600 ? "50%" : "40%";
   const fontSizeMaior = width < 600 ? "12px" : "15px";
-  const heightModal = width < 600 ? "70%" : "100%";
+  const heightModal = width < 600 ? "60%" : "100%";
   const marginTopModal = width < 600 ? "15%" : "0%";
   //responsividade aparelhos
   const paddingBody = width < 330 ? "1.5%" : paddingBodyMaior;
@@ -98,9 +98,14 @@ function Consultas({ navigation }) {
     } else if (mes >= 10) {
       var dataConsulta = dia + "/" + mes + "/" + ano;
     }
+
     const horas = aux.getHours();
     const minutos = aux.getMinutes();
-    const horaConsulta = horas + ":" + minutos;
+    if (minutos < 10){
+      var horaConsulta = horas + ":" + "0" + minutos;
+    } else if (minutos >= 10){
+      var horaConsulta = horas + ":" + minutos;
+    }
 
     return { dataConsulta, horaConsulta };
   }
@@ -194,10 +199,7 @@ function Consultas({ navigation }) {
                       transparent={true}
                       visible={modalOcorrida}
                     >
-                      <CaixaModal
-                        height={heightModal}
-                        marginTop={marginTopModal}
-                      >
+                      <CaixaModal>
                         <CaixaFechar>
                           <TouchableOpacity
                             onPress={() => {
@@ -254,7 +256,7 @@ function Consultas({ navigation }) {
                         <Icone
                           marginRight="4%"
                           marginLeft="0"
-                          source={iconeAvaliDesabilitado}
+                          source={iconeAvaliHabilitado}
                         />
                         <ConteudoCaixa fontSize={fontSizeConteudo}>
                           Consulta de Rotina
@@ -267,7 +269,7 @@ function Consultas({ navigation }) {
                       </CaixaNome>
                       <CaixaHora>
                         <ConteudoCaixa fontSize={fontSizeConteudo}>
-                          {value.horaConsulta}
+                          {value.horaConsulta} - {value.duracao_em_minutos} min
                         </ConteudoCaixa>
                       </CaixaHora>
                     </CaixaConsulta>
@@ -285,10 +287,7 @@ function Consultas({ navigation }) {
                       transparent={true}
                       visible={modalNaoOcorrida}
                     >
-                      <CaixaModal
-                        height={heightModal}
-                        marginTop={marginTopModal}
-                      >
+                      <CaixaModal>
                         <CaixaFechar>
                           <TouchableOpacity
                             onPress={() => {
@@ -327,7 +326,7 @@ function Consultas({ navigation }) {
                         <Icone
                           marginRight="4%"
                           marginLeft="0"
-                          source={iconeAvaliHabilitado}
+                          source={iconeAvaliDesabilitado}
                         />
                         <ConteudoCaixa fontSize={fontSizeConteudo}>
                           Consulta de Rotina
@@ -340,7 +339,7 @@ function Consultas({ navigation }) {
                       </CaixaNome>
                       <CaixaHora>
                         <ConteudoCaixa fontSize={fontSizeConteudo}>
-                          {value.horaConsulta}
+                          {value.horaConsulta} - {value.duracao_em_minutos} min
                         </ConteudoCaixa>
                       </CaixaHora>
                     </CaixaConsulta>

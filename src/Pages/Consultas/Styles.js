@@ -130,12 +130,12 @@ export const IconeBotao = styled.Image`
   width: 18.5px;
 `;
 export const CaixaModal = styled.View`
-  height: ${(props) => props.height};
+  height: 50%;
   width: 80%;
-  margin-top: ${(props) => props.marginTop};
-  margin-bottom: 4%;
+  margin-top:25%;
   margin-left: 10%;
   margin-right: 10%;
+  padding-bottom: 10%;
   background-color: #f7f7f7;
   border-radius: 6px;
   border: 4px;
@@ -148,7 +148,6 @@ export const CaixaFechar = styled.View`
   width: 100%;
   display: flex;
   flex-direction: row;
-  margin-top: 5%;
   justify-content: flex-end;
   padding-right: 5%;
 `;
