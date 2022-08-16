@@ -23,12 +23,12 @@ function Arquivos({ navigation }) {
             </ContainerCima>
             <ContainerBotoes>
                 <CaixaBotao
-                     onPress={() => navigation.navigate("ListaFormularios")}
+                     onPress={() => navigation.push("ListaFormularios")}
                    >
                     <TextoBotao>Formulários</TextoBotao>
                 </CaixaBotao>
                 <CaixaBotao
-                     onPress={() => navigation.navigate("ListaReceitas")}
+                     onPress={() => navigation.push("ListaReceitas")}
                    >
                     <TextoBotao>Receitas</TextoBotao>
                 </CaixaBotao>
