@@ -60,6 +60,57 @@ export const GetDadosUsuario = async () => {
   return { dadosEndereco, dadosUsuario };
 };
 
+export const GetFormulariosPaciente = async () => {
+  let formulariosPaciente;
+  const email = await AsyncStorage.getItem("@AirBnbApp:email");
+  const id_usuario = await GetDadosUsuario(email)
+    .then((res) => {
+      return res.dadosUsuario.id;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  await requesterService
+    .requisicaoFormulariosPaciente(id_usuario)
+    .then((res) => {
+      formulariosPaciente = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return formulariosPaciente;
+};
+
+// export const GetFormulariosPaciente = async () => {
+//   let formulariosPaciente;
+//   let id_usuario;
+//   await AsyncStorage.getItem("@AirBnbApp:email")
+//     .then((email) => {
+//       GetDadosUsuario(email)
+//         .then((res) => {
+//           id_usuario = res.dadosUsuario.id;
+//           requesterService
+//             .requisicaoFormulariosPaciente(id_usuario)
+//             .then((res) => {
+//               formulariosPaciente = res.data;
+//             })
+//             .catch((error) => {
+//               requisicaoErro(error);
+//             });
+//         })
+//         .catch((error) => {
+//           requisicaoErro(error);
+//         });
+//     })
+//     .catch((error) => {
+//       requisicaoErro(error);
+//     });
+//     return formulariosPaciente;
+// };
+
+
+
+
 export const UpdateDadosUsuario = async (
   id_usuario,
   id_endereco,
