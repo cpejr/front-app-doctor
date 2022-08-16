@@ -21,6 +21,7 @@ import {
 import Botao from "../../styles/Botao";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
+import { cep } from "../../utils/masks";
 
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -153,7 +154,7 @@ function Perfil({ navigation }) {
             <Dados fontSize={fontSizeDados}>País:  {endereco.pais}</Dados>
             <Dados fontSize={fontSizeDados}>Estado: {endereco.estado}</Dados>
             <Dados fontSize={fontSizeDados}>Cidade: {endereco.cidade}</Dados>
-            <Dados fontSize={fontSizeDados}>CEP:  {endereco.cep}</Dados>
+            <Dados fontSize={fontSizeDados}>CEP:  {cep(endereco.cep)}</Dados>
             <Dados fontSize={fontSizeDados}>
               Rua: {endereco.rua}, {endereco.numero}
             </Dados>
@@ -168,7 +169,7 @@ function Perfil({ navigation }) {
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
-              onPress={() => navigation.navigate("AlterarDados")}
+              onPress={() => navigation.push("AlterarDados")}
             >
               <ConteudoBotaoPerfil fontSize={fontSizeDados}>
                 ALTERAR DADOS
