@@ -22,6 +22,7 @@ import {
   CaixaBotao,
   IconeBotao,
   CaixaModal,
+  CaixaConteudoModal,
   CaixaFechar,
   CaixaEndereco,
   CaixaTituloModal,
@@ -298,6 +299,7 @@ function Consultas({ navigation }) {
                             <Icon name="close" size={tamanhoIcone}></Icon>
                           </TouchableOpacity>
                         </CaixaFechar>
+                        <CaixaConteudoModal>
                         <CaixaTituloModal>
                           <TituloModal>
                             A sua consulta será no {nomeModal}
@@ -312,6 +314,7 @@ function Consultas({ navigation }) {
                             {dataModal} às {horaModal}
                           </DataModal>
                         </CaixaDadosModal>
+                        </CaixaConteudoModal>
                       </CaixaModal>
                     </Modal>
                     <CaixaConsulta>

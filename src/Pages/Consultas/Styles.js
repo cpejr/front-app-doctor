@@ -132,24 +132,28 @@ export const IconeBotao = styled.Image`
 export const CaixaModal = styled.View`
   height: 50%;
   width: 80%;
-  margin-top:25%;
+  margin-top: 40%;
   margin-left: 10%;
   margin-right: 10%;
   padding-bottom: 10%;
+  padding-top:0%;
   background-color: #f7f7f7;
   border-radius: 6px;
   border: 4px;
   border-color: #c4c4c4;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 export const CaixaFechar = styled.View`
   width: 100%;
+  height: 10%;
+  height: auto;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  align-items: flex-end;
+  justify-content: flex-start;
   padding-right: 5%;
+  padding-top: 5%;
 `;
 export const CaixaTituloModal = styled.View`
   width: 80%;
@@ -169,6 +173,15 @@ export const CaixaDadosModal = styled.View`
   margin-top: 5%;
   justify-content: center;
 `;
+export const CaixaConteudoModal = styled.View`
+  width: 100%;
+  height:80%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  align-items :center;
+  justify-content: center;
+`;
 export const EnderecoModal = styled.Text`
   font-size: 15px;
   text-align: center;
@@ -186,9 +199,11 @@ export const TextoSemConsulta = styled.Text`
 `;
 export const CaixaAvaliacaoModal = styled.View`
   width: 80%;
+  height: 10%;
   display: flex;
   flex-direction: row;
-  margin-top: 10%;
+  margin-top: 5%;
+  align-items: flex-start;
   justify-content: center;
 `;
 
