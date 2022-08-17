@@ -90,6 +90,30 @@ function HomeStackScreen() {
   );
 }
 
+const ArquivosStack = createNativeStackNavigator();
+
+function ArquivosStackScreen() {
+  return (
+    <ArquivosStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Arquivos"
+    >
+      <ArquivosStack.Screen
+        name="Arquivos"
+        component={Arquivos}
+      />
+      <ArquivosStack.Screen
+        name="ListaReceitas"
+        component={ListaReceitas}
+      />
+      <ArquivosStack.Screen
+        name="ListaFormularios"
+        component={ListaFormularios}
+      />
+    </ArquivosStack.Navigator>
+  );
+}
+
 const FormulariosStack = createNativeStackNavigator();
 
 function FormulariosStackScreen() {
@@ -193,7 +217,7 @@ function TabScreen() {
       <Tab.Screen
         name="botao2"
         options={{ tabBarIcon: FormulariosIcon, title: "Arquivos" }}
-        component={Arquivos}
+        component={ArquivosStackScreen}
       />
       <Tab.Screen
         name="botao4"
