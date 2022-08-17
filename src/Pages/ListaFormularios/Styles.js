@@ -37,14 +37,12 @@ export const InputPesquisa = styled.TextInput`
 height:100%;
 font-size: 17px;
 width:90%;
-background-color: green;
 `;
 
 export const IconPesquisa = styled.Image`
 width:23px;
 height:23px;
 margin-right:1px;
-background-color: green;
 `;
 
 export const TabView = styled.View`
