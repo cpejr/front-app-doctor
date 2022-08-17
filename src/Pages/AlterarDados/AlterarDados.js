@@ -26,6 +26,7 @@ function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
+  const [telefoneCuidador, setTelefoneCuidador] = useState("");
   const [cpf, setCpf] = useState("");
   const [complemento, setComplemento] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
@@ -35,6 +36,7 @@ function AlterarDados({ navigation }) {
   const [cpfMasked, setCpfMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
+  const [telCuidadorMasked, setTelCuidadorMasked] = useState("");
   const [carregando, setCarregando] = useState(false);
   const [camposNulos, setCamposNulos] = useState({
     nome: true,
@@ -62,6 +64,9 @@ function AlterarDados({ navigation }) {
     setEndereco(resposta.dadosEndereco);
     setComplemento(resposta.dadosEndereco.complemento);
     setNumero(resposta.dadosEndereco.numero + " ");
+    if (resposta.dadosUsuario.telefone_cuidador !== null ){
+      setTelefoneCuidador(resposta.dadosUsuario.telefone_cuidador);
+    }
     setCarregando(false);
   }
 
@@ -86,6 +91,18 @@ function AlterarDados({ navigation }) {
         telefone.slice(-4)
     );
   }, [telefone]);
+
+  useEffect(() => {
+    setTelCuidadorMasked(
+      "(" +
+        telefoneCuidador.slice(0, -9) +
+        ")" +
+        telefoneCuidador.slice(2, -4) +
+        "-" +
+        telefoneCuidador.slice(-4)
+    );
+  }, [telefoneCuidador]);
+
   useEffect(() => {
     setDataMasked(
       dataNascimento.slice(8, -14) +
@@ -258,6 +275,70 @@ function AlterarDados({ navigation }) {
                 preenchendoDados("cpf", rawText);
               }}
             /> 
+
+            {usuario.convenio !== null ? (
+              <>
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Convenio:</TituloRotulos>
+                </CaixaTitulosRotulos>
+                
+                <Input
+                placeholder={usuario.convenio}
+                keyboardType="default"
+                width="100%"
+                label="convenio"
+                onChangeText={(text) => {
+                  preenchendoDados("convenio", text);
+                }}
+              /> 
+            </>
+            ) : (
+            <></>
+            )}
+
+            {usuario.nome_cuidador !== null ? (
+              <>
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Nome Cuidador:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <Input
+                placeholder={usuario.nome_cuidador}
+                keyboardType="default"
+                width="100%"
+                label="nome_cuidador"
+                onChangeText={(text) => {
+                  preenchendoDados("nome_cuidador", text);
+                }}
+              /> 
+
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Telefone Cuidador:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <InputMask
+                placeholder={telCuidadorMasked}
+                keyboardType="numeric"
+                width="100%"
+                type={"cel-phone"}
+                options={{
+                  maskType: "BRL",
+                  withDDD: true,
+                  dddMask: "(99) ",
+                }}
+                textContentType="telephoneNumber"
+                dataDetectorTypes="phoneNumber"
+                label="telefone_cuidador"
+                includeRawValueInChangeText={true}
+                onChangeText={(maskedText, rawText) => {
+                  preenchendoDados("telefone_cuidador", rawText);
+                }}
+              /> 
+            </>
+            ) : (
+            <></>
+            )}
+
             <CaixaTitulosRotulos>
               <TituloRotulos>CEP:</TituloRotulos>
             </CaixaTitulosRotulos>
