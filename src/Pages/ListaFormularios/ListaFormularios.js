@@ -46,45 +46,45 @@ function ListaFormularios({ navigation }) {
   const [listaFormPendente, setListaFormPendente] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [telaRespondido, setTelaRespondido] = useState(true);
+  const [busca, setBusca] = useState("");
   const aux = [];
 
   const lowerBusca = busca.toLowerCase();
-  const onChangeBusca = busca => setBusca(busca);
-  const formulariosFiltrados = formulariosPaciente.filter((formulario) => {
-    if(lowerBusca === "")
-      return formulariosPaciente;
-    else  
-      return(
-        (formulario?.titulo?.toLowerCase().includes(lowerBusca) || 
-        formulario?.tipo?.toLowerCase().includes(lowerBusca))
-        );
-  })
+  const onChangeBusca = (busca) => setBusca(busca);
+  const formulariosFiltrados = formulariosPaciente.filter((form) => {
+    if (lowerBusca === "") return formulariosPaciente;
+    else
+      return (
+        form?.titulo?.toLowerCase().includes(lowerBusca) ||
+        form?.tipo?.toLowerCase().includes(lowerBusca)
+      );
+  });
+
 
   async function pegandoFormulariosPaciente() {
     // listaFormPendente.length = 0;
     // listaFormRespondido.length = 0;
     // setListaFormPendente(aux)
     // setListaFormRespondido(aux)
-    await AsyncStorage.getItem("@AirBnbApp:email").then((res) => {
-      managerService.GetFormulariosPaciente(res).then((resposta) => {
-        resposta.forEach((formulario) => {
-          if (formulario.status === true) {
-            listaFormRespondido.push(formulario);
-          } else {
-            listaFormPendente.push(formulario);
-          }
-        })
-        setFormulariosPaciente(listaFormRespondido);
-        setCarregando(false);
+    await AsyncStorage.getItem("@AirBnbApp:email")
+      .then((res) => {
+        managerService.GetFormulariosPaciente(res).then((resposta) => {
+          resposta.forEach((formulario) => {
+            if (formulario.status === true) {
+              listaFormRespondido.push(formulario);
+            } else {
+              listaFormPendente.push(formulario);
+            }
+          });
+          setFormulariosPaciente(listaFormRespondido);
+          setCarregando(false);
+        });
       })
-    }
-    ).catch((error) => 
-    alert(error)
-    )
-    
+      .catch((error) => alert(error));
+
     // if (listaFormPendente.length === 0 && listaFormRespondido.length === 0){
     //   console.log("oi")
-    
+
     // }
     // setListaOriginal(resposta);
   }
@@ -129,11 +129,13 @@ function ListaFormularios({ navigation }) {
   }
 
   function trocandoTelaRespondido() {
+    setFormulariosPaciente("");
     setFormulariosPaciente(listaFormRespondido);
     setTelaRespondido(true);
   }
 
   function trocandoTelaPendente() {
+    setFormulariosPaciente("");
     setFormulariosPaciente(listaFormPendente);
     setTelaRespondido(false);
   }
@@ -153,7 +155,11 @@ function ListaFormularios({ navigation }) {
     <Scroll>
       <Body>
         <BarraPesquisa>
-          <InputPesquisa placeholder="Pesquisar formulário" />
+          <InputPesquisa
+            placeholder="Pesquisar formulário"
+            onChangeText={onChangeBusca}
+            value={busca}
+          />
           <IconPesquisa source={searchIcon} />
         </BarraPesquisa>
 
@@ -175,7 +181,7 @@ function ListaFormularios({ navigation }) {
             </FiltroNaoRespondido>
           </TouchableOpacity>
         </TabView>
-        {formulariosPaciente?.map((valor) => (
+        {formulariosFiltrados?.map((valor) => (
           <CaixaLista key={valor.id}>
             <TouchableOpacity
               onPress={() => {
