@@ -21,6 +21,9 @@ import { cep } from "../../utils/masks";
 import { Cores } from "../../variaveis";
 import { ActivityIndicator, Colors } from 'react-native-paper';
 import * as managerService from "../../services/ManagerService/managerService";
+import _ from "lodash";
+import { isEqual } from "lodash";
+import { sleep } from "../../utils/sleep";
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -38,6 +41,8 @@ function AlterarDados({ navigation }) {
   const [telMasked, setTelMasked] = useState("");
   const [telCuidadorMasked, setTelCuidadorMasked] = useState("");
   const [carregando, setCarregando] = useState(false);
+  
+
   const [camposNulos, setCamposNulos] = useState({
     nome: true,
     telefone: true,
@@ -51,8 +56,46 @@ function AlterarDados({ navigation }) {
     bairro: true,
     rua: true,
     numero: true,
-    complemento: true,
+    
   });
+
+  const referenciaCamposNulos = {
+    nome: true,
+    cpf: true,
+    email: true,
+    telefone: true,
+    cep: true,
+    data_nascimento: true,
+    pais: true,
+    estado: true,
+    cidade: true,
+    rua: true,
+    numero: true,
+    bairro: true,
+    complemento: true,
+  };
+
+  const errors = {};
+
+  useEffect(() => {
+    if (!estado.nome) errors.nome = true;
+    if (!estado.telefone) errors.telefone = true;
+    if (!estado.data_nascimento) errors.data_nascimento = true;
+    if (!estado.cpf) errors.cpf = true;
+    if (!estado.email) errors.email = true;
+    if (!novoEndereco.cep) errors.cep = true;
+    if (!novoEndereco.pais) errors.pais = true;
+    if (!novoEndereco.estado) errors.estado = true;
+    if (!novoEndereco.cidade) errors.cidade = true;
+    if (!novoEndereco.bairro) errors.bairro = true;
+    if (!novoEndereco.rua) errors.rua = true;
+    if (!novoEndereco.numero) errors.numero = true;
+    if (!novoEndereco.complemento) errors.complemento = true;
+
+
+    setCamposNulos({ ...camposNulos, ...errors });
+  }, [estado, novoEndereco]);
+
 
   async function pegandoDados() {
     setCarregando(true);
@@ -71,46 +114,54 @@ function AlterarDados({ navigation }) {
   }
 
   useEffect(() => {
-    setCpfMasked(
-      cpf.slice(+0, -8) +
-        "." +
-        cpf.slice(+3, -5) +
-        "." +
-        cpf.slice(+6, -2) +
-        "-" +
-        cpf.slice(-2)
-    );
+    if(cpf !== undefined){
+      setCpfMasked(
+        cpf.slice(+0, -8) +
+          "." +
+          cpf.slice(+3, -5) +
+          "." +
+          cpf.slice(+6, -2) +
+          "-" +
+          cpf.slice(-2)
+      );
+      }
   }, [cpf]);
   useEffect(() => {
-    setTelMasked(
-      "(" +
-        telefone.slice(0, -9) +
-        ")" +
-        telefone.slice(2, -4) +
-        "-" +
-        telefone.slice(-4)
-    );
+    if(telefone !== undefined){
+      setTelMasked(
+        "(" +
+          telefone.slice(0, -9) +
+          ")" +
+          telefone.slice(2, -4) +
+          "-" +
+          telefone.slice(-4)
+      );
+    }
   }, [telefone]);
 
   useEffect(() => {
-    setTelCuidadorMasked(
-      "(" +
-        telefoneCuidador.slice(0, -9) +
-        ")" +
-        telefoneCuidador.slice(2, -4) +
-        "-" +
-        telefoneCuidador.slice(-4)
-    );
+    if(telefoneCuidador !== undefined){
+      setTelCuidadorMasked(
+        "(" +
+          telefoneCuidador.slice(0, -9) +
+          ")" +
+          telefoneCuidador.slice(2, -4) +
+          "-" +
+          telefoneCuidador.slice(-4)
+      );
+    }
   }, [telefoneCuidador]);
 
   useEffect(() => {
-    setDataMasked(
-      dataNascimento.slice(8, -14) +
-        "/" +
-        dataNascimento.slice(5, -17) +
-        "/" +
-        dataNascimento.slice(0, -20)
-    );
+    if(dataMasked !== undefined){
+      setDataMasked(
+        dataNascimento.slice(8, -14) +
+          "/" +
+          dataNascimento.slice(5, -17) +
+          "/" +
+          dataNascimento.slice(0, -20)
+      );
+    }
   }, [dataNascimento]);
 
   function formatacaoData(data) {
@@ -122,11 +173,12 @@ function AlterarDados({ navigation }) {
     }
   }
 
-  async function atualizarDados() {
+/*   async function atualizarDados() {
     
     if (camposNulos.data_nascimento === false) {
       estado.data_nascimento = formatacaoData(estado.data_nascimento);
     }
+
 
     for (const propriedade_errors in estado) {
       if (!estado[propriedade_errors]) {
@@ -137,6 +189,8 @@ function AlterarDados({ navigation }) {
         }
       }
     }
+
+
     for (const propriedade_errors in novoEndereco) {
       if (!novoEndereco[propriedade_errors]) {
         for (const propriedade_campos in camposNulos) {
@@ -165,6 +219,22 @@ function AlterarDados({ navigation }) {
 
       Alert.alert("Erro", "Preencha Algum Campo.");
 
+    }
+  } */
+
+
+  async function atualizarDados() {
+    if (!_.isEqual(camposNulos, referenciaCamposNulos)) {
+      await managerService.UpdateDadosUsuario(
+        usuario.id,
+        endereco.id,
+        novoEndereco,
+        estado
+      );
+      await sleep(1500); 
+      navigation.push("Perfil");
+    } else {
+      Alert.alert("Erro", "Preencha Algum Campo.");
     }
   }
 
