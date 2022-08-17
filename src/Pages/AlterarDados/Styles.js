@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
+import DatePicker  from "react-native-datepicker";
 
 export const Body = styled.View`
   display: flex;
@@ -60,4 +61,45 @@ export const CaixaBotoes = styled.View`
   width: 70%;
   margin-top: 5%;
   margin-bottom: 5%;
+`;
+
+export const Data = styled(DatePicker)`
+  width: 100%;
+  height: 50px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  background-color: #e4e6f4;
+  border-width: 1.5px;
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if (props.camposVazios) {
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
+export const TituloRotulos = styled.Text`
+  font-size: 13px;
+  color: ${Cores.cinza[6]};
+  
+`;
+
+export const CaixaTitulosRotulos = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 2%;
 `;
