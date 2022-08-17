@@ -96,6 +96,20 @@ function AlterarDados({ navigation }) {
     setCamposNulos({ ...camposNulos, ...errors });
   }, [estado, novoEndereco]);
 
+  const [erro, setErro] = useState({
+    cpf: false,
+    telefone: false,
+    cep: false,
+  });
+  const referenciaFormatacao = {
+    cpf: false,
+    telefone: false,
+    cep: false,
+  };
+
+
+
+
 
   async function pegandoDados() {
     setCarregando(true);
@@ -225,14 +239,18 @@ function AlterarDados({ navigation }) {
 
   async function atualizarDados() {
     if (!_.isEqual(camposNulos, referenciaCamposNulos)) {
-      await managerService.UpdateDadosUsuario(
-        usuario.id,
-        endereco.id,
-        novoEndereco,
-        estado
-      );
-      await sleep(1500); 
-      navigation.push("Perfil");
+      if (_.isEqual(erro, referenciaFormatacao)) {
+        await managerService.UpdateDadosUsuario(
+          usuario.id,
+          endereco.id,
+          novoEndereco,
+          estado
+        );
+        await sleep(1500); 
+        navigation.push("Perfil");
+      } else {
+        Alert.alert("Erro", "Preencha os campos corretamente.");
+      }
     } else {
       Alert.alert("Erro", "Preencha Algum Campo.");
     }
@@ -241,11 +259,25 @@ function AlterarDados({ navigation }) {
   function preenchendoDados(identificador, valor) {
     setEstado({ ...estado, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
+    verificaErros(identificador, valor);
   }
 
   function preenchendoEndereco(identificador, valor) {
     setNovoEndereco({ ...novoEndereco, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
+    verificaErros(identificador, valor);
+  }
+
+  function verificaErros(identificador, valor) {
+    if (
+      (identificador === "telefone" && valor.length < 11) ||
+      (identificador === "cpf" && valor.length < 11) ||
+      (identificador === "cep" && valor.length < 8)
+    ) {
+      setErro({ ...erro, [identificador]: true });
+    } else {
+      setErro({ ...erro, [identificador]: false });
+    }
   }
 
   useEffect(() => {
