@@ -48,6 +48,18 @@ function ListaFormularios({ navigation }) {
   const [telaRespondido, setTelaRespondido] = useState(true);
   const aux = [];
 
+  const lowerBusca = busca.toLowerCase();
+  const onChangeBusca = busca => setBusca(busca);
+  const formulariosFiltrados = formulariosPaciente.filter((formulario) => {
+    if(lowerBusca === "")
+      return formulariosPaciente;
+    else  
+      return(
+        (formulario?.titulo?.toLowerCase().includes(lowerBusca) || 
+        formulario?.tipo?.toLowerCase().includes(lowerBusca))
+        );
+  })
+
   async function pegandoFormulariosPaciente() {
     // listaFormPendente.length = 0;
     // listaFormRespondido.length = 0;
