@@ -89,12 +89,12 @@ function Perfil({ navigation }) {
           text: "Não",
           style: "cancel"
         },
-        { text: "Confirmar", onPress: () => deletarUsuario() }
+        { text: "Confirmar", onPress: () => deletarEnderecoEUsuario() }
       ]
     );
 
-  async function deletarUsuario() {
-    await managerService.DeletarUsuario(usuario.id);
+  async function deletarEnderecoEUsuario() {
+    await managerService.DeletarEnderecoEUsuario(usuario.id_endereco);
     navigation.navigate("Login");
   }
 

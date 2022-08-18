@@ -166,3 +166,24 @@ export const DeletarUsuario = async (id) => {
 
   return false;
 };
+
+export const DeletarEnderecoEUsuario = async (id_endereco) => {
+  await requesterService
+    .deletarEnderecoEUsuario(id_endereco)
+    .then(() => {
+      Alert.alert(
+        "",
+        "Usuario deletado com sucesso!",
+      );
+    })
+    .catch((error) => {
+      //requisicaoErro(error);
+      Alert.alert(
+        "",
+        "Erro ao deletar usuario.",
+      );
+      return false;
+    });
+
+  return false;
+};
