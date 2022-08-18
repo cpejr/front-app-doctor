@@ -49,16 +49,16 @@ function ListaReceitas({ navigation }) {
     var data1 = new Date(a.data_criacao);
     var data2 = new Date(b.data_criacao);
     if (data1 > data2){
-        return 1;
+        return -1;
     }
     else {
-        return -1;
+        return 1;
     }
 }
 
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "") return receitas;
-    else return(receita?.titulo?.toLowerCase().includes(lowerBusca));
+    else return(receita?.titulo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(lowerBusca));
   });
 
   return (
