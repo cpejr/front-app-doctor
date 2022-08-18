@@ -59,7 +59,8 @@ function ListaReceitas({ navigation }) {
 
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "") return receitas;
-    else return(receita?.titulo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(lowerBusca));
+    else return((receita?.titulo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(lowerBusca)) ||
+    (receita?.titulo?.toLowerCase().includes(lowerBusca)));
   });
 
   const heightPesquisar = width > 720 ? "20%" : "15%";
