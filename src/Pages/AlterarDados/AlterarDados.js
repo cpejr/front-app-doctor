@@ -108,7 +108,15 @@ function AlterarDados({ navigation }) {
   };
 
 
-
+  function formatacaoData() {
+    let dataNascimento = estado.data_nascimento
+    try {
+      const response = brParaPadrao(dataNascimento);
+      return response;
+    } catch {
+      Alert.alert("Erro", "Data inválida.");
+    }
+  }
 
 
   async function pegandoDados() {
@@ -178,14 +186,6 @@ function AlterarDados({ navigation }) {
     }
   }, [dataNascimento]);
 
-  function formatacaoData(data) {
-    try {
-      const response = brParaPadrao(data);
-      return response;
-    } catch {
-      Alert.alert("Erro", "Data inválida.");
-    }
-  }
 
 /*   async function atualizarDados() {
     
@@ -238,6 +238,8 @@ function AlterarDados({ navigation }) {
 
 
   async function atualizarDados() {
+    const dataFormatada = formatacaoData();
+    estado.data_nascimento = dataFormatada;
     if (!_.isEqual(camposNulos, referenciaCamposNulos)) {
       if (_.isEqual(erro, referenciaFormatacao)) {
         await managerService.UpdateDadosUsuario(
@@ -269,14 +271,21 @@ function AlterarDados({ navigation }) {
   }
 
   function verificaErros(identificador, valor) {
-    if (
-      (identificador === "telefone" && valor.length < 11) ||
-      (identificador === "cpf" && valor.length < 11) ||
-      (identificador === "cep" && valor.length < 8)
-    ) {
-      setErro({ ...erro, [identificador]: true });
-    } else {
-      setErro({ ...erro, [identificador]: false });
+
+    if(
+      (identificador === "telefone") ||
+      (identificador === "cpf") ||
+      (identificador === "cep")
+    ){     
+      if (
+        (identificador === "telefone" && valor.length < 11) ||
+        (identificador === "cpf" && valor.length < 11) ||
+        (identificador === "cep" && valor.length < 8)
+      ){
+        setErro({ ...erro, [identificador]: true });
+      } else {
+        setErro({ ...erro, [identificador]: false });
+      }
     }
   }
 
