@@ -11,7 +11,7 @@ export const ContainerBody = styled.View `
 
 export const ContainerCima = styled.View `
 
-    height: 15%;
+    height: ${(props) => props.height};
     width: 100%;
     display: flex;
     justify-content: center;

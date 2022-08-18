@@ -31,6 +31,7 @@ function ListaReceitas({ navigation }) {
   const [carregando, setCarregando] = useState(false);
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
+  const { width } = useWindowDimensions();
 
   const onChangeBusca = (busca) => setBusca(busca);
 
@@ -61,9 +62,11 @@ function ListaReceitas({ navigation }) {
     else return(receita?.titulo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(lowerBusca));
   });
 
+  const heightPesquisar = width > 720 ? "20%" : "15%";
+
   return (
     <ContainerBody>
-      <ContainerCima>
+      <ContainerCima height={heightPesquisar}>
         <BarraPesquisa>
           <InputPesquisa
             placeholder="BUSCAR"

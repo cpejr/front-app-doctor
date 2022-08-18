@@ -6,6 +6,7 @@ import {
     ContainerBody, 
     ContainerBotoes, 
     ContainerCima,
+    ContainerBaixo,
     TextoCima, 
     TextoBotao,
     CaixaBotao,
@@ -21,6 +22,7 @@ function Arquivos({ navigation }) {
             <ContainerCima>
                 <TextoCima> Arquivos </TextoCima>
             </ContainerCima>
+            <ContainerBaixo>
             <ContainerBotoes>
                 <CaixaBotao
                      onPress={() => navigation.push("ListaFormularios")}
@@ -33,6 +35,7 @@ function Arquivos({ navigation }) {
                     <TextoBotao>Receitas</TextoBotao>
                 </CaixaBotao>
             </ContainerBotoes>
+            </ContainerBaixo>
         </ContainerBody>
     );
 }
