@@ -152,3 +152,41 @@ export const Lgpd = styled.Text`
   color: #151b57;
   text-decoration: underline;
 `;
+
+export const CaixaTituloInput = styled.View`
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+`;
+
+export const TituloInput = styled.Text`
+   font-size: 12px;
+   color: ${Cores.azulEscuro};
+   text-align: left;
+   
+
+`;
+
+export const PossuiConvenio = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2% 10% 0% 10%;
+
+  color:${Cores.azul} ;
+  .ant-switch-checked {
+    background-color: ${Cores.azul};
+  }
+`;
+
+export const Texto = styled.Text`
+  font-size: 12px;
+  color: ${Cores.azulEscuro};
+`;
+
+
+export const CaixaTextoConvenioCuidador = styled.View`
+  margin-top: 5%;
+  
+`;
