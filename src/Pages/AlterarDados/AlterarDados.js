@@ -93,7 +93,6 @@ function AlterarDados({ navigation }) {
   useEffect(() => {
     if (!estado.nome) errors.nome = true;
     if (!estado.telefone) errors.telefone = true;
-    if (!estado.data_nascimento) errors.data_nascimento = true;
     if (!estado.cpf) errors.cpf = true;
     if (!novoEndereco.cep) errors.cep = true;
     if (!novoEndereco.pais) errors.pais = true;
@@ -259,9 +258,6 @@ function AlterarDados({ navigation }) {
       estado.data_nascimento = formatacaoData(estado.data_nascimento);
     }
 
-    console.log(camposNulos);
-    console.log(referenciaCamposNulos);
-
     if (!_.isEqual(camposNulos, referenciaCamposNulos)) {
       if (_.isEqual(erro, referenciaFormatacao)) {
         await managerService.UpdateDadosUsuario(
@@ -271,7 +267,7 @@ function AlterarDados({ navigation }) {
           estado
         );
         await sleep(1500); 
-        navigation.push("Perfil");
+        navigation.push("AlterarDados");
       } else {
         Alert.alert("Erro", "Preencha os campos corretamente.");
       }
@@ -289,12 +285,13 @@ function AlterarDados({ navigation }) {
     setEstado({ ...estado, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
     verificaErros(identificador, valor);
+
+
   }
 
   function preenchendoEndereco(identificador, valor) {
 
     if (identificador === "cidade" || identificador === "pais"){
-      console.log("entrou");
       valor = apenasLetras(valor);
     }
 
@@ -410,6 +407,7 @@ function AlterarDados({ navigation }) {
               date={estado.data_nascimento}
               onDateChange={(data) => {
                 preenchendoDados("data_nascimento", data);
+                setCamposNulos({...camposNulos, data_nascimento: false});
               }}
             />
             <CaixaTitulosRotulos>
