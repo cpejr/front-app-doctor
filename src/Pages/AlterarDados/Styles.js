@@ -89,6 +89,14 @@ export const Data = styled(DatePicker)`
   align-items: flex-start;
 `;
 
+export const Rotulo = styled.Text`
+  font-size: 12px;
+  color: ${Cores.vermelho};
+  text-align: justify;
+  line-height: 12px;
+  margin-bottom: 1%;
+`;
+
 export const TituloRotulos = styled.Text`
   font-size: 13px;
   color: ${Cores.cinza[6]};

@@ -15,6 +15,7 @@ import {
   Data,
   TituloRotulos,
   CaixaTitulosRotulos,
+  Rotulo
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { cep } from "../../utils/masks";
@@ -24,6 +25,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
 import { isEqual } from "lodash";
 import { sleep } from "../../utils/sleep";
+import { CaixaRotulo } from "../Cadastro/Styles";
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -108,11 +110,13 @@ function AlterarDados({ navigation }) {
     cpf: false,
     telefone: false,
     cep: false,
+    telefone_cuidador: false,
   });
   const referenciaFormatacao = {
     cpf: false,
     telefone: false,
     cep: false,
+    telefone_cuidador: false,
   };
 
 
@@ -286,12 +290,14 @@ function AlterarDados({ navigation }) {
     if(
       (identificador === "telefone") ||
       (identificador === "cpf") ||
-      (identificador === "cep")
+      (identificador === "cep") ||
+      (identificador === "telefone_cuidador")
     ){     
       if (
         (identificador === "telefone" && valor.length < 11) ||
         (identificador === "cpf" && valor.length < 11) ||
-        (identificador === "cep" && valor.length < 8)
+        (identificador === "cep" && valor.length < 8) ||
+        (identificador === "telefone_cuidador" && valor.length < 11)
       ){
         setErro({ ...erro, [identificador]: true });
       } else {
@@ -355,10 +361,16 @@ function AlterarDados({ navigation }) {
               dataDetectorTypes="phoneNumber"
               label="Telefone"
               includeRawValueInChangeText={true}
+              erro={erro.telefone}
               onChangeText={(maskedText, rawText) => {
                 preenchendoDados("telefone", rawText);
               }}
-            /> 
+            />
+            {erro.telefone && (
+              <CaixaRotulo>
+                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+              </CaixaRotulo>
+            )} 
             <CaixaTitulosRotulos>
               <TituloRotulos>Data de nascimento:</TituloRotulos>
             </CaixaTitulosRotulos>
@@ -393,10 +405,16 @@ function AlterarDados({ navigation }) {
               label="cpf"
               type={"cpf"}
               includeRawValueInChangeText={true}
+              erro={erro.cpf}
               onChangeText={(maskedText, rawText) => {
                 preenchendoDados("cpf", rawText);
               }}
-            /> 
+            />
+            {erro.cpf && (
+              <CaixaRotulo>
+                <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
+              </CaixaRotulo>
+            )} 
 
             {usuario.convenio !== null ? (
               <>
@@ -465,10 +483,16 @@ function AlterarDados({ navigation }) {
                 dataDetectorTypes="phoneNumber"
                 label="telefone_cuidador"
                 includeRawValueInChangeText={true}
+                erro={erro.telefone_cuidador}
                 onChangeText={(maskedText, rawText) => {
                   preenchendoDados("telefone_cuidador", rawText);
                 }}
-              /> 
+              />
+              {erro.telefone_cuidador && (
+                <CaixaRotulo>
+                  <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+                </CaixaRotulo>
+              )} 
             </>
             ) : (
               <>
@@ -502,10 +526,16 @@ function AlterarDados({ navigation }) {
               dataDetectorTypes="phoneNumber"
               label="telefone_cuidador"
               includeRawValueInChangeText={true}
+              erro={erro.telefone_cuidador}
               onChangeText={(maskedText, rawText) => {
                 preenchendoDados("telefone_cuidador", rawText);
               }}
-            /> 
+            />
+              {erro.telefone_cuidador && (
+                <CaixaRotulo>
+                  <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+                </CaixaRotulo>
+              )} 
           </>
             )}
 
@@ -520,10 +550,16 @@ function AlterarDados({ navigation }) {
               width="100%"
               label="CEP"
               includeRawValueInChangeText={true}
+              erro={erro.cep}
               onChangeText={(maskedText, rawText) => {
                 preenchendoEndereco("cep", rawText);
               }}
             />
+            {erro.cep && (
+              <CaixaRotulo>
+                <Rotulo>Digite um CEP no formato xxxxx-xxx</Rotulo>
+              </CaixaRotulo>
+            )}
 
             <CaixaTitulosRotulos>
               <TituloRotulos>País:</TituloRotulos>
