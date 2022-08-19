@@ -30,6 +30,7 @@ import _ from "lodash";
 import { isEqual } from "lodash";
 import { sleep } from "../../utils/sleep";
 import { CaixaRotulo } from "../Cadastro/Styles";
+import { apenasLetras } from "../../utils/masks" 
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -123,6 +124,8 @@ function AlterarDados({ navigation }) {
     cep: false,
     telefone_cuidador: false,
   };
+
+
 
 
   function formatacaoData() {
@@ -279,12 +282,22 @@ function AlterarDados({ navigation }) {
 
   function preenchendoDados(identificador, valor) {
 
+    if (identificador === "nome" || identificador === "nome_cuidador"){
+      valor = apenasLetras(valor);
+    }
+
     setEstado({ ...estado, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
     verificaErros(identificador, valor);
   }
 
   function preenchendoEndereco(identificador, valor) {
+
+    if (identificador === "cidade" || identificador === "pais"){
+      console.log("entrou");
+      valor = apenasLetras(valor);
+    }
+
     setNovoEndereco({ ...novoEndereco, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
     verificaErros(identificador, valor);
@@ -338,7 +351,6 @@ function AlterarDados({ navigation }) {
             </CaixaTitulosRotulos>
             
             <Input
-              
               placeholder={usuario.nome}
               keyboardType="default"
               width="100%"
@@ -346,6 +358,7 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoDados("nome", text);
               }}
+              value={estado.nome}
               
             /> 
             <CaixaTitulosRotulos>
@@ -468,6 +481,7 @@ function AlterarDados({ navigation }) {
                 onChangeText={(text) => {
                   preenchendoDados("nome_cuidador", text);
                 }}
+                value={estado.nome_cuidador}
               /> 
 
                 <CaixaTitulosRotulos>
@@ -579,6 +593,7 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoEndereco("pais", text);
               }}
+              value={novoEndereco.pais}
             /> 
 
             <CaixaTitulosRotulos>
@@ -621,6 +636,7 @@ function AlterarDados({ navigation }) {
               onChangeText={(text) => {
                 preenchendoEndereco("cidade", text);
               }}
+              value={novoEndereco.cidade}
             /> 
 
             <CaixaTitulosRotulos>
