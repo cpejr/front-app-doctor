@@ -609,7 +609,7 @@ function AlterarDados({ navigation }) {
                 <Picker.Item
                   style={{ fontSize: 15, color: "grey" }}
                   value=""
-                  label="Selecione um Estado"
+                  label={endereco.estado}
                 />
                 {estados.map((estado) => (
                   <Picker.Item
