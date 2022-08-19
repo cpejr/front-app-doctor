@@ -29,7 +29,7 @@ export const requisicaoLogin = async (email, senha) => {
       return true;
     })
     .catch((error) => {
-      requisicaoErro(error);
+      Alert.alert("Erro", "Digite email e senha válidos!");
       return false;
     });
   return resposta;
@@ -89,7 +89,8 @@ export const requisicaoConsultasUsuario = async () => {
             return res.data;
           })
           .catch((error) => {
-            requisicaoErro(error);
+            // requisicaoErro(error);
+            return;
           });
       });
     }
