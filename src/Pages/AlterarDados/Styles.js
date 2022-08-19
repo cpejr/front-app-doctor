@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
 import DatePicker  from "react-native-datepicker";
+import { Picker } from "@react-native-picker/picker";
 
 export const Body = styled.View`
   display: flex;
@@ -110,4 +111,23 @@ export const CaixaTitulosRotulos = styled.View`
   align-items: flex-start;
   justify-content: flex-start;
   margin-left: 2%;
+`;
+
+export const PickerView = styled.View`
+  display: flex;
+  width: 100%;
+  background-color: #e4e6f4;
+  border-radius: 5px;
+  border-color: ${Cores.azul};
+  border-width: 1.5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  overflow: hidden;
+`;
+
+export const PickerEstado = styled(Picker)`
+  display: flex;
+  background-color: #e4e6f4;
+  width: 100%;
+  margin-top: 0;
 `;

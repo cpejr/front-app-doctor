@@ -5,6 +5,7 @@ import Input from "../../styles/Input";
 import InputMask from "../../styles/InputMask/InputMask";
 import { useWindowDimensions, ScrollView } from "react-native";
 import { Alert } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import {
   Body,
   CaixaAlterarDados,
@@ -15,9 +16,12 @@ import {
   Data,
   TituloRotulos,
   CaixaTitulosRotulos,
-  Rotulo
+  Rotulo,
+  PickerView,
+  PickerEstado,
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
+import { estados } from "./estados";
 import { cep } from "../../utils/masks";
 import { Cores } from "../../variaveis";
 import { ActivityIndicator, Colors } from 'react-native-paper';
@@ -42,6 +46,7 @@ function AlterarDados({ navigation }) {
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
   const [telCuidadorMasked, setTelCuidadorMasked] = useState("");
+  const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
   
 
@@ -561,10 +566,11 @@ function AlterarDados({ navigation }) {
               </CaixaRotulo>
             )}
 
+            
             <CaixaTitulosRotulos>
               <TituloRotulos>País:</TituloRotulos>
             </CaixaTitulosRotulos>
-            
+           
             <Input
               placeholder={endereco.pais}
               keyboardType="default"
@@ -578,16 +584,31 @@ function AlterarDados({ navigation }) {
             <CaixaTitulosRotulos>
               <TituloRotulos>Estado:</TituloRotulos>
             </CaixaTitulosRotulos>
-           
-            <Input
-              placeholder={endereco.estado}
-              keyboardType="default"
-              width="100%"
-              label="estado"
-              onChangeText={(text) => {
-                preenchendoEndereco("estado", text);
-              }}
-            /> 
+            
+            <PickerView>
+              <PickerEstado
+                selectedValue={estadoSelecionado}
+                onValueChange={(itemValue, itemIndex) => {
+                  setEstadoSelecionado(itemValue);
+                  preenchendoEndereco("estado", itemValue);
+                }}
+              >
+                <Picker.Item
+                  style={{ fontSize: 15, color: "grey" }}
+                  value=""
+                  label="Selecione um Estado"
+                />
+                {estados.map((estado) => (
+                  <Picker.Item
+                    key={estado.sigla}
+                    style={{ fontSize: 15, color: "black" }}
+                    value={estado.sigla}
+                    label={estado.nome}
+                  />
+                ))}
+            </PickerEstado>
+          </PickerView>
+
           <CaixaTitulosRotulos>
               <TituloRotulos>Cidade:</TituloRotulos>
             </CaixaTitulosRotulos>
