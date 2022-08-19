@@ -122,18 +122,22 @@ export const Dados = styled.Text`
 export const CaixaBotoesAlterar = styled.View`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
+  height: auto;
   margin-bottom: 2%;
 `;
 
 export const CaixaBotoesExcluirESair = styled.View`
+
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   width: 50%;
+  justify-content: center;
   padding-right: 3%;
   padding-left: 3%;
   margin-bottom: 8%;
+
 `;
 
 
@@ -153,6 +157,13 @@ export const Sair = styled.Text`
 export const AnimacaoCarregando = styled.View`
   position: relative;
   left: 42.5%;
-  
+  top: 0%;
+  height: 35px;
+`;
+
+export const AnimacaoCarregandoViewNome = styled.View`
+  position: relative;
+  top: 0%;
+  height: 35px;
 `;
 

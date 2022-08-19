@@ -7,6 +7,7 @@ export const Botao = styled.TouchableOpacity`
   justify-content: center;
   /*Medidas*/
   margin-top: ${(props) => props.marginTop?? "2%"};
+  margin-right: ${(props) => props.marginRight?? "0%"};
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   /*cor e borda do botão*/

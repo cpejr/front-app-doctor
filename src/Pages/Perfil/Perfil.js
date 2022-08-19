@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useWindowDimensions, ScrollView, Alert } from "react-native";
+import { useWindowDimensions, ScrollView, Alert, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import Botao from "../../styles/Botao";
@@ -26,7 +26,8 @@ import {
   ExcluirConta,
   CaixaBotoesExcluirESair,
   Sair,
-  AnimacaoCarregando
+  AnimacaoCarregando,
+  AnimacaoCarregandoViewNome
 } from "./Styles";
 import { Cores } from "../../variaveis";
 
@@ -171,7 +172,9 @@ function Perfil({ navigation }) {
         <CaixaViews>
           <ViewFotoNome width={larguraViews}>
             {carregando? (
-              <ActivityIndicator animating={true} color={Colors.blue900}/>
+              <AnimacaoCarregandoViewNome>
+                <ActivityIndicator animating={true} color={Colors.blue900}/>
+              </AnimacaoCarregandoViewNome>
             ):(
               <>
               <Foto />
@@ -200,10 +203,12 @@ function Perfil({ navigation }) {
               <Dados fontSize={fontSizeDados}>{telMasked}</Dados>
               <Dados fontSize={fontSizeDados}>{usuario.email}</Dados>
               {usuario.nome_cuidador != null ? (
-                <>
+                <View
+                style={{paddingRight: "6%"}}
+                >
               <Dados fontSize={fontSizeDados}>Nome do cuidador: {usuario.nome_cuidador}</Dados>
-              <Dados fontSize={fontSizeDados}>{telCuidadorMasked}</Dados>
-                </>
+              <Dados fontSize={fontSizeDados}>Telefone do cuidador: {telCuidadorMasked}</Dados>
+                </View>
               ) : (
                 <></>
               )}
@@ -244,7 +249,6 @@ function Perfil({ navigation }) {
             <Botao
               width={larguraBotoes}
               height="30px"
-              //backgroundColor={Cores.lilas[3]} -- Estatico
               backgroundColor="green"
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
@@ -260,7 +264,6 @@ function Perfil({ navigation }) {
               width={larguraBotoes}
               height="30px"
               marginTop="3%"
-              //backgroundColor={Cores.lilas[3]} -- Estatico
               backgroundColor="green"
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
@@ -277,7 +280,7 @@ function Perfil({ navigation }) {
           <Botao
               width="100px"
               height="30px"
-              //backgroundColor={Cores.lilas[3]} -- Estatico
+              marginRight="22%"
               backgroundColor="white"
               borderRadius="0px"
               borderColor="white"
@@ -288,7 +291,6 @@ function Perfil({ navigation }) {
             <Botao
               width="30px"
               height="30px"
-              //backgroundColor={Cores.lilas[3]} -- Estatico
               backgroundColor="white"
               borderRadius="0px"
               borderColor="white"
