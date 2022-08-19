@@ -48,24 +48,7 @@ function AlterarDados({ navigation }) {
     telefone: true,
     data_nascimento: true,
     cpf: true,
-    email: true,
     cep: true,
-    pais: true,
-    estado: true,
-    cidade: true,
-    bairro: true,
-    rua: true,
-    numero: true,
-    
-  });
-
-  const referenciaCamposNulos = {
-    nome: true,
-    cpf: true,
-    email: true,
-    telefone: true,
-    cep: true,
-    data_nascimento: true,
     pais: true,
     estado: true,
     cidade: true,
@@ -73,6 +56,28 @@ function AlterarDados({ navigation }) {
     numero: true,
     bairro: true,
     complemento: true,
+    convenio: true,
+    nome_cuidador: true,
+    telefone_cuidador: true,
+  });
+
+  const referenciaCamposNulos = {
+    nome: true,
+    telefone: true,
+    data_nascimento: true,
+    cpf: true,
+    cep: true,
+    pais: true,
+    estado: true,
+    cidade: true,
+    rua: true,
+    numero: true,
+    bairro: true,
+    complemento: true,
+    convenio: true,
+    nome_cuidador: true,
+    telefone_cuidador: true,
+
   };
 
   const errors = {};
@@ -82,7 +87,6 @@ function AlterarDados({ navigation }) {
     if (!estado.telefone) errors.telefone = true;
     if (!estado.data_nascimento) errors.data_nascimento = true;
     if (!estado.cpf) errors.cpf = true;
-    if (!estado.email) errors.email = true;
     if (!novoEndereco.cep) errors.cep = true;
     if (!novoEndereco.pais) errors.pais = true;
     if (!novoEndereco.estado) errors.estado = true;
@@ -91,6 +95,10 @@ function AlterarDados({ navigation }) {
     if (!novoEndereco.rua) errors.rua = true;
     if (!novoEndereco.numero) errors.numero = true;
     if (!novoEndereco.complemento) errors.complemento = true;
+    if (!estado.convenio) errors.convenio = true;
+    if (!estado.nome_cuidador) errors.nome_cuidador = true;
+    if (!estado.telefone_cuidador) errors.telefone_cuidador = true;
+
 
 
     setCamposNulos({ ...camposNulos, ...errors });
@@ -109,13 +117,9 @@ function AlterarDados({ navigation }) {
 
 
   function formatacaoData() {
-    let dataNascimento = estado.data_nascimento
-    try {
+      let dataNascimento = estado.data_nascimento
       const response = brParaPadrao(dataNascimento);
       return response;
-    } catch {
-      Alert.alert("Erro", "Data inválida.");
-    }
   }
 
 
@@ -238,8 +242,14 @@ function AlterarDados({ navigation }) {
 
 
   async function atualizarDados() {
-    const dataFormatada = formatacaoData();
-    estado.data_nascimento = dataFormatada;
+
+    if (camposNulos.data_nascimento === false) {
+      estado.data_nascimento = formatacaoData(estado.data_nascimento);
+    }
+
+    console.log(camposNulos);
+    console.log(referenciaCamposNulos);
+
     if (!_.isEqual(camposNulos, referenciaCamposNulos)) {
       if (_.isEqual(erro, referenciaFormatacao)) {
         await managerService.UpdateDadosUsuario(
@@ -259,6 +269,7 @@ function AlterarDados({ navigation }) {
   }
 
   function preenchendoDados(identificador, valor) {
+
     setEstado({ ...estado, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
     verificaErros(identificador, valor);
@@ -404,7 +415,20 @@ function AlterarDados({ navigation }) {
               /> 
             </>
             ) : (
-            <></>
+              <>
+              <CaixaTitulosRotulos>
+                <TituloRotulos>Convenio:</TituloRotulos>
+              </CaixaTitulosRotulos>
+              
+              <Input
+              keyboardType="default"
+              width="100%"
+              label="convenio"
+              onChangeText={(text) => {
+                preenchendoDados("convenio", text);
+              }}
+            /> 
+          </>
             )}
 
             {usuario.nome_cuidador !== null ? (
@@ -447,7 +471,42 @@ function AlterarDados({ navigation }) {
               /> 
             </>
             ) : (
-            <></>
+              <>
+              <CaixaTitulosRotulos>
+                <TituloRotulos>Nome Cuidador:</TituloRotulos>
+              </CaixaTitulosRotulos>
+
+              <Input
+              keyboardType="default"
+              width="100%"
+              label="nome_cuidador"
+              onChangeText={(text) => {
+                preenchendoDados("nome_cuidador", text);
+              }}
+            /> 
+
+              <CaixaTitulosRotulos>
+                <TituloRotulos>Telefone Cuidador:</TituloRotulos>
+              </CaixaTitulosRotulos>
+
+              <InputMask
+              keyboardType="numeric"
+              width="100%"
+              type={"cel-phone"}
+              options={{
+                maskType: "BRL",
+                withDDD: true,
+                dddMask: "(99) ",
+              }}
+              textContentType="telephoneNumber"
+              dataDetectorTypes="phoneNumber"
+              label="telefone_cuidador"
+              includeRawValueInChangeText={true}
+              onChangeText={(maskedText, rawText) => {
+                preenchendoDados("telefone_cuidador", rawText);
+              }}
+            /> 
+          </>
             )}
 
             <CaixaTitulosRotulos>
