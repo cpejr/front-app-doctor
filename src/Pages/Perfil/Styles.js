@@ -149,7 +149,7 @@ export const ExcluirConta = styled.Text`
 
 export const Sair = styled.Text`
   text-decoration: underline;
-  font-size:15px
+  font-size:15px;
   color: ${Cores.azul};
   
 `;

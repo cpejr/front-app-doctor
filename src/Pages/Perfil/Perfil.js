@@ -69,7 +69,7 @@ function Perfil({ navigation }) {
       AsyncStorage.removeItem("@AirBnbApp:token");
       AsyncStorage.removeItem("@AirBnbApp:email");
       new Alert.alert("", "Usuário deslogado com sucesso!");
-      navigation.navigate("Login")
+      navigation.push("Login")
     } catch (error) {
       alert(error);
     }
