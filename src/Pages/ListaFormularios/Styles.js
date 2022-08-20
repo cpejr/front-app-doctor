@@ -1,9 +1,10 @@
 import styled from "styled-components/native";
+import { Cores } from "../../variaveis";
 
 export const Scroll = styled.ScrollView`
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: ${Cores.branco};
 `;
 
 export const Body = styled.View`
@@ -11,7 +12,7 @@ export const Body = styled.View`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: ${Cores.branco};
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 10px;
@@ -23,11 +24,11 @@ export const BarraPesquisa = styled.View`
   align-items: center;
   width: 100%;
   height: 45px;
-  background-color: #EDEDED;
+  background-color: ${Cores.cinza[10]};
   border-radius: 5px;
   padding-left: 10px;
   margin-top: 10px;
-  border: #636AB4;
+  border: ${Cores.lilas[5]};
   border-width: 1.5px;
   font-size: 12px;
 `;
@@ -36,14 +37,12 @@ export const InputPesquisa = styled.TextInput`
 height:100%;
 font-size: 17px;
 width:90%;
-background-color: green;
 `;
 
 export const IconPesquisa = styled.Image`
 width:23px;
 height:23px;
 margin-right:1px;
-background-color: green;
 `;
 
 export const TabView = styled.View`
@@ -55,28 +54,29 @@ margin-bottom: 5px;
 align-items: flex-end;
 height: 25px;
 border-bottom-width: 1px;
-border-color: #C6C6C6;
+border-color: ${Cores.cinza[11]};
 
 `
 
 export const FiltroRespondido = styled.Text`
 height: 100%;
-border-bottom-width: 1.5px;
-color:#0A0E3C;
-background-color: green;
+border-bottom-width: ${(props) => props.borderBottomWidth};
+color:${(props) => props.color};
+/* background-color: green; */
 `
 
 export const FiltroNaoRespondido = styled.Text`
 height: 100%;
 margin-left: 12px;
-color:#8D8D8D;
-background-color: green;
+color:${(props) => props.color};
+border-bottom-width:${(props) => props.borderBottomWidth};
+/* background-color: green; */
 `
 
 export const CaixaLista = styled.View`
 flex:1;
 width:95%;
-margin-top:8px;
+
 `;
 
 export const BotaoForm = styled.View`
@@ -85,9 +85,16 @@ flex-direction: column;
 width:100%;
 `
 
+export const CaixaLoading = styled.View`
+display:flex;
+/* height:50px; */
+padding-top:30px;
+padding-bottom: 30px;
+`
+
 export const CaixaItem = styled.View`
 border-bottom-width: 1px;
-border-color: #C6C6C6;
+border-color: ${Cores.cinza[11]};
 `
 
 export const CaixaNomeUrgencia = styled.View`
@@ -107,8 +114,8 @@ text-decoration: underline;
 width: 58%;
 font-size:17px;
 font-weight: 700;
-color:#0A0E3C;
-background-color: green;
+color:${Cores.azulEscuro};
+/* background-color: green; */
 
 `;
 
@@ -123,13 +130,13 @@ flex-direction: row;
 export const UrgenciaTexto = styled.Text`
 font-size:16px;
 font-weight: 600;
-color:#434B97;
+color:${Cores.lilas[1]};
 `;
 
 export const CaixaEstrela = styled.View`
 display: flex;
 flex-direction: row;
-background-color: green;
+/* background-color: green; */
 `
 
 export const EstrelaIcon = styled.Image`
@@ -150,8 +157,8 @@ width: ${(props) => props.width};
 export const TextoTipoData = styled.Text`
 font-size:16px;
 font-weight: 600;
-color:#434B97;
-background-color: green;
+color:${Cores.lilas[1]};
+/* background-color: green; */
 `;
 
 

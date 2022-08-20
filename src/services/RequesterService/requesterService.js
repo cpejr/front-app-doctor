@@ -15,6 +15,9 @@ export const requisicaoDadosEndereco = (dadosUsuario) =>
   export const requisicaoDadosReceita = (dadosUsuario) =>
   api.get(`/usuarios_receitas/${dadosUsuario.id}`);
 
+export const requisicaoFormulariosPaciente = (id_usuario) =>
+  api.get(`/formularios_pacientes_usuario/${id_usuario}`);
+
 export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
   api.put(`/enderecos/${id_endereco}`, endereco).then((res) => {
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
