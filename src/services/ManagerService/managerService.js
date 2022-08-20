@@ -60,6 +60,57 @@ export const GetDadosUsuario = async () => {
   return { dadosEndereco, dadosUsuario };
 };
 
+export const GetFormulariosPaciente = async () => {
+  let formulariosPaciente;
+  const email = await AsyncStorage.getItem("@AirBnbApp:email");
+  const id_usuario = await GetDadosUsuario(email)
+    .then((res) => {
+      return res.dadosUsuario.id;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  await requesterService
+    .requisicaoFormulariosPaciente(id_usuario)
+    .then((res) => {
+      formulariosPaciente = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return formulariosPaciente;
+};
+
+// export const GetFormulariosPaciente = async () => {
+//   let formulariosPaciente;
+//   let id_usuario;
+//   await AsyncStorage.getItem("@AirBnbApp:email")
+//     .then((email) => {
+//       GetDadosUsuario(email)
+//         .then((res) => {
+//           id_usuario = res.dadosUsuario.id;
+//           requesterService
+//             .requisicaoFormulariosPaciente(id_usuario)
+//             .then((res) => {
+//               formulariosPaciente = res.data;
+//             })
+//             .catch((error) => {
+//               requisicaoErro(error);
+//             });
+//         })
+//         .catch((error) => {
+//           requisicaoErro(error);
+//         });
+//     })
+//     .catch((error) => {
+//       requisicaoErro(error);
+//     });
+//     return formulariosPaciente;
+// };
+
+
+
+
 export const UpdateDadosUsuario = async (
   id_usuario,
   id_endereco,
@@ -160,6 +211,35 @@ export const DeletarUsuario = async (id) => {
 
   return false;
 };
+
+
+export const GetDadosReceitas= async () => {
+  const email = await AsyncStorage.getItem("@AirBnbApp:email");
+  let dadosUsuario = {};
+  
+  let dadosReceitas = {};
+  
+  await requesterService
+    .requisicaoDadosUsuario(email)
+    .then((res) => {
+      dadosUsuario = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  await requesterService
+    .requisicaoDadosReceita(dadosUsuario)
+    .then((res) => {
+      dadosReceitas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return { dadosReceitas, dadosUsuario };
+};
+
 
 export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
