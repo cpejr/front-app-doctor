@@ -12,6 +12,9 @@ export const requisicaoDadosUsuario = (emailUrl) =>
 export const requisicaoDadosEndereco = (dadosUsuario) =>
   api.get(`/enderecos/${dadosUsuario.id_endereco}`);
 
+  export const requisicaoDadosReceita = (dadosUsuario) =>
+  api.get(`/usuarios_receitas/${dadosUsuario.id}`);
+
 export const requisicaoFormulariosPaciente = (id_usuario) =>
   api.get(`/formularios_pacientes_usuario/${id_usuario}`);
 
@@ -31,6 +34,7 @@ export const getConsultasUsuario = (id) => api.get(`/consultas/${id}`);
 export const getConsultorioById = (id) => api.get(`/consultorios/${id}`);
 
 export const getEnderecoById = (id) => api.get(`/enderecos/${id}`);
+
 
 export const verificarSenha = (email, senha) =>
   api.post("/verificar", {
