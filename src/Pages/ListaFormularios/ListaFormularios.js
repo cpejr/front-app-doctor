@@ -55,19 +55,22 @@ function ListaFormularios({ navigation }) {
     if (lowerBusca === "") return formulariosPaciente;
     else
       return (
-        (form?.titulo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(lowerBusca)) ||
-        (form?.tipo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(lowerBusca)) ||
-        (form?.titulo?.toLowerCase().includes(lowerBusca)) ||
-        (form?.tipo?.toLowerCase().includes(lowerBusca))
+        form?.titulo
+          ?.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(lowerBusca) ||
+        form?.tipo
+          ?.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(lowerBusca) ||
+        form?.titulo?.toLowerCase().includes(lowerBusca) ||
+        form?.tipo?.toLowerCase().includes(lowerBusca)
       );
   });
 
-
   async function pegandoFormulariosPaciente() {
-    // listaFormPendente.length = 0;
-    // listaFormRespondido.length = 0;
-    // setListaFormPendente(aux)
-    // setListaFormRespondido(aux)
     await AsyncStorage.getItem("@AirBnbApp:email")
       .then((res) => {
         managerService.GetFormulariosPaciente(res).then((resposta) => {
@@ -83,21 +86,11 @@ function ListaFormularios({ navigation }) {
         });
       })
       .catch((error) => alert(error));
-
-    // if (listaFormPendente.length === 0 && listaFormRespondido.length === 0){
-    //   console.log("oi")
-
-    // }
-    // setListaOriginal(resposta);
   }
 
   useEffect(() => {
     pegandoFormulariosPaciente();
   }, []);
-
-  // useEffect(() => {
-  //   dividindoListaForm();
-  // }, [listaOriginal]);
 
   function formatandoData(dataCriacao) {
     const data = new Date(dataCriacao).toLocaleDateString();
