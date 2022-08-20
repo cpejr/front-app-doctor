@@ -167,7 +167,7 @@ export const requisicaoVerificarSenha = async (senha) => {
       return requesterService.verificarSenha(res, senha);
     })
     .catch((error) => {
-      Alert.alert("ATENÇÃO","As senhas não conferem");
+      Alert.alert("ATENÇÃO", "As senhas não conferem");
     });
   return resposta;
 };
@@ -201,17 +201,11 @@ export const DeletarUsuario = async (id) => {
   await requesterService
     .deletarUsuario(id)
     .then(() => {
-      Alert.alert(
-        "",
-        "Usuario deletado com sucesso!",
-      );
+      Alert.alert("", "Usuario deletado com sucesso!");
     })
     .catch((error) => {
       //requisicaoErro(error);
-      Alert.alert(
-        "",
-        "Erro ao deletar usuario.",
-      );
+      Alert.alert("", "Erro ao deletar usuario.");
       return false;
     });
 
@@ -244,4 +238,22 @@ export const GetDadosReceitas= async () => {
       requisicaoErro(error);
     });
   return { dadosReceitas, dadosUsuario };
+};
+
+
+export const DeletarEnderecoEUsuario = async (id_endereco) => {
+  await requesterService
+    .deletarEnderecoEUsuario(id_endereco)
+    .then(() => {
+      Alert.alert("", "Usuario deletado com sucesso!");
+      AsyncStorage.removeItem("@AirBnbApp:token");
+      AsyncStorage.removeItem("@AirBnbApp:email");
+    })
+    .catch((error) => {
+      //requisicaoErro(error);
+      Alert.alert("", "Erro ao deletar usuario.");
+      return false;
+    });
+
+  return false;
 };
