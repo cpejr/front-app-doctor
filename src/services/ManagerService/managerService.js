@@ -166,3 +166,31 @@ export const DeletarUsuario = async (id) => {
 
   return false;
 };
+
+
+export const GetDadosReceitas= async () => {
+  const email = await AsyncStorage.getItem("@AirBnbApp:email");
+  let dadosUsuario = {};
+  
+  let dadosReceitas = {};
+  
+  await requesterService
+    .requisicaoDadosUsuario(email)
+    .then((res) => {
+      dadosUsuario = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  await requesterService
+    .requisicaoDadosReceita(dadosUsuario)
+    .then((res) => {
+      dadosReceitas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return { dadosReceitas, dadosUsuario };
+};
