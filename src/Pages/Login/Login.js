@@ -72,7 +72,7 @@ function Login({ navigation }) {
   }, []);
 
   const margemSuperior = height < 200 ? "5px" : "100px";
-  const tamanhoFonte = width > 500 ? "18px" : "11px";
+  const tamanhoFonte = width > 500 ? "17px" : "11px";
   const tamanhoIcone = width > 480 ? 20 : 18;
   const larguraConteudoBotaoEntrar = width > 480 ? "35%" : "40%";
   const larguraBotaoAlternativo = width > 480 ? "90%" : "100%";
