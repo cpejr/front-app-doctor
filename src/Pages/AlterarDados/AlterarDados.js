@@ -205,22 +205,8 @@ function AlterarDados({ navigation }) {
     }
   }, [dataNascimento]);
 
-
-  function verificacaoTermosUso() {
-    setCarregando(true);
-
-    if (!checked) {
-      alert("É obrigatório concordar com os termos de uso.");
-      setCarregando(false);
-    } else {
-      atualizarDados();
-
-    }
-
-  }
-
   async function atualizarDados() {
-
+    setCarregando(true);
     if (camposNulos.data_nascimento === false) {
       estado.data_nascimento = formatacaoData(estado.data_nascimento);
     }
@@ -233,8 +219,7 @@ function AlterarDados({ navigation }) {
           novoEndereco,
           estado
         );
-        await sleep(1500);
-        navigation.push("AlterarDados");
+        navigation.push("Perfil");
       } else {
         Alert.alert("Erro", "Preencha os campos corretamente.");
       }
@@ -685,24 +670,6 @@ function AlterarDados({ navigation }) {
                   /></>
               )}
             </CaixaInputs>
-
-          <CheckboxTexto>
-            <Checkbox
-              status={checked ? "checked" : "unchecked"}
-              onPress={() => {
-                setChecked(!checked);
-              }}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("LGPD");
-              }}
-            >
-              <Lgpd fontFamily="BarlowMedium">
-                Li e concordo com os Termos de Uso
-              </Lgpd>
-            </TouchableOpacity>
-          </CheckboxTexto>
           </>
           )}
 
@@ -733,7 +700,7 @@ function AlterarDados({ navigation }) {
               borderColor={Cores.azul}
               borderWidth="3px"
               boxShadow="none"
-              onPress={() => verificacaoTermosUso()}
+              onPress={() => atualizarDados()}
             >
               <ConteudoBotao
                 width="100%"
