@@ -202,56 +202,6 @@ function AlterarDados({ navigation }) {
   }, [dataNascimento]);
 
 
-/*   async function atualizarDados() {
-    
-    if (camposNulos.data_nascimento === false) {
-      estado.data_nascimento = formatacaoData(estado.data_nascimento);
-    }
-
-
-    for (const propriedade_errors in estado) {
-      if (!estado[propriedade_errors]) {
-        for (const propriedade_campos in camposNulos) {
-          if (propriedade_campos === propriedade_errors) {
-            camposNulos[propriedade_campos] = true;
-          }
-        }
-      }
-    }
-
-
-    for (const propriedade_errors in novoEndereco) {
-      if (!novoEndereco[propriedade_errors]) {
-        for (const propriedade_campos in camposNulos) {
-          if (propriedade_campos === propriedade_errors) {
-            camposNulos[propriedade_campos] = true;
-          }
-        }
-      }
-    }
-    let validacao = false;
-    for (const propriedade in camposNulos) {
-      if (camposNulos[propriedade] === false) {
-        validacao = true;
-      }
-    }
-    if (validacao) {
-      await managerService.UpdateDadosUsuario(
-        usuario.id,
-        endereco.id,
-        novoEndereco,
-        estado
-      );
-
-      navigation.push("Perfil");
-    } else {
-
-      Alert.alert("Erro", "Preencha Algum Campo.");
-
-    }
-  } */
-
-
   async function atualizarDados() {
 
     if (camposNulos.data_nascimento === false) {
@@ -309,10 +259,10 @@ function AlterarDados({ navigation }) {
       (identificador === "telefone_cuidador")
     ){     
       if (
-        (identificador === "telefone" && valor.length < 11) ||
-        (identificador === "cpf" && valor.length < 11) ||
-        (identificador === "cep" && valor.length < 8) ||
-        (identificador === "telefone_cuidador" && valor.length < 11)
+        (identificador === "telefone" && valor.length > 0 && valor.length < 11) ||
+        (identificador === "cpf"  && valor.length > 0 && valor.length < 11) ||
+        (identificador === "cep"  && valor.length > 0 && valor.length < 8) ||
+        (identificador === "telefone_cuidador"  && valor.length > 0 && valor.length < 11)
       ){
         setErro({ ...erro, [identificador]: true });
       } else {
@@ -455,6 +405,7 @@ function AlterarDados({ navigation }) {
               </CaixaTitulosRotulos>
               
               <Input
+              placeholder="Nome do Convênio:"
               keyboardType="default"
               width="100%"
               label="convenio"
@@ -518,6 +469,7 @@ function AlterarDados({ navigation }) {
               </CaixaTitulosRotulos>
 
               <Input
+              placeholder="Nome do cuidador:"
               keyboardType="default"
               width="100%"
               label="nome_cuidador"
@@ -531,6 +483,7 @@ function AlterarDados({ navigation }) {
               </CaixaTitulosRotulos>
 
               <InputMask
+              placeholder="Telefone do Cuidador:"
               keyboardType="numeric"
               width="100%"
               type={"cel-phone"}
