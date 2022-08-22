@@ -131,3 +131,17 @@ export const PickerEstado = styled(Picker)`
   width: 100%;
   margin-top: 0;
 `;
+
+export const CheckboxTexto = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const Lgpd = styled.Text`
+  font-family: ${(props) => props.fontFamily};
+  font-size: 16px;
+  text-align: right;
+  color: #151b57;
+  text-decoration: underline;
+`;

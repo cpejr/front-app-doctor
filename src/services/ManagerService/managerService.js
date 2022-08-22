@@ -69,7 +69,7 @@ export const UpdateDadosUsuario = async (
   await requesterService
     .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
     .then(() => {
-      alert("Usuário atualizado com sucesso.");
+      Alert.alert("Parabéns!", "Dados alterados com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error);
