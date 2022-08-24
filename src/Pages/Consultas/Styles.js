@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
 
+
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
@@ -113,7 +115,7 @@ export const CaixaBotao = styled.TouchableOpacity`
   justify-content: space-around;
   padding-left: 2%;
   padding-right: 3%;
-  height: 42px;
+  height: ${(props) => props.height};
   width: ${(props) => props.width};
   overflow: hidden;
   background-color: ${Cores.cinza[7]};

@@ -64,6 +64,8 @@ function Consultas({ navigation }) {
   const borderWidthCaixaNome = width < 330 ? "0px" : "2.5px";
   const fontSizeConteudo = width < 330 ? "11px" : fontSizeMaior;
   const tamanhoIcone = width > 480 ? 20 : 25;
+  //responsividade botões marcar agendamento e vídeo pre consulta
+  const heightCaixaBotao = width > 600 ? "48px" : "42px";
 
   const heightTela = `${Dimensions.get("window").height}px`;
 
@@ -206,6 +208,7 @@ function Consultas({ navigation }) {
       <ViewBotoes>
         <CaixaBotao
           width={larguraBotao}
+          height={heightCaixaBotao}
           onPress={() => navigation.navigate("SolicitarConsulta")}
         >
           <ConteudoBotao
@@ -219,6 +222,7 @@ function Consultas({ navigation }) {
 
         <CaixaBotao
           width={larguraBotao}
+          height={heightCaixaBotao}
           onPress={renderizarUrlVideo}
         >
           <ConteudoBotao
