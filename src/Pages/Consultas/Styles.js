@@ -112,7 +112,6 @@ export const CaixaBotao = styled.TouchableOpacity`
   justify-content: space-around;
   padding-left: 2%;
   padding-right: 3%;
-  margin-top: 2%;
   height: 35px;
   width: ${(props) => props.width};
   overflow: hidden;

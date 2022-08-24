@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   Modal,
   Text,
-  Linking
+  Linking,
+  View
 } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import {
@@ -214,7 +215,6 @@ function Consultas({ navigation }) {
           >
             Marcar Nova Consulta
           </ConteudoBotao>
-          <IconeBotao source={botaoIcone} />
         </CaixaBotao>
 
         <CaixaBotao
@@ -228,7 +228,6 @@ function Consultas({ navigation }) {
           >
             Recomendações pré-consulta
           </ConteudoBotao>
-          <IconeBotao source={botaoIcone} />
         </CaixaBotao>
       </ViewBotoes>
 
@@ -237,7 +236,7 @@ function Consultas({ navigation }) {
           <ActivityIndicator animating={true} color={Colors.black} />
         </ViewPadrao>
       ) : (
-        <ViewPadrao paddingLeft="10px" paddingRight="10px" paddingTop="0px" paddingBottom="0px" maxHeight="70%">
+        <ViewPadrao paddingLeft="10px" paddingRight="10px" paddingTop="5%" paddingBottom="5%" maxHeight="70%">
 
           {consultas.length !== 0 ? (
             <ScrollView>
