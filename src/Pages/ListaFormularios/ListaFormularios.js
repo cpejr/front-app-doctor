@@ -30,6 +30,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import { Cores } from "../../variaveis";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 function ListaFormularios({ navigation }) {
   const { width } = useWindowDimensions();
 
@@ -91,6 +92,13 @@ function ListaFormularios({ navigation }) {
   useEffect(() => {
     pegandoFormulariosPaciente();
   }, []);
+
+  
+  async function abrirFormularioEspecifico(idFormularioEspecifico) {
+    navigation.push("PreencherFormulario", {
+     paramKey: idFormularioEspecifico,
+    });
+  }
 
   function formatandoData(dataCriacao) {
     const data = new Date(dataCriacao).toLocaleDateString();
@@ -180,7 +188,7 @@ function ListaFormularios({ navigation }) {
           <CaixaLista key={valor.id}>
             <TouchableOpacity
               onPress={() => {
-                abrirFormularioEspecifico(valor);
+                abrirFormularioEspecifico(valor.id);
               }}
             >
               <CaixaItem>

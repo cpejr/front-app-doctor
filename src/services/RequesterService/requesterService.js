@@ -46,4 +46,14 @@ export const alterarSenha = (id, senha) =>
 
 
 
+export const requisicaoFormularioPacienteEspecifico = (id) =>
+  api.get(`/formularios_pacientes/${id}`);
+
+  export const updateRespostasFormularioPaciente = (id, respostas) =>
+  api.put(`/formularios_pacientes/${id}`, {
+    respostas: respostas,
+    status: true,
+  });
+
+
 export const deletarEnderecoEUsuario = (id_endereco) => api.delete(`/enderecos/${id_endereco}`);

@@ -110,6 +110,15 @@ function ArquivosStackScreen() {
         name="ListaFormularios"
         component={ListaFormularios}
       />
+     {/*  <ArquivosStack.Screen
+        name="ListaFormularios"
+        component={ListaFormularios}
+      /> */}
+      <ArquivosStack.Screen
+        name="PreencherFormulario"
+        component={PreencherFormulario}
+      />
+
     </ArquivosStack.Navigator>
   );
 }
