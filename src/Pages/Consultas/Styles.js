@@ -99,7 +99,8 @@ export const Titulo = styled.Text`
   font-size: 30px;
 `;
 export const ViewBotoes = styled.View`
-  height: 12%;
+  height: auto;
+  margin-bottom: 5%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -112,7 +113,7 @@ export const CaixaBotao = styled.TouchableOpacity`
   justify-content: space-around;
   padding-left: 2%;
   padding-right: 3%;
-  height: 35px;
+  height: 42px;
   width: ${(props) => props.width};
   overflow: hidden;
   background-color: ${Cores.cinza[7]};
