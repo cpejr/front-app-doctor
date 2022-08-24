@@ -78,6 +78,7 @@ function Consultas({ navigation }) {
   const [enderecoModal, setEnderecoModal] = useState({});
 
   const urlVideo = `https://www.google.com.br/`
+  const urlAvaliacaoConsulta = `https://www.google.com.br/`
 
   async function requisicaoEnderecoById(id) {
     const resposta = await managerService.requisicaoEnderecoById(id);
@@ -115,12 +116,21 @@ function Consultas({ navigation }) {
     return { dataConsulta, horaConsulta };
   }
 
-  const renderizarUrl = useCallback(async () => {
+  const renderizarUrlVideo = useCallback(async () => {
     const checarUrl = await Linking.canOpenURL(urlVideo);
     if (checarUrl) {
       await Linking.openURL(urlVideo);
     } else {
       Alert.alert(`Não foi possível abrir a URL: ${urlVideo}`);
+    }
+  });
+
+  const renderizarUrlAvalicaoConsulta = useCallback(async () => {
+    const checarUrl = await Linking.canOpenURL(urlAvaliacaoConsulta);
+    if (checarUrl) {
+      await Linking.openURL(urlAvaliacaoConsulta);
+    } else {
+      Alert.alert(`Não foi possível abrir a URL: ${urlAvaliacaoConsulta}`);
     }
   });
 
@@ -209,7 +219,7 @@ function Consultas({ navigation }) {
 
         <CaixaBotao
           width={larguraBotao}
-          onPress={renderizarUrl}
+          onPress={renderizarUrlVideo}
         >
           <ConteudoBotao
             fontSize={fontSizeConteudo}
@@ -272,10 +282,11 @@ function Consultas({ navigation }) {
                           <Botao
                             height="40px"
                             width="70%"
-                            backgroundColor="green"
+                            backgroundColor={Cores.cinza[7]}
                             borderRadius="10px"
                             borderWidth="1px"
-                            borderColor="#088E0E"
+                            borderColor={Cores.preto}
+                            onPress={renderizarUrlAvalicaoConsulta}
                           >
                             <ConteudoBotao
                               fontSize="15px"
