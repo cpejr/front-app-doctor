@@ -30,7 +30,6 @@ import Icon from "react-native-vector-icons/Entypo";
 import { Cores } from "../../variaveis";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 function ListaFormularios({ navigation }) {
   const { width } = useWindowDimensions();
 
@@ -93,10 +92,9 @@ function ListaFormularios({ navigation }) {
     pegandoFormulariosPaciente();
   }, []);
 
-  
-  async function abrirFormularioEspecifico(idFormularioEspecifico) {
+  async function abrirFormularioEspecifico(formularioEspecifico) {
     navigation.push("PreencherFormulario", {
-     paramKey: idFormularioEspecifico,
+      paramKey: formularioEspecifico,
     });
   }
 
@@ -143,12 +141,6 @@ function ListaFormularios({ navigation }) {
     setTelaRespondido(false);
   }
 
-  async function abrirFormularioEspecifico(formularioEspecifico) {
-    navigation.navigate("PreencherFormulario", {
-      paramKey: formularioEspecifico,
-    });
-  }
-
   const corRespondido = telaRespondido ? Cores.azulEscuro : Cores.cinza[2];
   const corPendente = telaRespondido ? Cores.cinza[2] : Cores.azulEscuro;
   const linhaRespondido = telaRespondido ? "1.5px" : "0px";
@@ -188,7 +180,7 @@ function ListaFormularios({ navigation }) {
           <CaixaLista key={valor.id}>
             <TouchableOpacity
               onPress={() => {
-                abrirFormularioEspecifico(valor.id);
+                abrirFormularioEspecifico(valor);
               }}
             >
               <CaixaItem>
