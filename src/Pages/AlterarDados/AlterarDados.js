@@ -32,7 +32,7 @@ import _ from "lodash";
 import { isEqual } from "lodash";
 import { sleep } from "../../utils/sleep";
 import { CaixaRotulo } from "../Cadastro/Styles";
-import { apenasLetras } from "../../utils/masks"
+import { apenasLetras, apenasNumeros } from "../../utils/masks"
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -244,9 +244,14 @@ function AlterarDados({ navigation }) {
 
   function preenchendoEndereco(identificador, valor) {
 
-    if (identificador === "cidade" || identificador === "pais") {
+    if (identificador === "cidade" || identificador === "pais" ) {
       valor = apenasLetras(valor);
     }
+
+    if (identificador === "numero"){
+      valor = apenasNumeros(valor)
+    }
+
 
     setNovoEndereco({ ...novoEndereco, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
@@ -630,6 +635,7 @@ function AlterarDados({ navigation }) {
 
               <Input
                 placeholder={numero}
+                value={novoEndereco.numero}
                 keyboardType="default"
                 width="100%"
                 label="numero"
