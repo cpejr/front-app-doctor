@@ -22,7 +22,7 @@ import {
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 
-function PreencherFormulario({ route }) {
+function PreencherFormulario({ route, navigation }) {
   const [carregando, setCarregando] = useState(true);
   const [schema, setSchema] = useState({});
   const [uiSchema, setUiSchema] = useState({});
@@ -34,10 +34,6 @@ function PreencherFormulario({ route }) {
   async function getFormularioPaciente() {
     const formulariosAux = await managerService.GetFormularioPacienteEspecifico(
       FormularioEspecifico.id
-    );
-    console.log(
-      "🚀 ~ file: PreencherFormularios.js ~ line 39 ~ getFormularioPaciente ~ formulariosAux",
-      FormularioEspecifico
     );
     setFormularioPaciente(formulariosAux);
     setSchema(FormularioEspecifico.perguntas);
@@ -56,6 +52,7 @@ function PreencherFormulario({ route }) {
       formularioPaciente.id,
       respostas
     );
+    navigation.push("ListaFormularios")
   }
 
   return (
@@ -63,7 +60,7 @@ function PreencherFormulario({ route }) {
       <Corpo>
         <HeaderFormularios borderColor={Cores.azul}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("ListaFormularios")}
+            onPress={() => navigation.push("ListaFormularios")}
           >
             <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
           </TouchableOpacity>
