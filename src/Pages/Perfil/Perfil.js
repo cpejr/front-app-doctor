@@ -78,24 +78,18 @@ function Perfil({ navigation }) {
     );
   }, [dataNascimento]);
 
-  
-
   const confirmacaoExcluir = () =>
-    Alert.alert(
-      "",
-      "Tem certeza que quer excluir sua conta?",
-      [
-        {
-          text: "Não",
-          style: "cancel"
-        },
-        { text: "Confirmar", onPress: () => deletarUsuario() }
-      ]
-    );
+    Alert.alert("", "Tem certeza que quer excluir sua conta?", [
+      {
+        text: "Não",
+        style: "cancel",
+      },
+      { text: "Confirmar", onPress: () => deletarEnderecoEUsuario() },
+    ]);
 
-  async function deletarUsuario() {
-    await managerService.DeletarUsuario(usuario.id);
-    navigation.navigate("Login");
+  async function deletarEnderecoEUsuario() {
+    await managerService.DeletarEnderecoEUsuario(usuario.id_endereco);
+    navigation.push("Login");
   }
 
   const larguraBotoesMaior = width < 600 ? "60%" : "35%";
@@ -137,10 +131,8 @@ function Perfil({ navigation }) {
                 <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
               </CaixaNascidoData>
               <CaixaNascidoData>
-              <TextNascido fontSize={fontSizeNascido}>
-                  CPF:
-                </TextNascido>
-              <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
+                <TextNascido fontSize={fontSizeNascido}>CPF:</TextNascido>
+                <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
               </CaixaNascidoData>
             </CaixaDataCpf>
           </ViewFotoNome>
@@ -151,14 +143,16 @@ function Perfil({ navigation }) {
           </ViewContatoEndereco>
           <ViewContatoEndereco paddingRight={paddingBody} width={larguraViews}>
             <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
-            <Dados fontSize={fontSizeDados}>País:  {endereco.pais}</Dados>
+            <Dados fontSize={fontSizeDados}>País: {endereco.pais}</Dados>
             <Dados fontSize={fontSizeDados}>Estado: {endereco.estado}</Dados>
             <Dados fontSize={fontSizeDados}>Cidade: {endereco.cidade}</Dados>
-            <Dados fontSize={fontSizeDados}>CEP:  {cep(endereco.cep)}</Dados>
+            <Dados fontSize={fontSizeDados}>CEP: {cep(endereco.cep)}</Dados>
             <Dados fontSize={fontSizeDados}>
               Rua: {endereco.rua}, {endereco.numero}
             </Dados>
-            <Dados fontSize={fontSizeDados}>Complemento: {endereco.complemento}</Dados>
+            <Dados fontSize={fontSizeDados}>
+              Complemento: {endereco.complemento}
+            </Dados>
           </ViewContatoEndereco>
           <CaixaBotoes>
             <Botao
@@ -190,16 +184,18 @@ function Perfil({ navigation }) {
               </ConteudoBotaoPerfil>
             </Botao>
             <Botao
-            width={larguraBotoes}
-            height="35px"
-            backgroundColor={Cores.branco}
-            borderRadius="3px"
-            borderColor={Cores.branco}
-            borderWidth="2px"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
-            onPress={() => confirmacaoExcluir()}
+              width={larguraBotoes}
+              height="35px"
+              backgroundColor={Cores.branco}
+              borderRadius="3px"
+              borderColor={Cores.branco}
+              borderWidth="2px"
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
+              onPress={() => confirmacaoExcluir()}
             >
-            <ExcluirConta onPress={() => confirmacaoExcluir()}>Excluir conta</ExcluirConta>
+              <ExcluirConta onPress={() => confirmacaoExcluir()}>
+                Excluir conta
+              </ExcluirConta>
             </Botao>
           </CaixaBotoes>
         </CaixaViews>
