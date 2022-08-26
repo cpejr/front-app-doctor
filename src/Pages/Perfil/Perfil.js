@@ -27,7 +27,8 @@ import {
   CaixaBotoesExcluirESair,
   Sair,
   AnimacaoCarregando,
-  AnimacaoCarregandoViewNome
+  AnimacaoCarregandoViewNome,
+  ScrollViewBranco
 } from "./Styles";
 import { Cores } from "../../variaveis";
 
@@ -150,7 +151,7 @@ function Perfil({ navigation }) {
   const larguraViews = width < 750 ? "100%" : "70%";
 
   return (
-    <ScrollView>
+    <ScrollViewBranco>
       <Body paddingLeft={paddingBody} paddingRight={paddingBody}>
         <CaixaBotao>
           <Botao
@@ -316,7 +317,7 @@ function Perfil({ navigation }) {
           </CaixaBotoesExcluirESair>
         </CaixaViews>
       </Body>
-    </ScrollView>
+    </ScrollViewBranco>
   );
 }
 

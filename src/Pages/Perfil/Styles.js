@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
 
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
@@ -137,6 +138,7 @@ export const CaixaBotoesExcluirESair = styled.View`
   padding-right: 3%;
   padding-left: 3%;
   margin-bottom: 8%;
+  margin-right: 1.5%;
 
 `;
 
@@ -165,5 +167,10 @@ export const AnimacaoCarregandoViewNome = styled.View`
   position: relative;
   top: 0%;
   height: 35px;
+`;
+
+
+export const ScrollViewBranco = styled.ScrollView`
+  background-color: ${Cores.branco};
 `;
 
