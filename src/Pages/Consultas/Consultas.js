@@ -196,6 +196,7 @@ function Consultas({ navigation }) {
   }
 
   return (
+    <ScrollView>
     <Body
       paddingLeft={paddingBody}
       paddingRight={paddingBody}
@@ -414,6 +415,7 @@ function Consultas({ navigation }) {
         </ViewPadrao>
       )}
     </Body>
+      </ScrollView>
   );
 }
 
