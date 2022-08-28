@@ -6,7 +6,8 @@ export const Corpo = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 100%;
+  justify-content: space-between;
+  height: ${(props) => props.height};
   overflow: scroll;
 `;
 export const HeaderFormularios = styled.View`
@@ -40,6 +41,7 @@ export const CaixaFormulario = styled.View`
 
 export const CaixaBotao = styled.View`
   display: flex;
+  justify-content: flex-end;
   margin-top: 8px;
   align-items: flex-end;
   width: 90%;

@@ -21,6 +21,7 @@ import {
 } from "react-native";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
+import { Dimensions } from "react-native";
 
 function PreencherFormulario({ route, navigation }) {
   const [carregando, setCarregando] = useState(true);
@@ -29,12 +30,15 @@ function PreencherFormulario({ route, navigation }) {
   const FormularioEspecifico = route.params.paramKey;
   const tamanhoIcone = width > 480 ? 20 : 25;
   const { width } = useWindowDimensions();
+  const heightTela = `${Dimensions.get("window").height}px`;
   const [formularioPaciente, setFormularioPaciente] = useState({});
 
   async function getFormularioPaciente() {
     const formulariosAux = await managerService.GetFormularioPacienteEspecifico(
-      FormularioEspecifico.id
+      FormularioEspecifico.id,
     );
+
+    
     setFormularioPaciente(formulariosAux);
     setSchema(FormularioEspecifico.perguntas);
     setCarregando(false);
@@ -57,7 +61,8 @@ function PreencherFormulario({ route, navigation }) {
 
   return (
     <ScrollView>
-      <Corpo>
+      <Corpo height={heightTela}>
+      <View>
         <HeaderFormularios borderColor={Cores.azul}>
           <TouchableOpacity
             onPress={() => navigation.push("ListaFormularios")}
@@ -69,8 +74,8 @@ function PreencherFormulario({ route, navigation }) {
           </Titulo>
         </HeaderFormularios>
         <CaixaTitulo>
-          <Titulo fontSize="25px" color={Cores.azulEscuro} marginBottom={"8px"}>
-            {formularioPaciente.titulo}
+          <Titulo fontSize="24px" color={Cores.azulEscuro} marginBottom={"8px"}>
+            {FormularioEspecifico.titulo}
           </Titulo>
         </CaixaTitulo>
         <CaixaFormulario>
@@ -89,6 +94,7 @@ function PreencherFormulario({ route, navigation }) {
             </View>
           )}
         </CaixaFormulario>
+        </View>
 
         <CaixaBotao>
           <Botao

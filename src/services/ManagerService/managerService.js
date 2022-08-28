@@ -257,7 +257,7 @@ export const UpdateRespostasFormulario = async (id, respostas) => {
   await requesterService
     .updateRespostasFormularioPaciente(id, respostas)
     .then(() => {
-      alert("Respostas enviadas com sucesso.");
+      Alert.alert("", "Respostas enviadas com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error);

@@ -3,6 +3,7 @@ import {
   useWindowDimensions,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import {
   Scroll,
@@ -93,9 +94,18 @@ function ListaFormularios({ navigation }) {
   }, []);
 
   async function abrirFormularioEspecifico(formularioEspecifico) {
-    navigation.push("PreencherFormulario", {
-      paramKey: formularioEspecifico,
-    });
+    if( formularioEspecifico.status === false)
+    {
+      navigation.push("PreencherFormulario", {
+        paramKey: formularioEspecifico,
+      });
+    }
+    else{
+      Alert.alert("", "Este formulário já foi respondido");
+    }
+    
+    
+    
   }
 
   function formatandoData(dataCriacao) {
