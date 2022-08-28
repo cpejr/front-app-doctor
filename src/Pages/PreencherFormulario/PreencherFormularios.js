@@ -62,7 +62,7 @@ function PreencherFormulario({ route, navigation }) {
   return (
     <ScrollView>
       <Corpo height={heightTela}>
-      <View>
+      
         <HeaderFormularios borderColor={Cores.azul}>
           <TouchableOpacity
             onPress={() => navigation.push("ListaFormularios")}
@@ -94,7 +94,7 @@ function PreencherFormulario({ route, navigation }) {
             </View>
           )}
         </CaixaFormulario>
-        </View>
+        
 
         <CaixaBotao>
           <Botao
