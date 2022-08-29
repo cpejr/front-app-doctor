@@ -142,6 +142,20 @@ function Perfil({ navigation }) {
     pegandoDados();
   }, []);
 
+  const confirmacaoExcluir = () =>
+    Alert.alert("", "Tem certeza que quer excluir sua conta?", [
+      {
+        text: "Não",
+        style: "cancel",
+      },
+      { text: "Confirmar", onPress: () => deletarEnderecoEUsuario() },
+    ]);
+
+  async function deletarEnderecoEUsuario() {
+    await managerService.DeletarEnderecoEUsuario(usuario.id_endereco);
+    navigation.push("Login");
+  }
+
   const larguraBotoesMaior = width < 600 ? "50%" : "35%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
   const paddingBody = width < 330 ? "5%" : "10%";
@@ -277,20 +291,23 @@ function Perfil({ navigation }) {
               </ConteudoBotaoPerfil>
             </Botao>
           </CaixaBotoesAlterar>
-          <CaixaBotoesExcluirESair>
-          <Botao
-              width="100px"
-              height="30px"
-              marginRight="22%"
-              backgroundColor="white"
-              borderRadius="0px"
-              borderColor="white"
-              borderWidth="0px"
-            >
-              <ExcluirConta>Excluir conta</ExcluirConta>
-          </Botao>
+          
             <Botao
-              width="30px"
+              width={larguraBotoes}
+              height="35px"
+              backgroundColor={Cores.branco}
+              borderRadius="3px"
+              borderColor={Cores.branco}
+              borderWidth="2px"
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
+              onPress={() => confirmacaoExcluir()}
+            >
+              <ExcluirConta onPress={() => confirmacaoExcluir()}>
+                Excluir conta
+              </ExcluirConta>
+            </Botao>
+            <Botao
+            width="30px"
               height="30px"
               backgroundColor="white"
               borderRadius="0px"
@@ -310,9 +327,8 @@ function Perfil({ navigation }) {
                   }
                 ]
               )}
-            >
-            <Sair>Sair</Sair>
-            </Botao>
+              >
+              <Sair>Sair</Sair>
 
           </CaixaBotoesExcluirESair>
         </CaixaViews>

@@ -49,6 +49,18 @@ function Home({ navigation }) {
         title="Go to LGPD"
         onPress={() => navigation.navigate("LGPD")}
       />
+      <Button
+        title="Go to ListaReceitas"
+        onPress={() => navigation.navigate("ListaReceitas")}
+      />
+      <Button
+        title="Go to ListaFormularios"
+        onPress={() => navigation.navigate("ListaFormularios")}
+      />
+      <Button
+        title="Go to Arquivos"
+        onPress={() => navigation.navigate("Arquivos")}
+      />
     </View>
   );
 }
