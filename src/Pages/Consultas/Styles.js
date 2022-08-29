@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
 
 
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
@@ -99,13 +100,13 @@ export const CaixaTitulo = styled.View`
 export const Titulo = styled.Text`
   font-size: 30px;
 `;
-export const ViewBotao = styled.View`
-  height: 12%;
+export const ViewBotoes = styled.View`
+  height: auto;
+  margin-bottom: 5%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
-  margin-bottom: 5%;
 `;
 export const CaixaBotao = styled.TouchableOpacity`
   display: flex;
@@ -114,8 +115,7 @@ export const CaixaBotao = styled.TouchableOpacity`
   justify-content: space-around;
   padding-left: 2%;
   padding-right: 3%;
-  margin-top: 2%;
-  height: 35px;
+  height: ${(props) => props.height};
   width: ${(props) => props.width};
   overflow: hidden;
   background-color: ${Cores.cinza[7]};
@@ -208,3 +208,4 @@ export const CaixaAvaliacaoModal = styled.View`
 `;
 
 //width: ${(props) => props.width}
+
