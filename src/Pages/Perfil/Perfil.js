@@ -41,7 +41,7 @@ function Perfil({ navigation }) {
   const [cep, setCep] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
 
-  const [carregando, setCarregando] = useState(false);
+  const [carregando, setCarregando] = useState(true);
 
   const [cpfMasked, setCpfMasked] = useState("");
   const [cepMasked, setCepMasked] = useState("");
@@ -329,8 +329,7 @@ function Perfil({ navigation }) {
               )}
               >
               <Sair>Sair</Sair>
-
-          </CaixaBotoesExcluirESair>
+            </Botao>
         </CaixaViews>
       </Body>
     </ScrollViewBranco>

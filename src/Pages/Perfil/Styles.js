@@ -144,7 +144,7 @@ export const CaixaBotoesExcluirESair = styled.View`
 
 
 export const ExcluirConta = styled.Text`
-  color: green;
+  color: ${Cores.azul};
   text-decoration: underline;
   font-size:15px
 `;
