@@ -52,19 +52,16 @@ import * as managerService from "../../services/ManagerService/managerService";
 function Consultas({ navigation }) {
   const { width } = useWindowDimensions();
 
-  //responsividade paisagem
   const paddingBodyMaior = width < 600 ? "5%" : "10%";
   const larguraBotaoMaior = width < 600 ? "47%" : "40%";
   const fontSizeMaior = width < 600 ? "12px" : "15px";
   const heightModal = width < 600 ? "60%" : "100%";
   const marginTopModal = width < 600 ? "15%" : "0%";
-  //responsividade aparelhos
   const paddingBody = width < 330 ? "1.5%" : paddingBodyMaior;
   const larguraBotao = width < 330 ? "60%" : larguraBotaoMaior;
   const borderWidthCaixaNome = width < 330 ? "0px" : "2.5px";
   const fontSizeConteudo = width < 330 ? "11px" : fontSizeMaior;
   const tamanhoIcone = width > 480 ? 20 : 25;
-  //responsividade botões marcar agendamento e vídeo pre consulta
   const heightCaixaBotao = width > 600 ? "48px" : "42px";
 
   const heightTela = `${Dimensions.get("window").height}px`;
