@@ -1,25 +1,42 @@
-
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
+
+export const CorpoScroll = styled.ScrollView`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: ${Cores.cinza[11]};
+`;
 
 export const Corpo = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
-  height: ${(props) => props.height};
-  overflow: scroll;
+  height: 100%;
+  flex-direction: column;
   background-color: ${Cores.cinza[11]};
 `;
+
 export const HeaderFormularios = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 1px;
-  border-color: ${(props) => props.borderColor};
+  border-bottom-width: 1px;
+  border-bottom-color: ${(props) => props.borderColor};
   padding-top: 10px;
   padding-bottom: 15px;
   padding-left: 5px;
   width: 100%;
+`;
+
+export const CaixaCima = styled.View`
+  width: 100%;
+  height: auto;
+  padding-bottom: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${Cores.cinza[11]};
 `;
 
 export const Titulo = styled.Text`
@@ -38,12 +55,16 @@ export const CaixaTitulo = styled.View`
 
 export const CaixaFormulario = styled.View`
   display: flex;
+  height: 50%;
   margin-top: 20px;
   width: 90%;
 `;
 
 export const CaixaBotao = styled.View`
-  align-items: flex-end;
-  margin-top: 5%;
   width: 90%;
+  height: auto;
+  display: flex;
+  background-color: ${Cores.cinza[11]};
+  align-items: flex-end;
+  justify-content: flex-end;
 `;

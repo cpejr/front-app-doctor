@@ -9,6 +9,9 @@ import {
   CaixaTitulo,
   CaixaFormulario,
   CaixaBotao,
+  CaixaCima,
+  CaixaPagina,
+  CorpoScroll,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -35,10 +38,9 @@ function PreencherFormulario({ route, navigation }) {
 
   async function getFormularioPaciente() {
     const formulariosAux = await managerService.GetFormularioPacienteEspecifico(
-      FormularioEspecifico.id,
+      FormularioEspecifico.id
     );
 
-    
     setFormularioPaciente(formulariosAux);
     setSchema(FormularioEspecifico.perguntas);
     setCarregando(false);
@@ -56,46 +58,47 @@ function PreencherFormulario({ route, navigation }) {
       formularioPaciente.id,
       respostas
     );
-    navigation.push("ListaFormularios")
+    navigation.push("ListaFormularios");
   }
 
   return (
-    <ScrollView>
-      <Corpo height={heightTela}>
-      
+    <CorpoScroll>
         <HeaderFormularios borderColor={Cores.azul}>
-          <TouchableOpacity
-            onPress={() => navigation.push("ListaFormularios")}
-          >
+          <TouchableOpacity onPress={() => navigation.push("ListaFormularios")}>
             <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
           </TouchableOpacity>
           <Titulo fontSize="20px" color={Cores.azul}>
             Formulários
           </Titulo>
         </HeaderFormularios>
-        <CaixaTitulo>
-          <Titulo fontSize="24px" color={Cores.azulEscuro} marginBottom={"8px"}>
-            {FormularioEspecifico.titulo}
-          </Titulo>
-        </CaixaTitulo>
-        <CaixaFormulario>
-          {carregando ? (
-            <ActivityIndicator animating={true} color={Cores.azulEscuro} />
-          ) : (
-            <View>
-              <Form
-                schema={schema}
-                uiSchema={uiSchema}
-                // widgets={widgets}
-                onChange={(submited) => preencherRespostas(submited.formData)}
-              >
-                <></>
-              </Form>
-            </View>
-          )}
-        </CaixaFormulario>
-        
-
+        <Corpo> 
+        <CaixaCima>
+          <CaixaTitulo>
+            <Titulo
+              fontSize="24px"
+              color={Cores.azulEscuro}
+              marginBottom="8px"
+            >
+              {FormularioEspecifico.titulo}
+            </Titulo>
+          </CaixaTitulo>
+          <CaixaFormulario>
+            {carregando ? (
+              <ActivityIndicator animating={true} color={Cores.azulEscuro} />
+            ) : (
+              <View>
+                <Form
+                  schema={schema}
+                  uiSchema={uiSchema}
+                  // widgets={widgets}
+                  onChange={(submited) => preencherRespostas(submited.formData)}
+                >
+                  <></>
+                </Form>
+              </View>
+            )}
+          </CaixaFormulario>
+        </CaixaCima>
         <CaixaBotao>
           <Botao
             width="32%"
@@ -112,8 +115,8 @@ function PreencherFormulario({ route, navigation }) {
             </ConteudoBotao>
           </Botao>
         </CaixaBotao>
-      </Corpo>
-    </ScrollView>
+     </Corpo> 
+    </CorpoScroll>
   );
 }
 
