@@ -6,7 +6,7 @@ import {
   ConteudoBotaoPerfil,
   CaixaViews,
   ViewFotoNome,
-  CaixaFoto,
+  Foto,
   Nome,
   CaixaDataCpf,
   CaixaNascidoData,
@@ -22,7 +22,6 @@ import Botao from "../../styles/Botao";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { cep } from "../../utils/masks";
-import Icon from 'react-native-vector-icons/AntDesign';
 
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -122,9 +121,7 @@ function Perfil({ navigation }) {
         </CaixaBotao>
         <CaixaViews>
           <ViewFotoNome width={larguraViews}>
-            <CaixaFoto>
-            <Icon name="user" size={60} color={Cores.azul} />
-            </CaixaFoto>
+            <Foto />
             <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
             <CaixaDataCpf>
               <CaixaNascidoData>

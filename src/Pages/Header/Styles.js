@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis"
-import Icon from 'react-native-vector-icons/AntDesign';
 
 export const Corpo = styled.View`
   display: flex;
@@ -14,7 +13,7 @@ export const Corpo = styled.View`
 export const Botaoo = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: ${Cores.azul};
   border-style: solid;
@@ -25,7 +24,6 @@ export const Botaoo = styled.TouchableOpacity`
   height: 50px;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: 5px;
 `;
 
 export const Logo = styled.Image`
@@ -41,9 +39,9 @@ export const Perfil = styled.View`
   height: 85%;
   border-style: solid;
   border-radius: 25px;
-  border: ${Cores.branco};
+  border: ${Cores.preto};
   border-width: 0px;
-  background-color: ${Cores.branco};
-
+  background-color: green;
+  /*background-color: ${Cores.cinza[3]};*/
 
 `;
