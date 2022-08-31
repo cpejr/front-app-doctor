@@ -47,11 +47,14 @@ export const ViewFotoNome = styled.View`
   margin-bottom: 5%;
 `;
 
-export const Foto = styled.Image`
+export const CaixaFoto = styled.View`
   width: 100px;
   height: 100px;
-  margin-bottom: 20px;
-  background-color: green;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
 `;
 
 export const Nome = styled.Text`
