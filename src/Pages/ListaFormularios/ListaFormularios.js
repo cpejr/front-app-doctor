@@ -24,6 +24,8 @@ import {
   CaixaTipoData,
   TextoTipoData,
   CaixaLoading,
+  HeaderListaFormularios,
+  Titulo,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -40,6 +42,7 @@ function ListaFormularios({ navigation }) {
   const larguraUrgenciaEstrela =
     width < 400 ? "39%" : larguraUrgenciaEstrelaMedio;
   const larguraCaixaTipoData = width < 700 ? "88%" : "95%";
+  const tamanhoIcone = width > 480 ? 20 : 25;
 
   const [listaOriginal, setListaOriginal] = useState([]);
   const [formulariosPaciente, setFormulariosPaciente] = useState([]);
@@ -158,6 +161,14 @@ function ListaFormularios({ navigation }) {
 
   return (
     <Scroll>
+      <HeaderListaFormularios borderColor={Cores.azul}>
+          <TouchableOpacity onPress={() => navigation.push("Arquivos")}>
+            <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
+          </TouchableOpacity>
+          <Titulo fontSize="20px" color={Cores.azul}>
+            Arquivos
+          </Titulo>
+        </HeaderListaFormularios>
       <Body>
         <BarraPesquisa>
           <InputPesquisa
