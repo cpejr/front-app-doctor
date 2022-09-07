@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AlterarDados from "./pages/AlterarDados";
 import AlterarSenha from "./pages/AlterarSenha";
+import AlterarSenhaComEmail from "./pages/AlterarSenhaComEmail";
 import Cadastro from "./pages/Cadastro";
 import Chat from "./pages/Chat";
 import Comentarios from "./pages/Comentarios";
@@ -239,6 +240,7 @@ function Routes() {
       >
         <Stack.Screen name="Tabs" component={TabScreen} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="AlterarSenhaComEmail" component={AlterarSenhaComEmail} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -137,6 +137,7 @@ function Login({ navigation }) {
                   borderRadius="3px"
                   borderWidth="3px"
                   boxShadow="none"
+                  onPress={() => navigation.push("AlterarSenhaComEmail")}
                 >
                   <ConteudoBotao
                     width="100%"
