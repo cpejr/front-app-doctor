@@ -3,8 +3,16 @@ import { Cores } from "../../variaveis";
 
 export const CorpoScroll = styled.ScrollView`
   display: flex;
+  width: 90%;
+  height: 100%;
+  background-color: ${Cores.cinza[11]};
+`;
+export const Body = styled.View`
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 100%;
+  overflow: scroll;
   background-color: ${Cores.cinza[11]};
 `;
 
@@ -57,14 +65,13 @@ export const CaixaFormulario = styled.View`
   display: flex;
   height: 50%;
   margin-top: 20px;
-  width: 90%;
+  width: 100%;
 `;
 
 export const CaixaBotao = styled.View`
   width: 90%;
-  height: auto;
+  height: 100%;
   display: flex;
   background-color: ${Cores.cinza[11]};
   align-items: flex-end;
-  justify-content: flex-end;
 `;
