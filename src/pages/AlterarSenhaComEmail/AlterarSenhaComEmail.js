@@ -77,7 +77,6 @@ function AlterarSenhaComEmail({ navigation }) {
   }
 
   return (
-    //<ScrollView backgroundColor="white">
     <Body>
       { width < height ? (
       <CaixaLogo>
