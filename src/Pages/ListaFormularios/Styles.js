@@ -16,6 +16,7 @@ export const Body = styled.View`
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 10px;
+  padding-bottom: 50px;
 `;
 
 export const BarraPesquisa = styled.View`
@@ -76,7 +77,6 @@ border-bottom-width:${(props) => props.borderBottomWidth};
 export const CaixaLista = styled.View`
 flex:1;
 width:95%;
-
 `;
 
 export const BotaoForm = styled.View`

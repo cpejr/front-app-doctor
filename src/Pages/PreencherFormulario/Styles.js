@@ -40,7 +40,7 @@ export const HeaderFormularios = styled.View`
 export const CaixaCima = styled.View`
   width: 100%;
   height: auto;
-  padding-bottom: 60%;
+  padding-bottom: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,7 +70,7 @@ export const CaixaFormulario = styled.View`
 
 export const CaixaBotao = styled.View`
   width: 90%;
-  height: 100%;
+  height: 80px;
   display: flex;
   background-color: ${Cores.cinza[11]};
   align-items: flex-end;
