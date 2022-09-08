@@ -16,8 +16,8 @@ export const CaixaView = styled.View`
   justify-content: flex-start;
   align-items: center;
   width: 90%;
-  height: 50%;
-  margin-top: 5%;
+  height: 45%;
+  margin-top: 10%;
 `;
 
 export const CaixaLogo = styled.View`
@@ -26,9 +26,9 @@ export const CaixaLogo = styled.View`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height:70px;
+  height: 70px;
   background-color: ${Cores.azul};
-  padding-top: 10%;
+  padding-top: 15%;
   padding-bottom: 10%;
 `;
 
@@ -51,15 +51,16 @@ export const CaixaInputs = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
-  margin-top: 10%;
+  margin-top: 3%;
 `;
 
 export const ContainerBotao = styled.View`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-  height: 40%;
+  height: 30%;
 `;
 
 export const CaixaBotao = styled.View`
@@ -69,23 +70,21 @@ export const CaixaBotao = styled.View`
   width: 90%;
   height: auto;
   margin-top: 5%;
-  margin-bottom: 20%;
+  margin-bottom: 2%;
   justify-content: space-between;
 `;
 
 export const Rotulo = styled.View`
   width: 100%;
   height: 22px;
-  margin-bottom: 20px;
 `;
 
 export const TextoRotulo = styled.Text`
   font-weight: 400;
   font-size: 15px;
-  color: red;
 `;
 
-export const InputNovaSenha = styled.TextInput`
+export const InputEmail = styled.TextInput`
   width: 100%;
   height: 50px;
   background-color: #e4e6f4;
@@ -100,7 +99,7 @@ export const InputNovaSenha = styled.TextInput`
   border: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.erro || props.camposVazios){
+      if (props.erro || props.camposVazios) {
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;

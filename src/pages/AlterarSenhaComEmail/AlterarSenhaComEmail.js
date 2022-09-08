@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Alert, TouchableOpacity } from "react-native";
-import { Dimensions } from "react-native";
+import { Alert, ScrollView, useWindowDimensions  } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import {
   Body,
@@ -14,22 +13,20 @@ import {
   TextoRotulo,
   ContainerBotao,
   Titulo,
-  InputNovaSenha,
+  InputEmail,
 } from "./Styles";
-import Input from "../../styles/Input/Input";
 import Botao from "../../styles/Botao/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
-import { Cores } from "../../variaveis";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function AlterarSenhaComEmail({ navigation }) {
+  const height = useWindowDimensions().height;
+  const width = useWindowDimensions().width;
+
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [carregando, setCarregando] = useState(false);
-
-  //const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
   const [email, setEmail] = useState();
 
   function PreenchendoEmail(text) {
@@ -80,10 +77,13 @@ function AlterarSenhaComEmail({ navigation }) {
   }
 
   return (
+    //<ScrollView backgroundColor="white">
     <Body>
+      { width < height ? (
       <CaixaLogo>
         <Logo source={logoGuilherme} />
       </CaixaLogo>
+      ):(<></>)}
       <CaixaView>
         <CaixaTitulo>
           <Titulo fontSize="25px">Recupere sua conta do DoctorApp:</Titulo>
@@ -92,14 +92,14 @@ function AlterarSenhaComEmail({ navigation }) {
           <CaixaTitulo>
             <Titulo fontSize="15px">Digite seu email cadastrado:</Titulo>
           </CaixaTitulo>
-          <InputNovaSenha
+          <InputEmail
             placeholder="E-mail:"
             onChangeText={(text) => {
               PreenchendoEmail(text);
             }}
             erro={erro}
             camposVazios={camposVazios}
-          ></InputNovaSenha>
+          ></InputEmail>
           {camposVazios ? (
                 <Rotulo>
                   <TextoRotulo>Digite um email</TextoRotulo>
@@ -144,6 +144,7 @@ function AlterarSenhaComEmail({ navigation }) {
         </CaixaBotao>
       </ContainerBotao>
     </Body>
+    //</ScrollView>
   );
 }
 
