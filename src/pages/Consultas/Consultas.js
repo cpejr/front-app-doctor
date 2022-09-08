@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   useWindowDimensions,
   ScrollView,
   TouchableOpacity,
   Modal,
   Text,
+  Linking,
+  View
 } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import {
@@ -18,7 +20,7 @@ import {
   CaixaHora,
   ConteudoCaixa,
   Icone,
-  ViewBotao,
+  ViewBotoes,
   CaixaBotao,
   IconeBotao,
   CaixaModal,
@@ -50,18 +52,17 @@ import * as managerService from "../../services/ManagerService/managerService";
 function Consultas({ navigation }) {
   const { width } = useWindowDimensions();
 
-  //responsividade paisagem
   const paddingBodyMaior = width < 600 ? "5%" : "10%";
-  const larguraBotaoMaior = width < 600 ? "50%" : "40%";
+  const larguraBotaoMaior = width < 600 ? "47%" : "40%";
   const fontSizeMaior = width < 600 ? "12px" : "15px";
   const heightModal = width < 600 ? "60%" : "100%";
   const marginTopModal = width < 600 ? "15%" : "0%";
-  //responsividade aparelhos
   const paddingBody = width < 330 ? "1.5%" : paddingBodyMaior;
   const larguraBotao = width < 330 ? "60%" : larguraBotaoMaior;
   const borderWidthCaixaNome = width < 330 ? "0px" : "2.5px";
   const fontSizeConteudo = width < 330 ? "11px" : fontSizeMaior;
   const tamanhoIcone = width > 480 ? 20 : 25;
+  const heightCaixaBotao = width > 600 ? "48px" : "42px";
 
   const heightTela = `${Dimensions.get("window").height}px`;
 
@@ -75,6 +76,9 @@ function Consultas({ navigation }) {
   const [dataModal, setDataModal] = useState("");
   const [horaModal, setHoraModal] = useState("");
   const [enderecoModal, setEnderecoModal] = useState({});
+
+  const urlVideo = `https://www.google.com.br/`
+  const urlAvaliacaoConsulta = `https://www.google.com.br/`
 
   async function requisicaoEnderecoById(id) {
     const resposta = await managerService.requisicaoEnderecoById(id);
@@ -111,6 +115,24 @@ function Consultas({ navigation }) {
 
     return { dataConsulta, horaConsulta };
   }
+
+  const renderizarUrlVideo = useCallback(async () => {
+    const checarUrl = await Linking.canOpenURL(urlVideo);
+    if (checarUrl) {
+      await Linking.openURL(urlVideo);
+    } else {
+      Alert.alert(`Não foi possível abrir a URL: ${urlVideo}`);
+    }
+  });
+
+  const renderizarUrlAvalicaoConsulta = useCallback(async () => {
+    const checarUrl = await Linking.canOpenURL(urlAvaliacaoConsulta);
+    if (checarUrl) {
+      await Linking.openURL(urlAvaliacaoConsulta);
+    } else {
+      Alert.alert(`Não foi possível abrir a URL: ${urlAvaliacaoConsulta}`);
+    }
+  });
 
   var consultasOcorridas = [];
   var consultasNaoOcorridas = [];
@@ -171,6 +193,7 @@ function Consultas({ navigation }) {
   }
 
   return (
+    <ScrollView>
     <Body
       paddingLeft={paddingBody}
       paddingRight={paddingBody}
@@ -180,13 +203,44 @@ function Consultas({ navigation }) {
         <Titulo>Consultas Marcadas</Titulo>
       </CaixaTitulo>
 
+      <ViewBotoes>
+        <CaixaBotao
+          width={larguraBotao}
+          height={heightCaixaBotao}
+          onPress={() => navigation.navigate("SolicitarConsulta")}
+        >
+          <ConteudoBotao
+            fontSize={fontSizeConteudo}
+            color={Cores.azul}
+            width="90%"
+          >
+            Marcar Nova Consulta
+          </ConteudoBotao>
+        </CaixaBotao>
+
+        <CaixaBotao
+          width={larguraBotao}
+          height={heightCaixaBotao}
+          onPress={renderizarUrlVideo}
+        >
+          <ConteudoBotao
+            fontSize={fontSizeConteudo}
+            color={Cores.azul}
+            width="90%"
+          >
+            Recomendações pré-consulta
+          </ConteudoBotao>
+        </CaixaBotao>
+      </ViewBotoes>
+
       {carregando ? (
         <ViewPadrao paddingLeft="10px" paddingRight="10px" paddingTop="2%" paddingBottom="2%" maxHeight="10%">
-          <ActivityIndicator animating={true} color={Colors.black}/>
+          <ActivityIndicator animating={true} color={Colors.black} />
         </ViewPadrao>
       ) : (
-        <ViewPadrao paddingLeft="10px" paddingRight="10px" paddingTop="0px" paddingBottom="0px" maxHeight="70%">
-          {consultas.length !== 0  ? (
+        <ViewPadrao paddingLeft="10px" paddingRight="10px" paddingTop="5%" paddingBottom="5%" maxHeight="70%">
+
+          {consultas.length !== 0 ? (
             <ScrollView>
               <>
                 {ocoridas?.map((value) => (
@@ -229,10 +283,11 @@ function Consultas({ navigation }) {
                           <Botao
                             height="40px"
                             width="70%"
-                            backgroundColor="green"
+                            backgroundColor={Cores.cinza[7]}
                             borderRadius="10px"
                             borderWidth="1px"
-                            borderColor="#088E0E"
+                            borderColor={Cores.preto}
+                            onPress={renderizarUrlAvalicaoConsulta}
                           >
                             <ConteudoBotao
                               fontSize="15px"
@@ -300,20 +355,20 @@ function Consultas({ navigation }) {
                           </TouchableOpacity>
                         </CaixaFechar>
                         <CaixaConteudoModal>
-                        <CaixaTituloModal>
-                          <TituloModal>
-                            A sua consulta será no {nomeModal}
-                          </TituloModal>
-                        </CaixaTituloModal>
-                        <CaixaDadosModal>
-                          <EnderecoModal>
-                            {enderecoModal.rua}, {enderecoModal.numero} -{" "}
-                            {enderecoModal.bairro} {enderecoModal.cidade}
-                          </EnderecoModal>
-                          <DataModal>
-                            {dataModal} às {horaModal}
-                          </DataModal>
-                        </CaixaDadosModal>
+                          <CaixaTituloModal>
+                            <TituloModal>
+                              A sua consulta será no {nomeModal}
+                            </TituloModal>
+                          </CaixaTituloModal>
+                          <CaixaDadosModal>
+                            <EnderecoModal>
+                              {enderecoModal.rua}, {enderecoModal.numero} -{" "}
+                              {enderecoModal.bairro} {enderecoModal.cidade}
+                            </EnderecoModal>
+                            <DataModal>
+                              {dataModal} às {horaModal}
+                            </DataModal>
+                          </CaixaDadosModal>
                         </CaixaConteudoModal>
                       </CaixaModal>
                     </Modal>
@@ -352,26 +407,12 @@ function Consultas({ navigation }) {
               </>
             </ScrollView>
           ) : (
-              <TextoSemConsulta>Não há consultas marcadas no momento!</TextoSemConsulta>
+            <TextoSemConsulta>Não há consultas marcadas no momento!</TextoSemConsulta>
           )}
         </ViewPadrao>
       )}
-      <ViewBotao>
-        <CaixaBotao
-          width={larguraBotao}
-          onPress={() => navigation.navigate("SolicitarConsulta")}
-        >
-          <ConteudoBotao
-            fontSize={fontSizeConteudo}
-            color={Cores.azul}
-            width="90%"
-          >
-            Marcar Nova Consulta
-          </ConteudoBotao>
-          <IconeBotao source={botaoIcone} />
-        </CaixaBotao>
-      </ViewBotao>
     </Body>
+      </ScrollView>
   );
 }
 

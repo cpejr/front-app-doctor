@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
 import DatePicker  from "react-native-datepicker";
+import { Picker } from "@react-native-picker/picker";
 
 export const Body = styled.View`
   display: flex;
@@ -89,6 +90,14 @@ export const Data = styled(DatePicker)`
   align-items: flex-start;
 `;
 
+export const Rotulo = styled.Text`
+  font-size: 12px;
+  color: ${Cores.vermelho};
+  text-align: justify;
+  line-height: 12px;
+  margin-bottom: 1%;
+`;
+
 export const TituloRotulos = styled.Text`
   font-size: 13px;
   color: ${Cores.cinza[6]};
@@ -102,4 +111,37 @@ export const CaixaTitulosRotulos = styled.View`
   align-items: flex-start;
   justify-content: flex-start;
   margin-left: 2%;
+`;
+
+export const PickerView = styled.View`
+  display: flex;
+  width: 100%;
+  background-color: #e4e6f4;
+  border-radius: 5px;
+  border-color: ${Cores.azul};
+  border-width: 1.5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  overflow: hidden;
+`;
+
+export const PickerEstado = styled(Picker)`
+  display: flex;
+  background-color: #e4e6f4;
+  width: 100%;
+  margin-top: 0;
+`;
+
+export const CheckboxTexto = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const Lgpd = styled.Text`
+  font-family: ${(props) => props.fontFamily};
+  font-size: 16px;
+  text-align: right;
+  color: #151b57;
+  text-decoration: underline;
 `;
