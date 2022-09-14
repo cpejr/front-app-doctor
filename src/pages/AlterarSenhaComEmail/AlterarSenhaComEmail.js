@@ -38,6 +38,7 @@ function AlterarSenhaComEmail({ navigation }) {
 
   function verificandoCamposVazios() {
     setCarregando(true);
+    Alert.alert("Aviso!", "Aguarde um pouco.");
     if (email === "" || email === null || email === undefined) {
       setCamposVazios(true);
       setCarregando(false);

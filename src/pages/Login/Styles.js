@@ -42,9 +42,10 @@ export const CaixaInputs = styled.View`
 
 export const SenhaCadastro = styled.View`
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 70%;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
   margin-top: 5%;
 `;
 

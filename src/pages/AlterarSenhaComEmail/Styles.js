@@ -17,7 +17,7 @@ export const CaixaView = styled.View`
   align-items: center;
   width: 90%;
   height: 45%;
-  margin-top: 10%;
+  margin-top: 9%;
 `;
 
 export const CaixaLogo = styled.View`
@@ -51,7 +51,7 @@ export const CaixaInputs = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
-  margin-top: 3%;
+  margin-top: 8%;
 `;
 
 export const ContainerBotao = styled.View`
@@ -82,6 +82,7 @@ export const Rotulo = styled.View`
 export const TextoRotulo = styled.Text`
   font-weight: 400;
   font-size: 15px;
+  color: ${Cores.vermelho};
 `;
 
 export const InputEmail = styled.TextInput`

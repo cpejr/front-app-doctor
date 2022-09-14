@@ -132,7 +132,7 @@ function Login({ navigation }) {
                 <Botao
                   backgroundColor="transparent"
                   borderColor="transparent"
-                  width="50%"
+                  width="100%"
                   height="40px"
                   borderRadius="3px"
                   borderWidth="3px"
@@ -146,12 +146,21 @@ function Login({ navigation }) {
                   >
                     Esqueceu a senha?
                   </ConteudoBotao>
+                  <ConteudoBotao
+                    width="100%"
+                    fontSize={tamanhoFonte}
+                    color={Cores.preto}
+                    textDecoration="underline"
+                  >
+                    Clique aqui para recuperá-la
+                  </ConteudoBotao>
                 </Botao>
                 <Botao
                   backgroundColor="transparent"
                   borderColor="transparent"
-                  width="35%"
+                  width="100%"
                   height="40px"
+                  marginTop="15px"
                   borderRadius="3px"
                   borderWidth="3px"
                   boxShadow="none"
@@ -161,6 +170,7 @@ function Login({ navigation }) {
                     width="100%"
                     fontSize={tamanhoFonte}
                     color="#000000"
+                    textDecoration="underline"
                   >
                     Cadastre-se
                   </ConteudoBotao>
