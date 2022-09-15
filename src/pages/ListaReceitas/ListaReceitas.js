@@ -8,6 +8,7 @@ import {
   View,
   useWindowDimensions,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import {
   ContainerBody,
@@ -20,8 +21,11 @@ import {
   IconPesquisa,
   InputPesquisa,
   PaginaCarregando,
+  HeaderListaReceitas,
+  Titulo,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
+import Icon from "react-native-vector-icons/Entypo";
 import Botao from "../../styles/Botao";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -32,6 +36,8 @@ function ListaReceitas({ navigation }) {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const { width } = useWindowDimensions();
+
+  const tamanhoIcone = width > 480 ? 20 : 25;
 
   const onChangeBusca = (busca) => setBusca(busca);
 
@@ -67,6 +73,14 @@ function ListaReceitas({ navigation }) {
 
   return (
     <ContainerBody>
+      <HeaderListaReceitas backgroundColor={Cores.branco} borderColor={Cores.azul}>
+          <TouchableOpacity onPress={() => navigation.push("Arquivos")}>
+            <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
+          </TouchableOpacity>
+          <Titulo fontSize="20px" color={Cores.azul}>
+            Arquivos
+          </Titulo>
+        </HeaderListaReceitas>
       <ContainerCima height={heightPesquisar}>
         <BarraPesquisa>
           <InputPesquisa

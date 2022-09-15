@@ -240,6 +240,30 @@ export const GetDadosReceitas= async () => {
   return { dadosReceitas, dadosUsuario };
 };
 
+export const GetFormularioPacienteEspecifico = async (id) => {
+  let dadosFormulario = {};
+  await requesterService
+    .requisicaoFormularioPacienteEspecifico(id)
+    .then((res) => {
+      dadosFormulario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosFormulario;
+};
+
+export const UpdateRespostasFormulario = async (id, respostas) => {
+  await requesterService
+    .updateRespostasFormularioPaciente(id, respostas)
+    .then(() => {
+      Alert.alert("", "Respostas enviadas com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+};
+
 
 export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
