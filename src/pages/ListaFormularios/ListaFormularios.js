@@ -3,6 +3,7 @@ import {
   useWindowDimensions,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import {
   Scroll,
@@ -23,6 +24,8 @@ import {
   CaixaTipoData,
   TextoTipoData,
   CaixaLoading,
+  HeaderListaFormularios,
+  Titulo,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -39,6 +42,7 @@ function ListaFormularios({ navigation }) {
   const larguraUrgenciaEstrela =
     width < 400 ? "39%" : larguraUrgenciaEstrelaMedio;
   const larguraCaixaTipoData = width < 700 ? "88%" : "95%";
+  const tamanhoIcone = width > 480 ? 20 : 25;
 
   const [listaOriginal, setListaOriginal] = useState([]);
   const [formulariosPaciente, setFormulariosPaciente] = useState([]);
@@ -92,6 +96,21 @@ function ListaFormularios({ navigation }) {
     pegandoFormulariosPaciente();
   }, []);
 
+  async function abrirFormularioEspecifico(formularioEspecifico) {
+    if( formularioEspecifico.status === false)
+    {
+      navigation.push("PreencherFormulario", {
+        paramKey: formularioEspecifico,
+      });
+    }
+    else{
+      Alert.alert("", "Este formulário já foi respondido");
+    }
+    
+    
+    
+  }
+
   function formatandoData(dataCriacao) {
     const data = new Date(dataCriacao).toLocaleDateString();
     return data;
@@ -135,12 +154,6 @@ function ListaFormularios({ navigation }) {
     setTelaRespondido(false);
   }
 
-  async function abrirFormularioEspecifico(formularioEspecifico) {
-    navigation.navigate("PreencherFormulario", {
-      paramKey: formularioEspecifico,
-    });
-  }
-
   const corRespondido = telaRespondido ? Cores.azulEscuro : Cores.cinza[2];
   const corPendente = telaRespondido ? Cores.cinza[2] : Cores.azulEscuro;
   const linhaRespondido = telaRespondido ? "1.5px" : "0px";
@@ -148,6 +161,14 @@ function ListaFormularios({ navigation }) {
 
   return (
     <Scroll>
+      <HeaderListaFormularios borderColor={Cores.azul}>
+          <TouchableOpacity onPress={() => navigation.push("Arquivos")}>
+            <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
+          </TouchableOpacity>
+          <Titulo fontSize="20px" color={Cores.azul}>
+            Arquivos
+          </Titulo>
+        </HeaderListaFormularios>
       <Body>
         <BarraPesquisa>
           <InputPesquisa

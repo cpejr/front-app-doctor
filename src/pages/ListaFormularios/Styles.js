@@ -16,6 +16,7 @@ export const Body = styled.View`
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 10px;
+  padding-bottom: 50px;
 `;
 
 export const BarraPesquisa = styled.View`
@@ -76,7 +77,6 @@ border-bottom-width:${(props) => props.borderBottomWidth};
 export const CaixaLista = styled.View`
 flex:1;
 width:95%;
-
 `;
 
 export const BotaoForm = styled.View`
@@ -161,4 +161,21 @@ color:${Cores.lilas[1]};
 /* background-color: green; */
 `;
 
+export const Titulo = styled.Text`
+  font-size: ${(props) => props.fontSize};
+  color: ${(props) => props.color};
+  margin-bottom: ${(props) => props.marginBottom ?? "0px"};
+  margin-left: 13px;
+`;
 
+export const HeaderListaFormularios = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom-width: 1px;
+  border-bottom-color: ${(props) => props.borderColor};
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 5px;
+  width: 100%;
+`;
