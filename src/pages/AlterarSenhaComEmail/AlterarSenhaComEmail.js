@@ -19,6 +19,7 @@ import Botao from "../../styles/Botao/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";
+import { sleep } from "../../utils/sleep";
 
 function AlterarSenhaComEmail({ navigation }) {
   const height = useWindowDimensions().height;
@@ -38,7 +39,6 @@ function AlterarSenhaComEmail({ navigation }) {
 
   function verificandoCamposVazios() {
     setCarregando(true);
-    Alert.alert("Aviso!", "Aguarde um pouco.");
     if (email === "" || email === null || email === undefined) {
       setCamposVazios(true);
       setCarregando(false);
@@ -57,7 +57,9 @@ function AlterarSenhaComEmail({ navigation }) {
       }
     });
     if (achei) {
+      Alert.alert("Aviso", "Aguarde um pouco!");
       const enviado = await managerService.EnviandoEmail(email);
+      await sleep(1500);
       if (enviado) {
         setCarregando(false);
         Alert.alert(

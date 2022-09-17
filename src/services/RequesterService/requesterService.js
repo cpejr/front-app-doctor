@@ -57,6 +57,3 @@ export const requisicaoFormularioPacienteEspecifico = (id) =>
     respostas: respostas,
     status: true,
   });
-
-
-export const deletarEnderecoEUsuario = (id_endereco) => api.delete(`/enderecos/${id_endereco}`);
