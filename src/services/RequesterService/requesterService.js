@@ -53,6 +53,7 @@ export const requisicaoFormularioPacienteEspecifico = (id) =>
   api.put(`/formularios_pacientes/${id}`, {
     respostas: respostas,
     status: true,
+    notificacao_ativa: true,
   });
 
 
