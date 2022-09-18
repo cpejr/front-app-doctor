@@ -3,7 +3,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 import { Alert } from "react-native";
 
-export const requisicaoCriarUsuario = async (estado, endereco) => {
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
+export const requisicaoCriarUsuario = async (estado, endereco,) => {
+
+  const dadosEmail = await requesterService.requisicaoDadosUsuario(estado.email);
+
+  if(dadosEmail.status != 204){
+    sleep(1500);
+    Alert.alert("Erro", "E-mail já cadastrado!");
+    return
+  }
+
   const resposta = await requesterService
     .CriarEndereco(endereco)
     .then((res) => {
