@@ -2,19 +2,17 @@ import * as requesterService from "../RequesterService/requesterService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 import { Alert } from "react-native";
+import { sleep } from "../../utils/sleep";
 
-const sleep = (milliseconds) => {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-};
+export const requisicaoCriarUsuario = async (estado, endereco) => {
+  const dadosEmail = await requesterService.requisicaoDadosUsuario(
+    estado.email
+  );
 
-export const requisicaoCriarUsuario = async (estado, endereco,) => {
-
-  const dadosEmail = await requesterService.requisicaoDadosUsuario(estado.email);
-
-  if(dadosEmail.status != 204){
+  if (dadosEmail.status != 204) {
     sleep(1500);
     Alert.alert("Erro", "E-mail já cadastrado!");
-    return
+    return;
   }
 
   const resposta = await requesterService
@@ -121,9 +119,6 @@ export const GetFormulariosPaciente = async () => {
 //     return formulariosPaciente;
 // };
 
-
-
-
 export const UpdateDadosUsuario = async (
   id_usuario,
   id_endereco,
@@ -225,18 +220,16 @@ export const DeletarUsuario = async (id) => {
   return false;
 };
 
-
-export const GetDadosReceitas= async () => {
+export const GetDadosReceitas = async () => {
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
   let dadosUsuario = {};
-  
+
   let dadosReceitas = {};
-  
+
   await requesterService
     .requisicaoDadosUsuario(email)
     .then((res) => {
       dadosUsuario = res.data;
-      
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -276,7 +269,6 @@ export const UpdateRespostasFormulario = async (id, respostas) => {
       requisicaoErro(error);
     });
 };
-
 
 export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
