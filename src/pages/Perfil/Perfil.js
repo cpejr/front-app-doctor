@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useWindowDimensions, ScrollView, Alert, View } from "react-native";
+import Icon from 'react-native-vector-icons/AntDesign';
+import { useWindowDimensions, ScrollView, Alert, View, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import Botao from "../../styles/Botao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
-
 import * as managerService from "../../services/ManagerService/managerService";
 
 import {
@@ -31,6 +31,7 @@ import {
   ScrollViewBranco
 } from "./Styles";
 import { Cores } from "../../variaveis";
+import  {sleep} from "../../utils/sleep";
 
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -40,9 +41,9 @@ function Perfil({ navigation }) {
   const [cpf, setCpf] = useState("");
   const [cep, setCep] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
-
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
   const [carregando, setCarregando] = useState(true);
-
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [cpfMasked, setCpfMasked] = useState("");
   const [cepMasked, setCepMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
@@ -156,6 +157,27 @@ function Perfil({ navigation }) {
     navigation.push("Login");
   }
 
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url;
+    
+    if (chave === null || chave === "" || chave === undefined)
+    {
+      await sleep(1500);
+      setCarregandoFoto(false);
+      return false;
+    }
+
+    setCarregandoFoto(true);
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
+  }
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
+
   const larguraBotoesMaior = width < 600 ? "50%" : "35%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
   const paddingBody = width < 330 ? "5%" : "10%";
@@ -192,7 +214,36 @@ function Perfil({ navigation }) {
               </AnimacaoCarregandoViewNome>
             ):(
               <>
-              <Foto />
+              {usuario.avatar_url === null || usuario.avatar_url === "" || usuario.avatar_url === undefined ? (
+              <Foto>
+              {carregandoFoto ? (
+              <AnimacaoCarregandoViewNome>
+                <ActivityIndicator animating={true} color={Colors.blue900}/>
+              </AnimacaoCarregandoViewNome>
+              ) : (
+                <>
+                <Icon name="user" size={80} color={Cores.preto}/> 
+                </>
+              )}
+              </Foto>
+            ) : (
+              <Foto>
+              {carregandoFoto ? (
+              <AnimacaoCarregandoViewNome>
+                <ActivityIndicator animating={true} color={Colors.blue900}/>
+              </AnimacaoCarregandoViewNome>
+              ) : (
+                <>
+                  <Image
+                    source={{uri:(fotoDePerfil)}}
+                    style={{
+                    height:"100%",
+                    width:"100%"}}
+                  ></Image>
+                </>
+              )}
+              </Foto>
+              )}
               <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
               <CaixaDataCpf>
                 <CaixaNascidoData>

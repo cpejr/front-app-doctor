@@ -57,3 +57,5 @@ export const requisicaoFormularioPacienteEspecifico = (id) =>
 
 
 export const deletarEnderecoEUsuario = (id_endereco) => api.delete(`/enderecos/${id_endereco}`);
+
+export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
