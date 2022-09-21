@@ -71,6 +71,37 @@ export const GetDadosUsuario = async () => {
   return { dadosEndereco, dadosUsuario };
 };
 
+export const GetTodosUsuarios = async () => {
+  let dadosUsuario = {};
+  await requesterService
+    .requisicaoUsuarios()
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosUsuario;
+};
+
+export const EnviandoEmail = async (email) => {
+  const resposta = await requesterService.requisicaoDadosUsuario(email);
+  if (resposta.status === 204) {
+    Alert.alert("Erro","E-mail inexistente!");
+    return;
+  }
+
+  const enviado = await requesterService
+    .recuperarSenha(email)
+    .then(() => {
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return enviado;
+};
 export const GetFormulariosPaciente = async () => {
   let formulariosPaciente;
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
