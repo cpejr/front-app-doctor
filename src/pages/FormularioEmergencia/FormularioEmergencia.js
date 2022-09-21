@@ -20,11 +20,6 @@ function FormularioEmergencia({ navigation }) {
   const [uiSchema, setUiSchema] = useState({});
 
 
-  //pegar todos os formulários pelo id do usuario logado
-
-  //salvar em formularioPacienteEmergencia o formulario com a a id_formulario = "0c40aa7c-8109-4764-b042-d47280c7143b"
-
-
   async function GetFormulariosEmergenciaPaciente() {
     const formularios = await managerService.GetFormulariosPaciente();
     formularios.forEach((formularioPaciente) => {
