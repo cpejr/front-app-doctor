@@ -146,7 +146,6 @@ function AlterarSenhaComEmail({ navigation }) {
         </CaixaBotao>
       </ContainerBotao>
     </Body>
-    //</ScrollView>
   );
 }
 
