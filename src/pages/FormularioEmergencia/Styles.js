@@ -7,7 +7,7 @@ export const Container = styled.View`
   width: 100%;
   height: 100%;
   overflow: scroll;
-  background-color: ${Cores.cinza[11]};
+  background-color: ${Cores.branco};
 `;
 
 export const HeaderFormularios = styled.View`
@@ -31,7 +31,7 @@ export const CorpoScroll = styled.ScrollView`
   display: flex;
   width: 90%;
   height: 100%;
-  background-color: ${Cores.cinza[11]};
+  background-color: ${Cores.branco};
 `;
 
 export const Corpo = styled.View`
@@ -42,7 +42,7 @@ export const Corpo = styled.View`
   padding-right: 5%;
   padding-left: 5%;
   flex-direction: column;
-  background-color: ${Cores.cinza[11]};
+  background-color: ${Cores.branco};
 `;
 
 export const CaixaCima = styled.View`
