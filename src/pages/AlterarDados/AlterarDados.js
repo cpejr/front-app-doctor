@@ -4,7 +4,7 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
 import Icon from 'react-native-vector-icons/AntDesign';
 import InputMask from "../../styles/InputMask/InputMask";
-import { useWindowDimensions, ScrollView, TouchableOpacity, } from "react-native";
+import { useWindowDimensions, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { ActivityIndicator, Colors, Checkbox } from "react-native-paper";
@@ -55,6 +55,8 @@ function AlterarDados({ navigation }) {
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [checked, setChecked] = useState(false);
   const [carregando, setCarregando] = useState(false);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
 
 
   const [camposNulos, setCamposNulos] = useState({
@@ -130,7 +132,26 @@ function AlterarDados({ navigation }) {
     telefone_cuidador: false,
   };
 
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url;
+    
+    if (chave === null || chave === "" || chave === undefined)
+    {
+      await sleep(1500);
+      setCarregandoFoto(false);
+      return false;
+    }
 
+    setCarregandoFoto(true);
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
+  }
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
 
 
   function formatacaoData() {
@@ -296,11 +317,38 @@ function AlterarDados({ navigation }) {
       <Body>
         <CaixaAlterarDados>
           <CaixaCima>
-          <Foto>
-            <>
-              <Icon name="adduser" size={80} color={Cores.preto}/> 
-            </>
+          {usuario.avatar_url === null || usuario.avatar_url === "" || usuario.avatar_url === undefined ? (
+          <Foto
+            borderColor = {Cores.cinza[2]}
+          >
+            {carregandoFoto ? ( 
+              <ActivityIndicator animating={true} color={Colors.blue900}/>
+            ) : (
+              <>
+                <Icon name="adduser" size={88} color={Cores.preto}/> 
+              </>
+            )}
           </Foto>
+          ) : (
+            <Foto
+              borderColor = {Cores.cinza[9]}
+            >
+            {carregandoFoto ? (
+            <>
+              <ActivityIndicator animating={true} color={Colors.blue900}/>
+            </>
+            ) : (
+              <>
+                <Image
+                  source={{uri:(fotoDePerfil)}}
+                  style={{
+                  height:"100%",
+                  width:"100%"}}
+                ></Image>
+              </>
+            )}
+            </Foto>
+            )}
           <CaixaTitulo>
             <Titulo>Altere os seus dados:</Titulo>
           </CaixaTitulo>
@@ -308,7 +356,8 @@ function AlterarDados({ navigation }) {
           {carregando ? (
             <>
               <ActivityIndicator animating={true} color={Colors.black} />
-            </>) : (
+            </>
+            ) : (
             <>
             <CaixaInputs width={tamanhoInputs}>
 

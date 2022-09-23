@@ -79,7 +79,7 @@ export const CaixaBotoes = styled.View`
 export const Foto = styled.View`
   width: 100px;
   height: 100px;
-  border-color: ${Cores.cinza[2]};
+  border-color: ${(props) => props.borderColor};
   border-left-width: 3px;
   border-right-width: 3px;
   border-radius: 2px;
