@@ -30,18 +30,30 @@ export const CaixaTitulo = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 4%;
+`;
+
+export const CaixaCima = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 8%;
   margin-bottom: 4%;
+  padding: 0 5% 0 5%;
 `;
 
 export const Titulo = styled.Text`
   font-size: 30px;
+  width: 200px;
 `;
+
 
 export const CaixaInputs = styled.View`
   width: 100%;
   padding-left: 10%;
   padding-right: 10%;
+  margin-top: 2%;
   height: auto;
   bottom: 0;
   background-color: ${Cores.branco};
@@ -62,6 +74,20 @@ export const CaixaBotoes = styled.View`
   width: 70%;
   margin-top: 5%;
   margin-bottom: 5%;
+`;
+
+export const Foto = styled.View`
+  width: 100px;
+  height: 100px;
+  border-color: ${Cores.cinza[2]};
+  border-left-width: 3px;
+  border-right-width: 3px;
+  border-radius: 2px;
+  background-color: ${Cores.cinza[9]};
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  elevation: 2;
 `;
 
 export const Data = styled(DatePicker)`

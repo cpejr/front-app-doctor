@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
+import Icon from 'react-native-vector-icons/AntDesign';
 import InputMask from "../../styles/InputMask/InputMask";
 import { useWindowDimensions, ScrollView, TouchableOpacity, } from "react-native";
 import { Alert } from "react-native";
@@ -12,6 +13,8 @@ import {
   CaixaAlterarDados,
   CaixaInputs,
   CaixaTitulo,
+  CaixaCima,
+  Foto,
   Titulo,
   CaixaBotoes,
   Data,
@@ -292,9 +295,16 @@ function AlterarDados({ navigation }) {
     <ScrollView>
       <Body>
         <CaixaAlterarDados>
+          <CaixaCima>
+          <Foto>
+            <>
+              <Icon name="adduser" size={80} color={Cores.preto}/> 
+            </>
+          </Foto>
           <CaixaTitulo>
-            <Titulo>Alterar Dados:</Titulo>
+            <Titulo>Altere os seus dados:</Titulo>
           </CaixaTitulo>
+          </CaixaCima>
           {carregando ? (
             <>
               <ActivityIndicator animating={true} color={Colors.black} />
