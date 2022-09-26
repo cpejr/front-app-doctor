@@ -48,7 +48,7 @@ async function setandoFotoDePerfil() {
 
 useEffect(() => {
   setandoFotoDePerfil();
-}, [usuario]);
+}, [usuario.avatar_url]);
 
   return (
     <Corpo>

@@ -149,7 +149,7 @@ function AlterarDados({ navigation }) {
 
   useEffect(() => {
     setandoFotoDePerfil();
-  }, [usuario]);
+  }, [usuario.avatar_url]);
 
   function formatacaoData() {
     let dataNascimento = estado.data_nascimento;

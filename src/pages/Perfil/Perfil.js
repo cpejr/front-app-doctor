@@ -176,7 +176,7 @@ function Perfil({ navigation }) {
 
   useEffect(() => {
     setandoFotoDePerfil();
-  }, [usuario]);
+  }, [usuario.avatar_url]);
 
   const larguraBotoesMaior = width < 600 ? "50%" : "35%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
