@@ -2,8 +2,19 @@ import * as requesterService from "../RequesterService/requesterService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 import { Alert } from "react-native";
+import { sleep } from "../../utils/sleep";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
+  const dadosEmail = await requesterService.requisicaoDadosUsuario(
+    estado.email
+  );
+
+  if (dadosEmail.status != 204) {
+    sleep(1500);
+    Alert.alert("Erro", "E-mail já cadastrado!");
+    return;
+  }
+
   const resposta = await requesterService
     .CriarEndereco(endereco)
     .then((res) => {
@@ -60,6 +71,37 @@ export const GetDadosUsuario = async () => {
   return { dadosEndereco, dadosUsuario };
 };
 
+export const GetTodosUsuarios = async () => {
+  let dadosUsuario = {};
+  await requesterService
+    .requisicaoUsuarios()
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosUsuario;
+};
+
+export const EnviandoEmail = async (email) => {
+  const resposta = await requesterService.requisicaoDadosUsuario(email);
+  if (resposta.status === 204) {
+    Alert.alert("Erro","E-mail inexistente!");
+    return;
+  }
+
+  const enviado = await requesterService
+    .recuperarSenha(email)
+    .then(() => {
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return enviado;
+};
 export const GetFormulariosPaciente = async () => {
   let formulariosPaciente;
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
@@ -107,9 +149,6 @@ export const GetFormulariosPaciente = async () => {
 //     });
 //     return formulariosPaciente;
 // };
-
-
-
 
 export const UpdateDadosUsuario = async (
   id_usuario,
@@ -212,18 +251,16 @@ export const DeletarUsuario = async (id) => {
   return false;
 };
 
-
-export const GetDadosReceitas= async () => {
+export const GetDadosReceitas = async () => {
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
   let dadosUsuario = {};
-  
+
   let dadosReceitas = {};
-  
+
   await requesterService
     .requisicaoDadosUsuario(email)
     .then((res) => {
       dadosUsuario = res.data;
-      
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -263,7 +300,6 @@ export const UpdateRespostasFormulario = async (id, respostas) => {
       requisicaoErro(error);
     });
 };
-
 
 export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService

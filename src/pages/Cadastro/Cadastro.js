@@ -119,13 +119,13 @@ function Cadastro({ navigation }) {
   function funcaoConvenio() {
     setConvenio(!convenio);
     setEstado({ ...estado, convenio: null });
-    setCamposVazios({...camposVazios, convenio: false});
+    setCamposVazios({ ...camposVazios, convenio: false });
   }
 
   function funcaoCuidador() {
     setCuidador(!cuidador);
     setEstado({ ...estado, nome_cuidador: null, telefone_cuidador: null });
-    setCamposVazios({...camposVazios, nome_cuidador: false, telefone_cuidador: false});
+    setCamposVazios({ ...camposVazios, nome_cuidador: false, telefone_cuidador: false });
   }
 
 
@@ -164,15 +164,15 @@ function Cadastro({ navigation }) {
     if (!endereco.numero) errors.numero = true;
     if (!estado.senha) errors.senha = true;
     if (!estado.senhaConfirmada) errors.senhaConfirmada = true;
-    if (cuidador === true){
-      if(!estado.nome_cuidador)
+    if (cuidador === true) {
+      if (!estado.nome_cuidador)
         errors.nome_cuidador = true;
-      if(!estado.telefone_cuidador)
+      if (!estado.telefone_cuidador)
         errors.telefone_cuidador = true;
     }
-    if (convenio === true){
-      if(!estado.convenio)
-      errors.convenio = true;
+    if (convenio === true) {
+      if (!estado.convenio)
+        errors.convenio = true;
     }
     if (erro.email === true) errors.email = true;
     if (erro.cpf === true) errors.email = true;
@@ -186,15 +186,15 @@ function Cadastro({ navigation }) {
     if (convenio === true) {
       teste.convenio = false;
     }
-    else if(convenio === false && camposVazios.convenio != undefined) { 
+    else if (convenio === false && camposVazios.convenio != undefined) {
       delete camposVazios.convenio
     }
 
-    if(cuidador === true){
+    if (cuidador === true) {
       teste.nome_cuidador = false;
       teste.telefone_cuidador = false;
     }
-    else if (cuidador === false && (camposVazios.nome_cuidador != undefined || camposVazios.telefone_cuidador != undefined)){
+    else if (cuidador === false && (camposVazios.nome_cuidador != undefined || camposVazios.telefone_cuidador != undefined)) {
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
     }
@@ -210,7 +210,7 @@ function Cadastro({ navigation }) {
       }
     }
 
-  
+
 
     if (_.isEqual(camposVazios, teste)) {
       requisicaoCadastro();
@@ -234,9 +234,6 @@ function Cadastro({ navigation }) {
       if (resposta) {
         Alert.alert("Bem vindo(a)", "Usuário cadastrado com sucesso!");
         navigation.navigate("Login");
-      } else {
-        Alert.alert("Erro", "Não foi possível cadastrar o usuario!");
-        navigation.push("Cadastro");
       }
     } else {
       Alert.alert("Erro", "As senhas digitadas são diferentes!");
@@ -275,15 +272,15 @@ function Cadastro({ navigation }) {
       (inputIdentifier === "senhaConfirmada" && enteredValue.length < 8)
     ) {
       setErro({ ...erro, [inputIdentifier]: true });
-      
+
     } else {
       setErro({ ...erro, [inputIdentifier]: false });
     }
 
-    if (cuidador === true && inputIdentifier === "telefone_cuidador"){
-      if (enteredValue.length < 11){
+    if (cuidador === true && inputIdentifier === "telefone_cuidador") {
+      if (enteredValue.length < 11) {
         setErro({ ...erro, [inputIdentifier]: true });
-      } else { 
+      } else {
         setErro({ ...erro, [inputIdentifier]: false });
       }
     }
@@ -566,7 +563,7 @@ function Cadastro({ navigation }) {
                 {erro.telefone_cuidador && (
                   <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
                 )}
-                </CaixaRotulo>
+              </CaixaRotulo>
             </>
           )}
 
