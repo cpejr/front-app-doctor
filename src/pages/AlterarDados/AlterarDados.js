@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from "react-native-vector-icons/AntDesign";
 import InputMask from "../../styles/InputMask/InputMask";
-import { useWindowDimensions, ScrollView, TouchableOpacity, Image } from "react-native";
+import { useWindowDimensions, ScrollView, Image, Text } from "react-native";
 import { Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { ActivityIndicator, Colors, Checkbox } from "react-native-paper";
@@ -24,7 +24,10 @@ import {
   PickerView,
   PickerEstado,
   CheckboxTexto,
-  Lgpd
+  Lgpd,
+  BotaoAlterarImagem,
+  TextoAlterarImagem,
+  ContainerFotoEAlterarImagem
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { estados } from "./estados";
@@ -35,7 +38,7 @@ import _ from "lodash";
 import { isEqual } from "lodash";
 import { sleep } from "../../utils/sleep";
 import { CaixaRotulo } from "../Cadastro/Styles";
-import { apenasLetras, apenasNumeros } from "../../utils/masks"
+import { apenasLetras, apenasNumeros } from "../../utils/masks";
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -57,7 +60,6 @@ function AlterarDados({ navigation }) {
   const [carregando, setCarregando] = useState(false);
   const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [fotoDePerfil, setFotoDePerfil] = useState("");
-
 
   const [camposNulos, setCamposNulos] = useState({
     nome: true,
@@ -93,7 +95,6 @@ function AlterarDados({ navigation }) {
     convenio: true,
     nome_cuidador: true,
     telefone_cuidador: true,
-
   };
 
   const errors = {};
@@ -114,8 +115,6 @@ function AlterarDados({ navigation }) {
     if (!estado.nome_cuidador) errors.nome_cuidador = true;
     if (!estado.telefone_cuidador) errors.telefone_cuidador = true;
 
-
-
     setCamposNulos({ ...camposNulos, ...errors });
   }, [estado, novoEndereco]);
 
@@ -134,9 +133,8 @@ function AlterarDados({ navigation }) {
 
   async function setandoFotoDePerfil() {
     const chave = usuario.avatar_url;
-    
-    if (chave === null || chave === "" || chave === undefined)
-    {
+
+    if (chave === null || chave === "" || chave === undefined) {
       await sleep(1500);
       setCarregandoFoto(false);
       return false;
@@ -153,13 +151,11 @@ function AlterarDados({ navigation }) {
     setandoFotoDePerfil();
   }, [usuario]);
 
-
   function formatacaoData() {
-    let dataNascimento = estado.data_nascimento
+    let dataNascimento = estado.data_nascimento;
     const response = brParaPadrao(dataNascimento);
     return response;
   }
-
 
   async function pegandoDados() {
     setCarregando(true);
@@ -182,12 +178,12 @@ function AlterarDados({ navigation }) {
     if (cpf !== undefined) {
       setCpfMasked(
         cpf.slice(+0, -8) +
-        "." +
-        cpf.slice(+3, -5) +
-        "." +
-        cpf.slice(+6, -2) +
-        "-" +
-        cpf.slice(-2)
+          "." +
+          cpf.slice(+3, -5) +
+          "." +
+          cpf.slice(+6, -2) +
+          "-" +
+          cpf.slice(-2)
       );
     }
   }, [cpf]);
@@ -195,11 +191,11 @@ function AlterarDados({ navigation }) {
     if (telefone !== undefined) {
       setTelMasked(
         "(" +
-        telefone.slice(0, -9) +
-        ")" +
-        telefone.slice(2, -4) +
-        "-" +
-        telefone.slice(-4)
+          telefone.slice(0, -9) +
+          ")" +
+          telefone.slice(2, -4) +
+          "-" +
+          telefone.slice(-4)
       );
     }
   }, [telefone]);
@@ -208,11 +204,11 @@ function AlterarDados({ navigation }) {
     if (telefoneCuidador !== undefined) {
       setTelCuidadorMasked(
         "(" +
-        telefoneCuidador.slice(0, -9) +
-        ")" +
-        telefoneCuidador.slice(2, -4) +
-        "-" +
-        telefoneCuidador.slice(-4)
+          telefoneCuidador.slice(0, -9) +
+          ")" +
+          telefoneCuidador.slice(2, -4) +
+          "-" +
+          telefoneCuidador.slice(-4)
       );
     }
   }, [telefoneCuidador]);
@@ -221,10 +217,10 @@ function AlterarDados({ navigation }) {
     if (dataMasked !== undefined) {
       setDataMasked(
         dataNascimento.slice(8, -14) +
-        "/" +
-        dataNascimento.slice(5, -17) +
-        "/" +
-        dataNascimento.slice(0, -20)
+          "/" +
+          dataNascimento.slice(5, -17) +
+          "/" +
+          dataNascimento.slice(0, -20)
       );
     }
   }, [dataNascimento]);
@@ -254,7 +250,6 @@ function AlterarDados({ navigation }) {
   }
 
   function preenchendoDados(identificador, valor) {
-
     if (identificador === "nome" || identificador === "nome_cuidador") {
       valor = apenasLetras(valor);
     }
@@ -262,20 +257,16 @@ function AlterarDados({ navigation }) {
     setEstado({ ...estado, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
     verificaErros(identificador, valor);
-
-
   }
 
   function preenchendoEndereco(identificador, valor) {
-
-    if (identificador === "cidade" || identificador === "pais" ) {
+    if (identificador === "cidade" || identificador === "pais") {
       valor = apenasLetras(valor);
     }
 
-    if (identificador === "numero"){
-      valor = apenasNumeros(valor)
+    if (identificador === "numero") {
+      valor = apenasNumeros(valor);
     }
-
 
     setNovoEndereco({ ...novoEndereco, [identificador]: valor });
     setCamposNulos({ ...camposNulos, [identificador]: false });
@@ -283,18 +274,21 @@ function AlterarDados({ navigation }) {
   }
 
   function verificaErros(identificador, valor) {
-
     if (
-      (identificador === "telefone") ||
-      (identificador === "cpf") ||
-      (identificador === "cep") ||
-      (identificador === "telefone_cuidador")
+      identificador === "telefone" ||
+      identificador === "cpf" ||
+      identificador === "cep" ||
+      identificador === "telefone_cuidador"
     ) {
       if (
-        (identificador === "telefone" && valor.length > 0 && valor.length < 11) ||
+        (identificador === "telefone" &&
+          valor.length > 0 &&
+          valor.length < 11) ||
         (identificador === "cpf" && valor.length > 0 && valor.length < 11) ||
         (identificador === "cep" && valor.length > 0 && valor.length < 8) ||
-        (identificador === "telefone_cuidador" && valor.length > 0 && valor.length < 11)
+        (identificador === "telefone_cuidador" &&
+          valor.length > 0 &&
+          valor.length < 11)
       ) {
         setErro({ ...erro, [identificador]: true });
       } else {
@@ -307,435 +301,451 @@ function AlterarDados({ navigation }) {
     pegandoDados();
   }, []);
 
-
-
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
+  const widthTitulo = width > height ? "100%" : "200px";
+  const tamanhoImagem = width > 2000 ? "200" : "100";
   return (
     <ScrollView>
       <Body>
         <CaixaAlterarDados>
           <CaixaCima>
-          {usuario.avatar_url === null || usuario.avatar_url === "" || usuario.avatar_url === undefined ? (
-          <Foto
-            borderColor = {Cores.cinza[2]}
-          >
-            {carregandoFoto ? ( 
-              <ActivityIndicator animating={true} color={Colors.blue900}/>
+            {usuario.avatar_url === null ||
+            usuario.avatar_url === "" ||
+            usuario.avatar_url === undefined ? (
+              <ContainerFotoEAlterarImagem>
+              <Foto borderColor={Cores.cinza[2]}>
+                {carregandoFoto ? (
+                  <ActivityIndicator animating={true} color={Colors.blue900} />
+                ) : (
+                  <>
+                    <Icon name="adduser" size={100} color={Cores.preto} />
+                  </>
+                )}
+              </Foto>
+              <BotaoAlterarImagem>
+              <TextoAlterarImagem>
+                Alterar a foto de perfil
+              </TextoAlterarImagem>
+            </BotaoAlterarImagem>
+          </ContainerFotoEAlterarImagem>
             ) : (
-              <>
-                <Icon name="adduser" size={88} color={Cores.preto}/> 
-              </>
+              <ContainerFotoEAlterarImagem>
+                <Foto borderColor={Cores.cinza[9]}>
+                  {carregandoFoto ? (
+                    <>
+                      <ActivityIndicator
+                        animating={true}
+                        color={Colors.blue900}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Image
+                        source={{ uri: fotoDePerfil }}
+                        style={{
+                          height: "100%",
+                          width: "100%",
+                        }}
+                      ></Image>
+                    </>
+                  )}
+                </Foto>
+                <BotaoAlterarImagem>
+                  <TextoAlterarImagem>
+                    Alterar a foto de perfil
+                  </TextoAlterarImagem>
+                </BotaoAlterarImagem>
+              </ContainerFotoEAlterarImagem>
             )}
-          </Foto>
-          ) : (
-            <Foto
-              borderColor = {Cores.cinza[9]}
-            >
-            {carregandoFoto ? (
-            <>
-              <ActivityIndicator animating={true} color={Colors.blue900}/>
-            </>
-            ) : (
-              <>
-                <Image
-                  source={{uri:(fotoDePerfil)}}
-                  style={{
-                  height:"100%",
-                  width:"100%"}}
-                ></Image>
-              </>
-            )}
-            </Foto>
-            )}
-          <CaixaTitulo>
-            <Titulo>Altere os seus dados:</Titulo>
-          </CaixaTitulo>
+            <CaixaTitulo>
+              <Titulo width={widthTitulo}>Altere os seus dados:</Titulo>
+            </CaixaTitulo>
           </CaixaCima>
           {carregando ? (
             <>
               <ActivityIndicator animating={true} color={Colors.black} />
             </>
-            ) : (
+          ) : (
             <>
-            <CaixaInputs width={tamanhoInputs}>
+              <CaixaInputs width={tamanhoInputs}>
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Nome:</TituloRotulos>
+                </CaixaTitulosRotulos>
 
-              <CaixaTitulosRotulos>
-                <TituloRotulos>Nome:</TituloRotulos>
-              </CaixaTitulosRotulos>
-
-              <Input
-                placeholder={usuario.nome}
-                keyboardType="default"
-                width="100%"
-                label="nome"
-                onChangeText={(text) => {
-                  preenchendoDados("nome", text);
-                }}
-                value={estado.nome}
-
-              />
-              <CaixaTitulosRotulos>
-                <TituloRotulos>Telefone:</TituloRotulos>
-              </CaixaTitulosRotulos>
-
-              <InputMask
-                placeholder={telMasked}
-                keyboardType="numeric"
-                width="100%"
-                type={"cel-phone"}
-                options={{
-                  maskType: "BRL",
-                  withDDD: true,
-                  dddMask: "(99) ",
-                }}
-                textContentType="telephoneNumber"
-                dataDetectorTypes="phoneNumber"
-                label="Telefone"
-                includeRawValueInChangeText={true}
-                erro={erro.telefone}
-                onChangeText={(maskedText, rawText) => {
-                  preenchendoDados("telefone", rawText);
-                }}
-              />
-              {erro.telefone && (
-                <CaixaRotulo>
-                  <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-                </CaixaRotulo>
-              )}
-              <CaixaTitulosRotulos>
-                <TituloRotulos>Data de nascimento:</TituloRotulos>
-              </CaixaTitulosRotulos>
-
-              <Data
-                customStyles={{
-                  dateInput: {
-                    borderWidth: 0,
-                    alignItems: "flex-start",
-                    paddingLeft: 10,
-                  },
-                  placeholderText: { color: "#90929B" },
-                }}
-                placeholder={dataMasked}
-                maxDate={new Date()}
-                format="DD/MM/YYYY"
-                mode="date"
-                showIcon={false}
-                date={estado.data_nascimento}
-                onDateChange={(data) => {
-                  preenchendoDados("data_nascimento", data);
-                  setCamposNulos({ ...camposNulos, data_nascimento: false });
-                }}
-              />
-              <CaixaTitulosRotulos>
-                <TituloRotulos>CPF:</TituloRotulos>
-              </CaixaTitulosRotulos>
-
-              <InputMask
-                placeholder={cpfMasked}
-                keyboardType="default"
-                width="100%"
-                label="cpf"
-                type={"cpf"}
-                includeRawValueInChangeText={true}
-                erro={erro.cpf}
-                onChangeText={(maskedText, rawText) => {
-                  preenchendoDados("cpf", rawText);
-                }}
-              />
-              {erro.cpf && (
-                <CaixaRotulo>
-                  <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
-                </CaixaRotulo>
-              )}
-
-              {usuario.convenio !== null ? (
-                <>
-                  <CaixaTitulosRotulos>
-                    <TituloRotulos>Convenio:</TituloRotulos>
-                  </CaixaTitulosRotulos>
-
-                  <Input
-                    placeholder={usuario.convenio}
-                    keyboardType="default"
-                    width="100%"
-                    label="convenio"
-                    onChangeText={(text) => {
-                      preenchendoDados("convenio", text);
-                    }}
-                  />
-                </>
-              ) : (
-                <>
-                  <CaixaTitulosRotulos>
-                    <TituloRotulos>Convenio:</TituloRotulos>
-                  </CaixaTitulosRotulos>
-
-                  <Input
-                    placeholder="Nome do Convênio:"
-                    keyboardType="default"
-                    width="100%"
-                    label="convenio"
-                    onChangeText={(text) => {
-                      preenchendoDados("convenio", text);
-                    }}
-                  />
-                </>
-              )}
-
-              {usuario.nome_cuidador !== null ? (
-                <>
-                  <CaixaTitulosRotulos>
-                    <TituloRotulos>Nome Cuidador:</TituloRotulos>
-                  </CaixaTitulosRotulos>
-
-                  <Input
-                    placeholder={usuario.nome_cuidador}
-                    keyboardType="default"
-                    width="100%"
-                    label="nome_cuidador"
-                    onChangeText={(text) => {
-                      preenchendoDados("nome_cuidador", text);
-                    }}
-                    value={estado.nome_cuidador}
-                  />
-
-                  <CaixaTitulosRotulos>
-                    <TituloRotulos>Telefone Cuidador:</TituloRotulos>
-                  </CaixaTitulosRotulos>
-
-                  <InputMask
-                    placeholder={telCuidadorMasked}
-                    keyboardType="numeric"
-                    width="100%"
-                    type={"cel-phone"}
-                    options={{
-                      maskType: "BRL",
-                      withDDD: true,
-                      dddMask: "(99) ",
-                    }}
-                    textContentType="telephoneNumber"
-                    dataDetectorTypes="phoneNumber"
-                    label="telefone_cuidador"
-                    includeRawValueInChangeText={true}
-                    erro={erro.telefone_cuidador}
-                    onChangeText={(maskedText, rawText) => {
-                      preenchendoDados("telefone_cuidador", rawText);
-                    }}
-                  />
-                  {erro.telefone_cuidador && (
-                    <CaixaRotulo>
-                      <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-                    </CaixaRotulo>
-                  )}
-                </>
-              ) : (
-                <>
-                  <CaixaTitulosRotulos>
-                    <TituloRotulos>Nome Cuidador:</TituloRotulos>
-                  </CaixaTitulosRotulos>
-
-                  <Input
-                    placeholder="Nome do cuidador:"
-                    keyboardType="default"
-                    width="100%"
-                    label="nome_cuidador"
-                    onChangeText={(text) => {
-                      preenchendoDados("nome_cuidador", text);
-                    }}
-                  />
-
-                  <CaixaTitulosRotulos>
-                    <TituloRotulos>Telefone Cuidador:</TituloRotulos>
-                  </CaixaTitulosRotulos>
-
-                  <InputMask
-                    placeholder="Telefone do Cuidador:"
-                    keyboardType="numeric"
-                    width="100%"
-                    type={"cel-phone"}
-                    options={{
-                      maskType: "BRL",
-                      withDDD: true,
-                      dddMask: "(99) ",
-                    }}
-                    textContentType="telephoneNumber"
-                    dataDetectorTypes="phoneNumber"
-                    label="telefone_cuidador"
-                    includeRawValueInChangeText={true}
-                    erro={erro.telefone_cuidador}
-                    onChangeText={(maskedText, rawText) => {
-                      preenchendoDados("telefone_cuidador", rawText);
-                    }}
-                  />
-                  {erro.telefone_cuidador && (
-                    <CaixaRotulo>
-                      <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-                    </CaixaRotulo>
-                  )}
-                </>
-              )}
-
-              <CaixaTitulosRotulos>
-                <TituloRotulos>CEP:</TituloRotulos>
-              </CaixaTitulosRotulos>
-
-              <InputMask
-                placeholder={cep(endereco.cep)}
-                keyboardType="default"
-                type={"zip-code"}
-                width="100%"
-                label="CEP"
-                includeRawValueInChangeText={true}
-                erro={erro.cep}
-                onChangeText={(maskedText, rawText) => {
-                  preenchendoEndereco("cep", rawText);
-                }}
-              />
-              {erro.cep && (
-                <CaixaRotulo>
-                  <Rotulo>Digite um CEP no formato xxxxx-xxx</Rotulo>
-                </CaixaRotulo>
-              )}
-
-
-              <CaixaTitulosRotulos>
-                <TituloRotulos>País:</TituloRotulos>
-              </CaixaTitulosRotulos>
-
-              <Input
-                placeholder={endereco.pais}
-                keyboardType="default"
-                width="100%"
-                label="pais"
-                onChangeText={(text) => {
-                  preenchendoEndereco("pais", text);
-                }}
-                value={novoEndereco.pais}
-              />
-
-              <CaixaTitulosRotulos>
-                <TituloRotulos>Estado:</TituloRotulos>
-              </CaixaTitulosRotulos>
-
-              <PickerView>
-                <PickerEstado
-                  selectedValue={estadoSelecionado}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setEstadoSelecionado(itemValue);
-                    preenchendoEndereco("estado", itemValue);
+                <Input
+                  placeholder={usuario.nome}
+                  keyboardType="default"
+                  width="100%"
+                  label="nome"
+                  onChangeText={(text) => {
+                    preenchendoDados("nome", text);
                   }}
-                >
-                  <Picker.Item
-                    style={{ fontSize: 15, color: "grey" }}
-                    value=""
-                    label={endereco.estado}
-                  />
-                  {estados.map((estado) => (
-                    <Picker.Item
-                      key={estado.sigla}
-                      style={{ fontSize: 15, color: "black" }}
-                      value={estado.sigla}
-                      label={estado.nome}
+                  value={estado.nome}
+                />
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Telefone:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <InputMask
+                  placeholder={telMasked}
+                  keyboardType="numeric"
+                  width="100%"
+                  type={"cel-phone"}
+                  options={{
+                    maskType: "BRL",
+                    withDDD: true,
+                    dddMask: "(99) ",
+                  }}
+                  textContentType="telephoneNumber"
+                  dataDetectorTypes="phoneNumber"
+                  label="Telefone"
+                  includeRawValueInChangeText={true}
+                  erro={erro.telefone}
+                  onChangeText={(maskedText, rawText) => {
+                    preenchendoDados("telefone", rawText);
+                  }}
+                />
+                {erro.telefone && (
+                  <CaixaRotulo>
+                    <Rotulo>
+                      Digite um telefone no formato (xx)xxxxx-xxxx
+                    </Rotulo>
+                  </CaixaRotulo>
+                )}
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Data de nascimento:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <Data
+                  customStyles={{
+                    dateInput: {
+                      borderWidth: 0,
+                      alignItems: "flex-start",
+                      paddingLeft: 10,
+                    },
+                    placeholderText: { color: "#90929B" },
+                  }}
+                  placeholder={dataMasked}
+                  maxDate={new Date()}
+                  format="DD/MM/YYYY"
+                  mode="date"
+                  showIcon={false}
+                  date={estado.data_nascimento}
+                  onDateChange={(data) => {
+                    preenchendoDados("data_nascimento", data);
+                    setCamposNulos({ ...camposNulos, data_nascimento: false });
+                  }}
+                />
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>CPF:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <InputMask
+                  placeholder={cpfMasked}
+                  keyboardType="default"
+                  width="100%"
+                  label="cpf"
+                  type={"cpf"}
+                  includeRawValueInChangeText={true}
+                  erro={erro.cpf}
+                  onChangeText={(maskedText, rawText) => {
+                    preenchendoDados("cpf", rawText);
+                  }}
+                />
+                {erro.cpf && (
+                  <CaixaRotulo>
+                    <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
+                  </CaixaRotulo>
+                )}
+
+                {usuario.convenio !== null ? (
+                  <>
+                    <CaixaTitulosRotulos>
+                      <TituloRotulos>Convenio:</TituloRotulos>
+                    </CaixaTitulosRotulos>
+
+                    <Input
+                      placeholder={usuario.convenio}
+                      keyboardType="default"
+                      width="100%"
+                      label="convenio"
+                      onChangeText={(text) => {
+                        preenchendoDados("convenio", text);
+                      }}
                     />
-                  ))}
-                </PickerEstado>
-              </PickerView>
+                  </>
+                ) : (
+                  <>
+                    <CaixaTitulosRotulos>
+                      <TituloRotulos>Convenio:</TituloRotulos>
+                    </CaixaTitulosRotulos>
 
-              <CaixaTitulosRotulos>
-                <TituloRotulos>Cidade:</TituloRotulos>
-              </CaixaTitulosRotulos>
+                    <Input
+                      placeholder="Nome do Convênio:"
+                      keyboardType="default"
+                      width="100%"
+                      label="convenio"
+                      onChangeText={(text) => {
+                        preenchendoDados("convenio", text);
+                      }}
+                    />
+                  </>
+                )}
 
-              <Input
-                placeholder={endereco.cidade}
-                keyboardType="default"
-                width="100%"
-                label="cidade"
-                onChangeText={(text) => {
-                  preenchendoEndereco("cidade", text);
-                }}
-                value={novoEndereco.cidade}
-              />
+                {usuario.nome_cuidador !== null ? (
+                  <>
+                    <CaixaTitulosRotulos>
+                      <TituloRotulos>Nome Cuidador:</TituloRotulos>
+                    </CaixaTitulosRotulos>
 
-              <CaixaTitulosRotulos>
-                <TituloRotulos>Bairro:</TituloRotulos>
-              </CaixaTitulosRotulos>
+                    <Input
+                      placeholder={usuario.nome_cuidador}
+                      keyboardType="default"
+                      width="100%"
+                      label="nome_cuidador"
+                      onChangeText={(text) => {
+                        preenchendoDados("nome_cuidador", text);
+                      }}
+                      value={estado.nome_cuidador}
+                    />
 
-              <Input
-                placeholder={endereco.bairro}
-                keyboardType="default"
-                width="100%"
-                label="bairro"
-                onChangeText={(text) => {
-                  preenchendoEndereco("bairro", text);
-                }}
-              />
-              <CaixaTitulosRotulos>
-                <TituloRotulos>Rua:</TituloRotulos>
-              </CaixaTitulosRotulos>
+                    <CaixaTitulosRotulos>
+                      <TituloRotulos>Telefone Cuidador:</TituloRotulos>
+                    </CaixaTitulosRotulos>
 
+                    <InputMask
+                      placeholder={telCuidadorMasked}
+                      keyboardType="numeric"
+                      width="100%"
+                      type={"cel-phone"}
+                      options={{
+                        maskType: "BRL",
+                        withDDD: true,
+                        dddMask: "(99) ",
+                      }}
+                      textContentType="telephoneNumber"
+                      dataDetectorTypes="phoneNumber"
+                      label="telefone_cuidador"
+                      includeRawValueInChangeText={true}
+                      erro={erro.telefone_cuidador}
+                      onChangeText={(maskedText, rawText) => {
+                        preenchendoDados("telefone_cuidador", rawText);
+                      }}
+                    />
+                    {erro.telefone_cuidador && (
+                      <CaixaRotulo>
+                        <Rotulo>
+                          Digite um telefone no formato (xx)xxxxx-xxxx
+                        </Rotulo>
+                      </CaixaRotulo>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <CaixaTitulosRotulos>
+                      <TituloRotulos>Nome Cuidador:</TituloRotulos>
+                    </CaixaTitulosRotulos>
 
+                    <Input
+                      placeholder="Nome do cuidador:"
+                      keyboardType="default"
+                      width="100%"
+                      label="nome_cuidador"
+                      onChangeText={(text) => {
+                        preenchendoDados("nome_cuidador", text);
+                      }}
+                    />
 
-              <Input
-                placeholder={endereco.rua}
-                keyboardType="default"
-                width="100%"
-                label="rua"
-                onChangeText={(text) => {
-                  preenchendoEndereco("rua", text);
-                }}
-              />
-              <CaixaTitulosRotulos>
-                <TituloRotulos>Número:</TituloRotulos>
-              </CaixaTitulosRotulos>
+                    <CaixaTitulosRotulos>
+                      <TituloRotulos>Telefone Cuidador:</TituloRotulos>
+                    </CaixaTitulosRotulos>
 
+                    <InputMask
+                      placeholder="Telefone do Cuidador:"
+                      keyboardType="numeric"
+                      width="100%"
+                      type={"cel-phone"}
+                      options={{
+                        maskType: "BRL",
+                        withDDD: true,
+                        dddMask: "(99) ",
+                      }}
+                      textContentType="telephoneNumber"
+                      dataDetectorTypes="phoneNumber"
+                      label="telefone_cuidador"
+                      includeRawValueInChangeText={true}
+                      erro={erro.telefone_cuidador}
+                      onChangeText={(maskedText, rawText) => {
+                        preenchendoDados("telefone_cuidador", rawText);
+                      }}
+                    />
+                    {erro.telefone_cuidador && (
+                      <CaixaRotulo>
+                        <Rotulo>
+                          Digite um telefone no formato (xx)xxxxx-xxxx
+                        </Rotulo>
+                      </CaixaRotulo>
+                    )}
+                  </>
+                )}
 
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>CEP:</TituloRotulos>
+                </CaixaTitulosRotulos>
 
-              <Input
-                placeholder={numero}
-                value={novoEndereco.numero}
-                keyboardType="default"
-                width="100%"
-                label="numero"
-                onChangeText={(text) => {
-                  preenchendoEndereco("numero", text);
-                }}
-              />
-              {complemento === null ? (
-                <>
-                  <CaixaTitulosRotulos>
-                    <TituloRotulos>Complemento:</TituloRotulos>
-                  </CaixaTitulosRotulos>
+                <InputMask
+                  placeholder={cep(endereco.cep)}
+                  keyboardType="default"
+                  type={"zip-code"}
+                  width="100%"
+                  label="CEP"
+                  includeRawValueInChangeText={true}
+                  erro={erro.cep}
+                  onChangeText={(maskedText, rawText) => {
+                    preenchendoEndereco("cep", rawText);
+                  }}
+                />
+                {erro.cep && (
+                  <CaixaRotulo>
+                    <Rotulo>Digite um CEP no formato xxxxx-xxx</Rotulo>
+                  </CaixaRotulo>
+                )}
 
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>País:</TituloRotulos>
+                </CaixaTitulosRotulos>
 
-                  <Input
-                    placeholder="Complemento: "
-                    keyboardType="default"
-                    width="100%"
-                    label="complemento"
-                    onChangeText={(text) => {
-                      preenchendoEndereco("complemento", text);
+                <Input
+                  placeholder={endereco.pais}
+                  keyboardType="default"
+                  width="100%"
+                  label="pais"
+                  onChangeText={(text) => {
+                    preenchendoEndereco("pais", text);
+                  }}
+                  value={novoEndereco.pais}
+                />
+
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Estado:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <PickerView>
+                  <PickerEstado
+                    selectedValue={estadoSelecionado}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setEstadoSelecionado(itemValue);
+                      preenchendoEndereco("estado", itemValue);
                     }}
-                  /></>
-              ) : (
-                <>
-                  <CaixaTitulosRotulos>
-                    <TituloRotulos>Complemento:</TituloRotulos>
-                  </CaixaTitulosRotulos>
+                  >
+                    <Picker.Item
+                      style={{ fontSize: 15, color: "grey" }}
+                      value=""
+                      label={endereco.estado}
+                    />
+                    {estados.map((estado) => (
+                      <Picker.Item
+                        key={estado.sigla}
+                        style={{ fontSize: 15, color: "black" }}
+                        value={estado.sigla}
+                        label={estado.nome}
+                      />
+                    ))}
+                  </PickerEstado>
+                </PickerView>
 
-                  <Input
-                    placeholder={complemento}
-                    keyboardType="default"
-                    width="100%"
-                    label="complemento"
-                    onChangeText={(text) => {
-                      preenchendoEndereco("complemento", text);
-                    }}
-                  /></>
-              )}
-            </CaixaInputs>
-          </>
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Cidade:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <Input
+                  placeholder={endereco.cidade}
+                  keyboardType="default"
+                  width="100%"
+                  label="cidade"
+                  onChangeText={(text) => {
+                    preenchendoEndereco("cidade", text);
+                  }}
+                  value={novoEndereco.cidade}
+                />
+
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Bairro:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <Input
+                  placeholder={endereco.bairro}
+                  keyboardType="default"
+                  width="100%"
+                  label="bairro"
+                  onChangeText={(text) => {
+                    preenchendoEndereco("bairro", text);
+                  }}
+                />
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Rua:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <Input
+                  placeholder={endereco.rua}
+                  keyboardType="default"
+                  width="100%"
+                  label="rua"
+                  onChangeText={(text) => {
+                    preenchendoEndereco("rua", text);
+                  }}
+                />
+                <CaixaTitulosRotulos>
+                  <TituloRotulos>Número:</TituloRotulos>
+                </CaixaTitulosRotulos>
+
+                <Input
+                  placeholder={numero}
+                  value={novoEndereco.numero}
+                  keyboardType="default"
+                  width="100%"
+                  label="numero"
+                  onChangeText={(text) => {
+                    preenchendoEndereco("numero", text);
+                  }}
+                />
+                {complemento === null ? (
+                  <>
+                    <CaixaTitulosRotulos>
+                      <TituloRotulos>Complemento:</TituloRotulos>
+                    </CaixaTitulosRotulos>
+
+                    <Input
+                      placeholder="Complemento: "
+                      keyboardType="default"
+                      width="100%"
+                      label="complemento"
+                      onChangeText={(text) => {
+                        preenchendoEndereco("complemento", text);
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <CaixaTitulosRotulos>
+                      <TituloRotulos>Complemento:</TituloRotulos>
+                    </CaixaTitulosRotulos>
+
+                    <Input
+                      placeholder={complemento}
+                      keyboardType="default"
+                      width="100%"
+                      label="complemento"
+                      onChangeText={(text) => {
+                        preenchendoEndereco("complemento", text);
+                      }}
+                    />
+                  </>
+                )}
+              </CaixaInputs>
+            </>
           )}
 
           <CaixaBotoes>

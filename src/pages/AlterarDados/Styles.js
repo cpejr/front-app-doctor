@@ -30,6 +30,8 @@ export const CaixaTitulo = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-bottom: 12%;
+  width: 50%;
 `;
 
 export const CaixaCima = styled.View`
@@ -45,7 +47,7 @@ export const CaixaCima = styled.View`
 
 export const Titulo = styled.Text`
   font-size: 30px;
-  width: 200px;
+  width: ${(props) => props.width};
 `;
 
 
@@ -87,7 +89,25 @@ export const Foto = styled.View`
   justify-content: center;
   align-items: center;
   display: flex;
-  elevation: 2;
+`;
+
+export const BotaoAlterarImagem = styled.TouchableOpacity`
+  background-color: green;
+  margin-top: 10%;
+`;
+
+export const TextoAlterarImagem = styled.Text`
+ color: ${Cores.azul};
+ text-decoration: underline;
+`;
+
+export const ContainerFotoEAlterarImagem = styled.View`
+ display: flex;
+ flex: 1;
+ width: 50%;
+ height: 100%;
+ flex-direction: column;
+ align-items: center;
 `;
 
 export const Data = styled(DatePicker)`

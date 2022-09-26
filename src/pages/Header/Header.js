@@ -66,7 +66,7 @@ useEffect(() => {
               </AnimacaoCarregandoViewNome>
               ) : (
                 <>
-                <Icon name="user" size={40} color={Cores.preto}/> 
+                <Icon name="user" size={40} color={Cores.branco}/> 
                 </>
               )}
               </Foto>
