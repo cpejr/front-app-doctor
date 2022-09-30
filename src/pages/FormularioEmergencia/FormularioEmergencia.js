@@ -46,31 +46,25 @@ function FormularioEmergencia({ navigation }) {
     GetFormulariosEmergenciaPaciente();
   }, []);
 
+  let resposta;
+  const preencherRespostas = (res) => (resposta = res);
 
-
-/*   async function requisicaoEnviandoRespostas(respostas) {
-    var validado = true;
-    for (const propriedade_schema in schema.properties) {
-      if (schema.properties[propriedade_schema].type === "string") {
-        if (respostas[propriedade_schema] === undefined) {
-          validado = false;
-        }
-      } else if (schema.properties[propriedade_schema].type === "boolean") {
-        if (respostas[propriedade_schema] === undefined) {
-          respostas[propriedade_schema] = false;
-        }
-      }
+  async function requisicaoEnviandoRespostas(respostas) {
+    var campo_vazio = true;
+    for (const pergunta in schema.properties) {
+      if (respostas[pergunta] === undefined)
+        campo_vazio = false;
     }
-    if (validado) {
+    if (campo_vazio) {
       await managerService.UpdateRespostasFormulario(
-        formularioPaciente.id,
+        formularioPacienteDeEmergencia.id,
         respostas
       );
       navigation.push("Home");
     } else {
       Alert.alert("Erro", "Preencha todos os campos!");
     }
-  } */
+  }
 
 
   return (
@@ -103,7 +97,9 @@ function FormularioEmergencia({ navigation }) {
                   <Form
                     schema={schema}
                     uiSchema={uiSchema}
-                  // widgets={widgets}}
+                    onChange={(submited) =>
+                      preencherRespostas(submited.formData)
+                    }
                   >
                     <></>
                   </Form>
@@ -130,13 +126,14 @@ function FormularioEmergencia({ navigation }) {
               </Botao>
               <Botao
                 width="35%"
-                height="40px"
+                height="45px"
                 backgroundColor={Cores.lilas[1]}
                 borderRadius="3px"
                 borderColor={Cores.azul}
                 borderWidth="3px"
                 boxShadow="none"
                 marginTop="0"
+                onPress={() => requisicaoEnviandoRespostas(resposta)}
               >
                 <ConteudoBotao width="90%" fontSize="15px" color={Cores.branco}>
                   ENVIAR
