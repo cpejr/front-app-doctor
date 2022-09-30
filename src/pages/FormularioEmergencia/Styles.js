@@ -79,9 +79,11 @@ export const CaixaBotao = styled.View`
   width: 90%;
   height: 95px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   background-color: ${Cores.cinza[11]};
   align-items: center;
+  margin-top: 25px;
 `;
 
 export const ConteudoBotaoUpload = styled.View`

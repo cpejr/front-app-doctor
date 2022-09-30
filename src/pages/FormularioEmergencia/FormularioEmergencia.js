@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Text, View, ScrollView, Alert, TouchableOpacity, useWindowDimensions, ActivityIndicator, Dimensions} from "react-native";
+import { Text, View, ScrollView, Alert, TouchableOpacity, useWindowDimensions, ActivityIndicator, Dimensions } from "react-native";
 import Form from "react-native-jsonschema-form";
 import * as managerService from "../../services/ManagerService/managerService";
 import Icon from "react-native-vector-icons/Entypo";
@@ -19,14 +19,22 @@ function FormularioEmergencia({ navigation }) {
   const tamanhoIcone = width > 480 ? 20 : 25;
   const { width } = useWindowDimensions();
   const [schema, setSchema] = useState({});
-  const [uiSchema, setUiSchema] = useState({});
   const heightCorpo = `${Dimensions.get("window").height - 230}px`;
+
+  const uiSchema = {
+    newInput5: {
+      "ui:widget": "textarea",
+      "ui:options": {
+        rows: 1
+      }
+    },
+  }
 
 
   async function GetFormulariosEmergenciaPaciente() {
     const formularios = await managerService.GetFormulariosPaciente();
     formularios.forEach((formularioPaciente) => {
-      if (formularioPaciente.id_formulario === "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33") {
+      if (formularioPaciente.id_formulario === "046975f7-d7d0-4635-a9d9-25efbe65d7b7") {
         setFormularioPacienteDeEmergencia(formularioPaciente);
         setSchema(formularioPaciente.perguntas);
       }
@@ -38,6 +46,31 @@ function FormularioEmergencia({ navigation }) {
     GetFormulariosEmergenciaPaciente();
   }, []);
 
+
+
+/*   async function requisicaoEnviandoRespostas(respostas) {
+    var validado = true;
+    for (const propriedade_schema in schema.properties) {
+      if (schema.properties[propriedade_schema].type === "string") {
+        if (respostas[propriedade_schema] === undefined) {
+          validado = false;
+        }
+      } else if (schema.properties[propriedade_schema].type === "boolean") {
+        if (respostas[propriedade_schema] === undefined) {
+          respostas[propriedade_schema] = false;
+        }
+      }
+    }
+    if (validado) {
+      await managerService.UpdateRespostasFormulario(
+        formularioPaciente.id,
+        respostas
+      );
+      navigation.push("Home");
+    } else {
+      Alert.alert("Erro", "Preencha todos os campos!");
+    }
+  } */
 
 
   return (
@@ -54,7 +87,7 @@ function FormularioEmergencia({ navigation }) {
               <Titulo
                 fontSize="24px"
                 color={Cores.azulEscuro}
-                marginBottom="8px"
+                marginBottom="4px"
               >
                 {formularioPacienteDeEmergencia.titulo}
               </Titulo>
@@ -78,8 +111,8 @@ function FormularioEmergencia({ navigation }) {
               )}
             </CaixaFormulario>
             <CaixaBotao>
-            <Botao
-                width="64%"
+              <Botao
+                width="55%"
                 height="45px"
                 backgroundColor="green"
                 borderRadius="3px"
@@ -89,14 +122,14 @@ function FormularioEmergencia({ navigation }) {
                 marginTop="0"
               >
                 <ConteudoBotaoUpload width="90%" fontSize="15px" color={Cores.azul}>
-                <ConteudoBotao width="90%" fontSize="15px" color={Cores.azul}>
-                  Upload de Arquivo
-                </ConteudoBotao>
-                  <Icon name = "upload" size = {tamanhoIcone} color={Cores.azul}></Icon>
+                  <ConteudoBotao width="90%" fontSize="15px" color={Cores.azul}>
+                    Upload de Arquivo
+                  </ConteudoBotao>
+                  <Icon name="upload" size={tamanhoIcone} color={Cores.azul}></Icon>
                 </ConteudoBotaoUpload>
               </Botao>
               <Botao
-                width="32%"
+                width="35%"
                 height="40px"
                 backgroundColor={Cores.lilas[1]}
                 borderRadius="3px"
