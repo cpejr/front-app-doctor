@@ -17,15 +17,18 @@ function FormularioEmergencia({ navigation }) {
   const [formularioDeEmergencia, setFormularioDeEmergencia] = useState({});
   const [formularioPacienteDeEmergencia, setFormularioPacienteDeEmergencia] = useState({});
   const tamanhoIcone = width > 480 ? 20 : 25;
-  const { width } = useWindowDimensions();
+  const  height  = Dimensions.get("window").height;
+  const  width  = Dimensions.get("window").width;
   const [schema, setSchema] = useState({});
-  const heightCorpo = `${Dimensions.get("window").height - 230}px`;
+  const heightCorpo = height > 600? `${height - 100}px` : "850px";
+  const topBotoes = height > 600? "10%" : "12%";
+  
 
   const uiSchema = {
     newInput5: {
       "ui:widget": "textarea",
       "ui:options": {
-        rows: 1
+        rows: 5
       }
     },
   }
@@ -44,6 +47,8 @@ function FormularioEmergencia({ navigation }) {
 
   useEffect(() => {
     GetFormulariosEmergenciaPaciente();
+    console.log(height);
+    
   }, []);
 
   let resposta;
@@ -107,9 +112,9 @@ function FormularioEmergencia({ navigation }) {
                   </View>
                 )}
               </CaixaFormulario>
-              <CaixaBotao>
+              <CaixaBotao top = {topBotoes}>
                 <Botao
-                  width="55%"
+                  width="58%"
                   height="45px"
                   backgroundColor="green"
                   borderRadius="3px"

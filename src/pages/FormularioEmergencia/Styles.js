@@ -40,6 +40,7 @@ export const Corpo = styled.View`
   height: ${(props) => props.height};
   padding-right: 5%;
   padding-left: 5%;
+  margin-bottom: 20px;
   flex-direction: column;
   background-color: ${Cores.branco};
 `;
@@ -77,6 +78,8 @@ export const CaixaFormulario = styled.View`
 export const CaixaBotao = styled.View`
   width: 90%;
   height: 95px;
+  position: relative;
+  top : ${(props) => props.top};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
