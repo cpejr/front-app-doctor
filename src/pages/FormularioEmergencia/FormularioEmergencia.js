@@ -68,82 +68,84 @@ function FormularioEmergencia({ navigation }) {
 
 
   return (
-    <Container>
-      <HeaderFormularios>
-        <TouchableOpacity onPress={() => navigation.push("Home")}>
-          <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
-        </TouchableOpacity>
-      </HeaderFormularios>
-      <CorpoScroll>
-        <Corpo height={heightCorpo}>
-          <CaixaCima>
-            <CaixaTitulo>
-              <Titulo
-                fontSize="24px"
-                color={Cores.azulEscuro}
-                marginBottom="4px"
-              >
-                {formularioPacienteDeEmergencia.titulo}
-              </Titulo>
-            </CaixaTitulo>
-            <CaixaFormulario>
-              {carregando ? (
-                <ActivityIndicator
-                  animating={true}
+    <ScrollView>
+      <Container>
+        <HeaderFormularios>
+          <TouchableOpacity onPress={() => navigation.push("Home")}>
+            <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
+          </TouchableOpacity>
+        </HeaderFormularios>
+        <CorpoScroll>
+          <Corpo height={heightCorpo}>
+            <CaixaCima>
+              <CaixaTitulo>
+                <Titulo
+                  fontSize="24px"
                   color={Cores.azulEscuro}
-                />
-              ) : (
-                <View>
-                  <Form
-                    schema={schema}
-                    uiSchema={uiSchema}
-                    onChange={(submited) =>
-                      preencherRespostas(submited.formData)
-                    }
-                  >
-                    <></>
-                  </Form>
-                </View>
-              )}
-            </CaixaFormulario>
-            <CaixaBotao>
-              <Botao
-                width="55%"
-                height="45px"
-                backgroundColor="green"
-                borderRadius="3px"
-                borderColor="black"
-                borderWidth="3px"
-                boxShadow="none"
-                marginTop="0"
-              >
-                <ConteudoBotaoUpload width="90%" fontSize="15px" color={Cores.azul}>
-                  <ConteudoBotao width="90%" fontSize="15px" color={Cores.azul}>
-                    Upload de Arquivo
+                  marginBottom="4px"
+                >
+                  {formularioPacienteDeEmergencia.titulo}
+                </Titulo>
+              </CaixaTitulo>
+              <CaixaFormulario>
+                {carregando ? (
+                  <ActivityIndicator
+                    animating={true}
+                    color={Cores.azulEscuro}
+                  />
+                ) : (
+                  <View>
+                    <Form
+                      schema={schema}
+                      uiSchema={uiSchema}
+                      onChange={(submited) =>
+                        preencherRespostas(submited.formData)
+                      }
+                    >
+                      <></>
+                    </Form>
+                  </View>
+                )}
+              </CaixaFormulario>
+              <CaixaBotao>
+                <Botao
+                  width="55%"
+                  height="45px"
+                  backgroundColor="green"
+                  borderRadius="3px"
+                  borderColor="black"
+                  borderWidth="3px"
+                  boxShadow="none"
+                  marginTop="0"
+                >
+                  <ConteudoBotaoUpload width="90%" fontSize="15px" color={Cores.azul}>
+                    <ConteudoBotao width="90%" fontSize="15px" color={Cores.azul}>
+                      Upload de Arquivo
+                    </ConteudoBotao>
+                    <Icon name="upload" size={tamanhoIcone} color={Cores.azul}></Icon>
+                  </ConteudoBotaoUpload>
+                </Botao>
+                <Botao
+                  width="35%"
+                  height="45px"
+                  backgroundColor={Cores.lilas[1]}
+                  borderRadius="3px"
+                  borderColor={Cores.azul}
+                  borderWidth="3px"
+                  boxShadow="none"
+                  marginTop="0"
+                  onPress={() => requisicaoEnviandoRespostas(resposta)}
+                >
+                  <ConteudoBotao width="90%" fontSize="15px" color={Cores.branco}>
+                    ENVIAR
                   </ConteudoBotao>
-                  <Icon name="upload" size={tamanhoIcone} color={Cores.azul}></Icon>
-                </ConteudoBotaoUpload>
-              </Botao>
-              <Botao
-                width="35%"
-                height="45px"
-                backgroundColor={Cores.lilas[1]}
-                borderRadius="3px"
-                borderColor={Cores.azul}
-                borderWidth="3px"
-                boxShadow="none"
-                marginTop="0"
-                onPress={() => requisicaoEnviandoRespostas(resposta)}
-              >
-                <ConteudoBotao width="90%" fontSize="15px" color={Cores.branco}>
-                  ENVIAR
-                </ConteudoBotao>
-              </Botao>
-            </CaixaBotao>
-          </CaixaCima>
-        </Corpo>
-      </CorpoScroll>
-    </Container>
+                </Botao>
+              </CaixaBotao>
+            </CaixaCima>
+          </Corpo>
+        </CorpoScroll>
+      </Container>
+    </ScrollView>
 
   );
 }
