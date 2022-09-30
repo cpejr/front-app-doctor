@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
   TouchableOpacity,
   Switch,
-  View
+  View,
 } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao";
@@ -114,7 +114,9 @@ function Cadastro({ navigation }) {
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
 
-
+  const [formularios, setFormularios] = useState([]);
+  const [formularioEspecifico, setFormularioEspecifico] = useState();
+  const [idUsuarioCriado, setIdUsuarioCriado] = useState();
 
   function funcaoConvenio() {
     setConvenio(!convenio);
@@ -125,15 +127,16 @@ function Cadastro({ navigation }) {
   function funcaoCuidador() {
     setCuidador(!cuidador);
     setEstado({ ...estado, nome_cuidador: null, telefone_cuidador: null });
-    setCamposVazios({ ...camposVazios, nome_cuidador: false, telefone_cuidador: false });
+    setCamposVazios({
+      ...camposVazios,
+      nome_cuidador: false,
+      telefone_cuidador: false,
+    });
   }
-
-
 
   const apenasLetras = (value) => {
     return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g, "");
   };
-
 
   function verificacaoTermosUso() {
     setCarregando(true);
@@ -143,9 +146,7 @@ function Cadastro({ navigation }) {
       setCarregando(false);
     } else {
       verificandoErros();
-
     }
-
   }
 
   async function verificandoErros() {
@@ -165,14 +166,11 @@ function Cadastro({ navigation }) {
     if (!estado.senha) errors.senha = true;
     if (!estado.senhaConfirmada) errors.senhaConfirmada = true;
     if (cuidador === true) {
-      if (!estado.nome_cuidador)
-        errors.nome_cuidador = true;
-      if (!estado.telefone_cuidador)
-        errors.telefone_cuidador = true;
+      if (!estado.nome_cuidador) errors.nome_cuidador = true;
+      if (!estado.telefone_cuidador) errors.telefone_cuidador = true;
     }
     if (convenio === true) {
-      if (!estado.convenio)
-        errors.convenio = true;
+      if (!estado.convenio) errors.convenio = true;
     }
     if (erro.email === true) errors.email = true;
     if (erro.cpf === true) errors.email = true;
@@ -182,23 +180,23 @@ function Cadastro({ navigation }) {
     if (erro.senha === true) errors.senha = true;
     if (erro.senhaConfirmada === true) errors.senhaConfirmada = true;
 
-
     if (convenio === true) {
       teste.convenio = false;
-    }
-    else if (convenio === false && camposVazios.convenio != undefined) {
-      delete camposVazios.convenio
+    } else if (convenio === false && camposVazios.convenio != undefined) {
+      delete camposVazios.convenio;
     }
 
     if (cuidador === true) {
       teste.nome_cuidador = false;
       teste.telefone_cuidador = false;
-    }
-    else if (cuidador === false && (camposVazios.nome_cuidador != undefined || camposVazios.telefone_cuidador != undefined)) {
+    } else if (
+      cuidador === false &&
+      (camposVazios.nome_cuidador != undefined ||
+        camposVazios.telefone_cuidador != undefined)
+    ) {
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
     }
-
 
     for (const propriedade_errors in errors) {
       if (errors[propriedade_errors] === true) {
@@ -210,20 +208,44 @@ function Cadastro({ navigation }) {
       }
     }
 
-
-
     if (_.isEqual(camposVazios, teste)) {
       requisicaoCadastro();
     } else {
-      Alert.alert("Erro", "Preencha todos os campos obrigatórios corretamente!");
+      Alert.alert(
+        "Erro",
+        "Preencha todos os campos obrigatórios corretamente!"
+      );
       await sleep(1500);
       setCarregando(false);
     }
   }
 
+  // Segundo pegando id do formulário de urgencia
+  async function pegandoFormularioEspecifico() {
+    id = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
+    const resposta = await managerService.GetFormularioEspecifico(id);
+    setFormularioEspecifico(resposta);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoFormularioEspecifico();
+  }, []);
+
+  async function enviandoFormularioPaciente(id_usuario) {
+    setCarregando(true);
+    await managerService.EnviandoFormularioPaciente(
+      false,
+      true,
+      formularioEspecifico.id,
+      id_usuario
+    );
+    setCarregando(false);
+    Alert.alert("Bem vindo(a)", "Usuário cadastrado com sucesso!");
+    navigation.navigate("Login");
+  }
+
   async function requisicaoCadastro() {
-
-
     if (estado.senha === estado.senhaConfirmada) {
       const dataFormatada = formatacaoData();
       estado.data_nascimento = dataFormatada;
@@ -232,8 +254,8 @@ function Cadastro({ navigation }) {
         endereco
       );
       if (resposta) {
-        Alert.alert("Bem vindo(a)", "Usuário cadastrado com sucesso!");
-        navigation.navigate("Login");
+        setIdUsuarioCriado(resposta.id);
+        enviandoFormularioPaciente(resposta.id);
       }
     } else {
       Alert.alert("Erro", "As senhas digitadas são diferentes!");
@@ -249,7 +271,6 @@ function Cadastro({ navigation }) {
         enteredValue === null
       ) {
         setCamposVazios({ ...camposVazios, [inputIdentifier]: true });
-
       } else {
         setCamposVazios({ ...camposVazios, [inputIdentifier]: false });
       }
@@ -272,7 +293,6 @@ function Cadastro({ navigation }) {
       (inputIdentifier === "senhaConfirmada" && enteredValue.length < 8)
     ) {
       setErro({ ...erro, [inputIdentifier]: true });
-
     } else {
       setErro({ ...erro, [inputIdentifier]: false });
     }
@@ -343,7 +363,6 @@ function Cadastro({ navigation }) {
       };
     });
   }
-
 
   //responsividade paisagem
   const larguraCaixaTituloMaior = width < 600 ? "50%" : "60%";
@@ -482,14 +501,9 @@ function Cadastro({ navigation }) {
           </CaixaRotulo>
           <PossuiConvenio>
             <CaixaTextoConvenioCuidador>
-              <Texto>
-                Possui Convênio?
-              </Texto>
+              <Texto>Possui Convênio?</Texto>
             </CaixaTextoConvenioCuidador>
-            <Switch
-              value={convenio}
-              onChange={funcaoConvenio}>
-            </Switch>
+            <Switch value={convenio} onChange={funcaoConvenio}></Switch>
           </PossuiConvenio>
           {convenio && (
             <>
@@ -502,7 +516,7 @@ function Cadastro({ navigation }) {
                 label="convenio"
                 value={estado.convenio}
                 onChangeText={(text) => {
-                  preenchendoDados("convenio", text)
+                  preenchendoDados("convenio", text);
                 }}
                 camposVazios={camposVazios.convenio}
               ></Input>
@@ -511,14 +525,9 @@ function Cadastro({ navigation }) {
 
           <PossuiConvenio>
             <CaixaTextoConvenioCuidador>
-              <Texto>
-                Possui Cuidador(a)?
-              </Texto>
+              <Texto>Possui Cuidador(a)?</Texto>
             </CaixaTextoConvenioCuidador>
-            <Switch
-              value={cuidador}
-              onChange={funcaoCuidador}>
-            </Switch>
+            <Switch value={cuidador} onChange={funcaoCuidador}></Switch>
           </PossuiConvenio>
           {cuidador && (
             <>
@@ -531,7 +540,7 @@ function Cadastro({ navigation }) {
                 label="nome_cuidador"
                 value={estado.nome_cuidador}
                 onChangeText={(text) => {
-                  preenchendoDados("nome_cuidador", text)
+                  preenchendoDados("nome_cuidador", text);
                 }}
                 camposVazios={camposVazios.nome_cuidador}
               ></Input>
@@ -566,7 +575,6 @@ function Cadastro({ navigation }) {
               </CaixaRotulo>
             </>
           )}
-
 
           <CaixaRotulo>
             <CaixaTituloInput>
