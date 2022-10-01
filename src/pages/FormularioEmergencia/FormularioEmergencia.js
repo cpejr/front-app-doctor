@@ -47,8 +47,7 @@ function FormularioEmergencia({ navigation }) {
 
   useEffect(() => {
     GetFormulariosEmergenciaPaciente();
-    console.log(height);
-    
+
   }, []);
 
   let resposta;
@@ -73,7 +72,6 @@ function FormularioEmergencia({ navigation }) {
 
 
   return (
-    <ScrollView>
       <Container>
         <HeaderFormularios>
           <TouchableOpacity onPress={() => navigation.push("Home")}>
@@ -150,7 +148,6 @@ function FormularioEmergencia({ navigation }) {
           </Corpo>
         </CorpoScroll>
       </Container>
-    </ScrollView>
 
   );
 }
