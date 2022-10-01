@@ -260,8 +260,8 @@ function Perfil({ navigation }) {
           <CaixaBotoesAlterar>
             <Botao
               width={larguraBotoes}
-              height="30px"
-              backgroundColor="green"
+              height="40px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -274,9 +274,10 @@ function Perfil({ navigation }) {
             </Botao>
             <Botao
               width={larguraBotoes}
-              height="30px"
+              height="40px"
               marginTop="3%"
-              backgroundColor="green"
+              padding="5px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -292,6 +293,7 @@ function Perfil({ navigation }) {
           <Botao
             width={larguraBotoes}
             height="35px"
+            padding="5px"
             backgroundColor={Cores.branco}
             borderRadius="3px"
             borderColor={Cores.branco}

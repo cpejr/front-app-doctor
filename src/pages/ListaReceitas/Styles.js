@@ -1,88 +1,100 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
 
-export const ContainerBody = styled.View `
-
-    height: 100%;
-    width: 100%;
-    display: flex;
-
+export const ContainerBody = styled.View`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  background-color: ${Cores.branco};
 `;
 
-export const ContainerCima = styled.View `
-
-    height: ${(props) => props.height};
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    elevation: 4;
-    margin-bottom: 1%;
-
+export const ContainerCima = styled.View`
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin-bottom: 0%;
+  border-bottom-width: 0.5px;
+  border-color: ${Cores.cinza[11]};
 `;
 
-export const ContainerTodasReceitas = styled.View ` 
-
-    height: 80%;
-    width: 100%;
-    display: flex;
-
+export const TextoCima = styled.Text`
+  font-size: 33px;
+  font-weight: 600;
+  color: ${Cores.azulEscuro};
 `;
 
-
-export const ContainerReceitas = styled.View ` 
-
-    height: 130px;
-    width: 100%;
-    padding: 4% 6% 4% 6%;
-    background-color: white;
-    border-radius: 3px;
-    margin: 3% 0% 1% 0%;
-    elevation: 4;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
+export const CaixaTextoCima = styled.View`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 4%;
+  margin-bottom: 4%;
+  height: 45px;
 `;
 
-export const TituloReceitas = styled.Text ` 
-    width: 50%;
-    font-size: 16px;
-    font-weight: 800;
-    color: ${Cores.azulEscuro};
-    text-decoration: underline;
+export const ContainerTodasReceitas = styled.View`
+  height: 80%;
+  width: 100%;
+  display: flex;
 `;
 
-export const TextoData = styled.Text ` 
-    font-size: 16px;
-    color: #434B97;
+export const ContainerReceitas = styled.View`
+  height: 80px;
+  width: 100%;
+  padding: 1% 6% 4% 6%;
+  background-color: white;
+  border-radius: 3px;
+  margin: 2% 0% 1% 0%;
+  z-index: 100;
+  border-bottom-width: 1px;
+  border-color: ${Cores.cinza[11]};
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const TituloReceitas = styled.Text`
+  width: 50%;
+  font-size: 16px;
+  font-weight: 800;
+  color: ${Cores.azulEscuro};
+  text-decoration: underline;
+`;
+
+export const TextoData = styled.Text`
+  font-size: 16px;
+  color: #434b97;
 `;
 
 export const BarraPesquisa = styled.View`
-display:flex;
-flex-direction: row;
-align-items: center;
-width: 90%;
-height: 45px;
-background-color: #EDEDED;
-border-radius: 5px;
-padding-left: 10px;
-border: #636AB4;
-border-width: 1.5px;
-font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 90%;
+  height: 45px;
+  background-color: ${Cores.cinza[10]};
+  border-radius: 5px;
+  padding-left: 10px;
+  border: #636ab4;
+  border-width: 1.5px;
+  font-size: 12px;
 `;
 
 export const InputPesquisa = styled.TextInput`
-height:100%;
-font-size: 17px;
-width:90%;
+  height: 100%;
+  font-size: 17px;
+  width: 90%;
 `;
 
 export const IconPesquisa = styled.Image`
-width:23px;
-height:23px;
-margin-right:1px;
+  width: 23px;
+  height: 23px;
+  margin-right: 1px;
 `;
 
 export const PaginaCarregando = styled.View`

@@ -23,6 +23,8 @@ import {
   PaginaCarregando,
   HeaderListaReceitas,
   Titulo,
+  CaixaTextoCima,
+  TextoCima
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import Icon from "react-native-vector-icons/Entypo";
@@ -81,6 +83,9 @@ function ListaReceitas({ navigation }) {
             Arquivos
           </Titulo>
         </HeaderListaReceitas>
+        <CaixaTextoCima>
+          <TextoCima> Receitas </TextoCima>
+        </CaixaTextoCima>
       <ContainerCima height={heightPesquisar}>
         <BarraPesquisa>
           <InputPesquisa

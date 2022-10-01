@@ -7,6 +7,18 @@ export const Scroll = styled.ScrollView`
   background-color: ${Cores.branco};
 `;
 
+export const TextoCima = styled.Text`
+  font-size: 33px;
+  font-weight: 600;
+  color: ${Cores.azulEscuro};
+`;
+
+export const CaixaTextoCima = styled.View`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
