@@ -4,7 +4,7 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
 import Icon from "react-native-vector-icons/AntDesign";
 import InputMask from "../../styles/InputMask/InputMask";
-import { useWindowDimensions, ScrollView, Image, Text } from "react-native";
+import { useWindowDimensions, ScrollView, Image, Text, Modal, View, TouchableOpacity } from "react-native";
 import { Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { ActivityIndicator, Colors, Checkbox } from "react-native-paper";
@@ -30,7 +30,9 @@ import {
   ContainerFotoEAlterarImagem,
   BotaoAlterarEDeletarImagem,
   TextoAlterarEDeleterImagem,
-  CaixaBotoesAlterarEDeletarImagem
+  CaixaBotoesAlterarEDeletarImagem,
+  CaixaModal,
+  CaixaFechar
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { estados } from "./estados";
@@ -63,6 +65,9 @@ function AlterarDados({ navigation }) {
   const [carregando, setCarregando] = useState(false);
   const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [fotoDePerfil, setFotoDePerfil] = useState("");
+  const [modalAdicionarFoto, setModalAdicionarFoto] = useState(false);
+  const [modalExcluirFoto, setModalExcluirFoto] = useState(false);
+  const tamanhoIcone = width > 480 ? 20 : 25;
 
   const [camposNulos, setCamposNulos] = useState({
     nome: true,
@@ -357,17 +362,41 @@ function AlterarDados({ navigation }) {
             </CaixaTitulo>
           </CaixaCima>
           <CaixaBotoesAlterarEDeletarImagem>
-            <BotaoAlterarEDeletarImagem>
+            <BotaoAlterarEDeletarImagem
+              onPress={() => {
+                setModalAdicionarFoto(true);
+              }}>
               <TextoAlterarEDeleterImagem>
                 Adicionar ou Alterar Foto de Perfil
               </TextoAlterarEDeleterImagem>
             </BotaoAlterarEDeletarImagem>
-            <BotaoAlterarEDeletarImagem>
+            <BotaoAlterarEDeletarImagem
+              onPress={() => {
+                setModalExcluirFoto(true);
+              }}>
               <TextoAlterarEDeleterImagem>
                 Excluir Foto De Perfil
               </TextoAlterarEDeleterImagem>
             </BotaoAlterarEDeletarImagem>
           </CaixaBotoesAlterarEDeletarImagem>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalAdicionarFoto}
+          >
+            <CaixaModal>
+              <Text>Você deseja alterar sua foto?</Text>
+              <CaixaFechar>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalAdicionarFoto(false);
+                  }}
+                >
+                  <Icon name="close" size={tamanhoIcone}></Icon>
+                </TouchableOpacity>
+              </CaixaFechar>
+            </CaixaModal>
+          </Modal>
           {carregando ? (
             <>
               <ActivityIndicator animating={true} color={Colors.black} />

@@ -11,6 +11,34 @@ export const Body = styled.View`
   background-color: ${Cores.branco};
 `;
 
+export const CaixaModal = styled.View`
+  height: 20%;
+  width: 80%;
+  margin-top: 40%;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 10%;
+  padding-top:0%;
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  border: 4px;
+  border-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const CaixaFechar = styled.View`
+  width: 100%;
+  height: 10%;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-right: 5%;
+  padding-top: 5%;
+`;
+
 export const CaixaAlterarDados = styled.View`
   display: flex;
   flex-direction: column;
