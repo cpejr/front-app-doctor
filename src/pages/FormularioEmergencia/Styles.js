@@ -8,6 +8,8 @@ export const Container = styled.View`
   height: 100%;
   overflow: scroll;
   background-color: ${Cores.branco};
+  padding-right: 5%;
+  padding-left: 5%;
 `;
 
 export const HeaderFormularios = styled.View`
@@ -30,32 +32,31 @@ export const CorpoScroll = styled.ScrollView`
   display: flex;
   width: 90%;
   height: 100%;
-  background-color: ${Cores.branco};
+  background-color: ${Cores.cinza[11]};
 `;
 
 export const Corpo = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
-  height: ${(props) => props.height};
-  padding-right: 5%;
-  padding-left: 5%;
+  border-width: 1px;
+  border-color: ${Cores.azulEscuro};
+  background-color: ${Cores.cinza[11]};
+  height: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
   margin-bottom: 20px;
   flex-direction: column;
-  background-color: ${Cores.branco};
 `;
 
 export const CaixaCima = styled.View`
   width: 100%;
-  height: 100%;
-  padding-bottom: 30%;
-  border-width: 1px;
-  border-color: ${Cores.azulEscuro};
+  height: 95%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: ${Cores.cinza[11]};
+  
 `;
 
 export const CaixaTitulo = styled.View`
@@ -67,7 +68,7 @@ export const CaixaTitulo = styled.View`
 
 export const CaixaFormulario = styled.View`
   display: flex;
-  height: 50%;
+  height: 100%;
   margin-top: 30px;
   width: 100%;
   padding-right: 7%;
@@ -77,9 +78,8 @@ export const CaixaFormulario = styled.View`
 
 export const CaixaBotao = styled.View`
   width: 90%;
-  height: 95px;
-  position: relative;
-  top : ${(props) => props.top};
+  height: auto;
+  margin-top: 10%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
