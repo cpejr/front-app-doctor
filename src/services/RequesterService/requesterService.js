@@ -59,3 +59,13 @@ export const requisicaoFormularioPacienteEspecifico = (id) =>
   });
 
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
+
+export const updateFotoDePerfil = (id, base64) =>
+  api.post(`/usuariosimagem/${id}`,{
+    file: base64
+  });
+
+export const deleteFotoDePerfil = (id, base64) =>
+  api.put(`/usuariosdeletarimagem/${id}`,{
+    file: base64
+  });
