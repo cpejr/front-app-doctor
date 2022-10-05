@@ -39,10 +39,10 @@ export const Corpo = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
+  height: ${(props) => props.height};
   border-width: 1px;
   border-color: ${Cores.azulEscuro};
   background-color: ${Cores.cinza[11]};
-  height: 90%;
   margin-left: 5%;
   margin-right: 5%;
   margin-bottom: 20px;

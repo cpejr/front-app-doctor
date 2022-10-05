@@ -20,8 +20,7 @@ function FormularioEmergencia({ navigation }) {
   const height = Dimensions.get("window").height;
   const width = Dimensions.get("window").width;
   const [schema, setSchema] = useState({});
-  const heightCorpo = height > 600 ? `${height - 100}px` : "850px";
-  const topBotoes = height > 600 ? "10%" : "12%";
+  const heightCorpo = width > height ? "80%" : "90%";
 
 
   const uiSchema = {
@@ -47,6 +46,9 @@ function FormularioEmergencia({ navigation }) {
 
   useEffect(() => {
     GetFormulariosEmergenciaPaciente();
+    console.log(height);
+    console.log(width);
+    console.log(heightCorpo);
 
   }, []);
 
