@@ -27,7 +27,10 @@ import {
   Lgpd,
   BotaoAlterarImagem,
   TextoAlterarImagem,
-  ContainerFotoEAlterarImagem
+  ContainerFotoEAlterarImagem,
+  BotaoAlterarEDeletarImagem,
+  TextoAlterarEDeleterImagem,
+  CaixaBotoesAlterarEDeletarImagem
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { estados } from "./estados";
@@ -178,12 +181,12 @@ function AlterarDados({ navigation }) {
     if (cpf !== undefined) {
       setCpfMasked(
         cpf.slice(+0, -8) +
-          "." +
-          cpf.slice(+3, -5) +
-          "." +
-          cpf.slice(+6, -2) +
-          "-" +
-          cpf.slice(-2)
+        "." +
+        cpf.slice(+3, -5) +
+        "." +
+        cpf.slice(+6, -2) +
+        "-" +
+        cpf.slice(-2)
       );
     }
   }, [cpf]);
@@ -191,11 +194,11 @@ function AlterarDados({ navigation }) {
     if (telefone !== undefined) {
       setTelMasked(
         "(" +
-          telefone.slice(0, -9) +
-          ")" +
-          telefone.slice(2, -4) +
-          "-" +
-          telefone.slice(-4)
+        telefone.slice(0, -9) +
+        ")" +
+        telefone.slice(2, -4) +
+        "-" +
+        telefone.slice(-4)
       );
     }
   }, [telefone]);
@@ -204,11 +207,11 @@ function AlterarDados({ navigation }) {
     if (telefoneCuidador !== undefined) {
       setTelCuidadorMasked(
         "(" +
-          telefoneCuidador.slice(0, -9) +
-          ")" +
-          telefoneCuidador.slice(2, -4) +
-          "-" +
-          telefoneCuidador.slice(-4)
+        telefoneCuidador.slice(0, -9) +
+        ")" +
+        telefoneCuidador.slice(2, -4) +
+        "-" +
+        telefoneCuidador.slice(-4)
       );
     }
   }, [telefoneCuidador]);
@@ -217,10 +220,10 @@ function AlterarDados({ navigation }) {
     if (dataMasked !== undefined) {
       setDataMasked(
         dataNascimento.slice(8, -14) +
-          "/" +
-          dataNascimento.slice(5, -17) +
-          "/" +
-          dataNascimento.slice(0, -20)
+        "/" +
+        dataNascimento.slice(5, -17) +
+        "/" +
+        dataNascimento.slice(0, -20)
       );
     }
   }, [dataNascimento]);
@@ -312,24 +315,19 @@ function AlterarDados({ navigation }) {
         <CaixaAlterarDados>
           <CaixaCima>
             {usuario.avatar_url === null ||
-            usuario.avatar_url === "" ||
-            usuario.avatar_url === undefined ? (
+              usuario.avatar_url === "" ||
+              usuario.avatar_url === undefined ? (
               <ContainerFotoEAlterarImagem>
-              <Foto borderColor={Cores.cinza[2]}>
-                {carregandoFoto ? (
-                  <ActivityIndicator animating={true} color={Colors.blue900} />
-                ) : (
-                  <>
-                    <Icon name="adduser" size={100} color={Cores.preto} />
-                  </>
-                )}
-              </Foto>
-              <BotaoAlterarImagem>
-              <TextoAlterarImagem>
-                Alterar a foto de perfil
-              </TextoAlterarImagem>
-            </BotaoAlterarImagem>
-          </ContainerFotoEAlterarImagem>
+                <Foto borderColor={Cores.cinza[2]}>
+                  {carregandoFoto ? (
+                    <ActivityIndicator animating={true} color={Colors.blue900} />
+                  ) : (
+                    <>
+                      <Icon name="adduser" size={100} color={Cores.preto} />
+                    </>
+                  )}
+                </Foto>
+              </ContainerFotoEAlterarImagem>
             ) : (
               <ContainerFotoEAlterarImagem>
                 <Foto borderColor={Cores.cinza[9]}>
@@ -352,17 +350,24 @@ function AlterarDados({ navigation }) {
                     </>
                   )}
                 </Foto>
-                <BotaoAlterarImagem>
-                  <TextoAlterarImagem>
-                    Alterar a foto de perfil
-                  </TextoAlterarImagem>
-                </BotaoAlterarImagem>
               </ContainerFotoEAlterarImagem>
             )}
             <CaixaTitulo>
               <Titulo width={widthTitulo}>Altere os seus dados:</Titulo>
             </CaixaTitulo>
           </CaixaCima>
+          <CaixaBotoesAlterarEDeletarImagem>
+            <BotaoAlterarEDeletarImagem>
+              <TextoAlterarEDeleterImagem>
+                Adicionar ou Alterar Foto de Perfil
+              </TextoAlterarEDeleterImagem>
+            </BotaoAlterarEDeletarImagem>
+            <BotaoAlterarEDeletarImagem>
+              <TextoAlterarEDeleterImagem>
+                Excluir Foto De Perfil
+              </TextoAlterarEDeleterImagem>
+            </BotaoAlterarEDeletarImagem>
+          </CaixaBotoesAlterarEDeletarImagem>
           {carregando ? (
             <>
               <ActivityIndicator animating={true} color={Colors.black} />

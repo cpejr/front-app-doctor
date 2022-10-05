@@ -91,22 +91,33 @@ export const Foto = styled.View`
   display: flex;
 `;
 
-export const BotaoAlterarImagem = styled.TouchableOpacity`
-  background-color: green;
-  margin-top: 10%;
+export const BotaoAlterarEDeletarImagem = styled.TouchableOpacity`
+  margin-top: 3%;
+  align-items:center;
 `;
 
-export const TextoAlterarImagem = styled.Text`
+export const TextoAlterarEDeleterImagem = styled.Text`
  color: ${Cores.azul};
  text-decoration: underline;
+`;
+
+export const CaixaBotoesAlterarEDeletarImagem = styled.View`
+ display: flex;
+ margin-top: 5%;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+ 
 `;
 
 export const ContainerFotoEAlterarImagem = styled.View`
  display: flex;
  flex: 1;
- width: 50%;
- height: 100%;
+ width: 100%;
+ height: auto;
  flex-direction: column;
+ justify-content: center;
  align-items: center;
 `;
 
