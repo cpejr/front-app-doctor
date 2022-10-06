@@ -311,9 +311,6 @@ function AlterarDados({ navigation }) {
     pegandoDados();
   }, []);
 
-  useEffect(() => {
-    console.log(usuario)
-  }, [usuario]);
 
   async function deletarFoto() {
     setCarregandoDeletarFoto(true);
@@ -405,7 +402,6 @@ function AlterarDados({ navigation }) {
             visible={modalAdicionarFoto}
           >
             <CaixaModal>
-              <Text>Selecione uma imagem para personalizar seu perfil:</Text>
               <CaixaFechar>
                 <TouchableOpacity
                   onPress={() => {
@@ -415,6 +411,11 @@ function AlterarDados({ navigation }) {
                   <Icon name="close" size={tamanhoIcone}></Icon>
                 </TouchableOpacity>
               </CaixaFechar>
+              <CaixaTituloModal>
+                <TituloModal>
+                  Selecione uma imagem para personalizar seu perfil:
+                </TituloModal>
+              </CaixaTituloModal>
             </CaixaModal>
           </Modal>
           <Modal
