@@ -25,14 +25,15 @@ import {
   PickerEstado,
   CheckboxTexto,
   Lgpd,
-  BotaoAlterarImagem,
-  TextoAlterarImagem,
   ContainerFotoEAlterarImagem,
   BotaoAlterarEDeletarImagem,
   TextoAlterarEDeleterImagem,
   CaixaBotoesAlterarEDeletarImagem,
   CaixaModal,
-  CaixaFechar
+  CaixaFechar,
+  CaixaTituloModal,
+  TituloModal,
+  CaixaBotoesCancelarConfirmarModalExcluirFoto
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { estados } from "./estados";
@@ -63,7 +64,8 @@ function AlterarDados({ navigation }) {
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [checked, setChecked] = useState(false);
   const [carregando, setCarregando] = useState(false);
-  const [carregandoFoto, setCarregandoFoto] = useState(true);
+  const [carregandoDeletarFoto, setCarregandoDeletarFoto] = useState(false);
+  const [carregandoFoto, setCarregandoFoto] = useState(false);
   const [fotoDePerfil, setFotoDePerfil] = useState("");
   const [modalAdicionarFoto, setModalAdicionarFoto] = useState(false);
   const [modalExcluirFoto, setModalExcluirFoto] = useState(false);
@@ -309,6 +311,24 @@ function AlterarDados({ navigation }) {
     pegandoDados();
   }, []);
 
+  useEffect(() => {
+    console.log(usuario)
+  }, [usuario]);
+
+  async function deletarFoto() {
+    setCarregandoDeletarFoto(true);
+    if (usuario.avatar_url === null || usuario.avatar_url === "" || usuario.avatar_url === undefined) {
+      Alert.alert("Erro", "O usuário não possui foto de perfil");
+      setCarregandoDeletarFoto(false);
+      return false;
+    }
+    await managerService.deletarFotoDePerfil(usuario.id, usuario.avatar_url);
+    navigation.navigate("AlterarDados");
+    setModalExcluirFoto(false);
+    setCarregandoDeletarFoto(false);
+
+  }
+
   const { width, height } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
@@ -385,7 +405,7 @@ function AlterarDados({ navigation }) {
             visible={modalAdicionarFoto}
           >
             <CaixaModal>
-              <Text>Você deseja alterar sua foto?</Text>
+              <Text>Selecione uma imagem para personalizar seu perfil:</Text>
               <CaixaFechar>
                 <TouchableOpacity
                   onPress={() => {
@@ -395,6 +415,71 @@ function AlterarDados({ navigation }) {
                   <Icon name="close" size={tamanhoIcone}></Icon>
                 </TouchableOpacity>
               </CaixaFechar>
+            </CaixaModal>
+          </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalExcluirFoto}
+          >
+            <CaixaModal>
+              <CaixaFechar>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalExcluirFoto(false);
+                  }}
+                >
+                  <Icon name="close" size={tamanhoIcone}></Icon>
+                </TouchableOpacity>
+              </CaixaFechar>
+              <CaixaTituloModal>
+                <TituloModal>
+                  Tem certeza que quer excluir sua foto de perfil?
+                </TituloModal>
+              </CaixaTituloModal>
+              <CaixaBotoesCancelarConfirmarModalExcluirFoto>
+                <Botao
+                  width="30%"
+                  height="35px"
+                  backgroundColor={Cores.branco}
+                  borderRadius="3px"
+                  borderColor="rgba(255, 0, 0, 0.25)"
+                  borderWidth="3px"
+                  boxShadow="none"
+                  onPress={() => setModalExcluirFoto(false)}
+                >
+                  <ConteudoBotao
+                    width="100%"
+                    fontSize="12px"
+                    color={Cores.preto}
+                  >
+                    CANCELAR
+                  </ConteudoBotao>
+                </Botao>
+                <Botao
+                  width="30%"
+                  height="35px"
+                  backgroundColor={Cores.lilas[1]}
+                  borderRadius="4px"
+                  borderColor={Cores.azul}
+                  borderWidth="3px"
+                  boxShadow="none"
+                  onPress={() => deletarFoto()}
+                >
+                  {carregandoDeletarFoto ? (
+                    <ActivityIndicator animating={true} color={Cores.branco} />
+                  ) : (
+                    <ConteudoBotao
+                      width="100%"
+                      fontSize="12px"
+                      color={Cores.branco}
+                    >
+                      CONFIRMAR
+                    </ConteudoBotao>
+                  )}
+                </Botao>
+
+              </CaixaBotoesCancelarConfirmarModalExcluirFoto>
             </CaixaModal>
           </Modal>
           {carregando ? (

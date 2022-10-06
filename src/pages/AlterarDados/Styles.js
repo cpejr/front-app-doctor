@@ -12,9 +12,9 @@ export const Body = styled.View`
 `;
 
 export const CaixaModal = styled.View`
-  height: 20%;
+  height: 25%;
   width: 80%;
-  margin-top: 40%;
+  margin-top: 60%;
   margin-left: 10%;
   margin-right: 10%;
   padding-bottom: 10%;
@@ -229,4 +229,25 @@ export const Lgpd = styled.Text`
   text-align: right;
   color: #151b57;
   text-decoration: underline;
+`;
+
+export const CaixaTituloModal = styled.View`
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 2%;
+  justify-content: center;
+`;
+
+export const TituloModal = styled.Text`
+  font-size: 14px;
+  text-align: center;
+`;
+
+export const CaixaBotoesCancelarConfirmarModalExcluirFoto = styled.View`
+  width: 100%;
+  margin-top: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 `;
