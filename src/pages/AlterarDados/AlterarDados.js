@@ -4,7 +4,15 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
 import Icon from "react-native-vector-icons/AntDesign";
 import InputMask from "../../styles/InputMask/InputMask";
-import { useWindowDimensions, ScrollView, Image, Text, Modal, View, TouchableOpacity } from "react-native";
+import {
+  useWindowDimensions,
+  ScrollView,
+  Image,
+  Text,
+  Modal,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { ActivityIndicator, Colors, Checkbox } from "react-native-paper";
@@ -33,7 +41,7 @@ import {
   CaixaFechar,
   CaixaTituloModal,
   TituloModal,
-  CaixaBotoesCancelarConfirmarModalExcluirFoto
+  CaixaBotoesCancelarConfirmarModalExcluirFoto,
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { estados } from "./estados";
@@ -45,6 +53,8 @@ import { isEqual } from "lodash";
 import { sleep } from "../../utils/sleep";
 import { CaixaRotulo } from "../Cadastro/Styles";
 import { apenasLetras, apenasNumeros } from "../../utils/masks";
+import { Button } from "react-native";
+
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -69,6 +79,9 @@ function AlterarDados({ navigation }) {
   const [fotoDePerfil, setFotoDePerfil] = useState("");
   const [modalAdicionarFoto, setModalAdicionarFoto] = useState(false);
   const [modalExcluirFoto, setModalExcluirFoto] = useState(false);
+  const [permissaoParaAbrirAGaleria, setPermissaoParaAbrirAGaleria] =
+    useState(null);
+  const [imagem64, setImagem64] = useState(null);
   const tamanhoIcone = width > 480 ? 20 : 25;
 
   const [camposNulos, setCamposNulos] = useState({
@@ -141,6 +154,32 @@ function AlterarDados({ navigation }) {
     telefone_cuidador: false,
   };
 
+  useEffect(() => {
+    (async () => {
+      const StatusDaGaleria =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setPermissaoParaAbrirAGaleria(StatusDaGaleria.status === "granted");
+    })();
+  }, []);
+
+  const selecionaImagem = async () => {
+    let resultado = await ImagePicker.launchImageLibraryAsync({
+      base64: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!resultado.cancelled) {
+      setImagem64(`data:image/png;base64,${resultado.base64}`);
+    }
+
+    if (permissaoParaAbrirAGaleria === false) {
+      alert("Sem permissão de acesso à galeria");
+    }
+  };
+
   async function setandoFotoDePerfil() {
     const chave = usuario.avatar_url;
 
@@ -188,12 +227,12 @@ function AlterarDados({ navigation }) {
     if (cpf !== undefined) {
       setCpfMasked(
         cpf.slice(+0, -8) +
-        "." +
-        cpf.slice(+3, -5) +
-        "." +
-        cpf.slice(+6, -2) +
-        "-" +
-        cpf.slice(-2)
+          "." +
+          cpf.slice(+3, -5) +
+          "." +
+          cpf.slice(+6, -2) +
+          "-" +
+          cpf.slice(-2)
       );
     }
   }, [cpf]);
@@ -201,11 +240,11 @@ function AlterarDados({ navigation }) {
     if (telefone !== undefined) {
       setTelMasked(
         "(" +
-        telefone.slice(0, -9) +
-        ")" +
-        telefone.slice(2, -4) +
-        "-" +
-        telefone.slice(-4)
+          telefone.slice(0, -9) +
+          ")" +
+          telefone.slice(2, -4) +
+          "-" +
+          telefone.slice(-4)
       );
     }
   }, [telefone]);
@@ -214,11 +253,11 @@ function AlterarDados({ navigation }) {
     if (telefoneCuidador !== undefined) {
       setTelCuidadorMasked(
         "(" +
-        telefoneCuidador.slice(0, -9) +
-        ")" +
-        telefoneCuidador.slice(2, -4) +
-        "-" +
-        telefoneCuidador.slice(-4)
+          telefoneCuidador.slice(0, -9) +
+          ")" +
+          telefoneCuidador.slice(2, -4) +
+          "-" +
+          telefoneCuidador.slice(-4)
       );
     }
   }, [telefoneCuidador]);
@@ -227,10 +266,10 @@ function AlterarDados({ navigation }) {
     if (dataMasked !== undefined) {
       setDataMasked(
         dataNascimento.slice(8, -14) +
-        "/" +
-        dataNascimento.slice(5, -17) +
-        "/" +
-        dataNascimento.slice(0, -20)
+          "/" +
+          dataNascimento.slice(5, -17) +
+          "/" +
+          dataNascimento.slice(0, -20)
       );
     }
   }, [dataNascimento]);
@@ -311,10 +350,13 @@ function AlterarDados({ navigation }) {
     pegandoDados();
   }, []);
 
-
   async function deletarFoto() {
     setCarregandoDeletarFoto(true);
-    if (usuario.avatar_url === null || usuario.avatar_url === "" || usuario.avatar_url === undefined) {
+    if (
+      usuario.avatar_url === null ||
+      usuario.avatar_url === "" ||
+      usuario.avatar_url === undefined
+    ) {
       Alert.alert("Erro", "O usuário não possui foto de perfil");
       setCarregandoDeletarFoto(false);
       return false;
@@ -323,7 +365,6 @@ function AlterarDados({ navigation }) {
     navigation.navigate("AlterarDados");
     setModalExcluirFoto(false);
     setCarregandoDeletarFoto(false);
-
   }
 
   const { width, height } = useWindowDimensions();
@@ -337,12 +378,15 @@ function AlterarDados({ navigation }) {
         <CaixaAlterarDados>
           <CaixaCima>
             {usuario.avatar_url === null ||
-              usuario.avatar_url === "" ||
-              usuario.avatar_url === undefined ? (
+            usuario.avatar_url === "" ||
+            usuario.avatar_url === undefined ? (
               <ContainerFotoEAlterarImagem>
                 <Foto borderColor={Cores.cinza[2]}>
                   {carregandoFoto ? (
-                    <ActivityIndicator animating={true} color={Colors.blue900} />
+                    <ActivityIndicator
+                      animating={true}
+                      color={Colors.blue900}
+                    />
                   ) : (
                     <>
                       <Icon name="adduser" size={100} color={Cores.preto} />
@@ -382,7 +426,8 @@ function AlterarDados({ navigation }) {
             <BotaoAlterarEDeletarImagem
               onPress={() => {
                 setModalAdicionarFoto(true);
-              }}>
+              }}
+            >
               <TextoAlterarEDeleterImagem>
                 Adicionar ou Alterar Foto de Perfil
               </TextoAlterarEDeleterImagem>
@@ -390,7 +435,8 @@ function AlterarDados({ navigation }) {
             <BotaoAlterarEDeletarImagem
               onPress={() => {
                 setModalExcluirFoto(true);
-              }}>
+              }}
+            >
               <TextoAlterarEDeleterImagem>
                 Excluir Foto De Perfil
               </TextoAlterarEDeleterImagem>
@@ -414,6 +460,14 @@ function AlterarDados({ navigation }) {
               <CaixaTituloModal>
                 <TituloModal>
                   Selecione uma imagem para personalizar seu perfil:
+                  <View style={{ flex: 1, justifyContent: "center" }}>
+                    <Button title="Upload" onPress={() => selecionaImagem()} />
+                    <Image source={imagem64}></Image>
+                    <Button
+                      title="Salvar Imagem"
+                      onPress={() => salvaImagem()}
+                    />
+                  </View>
                 </TituloModal>
               </CaixaTituloModal>
             </CaixaModal>
@@ -479,7 +533,6 @@ function AlterarDados({ navigation }) {
                     </ConteudoBotao>
                   )}
                 </Botao>
-
               </CaixaBotoesCancelarConfirmarModalExcluirFoto>
             </CaixaModal>
           </Modal>
