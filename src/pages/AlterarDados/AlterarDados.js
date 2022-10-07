@@ -16,7 +16,6 @@ import {
 import { Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { ActivityIndicator, Colors, Checkbox } from "react-native-paper";
-import * as ImagePicker from "expo-image-picker";
 import {
   Body,
   CaixaAlterarDados,
@@ -222,7 +221,9 @@ function AlterarDados({ navigation }) {
       setImagem64(null);
       setImagem(null);
       setModalAdicionarFoto(false);
+      navigation.push("AlterarDados");
       setCarregandoImagemModal(false);
+      
     } else {
       Alert.alert("Erro", "Selecione uma foto para enviar!");
     }
