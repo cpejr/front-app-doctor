@@ -19,8 +19,25 @@ export const PaginaCarregando = styled.View`
 `;
 
 
-export const CaixaModal = styled.View`
+export const CaixaModalUpdateFoto = styled.View`
   height: 50%;
+  width: 80%;
+  margin-top: 60%;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 10%;
+  padding-top:0%;
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  border: 4px;
+  border-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const CaixaModalDeleteFoto = styled.View`
+  height: 30%;
   width: 80%;
   margin-top: 60%;
   margin-left: 10%;

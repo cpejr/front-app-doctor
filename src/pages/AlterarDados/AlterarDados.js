@@ -45,7 +45,9 @@ import {
   CaixaImagemBotao,
   ImageModal,
   CaixaTituloModalExcluir,
-  PaginaCarregando
+  PaginaCarregando,
+  CaixaModalDeleteFoto,
+  CaixaModalUpdateFoto
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { estados } from "./estados";
@@ -484,7 +486,7 @@ function AlterarDados({ navigation }) {
               transparent={true}
               visible={modalAdicionarFoto}
             >
-              <CaixaModal>
+              <CaixaModalUpdateFoto>
                 <CaixaFechar>
                   <TouchableOpacity
                     onPress={() => {
@@ -569,14 +571,14 @@ function AlterarDados({ navigation }) {
                     </Botao>
                   </CaixaBotoesCancelarConfirmarModalExcluirFoto>
                 </CaixaTituloModal>
-              </CaixaModal>
+              </CaixaModalUpdateFoto>
             </Modal>
             <Modal
               animationType="slide"
               transparent={true}
               visible={modalExcluirFoto}
             >
-              <CaixaModal>
+              <CaixaModalDeleteFoto>
                 <CaixaFechar>
                   <TouchableOpacity
                     onPress={() => {
@@ -636,7 +638,7 @@ function AlterarDados({ navigation }) {
                     )}
                   </Botao>
                 </CaixaBotoesCancelarConfirmarModalExcluirFoto>
-              </CaixaModal>
+              </CaixaModalDeleteFoto>
             </Modal>
 
             <CaixaInputs width={tamanhoInputs}>
