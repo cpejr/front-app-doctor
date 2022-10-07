@@ -92,6 +92,27 @@ function AlterarDados({ navigation }) {
   const [CarregandoImagemModal, setCarregandoImagemModal] = useState(false);
   const tamanhoIcone = width > 480 ? 20 : 25;
 
+  const [heightModalDeletarFoto, setHeightModalDeletarFoto] = useState();
+  const [heightModalUpdateFoto, setHeightModalUpdateFoto] = useState();
+  const [marginTopModais, setMarginTopModais] = useState();
+
+  function deixandoModaisResponsivos() {
+    if (width > height){
+      setHeightModalDeletarFoto("65%");
+      setHeightModalUpdateFoto("80%");
+      setMarginTopModais("10%");
+    } 
+    else {
+      setHeightModalDeletarFoto("30%");
+      setHeightModalUpdateFoto("50%");
+      setMarginTopModais("60%");
+    }
+  }
+
+  useEffect(() => {
+    deixandoModaisResponsivos();
+  }, [width, height]);
+
   const [camposNulos, setCamposNulos] = useState({
     nome: true,
     telefone: true,
@@ -185,7 +206,7 @@ function AlterarDados({ navigation }) {
     }
 
     if (permissaoParaAbrirAGaleria === false) {
-      Alert.alert("Erro","Sem permissão de acesso à galeria");
+      Alert.alert("Erro", "Sem permissão de acesso à galeria");
     }
   };
 
@@ -207,6 +228,7 @@ function AlterarDados({ navigation }) {
 
   useEffect(() => {
     setandoFotoDePerfil();
+    console.log(heightModalDeletarFoto);
   }, [usuario.avatar_url]);
 
   function formatacaoData() {
@@ -225,7 +247,7 @@ function AlterarDados({ navigation }) {
       setModalAdicionarFoto(false);
       navigation.push("AlterarDados");
       setCarregandoImagemModal(false);
-      
+
     } else {
       Alert.alert("Erro", "Selecione uma foto para enviar!");
     }
@@ -252,12 +274,12 @@ function AlterarDados({ navigation }) {
     if (cpf !== undefined) {
       setCpfMasked(
         cpf.slice(+0, -8) +
-          "." +
-          cpf.slice(+3, -5) +
-          "." +
-          cpf.slice(+6, -2) +
-          "-" +
-          cpf.slice(-2)
+        "." +
+        cpf.slice(+3, -5) +
+        "." +
+        cpf.slice(+6, -2) +
+        "-" +
+        cpf.slice(-2)
       );
     }
   }, [cpf]);
@@ -265,11 +287,11 @@ function AlterarDados({ navigation }) {
     if (telefone !== undefined) {
       setTelMasked(
         "(" +
-          telefone.slice(0, -9) +
-          ")" +
-          telefone.slice(2, -4) +
-          "-" +
-          telefone.slice(-4)
+        telefone.slice(0, -9) +
+        ")" +
+        telefone.slice(2, -4) +
+        "-" +
+        telefone.slice(-4)
       );
     }
   }, [telefone]);
@@ -278,11 +300,11 @@ function AlterarDados({ navigation }) {
     if (telefoneCuidador !== undefined) {
       setTelCuidadorMasked(
         "(" +
-          telefoneCuidador.slice(0, -9) +
-          ")" +
-          telefoneCuidador.slice(2, -4) +
-          "-" +
-          telefoneCuidador.slice(-4)
+        telefoneCuidador.slice(0, -9) +
+        ")" +
+        telefoneCuidador.slice(2, -4) +
+        "-" +
+        telefoneCuidador.slice(-4)
       );
     }
   }, [telefoneCuidador]);
@@ -291,10 +313,10 @@ function AlterarDados({ navigation }) {
     if (dataMasked !== undefined) {
       setDataMasked(
         dataNascimento.slice(8, -14) +
-          "/" +
-          dataNascimento.slice(5, -17) +
-          "/" +
-          dataNascimento.slice(0, -20)
+        "/" +
+        dataNascimento.slice(5, -17) +
+        "/" +
+        dataNascimento.slice(0, -20)
       );
     }
   }, [dataNascimento]);
@@ -387,7 +409,7 @@ function AlterarDados({ navigation }) {
       return false;
     }
     await managerService.deletarFotoDePerfil(usuario.id, usuario.avatar_url);
-    navigation.navigate("AlterarDados");
+    navigation.push("AlterarDados");
     setModalExcluirFoto(false);
     setCarregandoDeletarFoto(false);
   }
@@ -417,8 +439,8 @@ function AlterarDados({ navigation }) {
           <CaixaAlterarDados>
             <CaixaCima>
               {usuario.avatar_url === null ||
-              usuario.avatar_url === "" ||
-              usuario.avatar_url === undefined ? (
+                usuario.avatar_url === "" ||
+                usuario.avatar_url === undefined ? (
                 <ContainerFotoEAlterarImagem>
                   <Foto borderColor={Cores.branco}>
                     {carregandoFoto ? (
@@ -486,7 +508,7 @@ function AlterarDados({ navigation }) {
               transparent={true}
               visible={modalAdicionarFoto}
             >
-              <CaixaModalUpdateFoto>
+              <CaixaModalUpdateFoto height={heightModalUpdateFoto} marginTop={marginTopModais}>
                 <CaixaFechar>
                   <TouchableOpacity
                     onPress={() => {
@@ -578,7 +600,7 @@ function AlterarDados({ navigation }) {
               transparent={true}
               visible={modalExcluirFoto}
             >
-              <CaixaModalDeleteFoto>
+              <CaixaModalDeleteFoto height={heightModalDeletarFoto} marginTop={marginTopModais}>
                 <CaixaFechar>
                   <TouchableOpacity
                     onPress={() => {

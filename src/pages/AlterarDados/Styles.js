@@ -20,9 +20,9 @@ export const PaginaCarregando = styled.View`
 
 
 export const CaixaModalUpdateFoto = styled.View`
-  height: 50%;
+  height: ${(props) => props.height};
   width: 80%;
-  margin-top: 60%;
+  margin-top: ${(props) => props.marginTop};
   margin-left: 10%;
   margin-right: 10%;
   padding-bottom: 10%;
@@ -37,9 +37,9 @@ export const CaixaModalUpdateFoto = styled.View`
 `;
 
 export const CaixaModalDeleteFoto = styled.View`
-  height: 30%;
+  height: ${(props) => props.height};
   width: 80%;
-  margin-top: 60%;
+  margin-top: ${(props) => props.marginTop};
   margin-left: 10%;
   margin-right: 10%;
   padding-bottom: 10%;
