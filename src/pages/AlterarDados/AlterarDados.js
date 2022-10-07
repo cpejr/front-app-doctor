@@ -228,7 +228,6 @@ function AlterarDados({ navigation }) {
 
   useEffect(() => {
     setandoFotoDePerfil();
-    console.log(heightModalDeletarFoto);
   }, [usuario.avatar_url]);
 
   function formatacaoData() {
