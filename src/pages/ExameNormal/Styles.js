@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { Cores, Fontes } from "../../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Body = styled.View`
 
@@ -14,8 +14,10 @@ export const Body = styled.View`
 export const CaixaTextoCima = styled.View`
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 7% 20% 0% 0%;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-direction: row;
   width: 100%;
   height: 15%;
   background-color: ${Cores.branco};
@@ -41,7 +43,8 @@ export const CaixaContato = styled.View`
 
 export const Titulo = styled.Text`
 
-  font-size: 30px;
+  font-size: 26px;
+  color: ${Cores.azulEscuro};
 
 `;
 
@@ -56,6 +59,7 @@ export const TextoCaixaContato = styled.Text`
 
     font-size: 20px;
     color: ${Cores.azulEscuro};
+    font-family: ${(props) => props.fontFamily};
 `;
 
 export const CaixaFaleConosco = styled.View`
@@ -71,19 +75,8 @@ export const CaixaFaleConosco = styled.View`
   border-color:${Cores.azulEscuro};
   border-radius: 2px;
   border-width: 1.2px;
-  elevation: 8;
+  elevation: 6;
   background-color: ${Cores.branco};
 
 `;
 
-export const ContainerVoltarCima = styled.View`
-
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 15%;
-  height: 10%;
-  background-color: ${Cores.azulEscuro};
-
-`;

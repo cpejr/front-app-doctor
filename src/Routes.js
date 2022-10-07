@@ -11,7 +11,7 @@ import Comentarios from "./pages/Comentarios";
 import Consultas from "./pages/Consultas";
 import Emergencia from "./pages/Emergencia";
 import Exames from "./pages/Exames";
-import ExameNormal from "./pages/Exames/ExameNormal/ExameNormal";
+import ExameNormal from "./pages/ExameNormal";
 import FormaPagamento from "./pages/FormaPagamento";
 import GrupoAMIE from "./pages/GrupoAMIE";
 import Home from "./pages/Home";
