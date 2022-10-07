@@ -346,6 +346,8 @@ export const UpdateFotoDePerfil = async (id, file) => {
   return;
 };
 
+
+
 export const deletarFotoDePerfil = async (id, file) => {
   await requesterService
     .deleteFotoDePerfil(id, file)

@@ -11,8 +11,16 @@ export const Body = styled.View`
   background-color: ${Cores.branco};
 `;
 
+export const PaginaCarregando = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70%;
+`;
+
+
 export const CaixaModal = styled.View`
-  height: 25%;
+  height: 50%;
   width: 80%;
   margin-top: 60%;
   margin-left: 10%;
@@ -71,6 +79,7 @@ export const CaixaCima = styled.View`
   margin-top: 8%;
   margin-bottom: 4%;
   padding: 0 5% 0 5%;
+  background-color:${Cores.branco}
 `;
 
 export const Titulo = styled.Text`
@@ -113,7 +122,7 @@ export const Foto = styled.View`
   border-left-width: 3px;
   border-right-width: 3px;
   border-radius: 2px;
-  background-color: ${Cores.cinza[9]};
+  background-color: ${Cores.branco};
   justify-content: center;
   align-items: center;
   display: flex;
@@ -233,11 +242,43 @@ export const Lgpd = styled.Text`
 
 export const CaixaTituloModal = styled.View`
   width: 80%;
+  height: 80%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  margin-top: 2%;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const CaixaTituloModalExcluir = styled.View`
+  width: 80%;
+  height: 45%;
+  display: flex;
+  flex-direction: column;
   margin-top: 2%;
   justify-content: center;
+  align-items: center;
 `;
+
+export const ImageModal = styled.Image`
+  width: 120px;
+  height: 120px;
+
+  @media (min-width: 2000px) {
+    width: 250px;
+  height: 250px;
+  }
+`
+
+export const CaixaImagemBotao = styled.View`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+
+`
 
 export const TituloModal = styled.Text`
   font-size: 14px;
