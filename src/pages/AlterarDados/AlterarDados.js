@@ -103,7 +103,7 @@ function AlterarDados({ navigation }) {
       setMarginTopModais("10%");
     } 
     else {
-      setHeightModalDeletarFoto("30%");
+      setHeightModalDeletarFoto("35%");
       setHeightModalUpdateFoto("50%");
       setMarginTopModais("60%");
     }
