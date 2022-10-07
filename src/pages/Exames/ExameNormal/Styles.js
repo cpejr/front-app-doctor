@@ -49,6 +49,7 @@ export const TextoCaixa = styled.Text`
 
     font-size: 13px;
     color: ${Cores.azulEscuro};
+    
 `;
 
 export const TextoCaixaContato = styled.Text`
@@ -60,15 +61,29 @@ export const TextoCaixaContato = styled.Text`
 export const CaixaFaleConosco = styled.View`
 
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  padding: 0 3% 0 2%;
+  justify-content: space-around;
   width: 55%;
   height: 26%;
   border-width: 1px;
   border-color:${Cores.azulEscuro};
   border-radius: 2px;
   border-width: 1.2px;
-  elevation: 4;
+  elevation: 8;
   background-color: ${Cores.branco};
+
+`;
+
+export const ContainerVoltarCima = styled.View`
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 15%;
+  height: 10%;
+  background-color: ${Cores.azulEscuro};
 
 `;
