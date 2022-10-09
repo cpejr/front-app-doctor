@@ -28,7 +28,7 @@ import {
   Sair,
   AnimacaoCarregando,
   AnimacaoCarregandoViewNome,
-  ScrollViewBranco
+  ScrollViewBranco,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 
@@ -48,7 +48,6 @@ function Perfil({ navigation }) {
   const [dataMasked, setDataMasked] = useState("");
   const [telMasked, setTelMasked] = useState("");
   const [telCuidadorMasked, setTelCuidadorMasked] = useState("");
-
 
   const { width, height, fontSize } = useWindowDimensions();
 
@@ -70,38 +69,34 @@ function Perfil({ navigation }) {
       AsyncStorage.removeItem("@AirBnbApp:token");
       AsyncStorage.removeItem("@AirBnbApp:email");
       new Alert.alert("", "Usuário deslogado com sucesso!");
-      navigation.push("Login")
+      navigation.push("Login");
     } catch (error) {
       alert(error);
     }
   }
 
   useEffect(() => {
-    if(cpf != null && cpf != undefined){
-    setCpfMasked(
-      cpf.slice(+0, -8) +
-        "." +
-        cpf.slice(+3, -5) +
-        "." +
-        cpf.slice(+6, -2) +
-        "-" +
-        cpf.slice(-2)
-    );
-  }
+    if (cpf != null && cpf != undefined) {
+      setCpfMasked(
+        cpf.slice(+0, -8) +
+          "." +
+          cpf.slice(+3, -5) +
+          "." +
+          cpf.slice(+6, -2) +
+          "-" +
+          cpf.slice(-2)
+      );
+    }
   }, [cpf]);
 
   useEffect(() => {
-    if(cep != null && cep != undefined){
-    setCepMasked(
-      cep.slice(0,5) +
-      "-" + 
-      cep.slice(5,8)
-    );
-  }
+    if (cep != null && cep != undefined) {
+      setCepMasked(cep.slice(0, 5) + "-" + cep.slice(5, 8));
+    }
   }, [cep]);
 
   useEffect(() => {
-    if(telefone != null && telefone != undefined){
+    if (telefone != null && telefone != undefined) {
       setTelMasked(
         "(" +
           telefone.slice(0, -9) +
@@ -112,9 +107,9 @@ function Perfil({ navigation }) {
       );
     }
   }, [telefone]);
-  
+
   useEffect(() => {
-    if(telefoneCuidador != null && telefoneCuidador != undefined){
+    if (telefoneCuidador != null && telefoneCuidador != undefined) {
       setTelCuidadorMasked(
         "(" +
           telefoneCuidador.slice(0, -9) +
@@ -127,14 +122,14 @@ function Perfil({ navigation }) {
   }, [telefoneCuidador]);
 
   useEffect(() => {
-    if(dataNascimento != null && dataNascimento != undefined){
-    setDataMasked(
-      dataNascimento.slice(8, -14) +
-        "/" +
-        dataNascimento.slice(5, -17) +
-        "/" +
-        dataNascimento.slice(0, -20)
-    );
+    if (dataNascimento != null && dataNascimento != undefined) {
+      setDataMasked(
+        dataNascimento.slice(8, -14) +
+          "/" +
+          dataNascimento.slice(5, -17) +
+          "/" +
+          dataNascimento.slice(0, -20)
+      );
     }
   }, [dataNascimento]);
 
@@ -186,79 +181,81 @@ function Perfil({ navigation }) {
         </CaixaBotao>
         <CaixaViews>
           <ViewFotoNome width={larguraViews}>
-            {carregando? (
+            {carregando ? (
               <AnimacaoCarregandoViewNome>
-                <ActivityIndicator animating={true} color={Colors.blue900}/>
+                <ActivityIndicator animating={true} color={Colors.blue900} />
               </AnimacaoCarregandoViewNome>
-            ):(
+            ) : (
               <>
-              <Foto />
-              <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
-              <CaixaDataCpf>
-                <CaixaNascidoData>
-                  <TextNascido fontSize={fontSizeNascido}>
-                    Nascido em:
-                  </TextNascido>
-                  <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
-                </CaixaNascidoData>
-                <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
-              </CaixaDataCpf>
-             </>
+                <Foto />
+                <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
+                <CaixaDataCpf>
+                  <CaixaNascidoData>
+                    <TextNascido fontSize={fontSizeNascido}>
+                      Nascido em:
+                    </TextNascido>
+                    <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
+                  </CaixaNascidoData>
+                  <CaixaNascidoData>
+                    <TextNascido fontSize={fontSizeNascido}>CPF:</TextNascido>
+                    <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
+                  </CaixaNascidoData>
+                </CaixaDataCpf>
+              </>
             )}
-           
           </ViewFotoNome>
           <ViewContatoEndereco width={larguraViews}>
             {carregando ? (
               <AnimacaoCarregando>
-                <ActivityIndicator animating={true} color={Colors.blue900}/>
+                <ActivityIndicator animating={true} color={Colors.blue900} />
               </AnimacaoCarregando>
             ) : (
               <>
-              <Titulo fontSize={fontSizeTitulos}>Contato</Titulo>
-              <Dados fontSize={fontSizeDados}>{telMasked}</Dados>
-              <Dados fontSize={fontSizeDados}>{usuario.email}</Dados>
-              {usuario.nome_cuidador != null ? (
-                <View
-                style={{paddingRight: "6%"}}
-                >
-              <Dados fontSize={fontSizeDados}>Nome do cuidador: {usuario.nome_cuidador}</Dados>
-              <Dados fontSize={fontSizeDados}>Telefone do cuidador: {telCuidadorMasked}</Dados>
-                </View>
-              ) : (
-                <></>
-              )}
-              {usuario.convenio != null ? (
-                <>
-                <Dados fontSize={fontSizeDados}>Convênio: {usuario.convenio}</Dados>
-                </>
-              ) : (
-                <></>
-              )}
+                <Titulo fontSize={fontSizeTitulos}>Contato</Titulo>
+                <Dados fontSize={fontSizeDados}>{telMasked}</Dados>
+                <Dados fontSize={fontSizeDados}>{usuario.email}</Dados>
+                {usuario.nome_cuidador != null ? (
+                  <View style={{ paddingRight: "6%" }}>
+                    <Dados fontSize={fontSizeDados}>
+                      Nome do cuidador: {usuario.nome_cuidador}
+                    </Dados>
+                    <Dados fontSize={fontSizeDados}>
+                      Telefone do cuidador: {telCuidadorMasked}
+                    </Dados>
+                  </View>
+                ) : (
+                  <></>
+                )}
+                {usuario.convenio != null ? (
+                  <>
+                    <Dados fontSize={fontSizeDados}>
+                      Convênio: {usuario.convenio}
+                    </Dados>
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
-
             )}
-            
-
           </ViewContatoEndereco>
           <ViewContatoEndereco width={larguraViews}>
             {carregando ? (
               <AnimacaoCarregando>
-                <ActivityIndicator animating={true} color={Colors.blue900}/>
+                <ActivityIndicator animating={true} color={Colors.blue900} />
               </AnimacaoCarregando>
             ) : (
-             <>
-              <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
-              <Dados fontSize={fontSizeDados}>{endereco.pais}</Dados>
-              <Dados fontSize={fontSizeDados}>{endereco.estado}</Dados>
-              <Dados fontSize={fontSizeDados}>{endereco.cidade}</Dados>
-              <Dados fontSize={fontSizeDados}>{cepMasked}</Dados>
-              <Dados fontSize={fontSizeDados}>
-                {endereco.rua}, {endereco.numero}
-              </Dados>
-              <Dados fontSize={fontSizeDados}>{endereco.complemento}</Dados>
-            </>
+              <>
+                <Titulo fontSize={fontSizeTitulos}>Endereço</Titulo>
+                <Dados fontSize={fontSizeDados}>País: {endereco.pais}</Dados>
+                <Dados fontSize={fontSizeDados}>Estado: {endereco.estado}</Dados>
+                <Dados fontSize={fontSizeDados}>Cidade: {endereco.cidade}</Dados>
+                <Dados fontSize={fontSizeDados}>CEP: {cepMasked}</Dados>
+                <Dados fontSize={fontSizeDados}>
+                  Rua: {endereco.rua}, {endereco.numero}
+                </Dados>
+                <Dados fontSize={fontSizeDados}>Complemento: {endereco.complemento}</Dados>
+              </>
             )}
-            
           </ViewContatoEndereco>
           <CaixaBotoesAlterar>
             <Botao
@@ -291,45 +288,43 @@ function Perfil({ navigation }) {
               </ConteudoBotaoPerfil>
             </Botao>
           </CaixaBotoesAlterar>
-          
-            <Botao
-              width={larguraBotoes}
-              height="35px"
-              backgroundColor={Cores.branco}
-              borderRadius="3px"
-              borderColor={Cores.branco}
-              borderWidth="2px"
-              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
-              onPress={() => confirmacaoExcluir()}
-            >
-              <ExcluirConta onPress={() => confirmacaoExcluir()}>
-                Excluir conta
-              </ExcluirConta>
-            </Botao>
-            <Botao
+
+          <Botao
+            width={larguraBotoes}
+            height="35px"
+            backgroundColor={Cores.branco}
+            borderRadius="3px"
+            borderColor={Cores.branco}
+            borderWidth="2px"
+            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
+            onPress={() => confirmacaoExcluir()}
+          >
+            <ExcluirConta onPress={() => confirmacaoExcluir()}>
+              Excluir conta
+            </ExcluirConta>
+          </Botao>
+          <Botao
             width="30px"
-              height="30px"
-              backgroundColor="white"
-              borderRadius="0px"
-              borderColor="white"
-              borderWidth="0px"
-              onPress={() => Alert.alert(
-                "",
-                "Tem certeza que quer sair da sua conta?",
-                [
-                  {
-                    text:"Não",
-                    style: "cancel"
-                  },
-                  {
-                    text: "Confirmar",
-                    onPress: () => handleLogout()
-                  }
-                ]
-              )}
-              >
-              <Sair>Sair</Sair>
-            </Botao>
+            height="30px"
+            backgroundColor="white"
+            borderRadius="0px"
+            borderColor="white"
+            borderWidth="0px"
+            onPress={() =>
+              Alert.alert("", "Tem certeza que quer sair da sua conta?", [
+                {
+                  text: "Não",
+                  style: "cancel",
+                },
+                {
+                  text: "Confirmar",
+                  onPress: () => handleLogout(),
+                },
+              ])
+            }
+          >
+            <Sair>Sair</Sair>
+          </Botao>
         </CaixaViews>
       </Body>
     </ScrollViewBranco>
@@ -337,4 +332,3 @@ function Perfil({ navigation }) {
 }
 
 export default Perfil;
-
