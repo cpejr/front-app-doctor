@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useWindowDimensions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AlterarDados from "./pages/AlterarDados";
@@ -28,43 +28,47 @@ import Header from "./pages/Header";
 import LGPD from "./pages/LGPD/Lgpd";
 import Arquivos from "./pages/Arquivos";
 
+import Icon from "react-native-vector-icons/Ionicons";
+import Icon2 from "react-native-vector-icons/AntDesign";
+import { Cores } from "./variaveis";
+
 import { View, Image } from "react-native";
 
 function HomeIcon() {
   return (
     <View>
-      <Image source={require("./assets/homeicon.png")} />
+      <Icon name="home-outline" size={25} color={Cores.branco}  />
     </View>
   );
 }
-function FormulariosIcon() {
+function ArquivosIcon() {
   return (
     <View>
-      <Image source={require("./assets/formulariosicon.png")} />
+      <Icon name="file-tray-full-outline" size={25} color={Cores.branco}  />
     </View>
   );
 }
-function ExamesIcon() {
-  return (
-    <View>
-      <Image source={require("./assets/examesicon.png")} />
-    </View>
-  );
-}
+// function ExamesIcon() {
+//   return (
+//     <View>
+//       <Image source={require("./assets/examesicon.png")} />
+//     </View>
+//   );
+// }
 function ConsultasIcon() {
   return (
     <View>
-      <Image source={require("./assets/consultasicon.png")} />
+      <Icon2 name="calendar" size={25} color={Cores.branco}  />
     </View>
   );
 }
-function ChatIcon() {
-  return (
-    <View>
-      <Image source={require("./assets/chaticon.png")} />
-    </View>
-  );
-}
+// function ChatIcon() {
+//   return (
+//     <View>
+//       <Image source={require("./assets/chaticon.png")} />
+//     </View>
+//   );
+// }
 
 const HomeStack = createNativeStackNavigator();
 
@@ -222,7 +226,7 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao2"
-        options={{ tabBarIcon: FormulariosIcon, title: "Arquivos" }}
+        options={{ tabBarIcon: ArquivosIcon, title: "Arquivos" }}
         component={ArquivosStackScreen}
       />
       <Tab.Screen

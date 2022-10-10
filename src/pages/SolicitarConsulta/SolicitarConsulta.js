@@ -20,8 +20,10 @@ import {
   BotaoView,
   Botao,
   BotaoIcone,
+  Container
 } from "./Styles";
 import { Cores } from "../../variaveis"
+import Icon from "react-native-vector-icons/Entypo";
 
 function SolicitarConsulta({ navigation }) {
   const mensagemPadrao =
@@ -51,28 +53,31 @@ function SolicitarConsulta({ navigation }) {
   const larguraViewMaior = width < 600 ? "80%" : "70%";
   const larguraBotaoMaior = width < 600 ? "60%" : "40%";
   const marginLeftCaixaTitulo = width < 600 ? "5%" : "30%";
+
   // //responsividade aparelhos
   const larguraView = width < 330 ? "80%" : larguraViewMaior;
   const larguraBotao = width < 330 ? "65%" : larguraBotaoMaior;
   const fontSizeBotao = width < 330 ? "13px" : "16px";
   const fontSizeConteudoView = width < 330 ? "18px" : "20px";
   const fontSizeTitulo = width < 330 ? "25px" : "30px";
+  const tamanhoIcone = width > 480 ? 30 : 35;
 
   return (
     <ScrollView>
       <Body height={heightTela}>
         <CaixaTitulo marginLeft={marginLeftCaixaTitulo}>
           <TouchableOpacity onPress={() => navigation.navigate("Consultas")}>
-            <VoltarIcone source={voltarIcon} />
+            <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
           </TouchableOpacity>
 
           <Titulo fontSize={fontSizeTitulo}>Marcar Consulta</Titulo>
         </CaixaTitulo>
 
         <ViewPadrao
-          width={larguraView}
-          paddingLeft="3%"
-          paddingRight="3%"
+          width="90%"
+          marginTop="6%"
+          paddingLeft="5%"
+          paddingRight="5%"
           backgroundColor={Cores.cinza[7]}
         >
           <ConteudoView fontSize={fontSizeConteudoView}>

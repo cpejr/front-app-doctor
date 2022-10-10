@@ -7,9 +7,10 @@ export const Corpo = styled.View`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 70%;
   background-color: ${Cores.azul};
 `;
+
 export const Botaoo = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
@@ -43,5 +44,4 @@ export const Perfil = styled.View`
   border-width: 0px;
   background-color: green;
   /*background-color: ${Cores.cinza[3]};*/
-
 `;
