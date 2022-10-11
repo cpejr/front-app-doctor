@@ -36,15 +36,15 @@ import { View, Image } from "react-native";
 
 function HomeIcon() {
   return (
-    <View>
-      <Icon name="home-outline" size={25} color={Cores.branco}  />
+    <View width={35} >
+      <Icon name="home-outline" size={35} color={Cores.branco}  />
     </View>
   );
 }
 function ArquivosIcon() {
   return (
-    <View>
-      <Icon name="file-tray-full-outline" size={25} color={Cores.branco}  />
+    <View width={35}>
+      <Icon name="file-tray-full-outline" size={35} color={Cores.branco}  />
     </View>
   );
 }
@@ -57,8 +57,8 @@ function ArquivosIcon() {
 // }
 function ConsultasIcon() {
   return (
-    <View>
-      <Icon2 name="calendar" size={25} color={Cores.branco}  />
+    <View width={35}>
+      <Icon2 name="calendar" size={35} color={Cores.branco}  />
     </View>
   );
 }
@@ -203,7 +203,7 @@ function TabScreen() {
         headerBackground: (props) => <Header {...props} />,
         headerStyle: {
           backgroundColor: "#151B57",
-          height: 100,
+          height: 70,
         },
         tabBarStyle: {
           backgroundColor: "#151B57",

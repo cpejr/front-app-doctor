@@ -7,7 +7,7 @@ export const Corpo = styled.View`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 70%;
+  height: 100%;
   background-color: ${Cores.azul};
 `;
 
