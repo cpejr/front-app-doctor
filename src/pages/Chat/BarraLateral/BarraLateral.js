@@ -17,13 +17,13 @@ import * as managerService from "../../../services/ManagerService/managerService
 import Botao from "../../../styles/Botao";
 import ConteudoBotao from "../../../styles/ConteudoBotao";
 import { Cores } from "../../../variaveis";
-import { ChatContext } from "../../../contexts/ChatContext/";
+//import { ChatContext } from "../../../contexts/ChatContext/";
 
 function BarraLateral() {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const onChangeBusca = (busca) => setBusca(busca);
-  {const {
+  {/*{const {
     usuarioId,
     conversas,
     setConversas,
@@ -51,7 +51,7 @@ function BarraLateral() {
       setConversas(copiaConversas);
       navigation.navigate("ConversaAberta");
     };
-  };
+  };*/}
 
   const vetorUsuariosMensagem = [
     {
@@ -87,29 +87,6 @@ const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
     );
 });
 
-
-  const componenteEstaMontadoRef = useRef(null);
-
-  useEffect(() => {
-    componenteEstaMontadoRef.current = true;
-
-    async function getConversas() {
-      setCarregandoConversas(true);
-
-      await managerService.deletarConversasInativas(usuarioId);
-      const resposta = await managerService.GetConversasUsuario(usuarioId);
-
-      if (componenteEstaMontadoRef.current) {
-        setConversas(resposta);
-        setCarregandoConversas(false);
-      }
-    }
-
-    getConversas();
-
-    return () => (componenteEstaMontadoRef.current = false);
-  }, []);
-
   return (
     <Body>
 
@@ -125,16 +102,7 @@ const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
         <ScrollView>
           
           {MensagensFiltradas?.map((value, index) => (
-            <Botao
-            height="40px"
-            width="70%"
-            backgroundColor={"green"}
-            borderRadius="10px"
-            borderWidth="1px"
-            borderColor={"green"}
-            key={index} 
-            onPress={ ()=> cliqueNaConversa(value)}
-          >
+
             <CaixaUsuarioMensagem>
               <CaixaImagem>
                 <ImagemUsuario
@@ -147,7 +115,7 @@ const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
                 <TextoCaixa fontSize = "13px">Última Mensagem: {value.ultimaMensagem} </TextoCaixa>
               </CaixaTexto>
             </CaixaUsuarioMensagem>
-            </Botao>
+
         ))}
             
       </ScrollView>
