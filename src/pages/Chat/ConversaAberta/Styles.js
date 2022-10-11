@@ -14,7 +14,9 @@ export const HeaderConversaAberta = styled.View`
   display: flex;
   width: 100%;
   height: 65px;
-  justify-content:center;
+  flex-direction: row;
+  align-items:center;
+  justify-content:flex-start;
   padding-left: 10px;
   background-color: ${Cores.branco};
 `;
@@ -51,8 +53,9 @@ export const BarraEnviarMensagemConversaAberta = styled.View`
 `;
 
 export const TextoMensagem = styled.Text`
-    font-size: 15px;
-    color: ${Cores.cinza[2]};
+    color: ${(props) => props.color};
+    font-size: ${(props) => props.fontSize};
+    font-weight: ${(props) => props.fontWeight};
 `;
 
 export const TextoMensagemEnviada = styled.Text`
@@ -85,3 +88,12 @@ export const HoraMensagem = styled.Text`
     color: ${Cores.preto};
 `;
 
+export const ImagemUsuario = styled.Image`
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  width: 50.3px;
+  height: 50.3px;
+  margin-right: 15px;
+  margin-left: 12px;
+`;

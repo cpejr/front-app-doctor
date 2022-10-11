@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect, useRef, useDebugValue } from 'react';
 import { Text, View, ScrollView, Image } from "react-native";
 import {
   Body,
@@ -11,28 +11,37 @@ import {
   TextoMensagemEnviada,
   MensagemRecebida,
   HoraMensagem,
+  ImagemUsuario,
 } from "./Styles";
-import searchIcon from "../../../assets/searchIcon.png";
-import * as managerService from "../../../services/ManagerService/managerService";
-import Botao from "../../../styles/Botao";
-import ConteudoBotao from "../../../styles/ConteudoBotao";
 import { Cores } from "../../../variaveis";
 import IconeMaterial from 'react-native-vector-icons/MaterialIcons';
 import IconeIon from 'react-native-vector-icons/Ionicons';
 import IconeFoundation from 'react-native-vector-icons/Foundation';
 
+function ConversaAberta({navigation, route}) {
 
-function ConversaAberta({navigation}) {
+  const conversaClicada = route.params.paramKey;
+
   return (
     <Body>
+
       <HeaderConversaAberta>
         <IconeIon 
         name="arrow-back-circle-outline" 
         size={32} 
-        color={Cores.azulEscuro}
+        color={Cores.lilas[1]}
         onPress={() => navigation.navigate("BarraLateral")}
         />
+        <ImagemUsuario source = {conversaClicada.imagemPerfil}/>
+        <TextoMensagem
+          color={Cores.lilas[1]}
+          fontSize = "20px"
+          fontWeight = "bold"
+        >
+         {conversaClicada.nome}
+        </TextoMensagem>
       </HeaderConversaAberta>
+
       <FundoConversaAberta>
         <MensagemEnviada>
           <TextoMensagemEnviada>
@@ -51,6 +60,7 @@ function ConversaAberta({navigation}) {
           </HoraMensagem>
         </MensagemRecebida>
       </FundoConversaAberta>
+
       <FooterConversaAberta>
         <IconeFoundation
           name="paperclip" 
@@ -58,7 +68,13 @@ function ConversaAberta({navigation}) {
           color={Cores.azulEscuro}
           />
           <BarraEnviarMensagemConversaAberta>
-            <TextoMensagem>Mensagem</TextoMensagem>
+            <TextoMensagem
+              color={Cores.cinza[2]}
+              fontSize = "15px"
+              fontWeight = "100"
+            > 
+              Mensagem
+            </TextoMensagem>
           </BarraEnviarMensagemConversaAberta>
         <IconeMaterial
           name="send" 
@@ -66,6 +82,7 @@ function ConversaAberta({navigation}) {
           color={Cores.azulEscuro}
           />
       </FooterConversaAberta>
+
     </Body>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Text, View, ScrollView, Image } from "react-native";
+import { Text, View, ScrollView, Image, TouchableOpacity} from "react-native";
 import {
   BarraPesquisa,
   Body,
@@ -8,7 +8,6 @@ import {
   ImagemUsuario,
   CaixaTexto,
   CaixaImagem,
-  HeaderChat,
   TextoCaixa,
   CaixaUsuarioMensagem,
 } from "./Styles";
@@ -17,60 +16,32 @@ import * as managerService from "../../../services/ManagerService/managerService
 import Botao from "../../../styles/Botao";
 import ConteudoBotao from "../../../styles/ConteudoBotao";
 import { Cores } from "../../../variaveis";
-//import { ChatContext } from "../../../contexts/ChatContext/";
 
-function BarraLateral() {
+function BarraLateral({navigation}) {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const onChangeBusca = (busca) => setBusca(busca);
-  {/*{const {
-    usuarioId,
-    conversas,
-    setConversas,
-    setConversaSelecionada,
-    imagemPerfilPadrão,
-  } = useContext(ChatContext);
 
-  const cliqueNaConversa = (conversa) => {
-    return async (e) => {
-      e.preventDefault();
-
-      const index = conversas.findIndex(({ id }) => id === conversa.id);
-      const copiaConversas = objCopiaProfunda(conversas);
-
-      const conversaNaLista = copiaConversas[index];
-
-      if (conversaNaLista.mensagensNaoVistas) {
-        conversaNaLista.mensagensNaoVistas = 0;
-        await managerService.UpdateMensagensVisualizadas(
-          usuarioId,
-          conversa.id
-        );
-      }
-      setConversaSelecionada(conversaNaLista);
-      setConversas(copiaConversas);
-      navigation.navigate("ConversaAberta");
-    };
-  };*/}
+  const imagemPerfilPadrão = require('../../../assets/logoGuilherme.png');
 
   const vetorUsuariosMensagem = [
     {
-      id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
+      id: "41b266f8-5bcd-4e74-94b0-465aefb0f9dab",
       nome: "Matheus",
       ultimaMensagem: "teste Mensagem",
-      //simagemPerfilPadrão: "avatar_url",
+      imagemPerfil: imagemPerfilPadrão,
     },
     {
-      id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
-      nome: "Matheus Dois",
+      id: "41b266f8-5bcd-4e74-94b0-465aefb0f9dac",
+      nome: "Adrianus",
       ultimaMensagem: "teste Mensagem dois",
-      //imagemPerfilPadrão: "avatar_url",
+      imagemPerfil: imagemPerfilPadrão,
     },
     {
       id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
-      nome: "Matheus Três",
+      nome: "Laura",
       ultimaMensagem: "teste Mensagem três",
-      //imagemPerfilPadrão: "avatar_url",
+      imagemPerfil: imagemPerfilPadrão,
     },
 ]
 
@@ -87,6 +58,18 @@ const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
     );
 });
 
+async function abrirMensagemClicada(conversa) {
+  if(conversa.id)
+  {
+    navigation.push("ConversaAberta", {
+      paramKey: conversa,
+    });
+  }
+  else{
+    Alert.alert("Erro ao abrir a conversa.");
+  }
+}
+
   return (
     <Body>
 
@@ -100,22 +83,23 @@ const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
       </BarraPesquisa>
 
         <ScrollView>
-          
-          {MensagensFiltradas?.map((value, index) => (
 
-            <CaixaUsuarioMensagem>
-              <CaixaImagem>
-                <ImagemUsuario
-                  border-radius='3px'
-                  source={require('../../../assets/logoGuilherme.png')}> 
-                </ImagemUsuario>
-              </CaixaImagem>
-              <CaixaTexto>
-                <TextoCaixa fontSize = "17px" >{value.nome} </TextoCaixa>
-                <TextoCaixa fontSize = "13px">Última Mensagem: {value.ultimaMensagem} </TextoCaixa>
-              </CaixaTexto>
-            </CaixaUsuarioMensagem>
-
+          {MensagensFiltradas?.map((value) => (
+            <TouchableOpacity onPress={() => {abrirMensagemClicada(value)}}>
+              <CaixaUsuarioMensagem>
+                <CaixaImagem>
+                  <ImagemUsuario
+                    border-radius='3px'
+                    source={value.imagemPerfil}> 
+                  </ImagemUsuario>
+                </CaixaImagem>
+                <CaixaTexto>
+                  <TextoCaixa fontSize = "17px" >{value.nome} </TextoCaixa>
+                  <TextoCaixa fontSize = "13px">Última Mensagem: {value.ultimaMensagem} </TextoCaixa>
+                </CaixaTexto>
+                
+              </CaixaUsuarioMensagem>
+              </TouchableOpacity>
         ))}
             
       </ScrollView>
