@@ -1,0 +1,48 @@
+import styled from "styled-components/native";
+import { Cores } from "../../../variaveis";
+import { View, Text } from "react-native";
+import { TextInput } from "react-native";
+
+export const Body = styled.View`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: ${Cores.branco};
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 10px;
+  padding-bottom: 20px;
+`;
+
+export const HeaderChat = styled.View`
+
+`;
+
+export const BarraPesquisa = styled.View`
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 45px;
+  background-color: ${Cores.cinza[10]};
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  border: ${Cores.lilas[5]};
+  border-width: 1.5px;
+  font-size: 12px;
+`;
+
+export const InputPesquisa = styled.TextInput`
+height:100%;
+font-size: 17px;
+width:90%;
+`;
+
+export const IconPesquisa = styled.Image`
+width:23px;
+height:23px;
+margin-right:1px;
+`;

@@ -6,7 +6,6 @@ import AlterarDados from "./pages/AlterarDados";
 import AlterarSenha from "./pages/AlterarSenha";
 import AlterarSenhaComEmail from "./pages/AlterarSenhaComEmail";
 import Cadastro from "./pages/Cadastro";
-import Chat from "./pages/Chat";
 import Comentarios from "./pages/Comentarios";
 import Consultas from "./pages/Consultas";
 import Emergencia from "./pages/Emergencia";
@@ -27,6 +26,8 @@ import SolicitarExame from "./pages/SolicitarExame";
 import Header from "./pages/Header";
 import LGPD from "./pages/LGPD/Lgpd";
 import Arquivos from "./pages/Arquivos";
+import BarraLateral from "./pages/Chat/BarraLateral";
+import ConversaAberta from "./pages/Chat/ConversaAberta";
 
 import { View, Image } from "react-native";
 
@@ -87,6 +88,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="ListaFormularios" component={ListaFormularios} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
+      <HomeStack.Screen name="BarraLateral" component={BarraLateral} />
+      <HomeStack.Screen name="ConversaAberta" component={ConversaAberta} />
     </HomeStack.Navigator>
   );
 }
@@ -184,7 +187,8 @@ function ChatStackScreen() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Chat"
     >
-      <ChatStack.Screen name="Chat" component={Chat} />
+      <ChatStack.Screen name="BarraLateral" component={BarraLateral} />
+      <ChatStack.Screen name="ConversaAberta" component={ConversaAberta} />
     </ChatStack.Navigator>
   );
 }
@@ -226,9 +230,14 @@ function TabScreen() {
         component={ArquivosStackScreen}
       />
       <Tab.Screen
-        name="botao4"
+        name="botao3"
         options={{ tabBarIcon: ConsultasIcon, title: "Consultas" }}
         component={ConsultasStackScreen}
+      />
+         <Tab.Screen
+        name="botao4"
+        options={{ tabBarIcon: ChatIcon, title: "Chat" }}
+        component={ChatStackScreen}
       />
     </Tab.Navigator>
   );
