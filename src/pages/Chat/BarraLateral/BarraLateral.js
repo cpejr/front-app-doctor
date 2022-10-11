@@ -17,34 +17,57 @@ import * as managerService from "../../../services/ManagerService/managerService
 import Botao from "../../../styles/Botao";
 import ConteudoBotao from "../../../styles/ConteudoBotao";
 import { Cores } from "../../../variaveis";
+import { ChatContext } from "../../../contexts/ChatContext/";
 
 function BarraLateral() {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const onChangeBusca = (busca) => setBusca(busca);
-  /*const {
+  {const {
     usuarioId,
     conversas,
     setConversas,
     setConversaSelecionada,
     imagemPerfilPadrão,
-  } = useContext(ChatContext); */
+  } = useContext(ChatContext);
+
+  const cliqueNaConversa = (conversa) => {
+    return async (e) => {
+      e.preventDefault();
+
+      const index = conversas.findIndex(({ id }) => id === conversa.id);
+      const copiaConversas = objCopiaProfunda(conversas);
+
+      const conversaNaLista = copiaConversas[index];
+
+      if (conversaNaLista.mensagensNaoVistas) {
+        conversaNaLista.mensagensNaoVistas = 0;
+        await managerService.UpdateMensagensVisualizadas(
+          usuarioId,
+          conversa.id
+        );
+      }
+      setConversaSelecionada(conversaNaLista);
+      setConversas(copiaConversas);
+      navigation.navigate("ConversaAberta");
+    };
+  };
 
   const vetorUsuariosMensagem = [
     {
-      //id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
+      id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
       nome: "Matheus",
       ultimaMensagem: "teste Mensagem",
       //simagemPerfilPadrão: "avatar_url",
     },
     {
-      //id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
+      id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
       nome: "Matheus Dois",
       ultimaMensagem: "teste Mensagem dois",
       //imagemPerfilPadrão: "avatar_url",
     },
     {
-      //id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
+      id: "41b266f8-5bcd-4e74-94b0-465aefb0f9da",
       nome: "Matheus Três",
       ultimaMensagem: "teste Mensagem três",
       //imagemPerfilPadrão: "avatar_url",
@@ -100,8 +123,18 @@ const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
       </BarraPesquisa>
 
         <ScrollView>
-
-          {MensagensFiltradas?.map((value) => (
+          
+          {MensagensFiltradas?.map((value, index) => (
+            <Botao
+            height="40px"
+            width="70%"
+            backgroundColor={"green"}
+            borderRadius="10px"
+            borderWidth="1px"
+            borderColor={"green"}
+            key={index} 
+            onPress={ ()=> cliqueNaConversa(value)}
+          >
             <CaixaUsuarioMensagem>
               <CaixaImagem>
                 <ImagemUsuario
@@ -110,13 +143,13 @@ const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
                 </ImagemUsuario>
               </CaixaImagem>
               <CaixaTexto>
-                {/*<Text> ID: {value.id} </Text>*/}
                 <TextoCaixa fontSize = "17px" >{value.nome} </TextoCaixa>
                 <TextoCaixa fontSize = "13px">Última Mensagem: {value.ultimaMensagem} </TextoCaixa>
               </CaixaTexto>
             </CaixaUsuarioMensagem>
+            </Botao>
         ))}
-
+            
       </ScrollView>
 
       <Botao
@@ -131,7 +164,7 @@ const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
           Iniciar Nova Conversa
         </ConteudoBotao>
       </Botao>
-      
+
     </Body>
   );
 }
