@@ -102,14 +102,8 @@ function ArquivosStackScreen() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Arquivos"
     >
-      <ArquivosStack.Screen
-        name="Arquivos"
-        component={Arquivos}
-      />
-      <ArquivosStack.Screen
-        name="ListaReceitas"
-        component={ListaReceitas}
-      />
+      <ArquivosStack.Screen name="Arquivos" component={Arquivos} />
+      <ArquivosStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <ArquivosStack.Screen
         name="ListaFormularios"
         component={ListaFormularios}
@@ -118,7 +112,6 @@ function ArquivosStackScreen() {
         name="PreencherFormulario"
         component={PreencherFormulario}
       />
-
     </ArquivosStack.Navigator>
   );
 }
@@ -185,10 +178,16 @@ function ChatStackScreen() {
   return (
     <ChatStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Chat"
+      initialRouteName="BarraLateral"
     >
-      <ChatStack.Screen name="BarraLateral" component={BarraLateral} />
-      <ChatStack.Screen name="ConversaAberta" component={ConversaAberta} />
+      <ChatStack.Screen
+        name="BarraLateral"
+        component={BarraLateral}
+      />
+      <ChatStack.Screen
+        name="ConversaAberta"
+        component={ConversaAberta}
+      />
     </ChatStack.Navigator>
   );
 }
@@ -234,7 +233,7 @@ function TabScreen() {
         options={{ tabBarIcon: ConsultasIcon, title: "Consultas" }}
         component={ConsultasStackScreen}
       />
-         <Tab.Screen
+      <Tab.Screen
         name="botao4"
         options={{ tabBarIcon: ChatIcon, title: "Chat" }}
         component={ChatStackScreen}
@@ -254,7 +253,10 @@ function Routes() {
       >
         <Stack.Screen name="Tabs" component={TabScreen} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="AlterarSenhaComEmail" component={AlterarSenhaComEmail} />
+        <Stack.Screen
+          name="AlterarSenhaComEmail"
+          component={AlterarSenhaComEmail}
+        />
         <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>

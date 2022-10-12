@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 import { Cores } from "../../../variaveis";
 import { View, Text } from "react-native";
 import { TextInput } from "react-native";
+import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
 
 export const Body = styled.View`
   display: flex;
@@ -34,9 +35,18 @@ export const CaixaImagem = styled.View`
     width: 30px;
 `;
 
-export const TextoCaixa = styled.Text`
+export const TextoCaixa = styled.Text.attrs(()=>({
+  numberOfLines: 1
+}))`
   font-size: ${(props) => props.fontSize};
   padding-bottom: 5px;
+  
+`;
+
+export const PaginaCarregando = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CaixaTexto = styled.View`
