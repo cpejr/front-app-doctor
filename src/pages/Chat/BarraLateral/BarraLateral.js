@@ -66,7 +66,7 @@ function BarraLateral({ navigation }) {
     },
     {
       id: "41b266f865bcd-4e74-94b0-465aefb0f9da",
-      nome: "Laura Maria da Silva Moneitro de Alexander Pardini Gomes",
+      nome: "Laura Maria da Silva Carvalho Alexander Pardini Prado Neto ",
       ultimaMensagem:
         "teste Mensagem três agora com uma mensagem grnade muiti aaaa huttryturjfb ssss sss sss s sss sss sss s ss ss s s s ss ss ss ss s sss ",
       imagemPerfil: imagemPerfilPadrão,
