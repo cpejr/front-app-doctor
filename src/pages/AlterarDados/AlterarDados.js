@@ -315,7 +315,7 @@ function AlterarDados({ navigation }) {
             usuario.avatar_url === "" ||
             usuario.avatar_url === undefined ? (
               <ContainerFotoEAlterarImagem>
-              <Foto borderColor={Cores.cinza[2]}>
+              <Foto>
                 {carregandoFoto ? (
                   <ActivityIndicator animating={true} color={Colors.blue900} />
                 ) : (

@@ -71,7 +71,10 @@ function Perfil({ navigation }) {
       AsyncStorage.removeItem("@AirBnbApp:token");
       AsyncStorage.removeItem("@AirBnbApp:email");
       new Alert.alert("", "Usuário deslogado com sucesso!");
-      navigation.push("Login")
+      navigation.reset({
+        index:0,
+        routes: [{name: "Login"}]
+      })
     } catch (error) {
       alert(error);
     }
@@ -141,7 +144,7 @@ function Perfil({ navigation }) {
 
   useEffect(() => {
     pegandoDados();
-  }, []);
+  }, [usuario]);
 
   const confirmacaoExcluir = () =>
     Alert.alert("", "Tem certeza que quer excluir sua conta?", [
