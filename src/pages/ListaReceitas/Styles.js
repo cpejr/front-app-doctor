@@ -16,8 +16,7 @@ export const ContainerCima = styled.View`
   align-items: center;
   background-color: white;
   margin-bottom: 0%;
-  border-bottom-width: 0.5px;
-  border-color: ${Cores.cinza[11]};
+  
 `;
 
 export const TextoCima = styled.Text`
@@ -31,9 +30,8 @@ export const CaixaTextoCima = styled.View`
   width: 100%;
   flex-direction: row;
   justify-content: center;
-  margin-top: 4%;
-  margin-bottom: 4%;
-  height: 45px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 `;
 
 export const ContainerTodasReceitas = styled.View`
@@ -61,7 +59,7 @@ export const ContainerReceitas = styled.View`
 export const TituloReceitas = styled.Text`
   width: 50%;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: bold;
   color: ${Cores.azulEscuro};
   text-decoration: underline;
 `;
@@ -82,6 +80,7 @@ export const BarraPesquisa = styled.View`
   padding-left: 10px;
   border: #636ab4;
   border-width: 1.5px;
+  margin-bottom: 25px;
   font-size: 12px;
 `;
 

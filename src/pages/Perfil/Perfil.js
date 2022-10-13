@@ -151,11 +151,11 @@ function Perfil({ navigation }) {
     navigation.push("Login");
   }
 
-  const larguraBotoesMaior = width < 600 ? "50%" : "35%";
+  const larguraBotoesMaior = width < 600 ? "50%" : "40%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
   const paddingBody = width < 330 ? "5%" : "10%";
   const fontSizeTitulos = fontSize < 1080 ? "20px" : "23px";
-  const fontSizeDados = fontSize < 1080 ? "15px" : "18px";
+  const fontSizeDados = fontSize < 1080 ? "14px" : "16px";
   const fontSizeNascido = fontSize < 1080 ? "12px" : "14px";
   const larguraViews = width < 750 ? "100%" : "70%";
 

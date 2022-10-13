@@ -46,6 +46,7 @@ function ListaReceitas({ navigation }) {
   async function pegandoReceitas() {
     setCarregando(true);
     const resposta = await managerService.GetDadosReceitas();
+    setCarregando(false);
     setReceitas(resposta.dadosReceitas[0].receita);
     setCarregando(false);
   }

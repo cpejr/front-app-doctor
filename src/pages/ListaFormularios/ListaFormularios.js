@@ -234,7 +234,11 @@ function ListaFormularios({ navigation }) {
                     <CaixaTipoData width={larguraCaixaTipoData}>
                       <TextoTipoData>Tipo: {valor.tipo}</TextoTipoData>
                       <TextoTipoData>
-                        {formatandoData(valor.data_criacao)}
+                        {valor.data_criacao.slice(8, 10) +
+                          "/" +
+                          valor.data_criacao.slice(5, 7) +
+                          "/" +
+                          valor.data_criacao.slice(0, 4)}
                       </TextoTipoData>
                     </CaixaTipoData>
                   </>
