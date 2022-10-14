@@ -83,7 +83,7 @@ export const ConteudoCaixa = styled.Text`
   font-size: ${(props) => props.fontSize};
 `;
 
-export const Icone = styled.Image`
+export const Icone = styled.View`
   margin-left: ${(props) => props.marginLeft};
   margin-right: ${(props) => props.marginRight};
 `;
@@ -136,6 +136,22 @@ export const CaixaModal = styled.View`
   margin-left: 10%;
   margin-right: 10%;
   padding-bottom: 10%;
+  padding-top:0%;
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  border: 4px;
+  border-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+export const CaixaModalGrande = styled.View`
+  height: 80%;
+  width: 80%;
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 20%;
   padding-top:0%;
   background-color: #f7f7f7;
   border-radius: 6px;
