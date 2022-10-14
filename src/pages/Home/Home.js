@@ -61,6 +61,10 @@ function Home({ navigation }) {
         title="Go to Arquivos"
         onPress={() => navigation.navigate("Arquivos")}
       />
+      <Button
+        title="Go to ListaExames"
+        onPress={() => navigation.navigate("ListaExames")}
+      />
     </View>
   );
 }
