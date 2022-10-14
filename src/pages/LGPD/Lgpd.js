@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, TouchableOpacity, Text } from "react-native";
+import React, { useEffect } from "react";
+import { ScrollView, TouchableOpacity, Text, useWindowDimensions } from "react-native";
 import {
   Body,
   Titulo,
@@ -13,6 +13,12 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 
 function LGPD({navigation}) {
+  const width = useWindowDimensions().width
+  const height = useWindowDimensions().height
+
+  const fontSizeBotao = height > width ? "13px" : "17px"
+  
+
   const [loaded] = useFonts({
     BarlowSemibold: require("../../assets/fonts/Barlow-SemiBold.ttf"),
     BarlowMedium: require("../../assets/fonts/Barlow-Medium.ttf"),
@@ -20,6 +26,8 @@ function LGPD({navigation}) {
   if (!loaded) {
     return null;
   }
+
+
 
   return (
     <ScrollView>
@@ -57,8 +65,8 @@ function LGPD({navigation}) {
             navigation.navigate("Cadastro");
           }}
         >
-          <ConteudoBotao fontSize="15px" color="#151B57" width="100%">
-            CONFIRMAR
+          <ConteudoBotao fontSize={fontSizeBotao}color="#151B57" width="100%">
+            Voltar ao cadastro
           </ConteudoBotao>
         </Botao>
       </Body>
