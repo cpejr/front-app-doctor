@@ -12,16 +12,22 @@ import {
   ContainerBotao,
   BotaoFiltro,
   Scroll,
+  QuadroExames,
+  ContainerExames,
 } from "./Styles";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao/ConteudoBotao";
 import { Cores } from "../../variaveis";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 function ListaExames({ navigation }) {
   
-  const[agendamentoESugestoes, setAgendamentoESugestoes] = useState(false);
+  const[agendamentoESugestoes, setAgendamentoESugestoes] = useState(true);
   const[examesMarcados, setExamesMarcados] = useState(false);
+
+  function alterarEstado() {
+    setAgendamentoESugestoes(!agendamentoESugestoes);
+    setExamesMarcados(!examesMarcados);
+  }
 
   return (
     <Body>
@@ -29,19 +35,24 @@ function ListaExames({ navigation }) {
         <TextoExames>Exames</TextoExames>
         <TabFiltro>
           <BotaoFiltro
-          campoSelecionado={agendamentoESugestoes}>
+          campoSelecionado={agendamentoESugestoes}
+          onPress={alterarEstado}
+          >
             <TextoTabFiltro
             campoSelecionado={agendamentoESugestoes}
             >Agendamento e sugestões</TextoTabFiltro>
           </BotaoFiltro>
           <BotaoFiltro
-          campoSelecionado={examesMarcados}>
+          campoSelecionado={examesMarcados}
+          onPress={alterarEstado}
+          >
             <TextoTabFiltro
             campoSelecionado={examesMarcados}
             >Exames Marcados</TextoTabFiltro>
           </BotaoFiltro>
         </TabFiltro>
       </CaixaCima>
+      {agendamentoESugestoes? (
       <Scroll>
       <CaixaBaixo>
         <Quadro>
@@ -125,6 +136,17 @@ function ListaExames({ navigation }) {
         </Quadro>
       </CaixaBaixo>
       </Scroll>
+      ):(
+        <Scroll>
+          <CaixaBaixo>
+            <QuadroExames>
+              <ContainerExames>
+                <></>
+              </ContainerExames>
+            </QuadroExames>
+          </CaixaBaixo>
+      </Scroll>
+      )}
     </Body>
   );
 }

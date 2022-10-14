@@ -131,3 +131,37 @@ export const ContainerBotao = styled.View`
 	justify-content: space-evenly;
 	align-items: center;
 `;
+
+export const QuadroExames = styled.View`
+	display: flex;
+  width: 90%;
+	height: auto;
+	justify-content: flex-start;
+	align-items: center;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-top: 4%;
+	margin-bottom: 4%;
+	background-color: ${Cores.branco};
+	border-radius: 5px;
+	border-width: 2px;
+	border-color: ${Cores.azul};
+	elevation: 8;
+`;
+
+export const ContainerExames = styled.View`
+	display: flex;
+  width: 100%;
+	height: 20px;
+	background-color: pink;
+`;
+
+export const Data = styled.Text`
+	text-align: center;
+	line-height: 20px;
+	font-size: 18px;
+  color: ${Cores.preto};
+	margin-bottom: 5px;
+`;
