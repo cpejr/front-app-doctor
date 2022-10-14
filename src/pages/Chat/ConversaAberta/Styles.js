@@ -41,7 +41,7 @@ export const FooterConversaAberta = styled.View`
   background-color: ${Cores.branco};
 `;
 
-export const BarraEnviarMensagemConversaAberta = styled.View`
+export const BarraEnviarMensagemConversaAberta = styled.TextInput`
   display: flex;
   width: 83%;
   height: 40px;
@@ -77,8 +77,9 @@ export const MensagemEnviada = styled.View`
   align-self: flex-end;
   padding: 3px 13px 5px 13px;
   max-width: 55%;
+  margin-top: 8px;
+  margin-bottom: 8px;
   background-color: ${Cores.lilas[4]};
-  margin: 2%;
   border-radius: 5px;
 `;
 
@@ -94,8 +95,9 @@ export const MensagemRecebida = styled.View`
   align-self: flex-start;
   padding: 3px 13px 5px 13px;
   max-width: 55%;
+  margin-top: 8px;
+  margin-bottom: 8px;
   background-color: ${Cores.branco};
-  margin: 2%;
   border-radius: 5px;
 `;
 

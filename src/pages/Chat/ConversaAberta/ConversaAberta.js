@@ -118,14 +118,8 @@ function ConversaAberta({ navigation, route }) {
 
       <FooterConversaAberta>
         <IconeFoundation name="paperclip" size={33} color={Cores.azulEscuro} />
-        <BarraEnviarMensagemConversaAberta>
-          <TextoMensagem
-            color={Cores.cinza[2]}
-            fontSize="15px"
-            fontWeight="100"
-          >
-            Mensagem
-          </TextoMensagem>
+        <BarraEnviarMensagemConversaAberta
+        placeholder="Mensagem">
         </BarraEnviarMensagemConversaAberta>
         <IconeMaterial name="send" size={30} color={Cores.azulEscuro} />
       </FooterConversaAberta>
