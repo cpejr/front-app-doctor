@@ -175,7 +175,7 @@ export const CaixaTituloModal = styled.View`
   width: 80%;
   display: flex;
   flex-direction: row;
-  margin-top: 5%;
+  margin-top: 2%;
   justify-content: center;
 `;
 export const TituloModal = styled.Text`

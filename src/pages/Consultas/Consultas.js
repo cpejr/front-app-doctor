@@ -295,6 +295,7 @@ function Consultas({ navigation }) {
                                 <Botao
                                   height="40px"
                                   width="70%"
+                                  marginTop="0px"
                                   backgroundColor={Cores.cinza[7]}
                                   borderRadius="10px"
                                   borderWidth="1px"
@@ -330,6 +331,7 @@ function Consultas({ navigation }) {
                                   <Icon name="close" size={tamanhoIcone}></Icon>
                                 </TouchableOpacity>
                               </CaixaFechar>
+
                               <CaixaTituloModal>
                                 <TituloModal>
                                   A sua consulta foi no {nomeModal}
