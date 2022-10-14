@@ -32,27 +32,60 @@ export const TabFiltro = styled.View`
 	flex-direction: row;
   width: 90%;
   height: auto;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
-	border-bottom-width: 2px;
-	border-color: ${Cores.cinza[11]};
-	margin-top: 10px;
+	margin-top: 5px;
 `;
 
 export const TextoTabFiltro = styled.Text`
 	width: 100%;
+	justify-content: center;
+	align-items: center;
 	text-align: center;
-	font-size: 16px;
-  color: ${Cores.cinza[2]};
-	margin-bottom: 5px;
+	font-size: 14px;
+	color: ${(props) => {
+    let cor;
+    if (!props.color) {
+      if (props.campoSelecionado) {
+        cor = Cores.azul;
+      } else {
+        cor = Cores.cinza[2];
+      }
+    } else {
+      cor = props.color;
+    }
+    return cor;
+  }};
+	margin-bottom: 2px;
 `;
  
 export const BotaoFiltro = styled.TouchableOpacity`
 	display: flex;
 	width: 50%;
-	height: 100%;
+	height: 70px;
+	justify-content: center;
+	align-items: center;
 	border-bottom-width: 3px;
-	border-color: ${Cores.azul};
+	border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if (props.campoSelecionado) {
+        cor = Cores.azul;
+      } else {
+        cor = Cores.cinza[2];
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+`;
+
+export const Scroll = styled.ScrollView`
+	display: flex;
+	flex: 1;
+	width: 100%;
+	background-color: ${Cores.branco};
 `;
 
 export const CaixaBaixo = styled.View`
@@ -67,13 +100,15 @@ export const CaixaBaixo = styled.View`
 export const Quadro = styled.View`
 	display: flex;
   width: 90%;
-	height: 90%;
+	height: 500px;
 	justify-content: flex-start;
 	align-items: center;
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	margin-top: 4%;
+	margin-bottom: 4%;
 	background-color: ${Cores.branco};
 	border-radius: 5px;
 	elevation: 8;
@@ -91,7 +126,7 @@ export const ContainerBotao = styled.View`
 	display: flex;
 	flex: 1;
 	width: 100%;
-	height: 100%;
+	height: 90%;
 	flex-direction: column;
 	justify-content: space-evenly;
 	align-items: center;

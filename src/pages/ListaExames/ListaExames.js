@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, ScrollView } from "react-native";
 import {
   Body,
   CaixaBaixo,
@@ -11,25 +11,38 @@ import {
   TextoQuadro,
   ContainerBotao,
   BotaoFiltro,
+  Scroll,
 } from "./Styles";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao/ConteudoBotao";
 import { Cores } from "../../variaveis";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function ListaExames({ navigation }) {
+  
+  const[agendamentoESugestoes, setAgendamentoESugestoes] = useState(false);
+  const[examesMarcados, setExamesMarcados] = useState(false);
+
   return (
     <Body>
       <CaixaCima>
         <TextoExames>Exames</TextoExames>
         <TabFiltro>
-          <BotaoFiltro>
-            <TextoTabFiltro>Agendamento e sugestões</TextoTabFiltro>
+          <BotaoFiltro
+          campoSelecionado={agendamentoESugestoes}>
+            <TextoTabFiltro
+            campoSelecionado={agendamentoESugestoes}
+            >Agendamento e sugestões</TextoTabFiltro>
           </BotaoFiltro>
-          <BotaoFiltro>
-            <TextoTabFiltro>Exames Marcados</TextoTabFiltro>
+          <BotaoFiltro
+          campoSelecionado={examesMarcados}>
+            <TextoTabFiltro
+            campoSelecionado={examesMarcados}
+            >Exames Marcados</TextoTabFiltro>
           </BotaoFiltro>
         </TabFiltro>
       </CaixaCima>
+      <Scroll>
       <CaixaBaixo>
         <Quadro>
           <TextoQuadro>
@@ -104,13 +117,14 @@ function ListaExames({ navigation }) {
               borderColor={Cores.azul}
               borderWidth="2px"
             >
-              <ConteudoBotao fontSize="14px" color="green" width="100%">
+              <ConteudoBotao fontSize="12px" color="green" width="100%">
                 Sugestões e Indicações(exames & profissionais)
               </ConteudoBotao>
             </Botao>
           </ContainerBotao>
         </Quadro>
       </CaixaBaixo>
+      </Scroll>
     </Body>
   );
 }
