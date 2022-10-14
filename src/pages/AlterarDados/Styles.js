@@ -259,11 +259,10 @@ export const Lgpd = styled.Text`
 
 export const CaixaTituloModal = styled.View`
   width: 80%;
-  height: 80%;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  margin-top: 2%;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 `;
 
@@ -277,14 +276,11 @@ export const CaixaTituloModalExcluir = styled.View`
   align-items: center;
 `;
 
-export const ImageModal = styled.Image`
-  width: 120px;
-  height: 120px;
+export const ImagemModal = styled.Image`
+ width: ${(props) => props.width};
+ height: ${(props) => props.height};
+ margin-top: 25px;
 
-  @media (min-width: 2000px) {
-    width: 250px;
-  height: 250px;
-  }
 `
 
 export const CaixaImagemBotao = styled.View`
@@ -298,14 +294,15 @@ export const CaixaImagemBotao = styled.View`
 `
 
 export const TituloModal = styled.Text`
-  font-size: 14px;
+  font-size: 18px;
+  font-weight:600;
   text-align: center;
 `;
 
 export const CaixaBotoesCancelarConfirmarModalExcluirFoto = styled.View`
   width: 100%;
-  margin-top: 10%;
   display: flex;
+  margin-top: 1%;
   flex-direction: row;
   justify-content: space-around;
 `;

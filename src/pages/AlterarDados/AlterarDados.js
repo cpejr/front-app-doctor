@@ -43,7 +43,7 @@ import {
   TituloModal,
   CaixaBotoesCancelarConfirmarModalExcluirFoto,
   CaixaImagemBotao,
-  ImageModal,
+  ImagemModal,
   CaixaTituloModalExcluir,
   PaginaCarregando,
   CaixaModalDeleteFoto,
@@ -99,13 +99,13 @@ function AlterarDados({ navigation }) {
   function deixandoModaisResponsivos() {
     if (width > height){
       setHeightModalDeletarFoto("65%");
-      setHeightModalUpdateFoto("80%");
-      setMarginTopModais("10%");
+      setHeightModalUpdateFoto("90%");
+      setMarginTopModais("2%");
     } 
     else {
       setHeightModalDeletarFoto("35%");
-      setHeightModalUpdateFoto("50%");
-      setMarginTopModais("60%");
+      setHeightModalUpdateFoto("53%");
+      setMarginTopModais("40%");
     }
   }
 
@@ -423,8 +423,8 @@ function AlterarDados({ navigation }) {
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
   const widthTitulo = width > height ? "100%" : "200px";
-  const tamanhoImagem = width > 2000 ? "200" : "100";
-  const tamanhoImagemModal = width > 2000 ? "200px" : "100px";
+  const tamanhoImagem = width > 2000 ? "400" : "180";
+  const tamanhoImagemModal = width > 2000 ? "400px" : "180px";
   return (
     <ScrollView>
       {carregando ? (
@@ -456,7 +456,7 @@ function AlterarDados({ navigation }) {
                 </ContainerFotoEAlterarImagem>
               ) : (
                 <ContainerFotoEAlterarImagem>
-                  <Foto borderColor={Cores.cinza[9]}>
+                  <Foto borderColor={Cores.branco}>
                     {carregandoFoto ? (
                       <>
                         <ActivityIndicator
@@ -521,7 +521,6 @@ function AlterarDados({ navigation }) {
                   <TituloModal>
                     Selecione uma imagem para personalizar seu perfil:
                   </TituloModal>
-                  <CaixaImagemBotao>
                     {imagem === null ? (
                       <Botao
                         width={tamanhoImagemModal}
@@ -532,20 +531,22 @@ function AlterarDados({ navigation }) {
                         borderWidth="3px"
                         boxShadow="none"
                         onPress={() => selecionaImagem()}
-                        marginTop="25px"
+                        //marginTop="25px"
                       >
                         <ConteudoBotao
                           width="90px"
-                          fontSize={tamanhoFonte}
+                          fontSize="20px"
                           color={Cores.azul}
                         >
                           +
                         </ConteudoBotao>
                       </Botao>
                     ) : (
-                      <ImageModal source={imagem}></ImageModal>
+                      <ImagemModal 
+                       width={tamanhoImagem}
+                       height={tamanhoImagem}
+                       source={imagem}></ImagemModal>
                     )}
-                  </CaixaImagemBotao>
                   <CaixaBotoesCancelarConfirmarModalExcluirFoto>
                     <Botao
                       width="40%"
