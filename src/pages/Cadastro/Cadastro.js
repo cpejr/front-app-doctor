@@ -13,7 +13,7 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import requisicaoErro from "../../utils/HttpErros";
 import { Picker } from "@react-native-picker/picker";
-import { ActivityIndicator, Colors, Checkbox } from "react-native-paper";
+import { ActivityIndicator, Colors, Checkbox, Button } from "react-native-paper";
 import {
   Body,
   CaixaTitulo,
@@ -756,7 +756,7 @@ function Cadastro({ navigation }) {
           />
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("LGPD");
+              navigation.push("LGPD");
             }}
           >
             <Lgpd fontFamily="BarlowMedium">
