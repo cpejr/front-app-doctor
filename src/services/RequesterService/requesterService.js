@@ -57,3 +57,5 @@ export const requisicaoFormularioPacienteEspecifico = (id) =>
     respostas: respostas,
     status: true,
   });
+
+  export const requisicaoExamesMarcadosPorId = (id) => api.get(`/exame_marcados/${id}`);
