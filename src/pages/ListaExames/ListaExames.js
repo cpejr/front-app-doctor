@@ -36,6 +36,7 @@ function ListaExames({ navigation }) {
   const [carregando, setCarregando] = useState();
 
   function alterarEstado() {
+    setCarregando(true);
     setEstadoAgendamentoESugestoes(!estadoAgendamentoESugestoes);
     setEstadoExamesMarcados(!estadoExamesMarcados);
   }
