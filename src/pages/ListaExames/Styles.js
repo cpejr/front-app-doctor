@@ -22,7 +22,7 @@ export const CaixaCima = styled.View`
 
 export const TextoExames = styled.Text`
   text-align: center;
-  font-size: 27px;
+  font-size: ${(props) => props.fontSize};
   color: ${Cores.azulEscuro};
 `;
 
@@ -60,7 +60,7 @@ export const TextoTabFiltro = styled.Text`
 export const BotaoFiltro = styled.TouchableOpacity`
   display: flex;
   width: 50%;
-  height: 50px;
+  height: ${(props) => props.height};
   justify-content: center;
   align-items: center;
   border-bottom-width: 3px;

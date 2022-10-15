@@ -33,7 +33,9 @@ function ListaExames({ navigation }) {
   const heightTela = `${Dimensions.get("window").height}px`;
   const widthTela = `${Dimensions.get("window").width}px`;
 
-  const telaPanorâmica = widthTela > heightTela ? "1%" : "4%";
+  const telaPanorâmica = widthTela > heightTela ? "1.2%" : "4%";
+  const tituloTelaPanorâmica = widthTela > heightTela ? "22px" : "27px";
+  const botaoEstadoTelaPanorâmica = widthTela > heightTela ? "30px" : "50px";
 
   const [estadoAgendamentoESugestoes, setEstadoAgendamentoESugestoes] =
     useState(true);
@@ -71,9 +73,10 @@ function ListaExames({ navigation }) {
   return (
     <Body>
       <CaixaCima marginTop={telaPanorâmica}>
-        <TextoExames>Exames</TextoExames>
+        <TextoExames fontSize={tituloTelaPanorâmica}>Exames</TextoExames>
         <TabFiltro marginTop={telaPanorâmica}>
           <BotaoFiltro
+            height={botaoEstadoTelaPanorâmica}
             campoSelecionado={estadoAgendamentoESugestoes}
             onPress={alterarEstado}
           >
@@ -82,6 +85,7 @@ function ListaExames({ navigation }) {
             </TextoTabFiltro>
           </BotaoFiltro>
           <BotaoFiltro
+            height={botaoEstadoTelaPanorâmica}
             campoSelecionado={estadoExamesMarcados}
             onPress={alterarEstado}
           >
