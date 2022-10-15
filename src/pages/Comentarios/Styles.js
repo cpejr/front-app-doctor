@@ -38,10 +38,9 @@ export const ContainerComentarios = styled.View`
   flex-direction: column;
   justify-content: center;
   align-items: center; 
-  padding-top: 15%;
-  padding-bottom: 35%;
-  margin-bottom: 10%;
-  margin-top: 5%;
+  padding-top: ${(props) => props.paddingTop};
+  padding-bottom: ${(props) => props.paddingBottom};
+  margin-bottom: ${(props) => props.paddingBottom};
 
 `
 
