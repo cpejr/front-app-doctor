@@ -17,7 +17,7 @@ export const CaixaCima = styled.View`
   height: auto;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 5%;
+  margin-top: ${(props) => props.marginTop};
 `;
 
 export const TextoExames = styled.Text`
@@ -33,7 +33,7 @@ export const TabFiltro = styled.View`
   height: auto;
   justify-content: center;
   align-items: center;
-  margin-top: 4px;
+  margin-top: ${(props) => props.marginTop};
 `;
 
 export const TextoTabFiltro = styled.Text`
@@ -148,7 +148,7 @@ export const QuadroExames = styled.View`
   elevation: 8;
 `;
 
-export const ContainerExames = styled.View`
+export const ContainerExames = styled.TouchableOpacity`
   display: flex;
   width: 100%;
   height: auto;

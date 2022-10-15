@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Dimensions } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import {
   Body,
@@ -29,6 +30,11 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaExames({ navigation }) {
+  const heightTela = `${Dimensions.get("window").height}px`;
+  const widthTela = `${Dimensions.get("window").width}px`;
+
+  const telaPanorâmica = widthTela > heightTela ? "1%" : "4%";
+
   const [estadoAgendamentoESugestoes, setEstadoAgendamentoESugestoes] =
     useState(true);
   const [estadoExamesMarcados, setEstadoExamesMarcados] = useState(false);
@@ -64,9 +70,9 @@ function ListaExames({ navigation }) {
 
   return (
     <Body>
-      <CaixaCima>
+      <CaixaCima marginTop={telaPanorâmica}>
         <TextoExames>Exames</TextoExames>
-        <TabFiltro>
+        <TabFiltro marginTop={telaPanorâmica}>
           <BotaoFiltro
             campoSelecionado={estadoAgendamentoESugestoes}
             onPress={alterarEstado}
