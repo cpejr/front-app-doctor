@@ -5,78 +5,66 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   ScrollView,
+  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
-import { Cores } from "../../variaveis";
-import Botao from "../../styles/Botao";
+import logoAmie from "./../../assets/logoAmie.jpg";
+import medicosAmie from "./../../assets/medicosAmie.webp";
 import {
   Body,
   CaixaSeta,
-  CaixaTitulo,
-  Titulo,
-  CaixaScroll,
   CaixaDescricao,
-  CaixaBotao,
-  CaixaCentro,
   Descricao,
-  TextoBotao,
+  Container,
+  ImagemLogo,
+  ImagemMedicos,
 } from "./Styles";
 
 function GrupoAMIE() {
   const { width } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const tamanhoIcone = width > 480 ? 20 : 25;
+  const WidthImagemMedicos = width > height ? 450 : 280;
+  const HeightImagemMedicos = width > height ? 350 : 180;
+  const WidthImagemLogo = width > height ? 300 : 250;
+  const HeightImagemLogo = width > height ? 200 : 150;
   const larguraBotoesMaior = width < 600 ? "60%" : "50%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
 
   return (
-    <Body>
+    <Container>
       <CaixaSeta>
         <TouchableOpacity>
           <Icon
             name="arrow-left"
             size={tamanhoIcone}
-            /* color={Cores.azul} */   color = "green"  
+            /* color={Cores.azul} */ color="green"
           />
         </TouchableOpacity>
       </CaixaSeta>
-      <CaixaTitulo>
-        <Titulo>Exame específico</Titulo>
-      </CaixaTitulo>
-      <CaixaCentro>
-        <ScrollView>
-          <CaixaScroll>
-            <CaixaDescricao>
-              <Descricao>
-                Você me ama? Perguntou Alice. — Não, não te amo! Respondeu o
-                Coelho Branco. Alice franziu a testa e juntou as mãos como fazia
-                sempre que se sentia ferida. —Vês? Retorquiu o Coelho Branco.
-                Agora vais começar a perguntar-te o que te torna tão imperfeita
-                e o que fizeste de mal para que eu não consiga amar-te pelo
-                menos um pouco. Sabes, é por esta razão que não te posso amar.
-
-              </Descricao>
-            </CaixaDescricao>
-          </CaixaScroll>
-        </ScrollView>
-      </CaixaCentro>
-      <CaixaBotao>
-        <Botao
-          width={larguraBotoes}
-          height="40px"
-          marginTop="0%"
-        /*   backgroundColor={Cores.cinza[11]} */
-        backgroundColor="green"
-          borderRadius="3px"
-          borderColor={Cores.azul}
-          borderWidth="2px"
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
-        >
-          <TextoBotao>Agendar Exame Específico</TextoBotao>
-        </Botao>
-      </CaixaBotao>
-    </Body>
+      <ScrollView>
+        <Body>
+          <ImagemLogo 
+           width={WidthImagemLogo}
+           height={HeightImagemLogo}source={logoAmie}></ImagemLogo>
+          <CaixaDescricao>
+            <Descricao>
+              O grupo de Avaliação e Manejo Integrado das Epilepsias (AMIE) foi
+              idealizado e fundado pelos Neurologistas e Neurofisiologistas
+              Clínicos Dr. Guilherme Marques e Dra. Izabela Feitosa, e pelo
+              Neurocirurgião Dr. Pedro Henrique, com o propósito de prestar
+              assistência médica de excelência para as pessoas com epilepsia em
+              Belo Horizonte e região metropolitana.
+            </Descricao>
+          </CaixaDescricao>
+          <ImagemMedicos 
+          width={WidthImagemMedicos}
+          height={HeightImagemMedicos}
+          source={medicosAmie}></ImagemMedicos>
+        </Body>
+      </ScrollView>
+    </Container>
   );
 }
 
 export default GrupoAMIE;
-

@@ -54,12 +54,12 @@ function Home({ navigation }) {
         onPress={() => navigation.navigate("ListaReceitas")}
       />
       <Button
-        title="Go to ListaFormularios"
-        onPress={() => navigation.navigate("ListaFormularios")}
+        title="Go to Grupo AMIE"
+        onPress={() => navigation.navigate("GrupoAMIE")}
       />
       <Button
-        title="Go to Arquivos"
-        onPress={() => navigation.navigate("Arquivos")}
+        title="Go to ListaFormularios"
+        onPress={() => navigation.navigate("ListaFormularios")}
       />
     </View>
   );
