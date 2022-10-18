@@ -54,10 +54,6 @@ function Home({ navigation }) {
         onPress={() => navigation.navigate("ListaReceitas")}
       />
       <Button
-        title="Go to Grupo AMIE"
-        onPress={() => navigation.navigate("GrupoAMIE")}
-      />
-      <Button
         title="Go to ListaFormularios"
         onPress={() => navigation.navigate("ListaFormularios")}
       />
