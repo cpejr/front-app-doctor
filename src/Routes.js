@@ -85,6 +85,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="AlterarSenha" component={AlterarSenha} />
       <HomeStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <HomeStack.Screen name="ListaFormularios" component={ListaFormularios} />
+      <HomeStack.Screen name="SolicitarExame" component={SolicitarExame} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
     </HomeStack.Navigator>
@@ -99,14 +100,8 @@ function ArquivosStackScreen() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Arquivos"
     >
-      <ArquivosStack.Screen
-        name="Arquivos"
-        component={Arquivos}
-      />
-      <ArquivosStack.Screen
-        name="ListaReceitas"
-        component={ListaReceitas}
-      />
+      <ArquivosStack.Screen name="Arquivos" component={Arquivos} />
+      <ArquivosStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <ArquivosStack.Screen
         name="ListaFormularios"
         component={ListaFormularios}
@@ -115,7 +110,6 @@ function ArquivosStackScreen() {
         name="PreencherFormulario"
         component={PreencherFormulario}
       />
-
     </ArquivosStack.Navigator>
   );
 }
@@ -150,7 +144,7 @@ function ExamesStackScreen() {
     >
       <ExamesStack.Screen name="Exames" component={Exames} />
       <ExamesStack.Screen name="FormaPagamento" component={FormaPagamento} />
-      <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
+      {/*  <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} /> */}
     </ExamesStack.Navigator>
   );
 }
@@ -245,7 +239,10 @@ function Routes() {
       >
         <Stack.Screen name="Tabs" component={TabScreen} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="AlterarSenhaComEmail" component={AlterarSenhaComEmail} />
+        <Stack.Screen
+          name="AlterarSenhaComEmail"
+          component={AlterarSenhaComEmail}
+        />
         <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>
