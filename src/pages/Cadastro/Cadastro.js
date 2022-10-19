@@ -220,7 +220,6 @@ function Cadastro({ navigation }) {
     }
   }
 
-  // Segundo pegando id do formulário de urgencia
   async function pegandoFormularioEspecifico() {
     id = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
     const resposta = await managerService.GetFormularioEspecifico(id);
