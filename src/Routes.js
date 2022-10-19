@@ -27,6 +27,7 @@ import SolicitarExame from "./pages/SolicitarExame";
 import Header from "./pages/Header";
 import LGPD from "./pages/LGPD/Lgpd";
 import Arquivos from "./pages/Arquivos";
+import FormularioEmergencia from "./pages/FormularioEmergencia";
 
 import { View, Image } from "react-native";
 
@@ -87,6 +88,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="ListaFormularios" component={ListaFormularios} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
+      <HomeStack.Screen name="FormularioEmergencia" component={FormularioEmergencia} />
+
     </HomeStack.Navigator>
   );
 }
