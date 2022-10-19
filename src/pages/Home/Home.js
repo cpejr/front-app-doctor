@@ -63,7 +63,7 @@ function Home({ navigation }) {
       />
       <Button
         title="Go to Formulário de Emergência"
-        onPress={() => navigation.navigate("FormularioEmergencia")}
+        onPress={() => navigation.push("FormularioEmergencia")}
       />
     </View>
   );

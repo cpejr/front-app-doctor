@@ -290,9 +290,7 @@ export const EnviandoFormularioPaciente = async (
       id_formulario,
       id_usuario
     )
-    .then(() => {
-      
-    })
+    .then(() => {})
     .catch((error) => {
       requisicaoErro(error);
       return false;
@@ -367,17 +365,4 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
     });
 
   return false;
-};
-
-export const GetFormularioEspecifico = async (id) => {
-  let dadosFormulario = {};
-  await requesterService
-    .requisicaoFormularioEspecifico(id)
-    .then((res) => {
-      dadosFormulario = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosFormulario;
 };
