@@ -21,7 +21,7 @@ export const requisicaoCriarUsuario = async (estado, endereco) => {
       return requesterService
         .CriarUsuario(estado, res.data.id)
         .then((res) => {
-          return true;
+          return res.data;
         })
         .catch((error) => {
           requisicaoErro(error);
@@ -87,7 +87,7 @@ export const GetTodosUsuarios = async () => {
 export const EnviandoEmail = async (email) => {
   const resposta = await requesterService.requisicaoDadosUsuario(email);
   if (resposta.status === 204) {
-    Alert.alert("Erro","E-mail inexistente!");
+    Alert.alert("Erro", "E-mail inexistente!");
     return;
   }
 
@@ -277,6 +277,55 @@ export const GetDadosReceitas = async () => {
   return { dadosReceitas, dadosUsuario };
 };
 
+export const EnviandoFormularioPaciente = async (
+  status,
+  notificacao_ativa,
+  id_formulario,
+  id_usuario
+) => {
+  await requesterService
+    .enviarFormularioPaciente(
+      status,
+      notificacao_ativa,
+      id_formulario,
+      id_usuario
+    )
+    .then(() => {
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+export const GetFormularioEspecifico = async (id) => {
+  let dadosFormulario = {};
+  await requesterService
+    .requisicaoFormularioEspecifico(id)
+    .then((res) => {
+      dadosFormulario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosFormulario;
+};
+
+
+export const GetFormularios = async () => {
+  let dadosFormularios = {};
+  await requesterService
+    .requisicaoFormularios()
+    .then((res) => {
+      dadosFormularios = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosFormularios;
+};
+
 export const GetFormularioPacienteEspecifico = async (id) => {
   let dadosFormulario = {};
   await requesterService
@@ -317,3 +366,4 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
 
   return false;
 };
+
