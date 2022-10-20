@@ -35,7 +35,7 @@ function SolicitarExame() {
           <Icon
             name="arrow-left"
             size={tamanhoIcone}
-            /* color={Cores.azul} */   color = "green"  
+            /* color={Cores.azul} */ color="green"
           />
         </TouchableOpacity>
       </CaixaSeta>
@@ -43,9 +43,9 @@ function SolicitarExame() {
         <Titulo>Exame específico</Titulo>
       </CaixaTitulo>
       <CaixaCentro>
-        <ScrollView>
-          <CaixaScroll>
-            <CaixaDescricao>
+        <CaixaScroll>
+          <CaixaDescricao>
+            <ScrollView>          
               <Descricao>
                 Você me ama? Perguntou Alice. — Não, não te amo! Respondeu o
                 Coelho Branco. Alice franziu a testa e juntou as mãos como fazia
@@ -53,19 +53,18 @@ function SolicitarExame() {
                 Agora vais começar a perguntar-te o que te torna tão imperfeita
                 e o que fizeste de mal para que eu não consiga amar-te pelo
                 menos um pouco. Sabes, é por esta razão que não te posso amar.
-
               </Descricao>
-            </CaixaDescricao>
-          </CaixaScroll>
-        </ScrollView>
+            </ScrollView>
+          </CaixaDescricao>
+        </CaixaScroll>
       </CaixaCentro>
       <CaixaBotao>
         <Botao
           width={larguraBotoes}
           height="40px"
           marginTop="0%"
-        /*   backgroundColor={Cores.cinza[11]} */
-        backgroundColor="green"
+          /*   backgroundColor={Cores.cinza[11]} */
+          backgroundColor="green"
           borderRadius="3px"
           borderColor={Cores.azul}
           borderWidth="2px"

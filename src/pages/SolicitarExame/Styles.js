@@ -13,18 +13,19 @@ export const Body = styled.View`
 
 export const CaixaSeta = styled.View`
   width: 100%;
-  height: 8%;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-left: 10px;
+  padding-top:10px;
 `;
 
 export const CaixaCentro = styled.View`
   width: 100%;
-  height: 60%;
+  height: 50%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -36,6 +37,7 @@ export const CaixaTitulo = styled.View`
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 
 export const Titulo = styled.Text`
@@ -48,28 +50,29 @@ export const CaixaScroll = styled.View`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 5%;
-  padding-bottom: 5%;
+  padding-top: 2%;
+  padding-bottom: 3%;
 `;
 
 export const CaixaDescricao = styled.View`
-  width: 75%;
-  min-height: 200px;
+  width: 80%;
+  min-height: 150px;
   height: auto;
   border-style: solid;
   border-width: 2px;
   border-radius: 5px;
   border-color: ${Cores.azul};
-  padding: 4%;
+  padding: 3%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   elevation: 5;
   background-color: green;
+  
 `;
 
 export const Descricao = styled.Text`
@@ -89,6 +92,7 @@ export const CaixaBotao = styled.View`
   justify-content: center;
   background-color: ${Cores.branco};
   padding: 4%;
+
  
 `;
 
