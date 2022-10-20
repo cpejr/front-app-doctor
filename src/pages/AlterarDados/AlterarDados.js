@@ -47,7 +47,8 @@ import {
   CaixaTituloModalExcluir,
   PaginaCarregando,
   CaixaModalDeleteFoto,
-  CaixaModalUpdateFoto
+  CaixaModalUpdateFoto,
+  CaixaExterna
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { estados } from "./estados";
@@ -98,14 +99,14 @@ function AlterarDados({ navigation }) {
 
   function deixandoModaisResponsivos() {
     if (width > height){
-      setHeightModalDeletarFoto("65%");
-      setHeightModalUpdateFoto("90%");
-      setMarginTopModais("2%");
+      setHeightModalDeletarFoto("55%");
+      setHeightModalUpdateFoto("85%");
+      setMarginTopModais("0%");
     } 
     else {
       setHeightModalDeletarFoto("35%");
       setHeightModalUpdateFoto("60%");
-      setMarginTopModais("20%");
+      setMarginTopModais("0%");
     }
   }
 
@@ -507,6 +508,7 @@ function AlterarDados({ navigation }) {
               transparent={true}
               visible={modalAdicionarFoto}
             >
+              <CaixaExterna height={height} width={width}>
               <CaixaModalUpdateFoto height={heightModalUpdateFoto} marginTop={marginTopModais}>
                 <CaixaFechar>
                   <TouchableOpacity
@@ -594,12 +596,14 @@ function AlterarDados({ navigation }) {
                   </CaixaBotoesCancelarConfirmarModalExcluirFoto>
                 </CaixaTituloModal>
               </CaixaModalUpdateFoto>
+              </CaixaExterna>
             </Modal>
             <Modal
               animationType="slide"
               transparent={true}
               visible={modalExcluirFoto}
             >
+              <CaixaExterna height={height} width={width}>
               <CaixaModalDeleteFoto height={heightModalDeletarFoto} marginTop={marginTopModais}>
                 <CaixaFechar>
                   <TouchableOpacity
@@ -661,9 +665,10 @@ function AlterarDados({ navigation }) {
                   </Botao>
                 </CaixaBotoesCancelarConfirmarModalExcluirFoto>
               </CaixaModalDeleteFoto>
+              </CaixaExterna>
             </Modal>
 
-            <CaixaInputs width={tamanhoInputs}>
+            <CaixaInputs width={tamanhoInputs} >
               <CaixaTitulosRotulos>
                 <TituloRotulos>Nome:</TituloRotulos>
               </CaixaTitulosRotulos>
