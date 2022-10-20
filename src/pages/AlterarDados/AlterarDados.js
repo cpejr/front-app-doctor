@@ -104,8 +104,8 @@ function AlterarDados({ navigation }) {
     } 
     else {
       setHeightModalDeletarFoto("35%");
-      setHeightModalUpdateFoto("53%");
-      setMarginTopModais("40%");
+      setHeightModalUpdateFoto("60%");
+      setMarginTopModais("20%");
     }
   }
 
