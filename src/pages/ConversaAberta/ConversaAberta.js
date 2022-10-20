@@ -21,7 +21,7 @@ import {
   CaixaTexto,
   PaginaCarregando
 } from "./Styles";
-import { Cores } from "../../../variaveis";
+import { Cores } from "../../variaveis";
 import IconeMaterial from "react-native-vector-icons/MaterialIcons";
 import IconeIon from "react-native-vector-icons/Ionicons";
 import IconeFoundation from "react-native-vector-icons/Foundation";

@@ -10,13 +10,13 @@ import {
   CaixaImagem,
   TextoCaixa,
   CaixaUsuarioMensagem,
-  PaginaCarregando
+  PaginaCarregando,
 } from "./Styles";
-import searchIcon from "../../../assets/searchIcon.png";
-import * as managerService from "../../../services/ManagerService/managerService";
-import Botao from "../../../styles/Botao";
-import ConteudoBotao from "../../../styles/ConteudoBotao";
-import { Cores } from "../../../variaveis";
+import searchIcon from "../../assets/searchIcon.png";
+import * as managerService from "../../services/ManagerService/managerService";
+import Botao from "../../styles/Botao";
+import ConteudoBotao from "../../styles/ConteudoBotao";
+import { Cores } from "../../variaveis";
 import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
 
 function BarraLateral({ navigation }) {
@@ -25,7 +25,7 @@ function BarraLateral({ navigation }) {
   const onChangeBusca = (busca) => setBusca(busca);
   const [carregando, setCarregando] = useState(false);
 
-  const imagemPerfilPadrão = require("../../../assets/logoGuilherme.png");
+  const imagemPerfilPadrão = require("../../assets/logoGuilherme.png");
 
   const vetorUsuariosMensagem = [
     {

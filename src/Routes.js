@@ -26,8 +26,8 @@ import SolicitarExame from "./pages/SolicitarExame";
 import Header from "./pages/Header";
 import LGPD from "./pages/LGPD/Lgpd";
 import Arquivos from "./pages/Arquivos";
-import BarraLateral from "./pages/Chat/BarraLateral";
-import ConversaAberta from "./pages/Chat/ConversaAberta";
+import BarraLateral from "./pages/BarraLateral/BarraLateral";
+import ConversaAberta from "./pages/ConversaAberta/ConversaAberta";
 
 import { View, Image } from "react-native";
 

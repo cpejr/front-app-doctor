@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { Cores } from "../../../variaveis";
+import { Cores } from "../../variaveis";
 import { View, Text } from "react-native";
 import { TextInput } from "react-native";
 import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
