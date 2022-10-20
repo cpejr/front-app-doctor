@@ -299,13 +299,10 @@ export const EnviandoFormularioPaciente = async (
     });
   return;
 };
-
 export const GetFormularioEspecifico = async (id) => {
   let dadosFormulario = {};
-
   await requesterService
     .requisicaoFormularioEspecifico(id)
-
     .then((res) => {
       dadosFormulario = res.data;
     })
@@ -314,6 +311,7 @@ export const GetFormularioEspecifico = async (id) => {
     });
   return dadosFormulario;
 };
+
 
 export const GetFormularios = async () => {
   let dadosFormularios = {};
@@ -369,15 +367,3 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
   return false;
 };
 
-export const GetFormularioEspecifico = async (id) => {
-  let dadosFormulario = {};
-  await requesterService
-    .requisicaoFormularioEspecifico(id)
-    .then((res) => {
-      dadosFormulario = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosFormulario;
-};
