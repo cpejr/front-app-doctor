@@ -1,23 +1,24 @@
 import React, { useEffect } from "react";
-import { ScrollView, TouchableOpacity, Text, useWindowDimensions } from "react-native";
+import { ScrollView, TouchableOpacity, Text, useWindowDimensions, View } from "react-native";
 import {
   Body,
   Titulo,
   Subtitulo,
   TituloPrimeiroTopico,
   TextoPrimeiroTopico,
+  ViewBotao,
 } from "./Styles";
 import { Checkbox } from "react-native-paper";
 import { useFonts } from "expo-font";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 
-function LGPD({navigation}) {
+function LGPD({ navigation }) {
   const width = useWindowDimensions().width
   const height = useWindowDimensions().height
 
-  const fontSizeBotao = height > width ? "13px" : "17px"
-  
+  const fontSizeBotao = height > width ? "15px" : "19px"
+
 
   const [loaded] = useFonts({
     BarlowSemibold: require("../../assets/fonts/Barlow-SemiBold.ttf"),
@@ -30,8 +31,9 @@ function LGPD({navigation}) {
 
 
   return (
-    <ScrollView>
-      <Body>
+
+    <Body>
+      <ScrollView>
         <Titulo fontFamily="BarlowSemibold">Termos e Condições</Titulo>
         <Subtitulo fontFamily="BarlowMedium">
           Por meio do presente instrumento, são estabelecidos os termos e as
@@ -54,9 +56,11 @@ function LGPD({navigation}) {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </TextoPrimeiroTopico>
+      </ScrollView>
+      <ViewBotao>
         <Botao
-          width="30%"
-          height="35px"
+          width="35%"
+          height="40px"
           backgroundColor="#838ad0"
           borderRadius="3px"
           borderColor="#151B57"
@@ -65,12 +69,12 @@ function LGPD({navigation}) {
             navigation.navigate("Cadastro");
           }}
         >
-          <ConteudoBotao fontSize={fontSizeBotao}color="#151B57" width="100%">
+          <ConteudoBotao fontSize={fontSizeBotao} color="#151B57" width="100%">
             Voltar ao cadastro
           </ConteudoBotao>
         </Botao>
-      </Body>
-    </ScrollView>
+      </ViewBotao>
+    </Body>
   );
 }
 
