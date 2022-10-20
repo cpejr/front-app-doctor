@@ -28,8 +28,8 @@ import Header from "./pages/Header";
 import LGPD from "./pages/LGPD/Lgpd";
 import Arquivos from "./pages/Arquivos";
 
-import Icon from "react-native-vector-icons/Ionicons";
-import Icon2 from "react-native-vector-icons/AntDesign";
+import IonIcon from "react-native-vector-icons/Ionicons";
+import AntIcon from "react-native-vector-icons/AntDesign";
 import { Cores } from "./variaveis";
 
 import { View, Image } from "react-native";
@@ -37,14 +37,14 @@ import { View, Image } from "react-native";
 function HomeIcon() {
   return (
     <View width={35} >
-      <Icon name="home-outline" size={35} color={Cores.branco}  />
+      <IonIcon name="home-outline" size={35} color={Cores.branco}  />
     </View>
   );
 }
 function ArquivosIcon() {
   return (
     <View width={35}>
-      <Icon name="file-tray-full-outline" size={35} color={Cores.branco}  />
+      <IonIcon name="file-tray-full-outline" size={35} color={Cores.branco}  />
     </View>
   );
 }
@@ -58,7 +58,7 @@ function ArquivosIcon() {
 function ConsultasIcon() {
   return (
     <View width={35}>
-      <Icon2 name="calendar" size={35} color={Cores.branco}  />
+      <AntIcon name="calendar" size={35} color={Cores.branco}  />
     </View>
   );
 }
