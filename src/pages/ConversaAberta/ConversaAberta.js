@@ -39,7 +39,7 @@ function ConversaAberta({ navigation, route }) {
           name="arrow-left"
           size={32}
           color={Cores.azul}
-          onPress={() => navigation.navigate("BarraLateral")}
+          onPress={() => navigation.push("BarraLateral")}
         />
         <ImagemUsuario source={conversaClicada.imagemPerfil} />
         <CaixaTexto>
