@@ -24,7 +24,7 @@ import Botao from "../../styles/Botao";
 
 function SolicitarExame() {
   const { width } = useWindowDimensions();
-  const tamanhoIcone = width > 480 ? 20 : 25;
+  const tamanhoIcone = width > 480 ? 45 : 55;
   const larguraBotoesMaior = width < 600 ? "60%" : "50%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
 
