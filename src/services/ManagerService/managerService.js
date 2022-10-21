@@ -367,3 +367,16 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
   return false;
 };
 
+export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
+  let mensagensAtualizadas = {};
+  await requesterService
+    .updateMensagensVisualizadas(id_usuario, id_conversa)
+    .then((res) => {
+      mensagensAtualizadas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return mensagensAtualizadas;
+};

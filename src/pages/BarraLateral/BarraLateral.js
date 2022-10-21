@@ -18,6 +18,8 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import { Cores } from "../../variaveis";
 import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
+import { ChatContext } from "../../contexts/ChatContext/ChatContext";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
 
 function BarraLateral({ navigation }) {
   const [busca, setBusca] = useState("");
@@ -25,53 +27,35 @@ function BarraLateral({ navigation }) {
   const onChangeBusca = (busca) => setBusca(busca);
   const [carregando, setCarregando] = useState(false);
 
-  const imagemPerfilPadrão = require("../../assets/logoGuilherme.png");
+  const {
+    usuarioId,
+    conversas,
+    setConversas,
+    setConversaSelecionada,
+    imagemPerfilPadrão,
+  } = useContext(ChatContext);
 
-  const vetorUsuariosMensagem = [
-    {
-      id: "41b266f8-5bcd-4e74-94b0-465aefb0f9dab",
-      nome: "Matheus",
-      ultimaMensagem: "teste Mensagem",
-      imagemPerfil: imagemPerfilPadrão,
-    },
-    {
-      id: "41b266f8-5bcd-4e74-94b0-4d6aefb0f9dab",
-      nome: "Matheus",
-      ultimaMensagem: "teste Mensagem",
-      imagemPerfil: imagemPerfilPadrão,
-    },
-    {
-      id: "41b266f8-5bcd-4e74-94b0-g65aefb0f9dab",
-      nome: "Matheus",
-      ultimaMensagem: "teste Mensagem",
-      imagemPerfil: imagemPerfilPadrão,
-    },
-    {
-      id: "41f266f8-5bcd-4e74-94b0-465aefb0f9dab",
-      nome: "Matheus",
-      ultimaMensagem: "teste Mensagem",
-      imagemPerfil: imagemPerfilPadrão,
-    },
-    {
-      id: "41b266g8-5bcd-4e74-94b0-465aefb0f9dab",
-      nome: "Matheus",
-      ultimaMensagem: "teste Mensagem",
-      imagemPerfil: imagemPerfilPadrão,
-    },
-    {
-      id: "41b266f8b5bcd-4e74-94b0-465aefb0f9dac",
-      nome: "Adrianus",
-      ultimaMensagem: "teste Mensagem dois",
-      imagemPerfil: imagemPerfilPadrão,
-    },
-    {
-      id: "41b266f865bcd-4e74-94b0-465aefb0f9da",
-      nome: "Laura Maria da Silva Carvalho Alexander Pardini Prado Neto ",
-      ultimaMensagem:
-        "teste Mensagem três agora com uma mensagem grnade muiti aaaa huttryturjfb ssss sss sss s sss sss sss s ss ss s s s ss ss ss ss s sss ",
-      imagemPerfil: imagemPerfilPadrão,
-    },
-  ];
+  const cliqueNaConversa = (conversa) => {
+    return async (e) => {
+      e.preventDefault();
+
+      const index = conversas.findIndex(({ id }) => id === conversa.id);
+      const copiaConversas = objCopiaProfunda(conversas);
+
+      const conversaNaLista = copiaConversas[index];
+
+      if (conversaNaLista.mensagensNaoVistas) {
+        conversaNaLista.mensagensNaoVistas = 0;
+        await managerService.UpdateMensagensVisualizadas(
+          usuarioId,
+          conversa.id
+        );
+      }
+
+      setConversaSelecionada(conversaNaLista);
+      setConversas(copiaConversas);
+    };
+  };
 
   const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
     if (lowerBusca === "") return vetorUsuariosMensagem;
@@ -85,15 +69,15 @@ function BarraLateral({ navigation }) {
       );
   });
 
-  async function abrirMensagemClicada(conversa) {
-    if (conversa.id) {
-      navigation.push("ConversaAberta", {
-        paramKey: conversa,
-      });
-    } else {
-      Alert.alert("Erro ao abrir a conversa.");
-    }
-  }
+  // async function abrirMensagemClicada(conversa) {
+  //   if (conversa.id) {
+  //     navigation.push("ConversaAberta", {
+  //       paramKey: conversa,
+  //     });
+  //   } else {
+  //     Alert.alert("Erro ao abrir a conversa.");
+  //   }
+  // }
 
   return (
     <Body>
@@ -111,23 +95,30 @@ function BarraLateral({ navigation }) {
         </PaginaCarregando>
       ) : (
         <ScrollView>
-          {MensagensFiltradas?.map((value) => (
+          {conversas?.map((value, idx) => (
             <TouchableOpacity
+              key={idx}
               onPress={() => {
-                abrirMensagemClicada(value);
+                cliqueNaConversa(value);
               }}
             >
               <CaixaUsuarioMensagem>
                 <CaixaImagem>
                   <ImagemUsuario
                     border-radius="3px"
-                    source={value.imagemPerfil}
+                    source={value.conversaCom.imagemPerfil}
                   ></ImagemUsuario>
                 </CaixaImagem>
                 <CaixaTexto>
-                  <TextoCaixa fontSize="17px">{value.nome} </TextoCaixa>
-                  <TextoCaixa fontSize="13px">
-                    Última Mensagem: {value.ultimaMensagem}{" "}
+                  <TextoCaixa fontSize="17px">
+                    {value.conversaCom.nome}
+                  </TextoCaixa>
+                  <TextoCaixa
+                    fontSize="13px"
+                    naoVisto={value.mensagensNaoVistas}
+                  >
+                    {value?.ultima_mensagem?.pertenceAoUsuarioAtual && "Você: "}
+                    {value?.ultima_mensagem?.conteudo}
                   </TextoCaixa>
                 </CaixaTexto>
               </CaixaUsuarioMensagem>
