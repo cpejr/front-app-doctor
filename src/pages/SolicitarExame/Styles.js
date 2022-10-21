@@ -18,7 +18,7 @@ export const CaixaSeta = styled.View`
   flex-direction: row;
   align-items: center;
   padding-left: 10px;
-  padding-top:10px;
+  padding-top:4px;
 `;
 
 export const CaixaCentro = styled.View`
@@ -91,7 +91,7 @@ export const CaixaBotao = styled.View`
   align-items: center;
   justify-content: center;
   background-color: ${Cores.branco};
-  padding: 4%;
+  padding: 3%;
 
  
 `;
