@@ -6,7 +6,6 @@ import AlterarDados from "./pages/AlterarDados";
 import AlterarSenha from "./pages/AlterarSenha";
 import AlterarSenhaComEmail from "./pages/AlterarSenhaComEmail";
 import Cadastro from "./pages/Cadastro";
-import Chat from "./pages/Chat";
 import Comentarios from "./pages/Comentarios";
 import Consultas from "./pages/Consultas";
 import Emergencia from "./pages/Emergencia";
@@ -28,6 +27,8 @@ import Header from "./pages/Header";
 import LGPD from "./pages/LGPD/Lgpd";
 import Arquivos from "./pages/Arquivos";
 import FormularioEmergencia from "./pages/FormularioEmergencia";
+import BarraLateral from "./pages/BarraLateral/BarraLateral";
+import ConversaAberta from "./pages/ConversaAberta/ConversaAberta";
 
 import IonIcon from "react-native-vector-icons/Ionicons";
 import AntIcon from "react-native-vector-icons/AntDesign";
@@ -63,13 +64,13 @@ function ConsultasIcon() {
     </View>
   );
 }
-// function ChatIcon() {
-//   return (
-//     <View>
-//       <Image source={require("./assets/chaticon.png")} />
-//     </View>
-//   );
-// }
+ function ChatIcon() {
+   return (
+    <View>
+       <Image source={require("./assets/chaticon.png")} />
+     </View>
+   );
+ }
 
 const HomeStack = createNativeStackNavigator();
 
@@ -94,6 +95,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="LGPD" component={LGPD} />
       <HomeStack.Screen name="FormularioEmergencia" component={FormularioEmergencia} />
 
+      <HomeStack.Screen name="BarraLateral" component={BarraLateral} />
+      <HomeStack.Screen name="ConversaAberta" component={ConversaAberta} />
     </HomeStack.Navigator>
   );
 }
@@ -106,14 +109,8 @@ function ArquivosStackScreen() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Arquivos"
     >
-      <ArquivosStack.Screen
-        name="Arquivos"
-        component={Arquivos}
-      />
-      <ArquivosStack.Screen
-        name="ListaReceitas"
-        component={ListaReceitas}
-      />
+      <ArquivosStack.Screen name="Arquivos" component={Arquivos} />
+      <ArquivosStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <ArquivosStack.Screen
         name="ListaFormularios"
         component={ListaFormularios}
@@ -122,7 +119,6 @@ function ArquivosStackScreen() {
         name="PreencherFormulario"
         component={PreencherFormulario}
       />
-
     </ArquivosStack.Navigator>
   );
 }
@@ -189,9 +185,16 @@ function ChatStackScreen() {
   return (
     <ChatStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Chat"
+      initialRouteName="BarraLateral"
     >
-      <ChatStack.Screen name="Chat" component={Chat} />
+      <ChatStack.Screen
+        name="BarraLateral"
+        component={BarraLateral}
+      />
+      <ChatStack.Screen
+        name="ConversaAberta"
+        component={ConversaAberta}
+      />
     </ChatStack.Navigator>
   );
 }
@@ -233,9 +236,14 @@ function TabScreen() {
         component={ArquivosStackScreen}
       />
       <Tab.Screen
-        name="botao4"
+        name="botao3"
         options={{ tabBarIcon: ConsultasIcon, title: "Consultas" }}
         component={ConsultasStackScreen}
+      />
+      <Tab.Screen
+        name="botao4"
+        options={{ tabBarIcon: ChatIcon, title: "Chat" }}
+        component={ChatStackScreen}
       />
     </Tab.Navigator>
   );
@@ -252,7 +260,10 @@ function Routes() {
       >
         <Stack.Screen name="Tabs" component={TabScreen} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="AlterarSenhaComEmail" component={AlterarSenhaComEmail} />
+        <Stack.Screen
+          name="AlterarSenhaComEmail"
+          component={AlterarSenhaComEmail}
+        />
         <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>
