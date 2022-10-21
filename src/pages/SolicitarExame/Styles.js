@@ -16,9 +16,9 @@ export const CaixaSeta = styled.View`
   height: auto;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   padding-left: 10px;
-  padding-top:5px;
+  padding-top:10px;
 `;
 
 export const CaixaCentro = styled.View`
@@ -41,7 +41,7 @@ export const CaixaTitulo = styled.View`
 `;
 
 export const Titulo = styled.Text`
-  font-size: 24px;
+  font-size: 27px;
   font-weight: 600;
   color: green;
 `;
@@ -91,8 +91,9 @@ export const CaixaBotao = styled.View`
   align-items: center;
   justify-content: center;
   background-color: ${Cores.branco};
-  padding: 3%;
+  padding: 4%;
 
+ 
 `;
 
 export const TextoBotao = styled.Text`
