@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useWindowDimensions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AlterarDados from "./pages/AlterarDados";
@@ -26,46 +26,51 @@ import SolicitarExame from "./pages/SolicitarExame";
 import Header from "./pages/Header";
 import LGPD from "./pages/LGPD/Lgpd";
 import Arquivos from "./pages/Arquivos";
+import FormularioEmergencia from "./pages/FormularioEmergencia";
 import BarraLateral from "./pages/BarraLateral/BarraLateral";
 import ConversaAberta from "./pages/ConversaAberta/ConversaAberta";
+
+import IonIcon from "react-native-vector-icons/Ionicons";
+import AntIcon from "react-native-vector-icons/AntDesign";
+import { Cores } from "./variaveis";
 
 import { View, Image } from "react-native";
 
 function HomeIcon() {
   return (
-    <View>
-      <Image source={require("./assets/homeicon.png")} />
+    <View width={35} >
+      <IonIcon name="home-outline" size={35} color={Cores.branco}  />
     </View>
   );
 }
-function FormulariosIcon() {
+function ArquivosIcon() {
   return (
-    <View>
-      <Image source={require("./assets/formulariosicon.png")} />
+    <View width={35}>
+      <IonIcon name="file-tray-full-outline" size={35} color={Cores.branco}  />
     </View>
   );
 }
-function ExamesIcon() {
-  return (
-    <View>
-      <Image source={require("./assets/examesicon.png")} />
-    </View>
-  );
-}
+// function ExamesIcon() {
+//   return (
+//     <View>
+//       <Image source={require("./assets/examesicon.png")} />
+//     </View>
+//   );
+// }
 function ConsultasIcon() {
   return (
-    <View>
-      <Image source={require("./assets/consultasicon.png")} />
+    <View width={35}>
+      <AntIcon name="calendar" size={35} color={Cores.branco}  />
     </View>
   );
 }
-function ChatIcon() {
-  return (
+ function ChatIcon() {
+   return (
     <View>
-      <Image source={require("./assets/chaticon.png")} />
-    </View>
-  );
-}
+       <Image source={require("./assets/chaticon.png")} />
+     </View>
+   );
+ }
 
 const HomeStack = createNativeStackNavigator();
 
@@ -88,6 +93,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="ListaFormularios" component={ListaFormularios} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
+      <HomeStack.Screen name="FormularioEmergencia" component={FormularioEmergencia} />
+
       <HomeStack.Screen name="BarraLateral" component={BarraLateral} />
       <HomeStack.Screen name="ConversaAberta" component={ConversaAberta} />
     </HomeStack.Navigator>
@@ -202,7 +209,7 @@ function TabScreen() {
         headerBackground: (props) => <Header {...props} />,
         headerStyle: {
           backgroundColor: "#151B57",
-          height: 100,
+          height: 70,
         },
         tabBarStyle: {
           backgroundColor: "#151B57",
@@ -225,7 +232,7 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao2"
-        options={{ tabBarIcon: FormulariosIcon, title: "Arquivos" }}
+        options={{ tabBarIcon: ArquivosIcon, title: "Arquivos" }}
         component={ArquivosStackScreen}
       />
       <Tab.Screen
