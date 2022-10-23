@@ -17,7 +17,24 @@ export const Body = styled.View`
 `;
 
 export const HeaderChat = styled.View`
+  display: flex;
+  width: 100%;
+  height: 65px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10px;
 
+`;
+
+
+export const ContainerIcone = styled.View`
+  display: flex;
+  width: 12%;
+  height: 55px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 `;
 
 export const CaixaUsuarioMensagem = styled.View`
@@ -62,7 +79,7 @@ export const BarraPesquisa = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content:space-between;
-  width: 100%;
+  width: 88%;
   height: 45px;
   background-color: ${Cores.cinza[10]};
   border-radius: 5px;
@@ -73,6 +90,7 @@ export const BarraPesquisa = styled.View`
   border-width: 1.5px;
   font-size: 12px;
   margin-bottom: 30px;
+  margin-right: 5px;
 `;
 
 export const InputPesquisa = styled.TextInput`

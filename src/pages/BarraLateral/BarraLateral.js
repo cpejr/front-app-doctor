@@ -10,7 +10,9 @@ import {
   CaixaImagem,
   TextoCaixa,
   CaixaUsuarioMensagem,
+  HeaderChat,
   PaginaCarregando,
+  ContainerIcone,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -18,6 +20,7 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import { Cores } from "../../variaveis";
 import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
+import IconeAddConversa from "react-native-vector-icons/Ionicons";
 
 function BarraLateral({ navigation }) {
   const [busca, setBusca] = useState("");
@@ -97,14 +100,19 @@ function BarraLateral({ navigation }) {
 
   return (
     <Body>
-      <BarraPesquisa>
-        <InputPesquisa
-          placeholder="Pesquisar no chat"
-          onChangeText={onChangeBusca}
-          value={busca}
-        />
-        <IconPesquisa source={searchIcon} />
-      </BarraPesquisa>
+      <HeaderChat>
+        <BarraPesquisa>
+          <InputPesquisa
+            placeholder="Pesquisar no chat"
+            onChangeText={onChangeBusca}
+            value={busca}
+          />
+          <IconPesquisa source={searchIcon} />
+        </BarraPesquisa>
+        <ContainerIcone>
+          <IconeAddConversa name="add-circle-outline" size={40} color={Cores.azulEscuro} marginBot = {10} onPress={() => navigation.push("ModalNovaConversa")}/>
+        </ContainerIcone>
+      </HeaderChat>
       {carregando ? (
         <PaginaCarregando>
           <ActivityIndicator animating={true} color={Colors.black} />
