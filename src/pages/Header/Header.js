@@ -26,7 +26,7 @@ async function pegandoDados() {
 
 useEffect(() => {
   pegandoDados();
-}, []);
+}, [usuario]);
 
 
 async function setandoFotoDePerfil() {

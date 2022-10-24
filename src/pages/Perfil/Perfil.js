@@ -70,7 +70,10 @@ function Perfil({ navigation }) {
       AsyncStorage.removeItem("@AirBnbApp:token");
       AsyncStorage.removeItem("@AirBnbApp:email");
       new Alert.alert("", "Usuário deslogado com sucesso!");
-      navigation.push("Login");
+      navigation.reset({
+        index:0,
+        routes: [{name: "Login"}]
+      })
     } catch (error) {
       alert(error);
     }
@@ -136,7 +139,7 @@ function Perfil({ navigation }) {
 
   useEffect(() => {
     pegandoDados();
-  }, []);
+  }, [usuario]);
 
   const confirmacaoExcluir = () =>
     Alert.alert("", "Tem certeza que quer excluir sua conta?", [
@@ -177,7 +180,7 @@ function Perfil({ navigation }) {
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
   const paddingBody = width < 330 ? "5%" : "10%";
   const fontSizeTitulos = fontSize < 1080 ? "20px" : "23px";
-  const fontSizeDados = fontSize < 1080 ? "15px" : "18px";
+  const fontSizeDados = fontSize < 1080 ? "14px" : "16px";
   const fontSizeNascido = fontSize < 1080 ? "12px" : "14px";
   const larguraViews = width < 750 ? "100%" : "70%";
 
@@ -308,8 +311,8 @@ function Perfil({ navigation }) {
           <CaixaBotoesAlterar>
             <Botao
               width={larguraBotoes}
-              height="30px"
-              backgroundColor="green"
+              height="40px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -322,9 +325,10 @@ function Perfil({ navigation }) {
             </Botao>
             <Botao
               width={larguraBotoes}
-              height="30px"
+              height="40px"
               marginTop="3%"
-              backgroundColor="green"
+              padding="5px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -340,6 +344,7 @@ function Perfil({ navigation }) {
           <Botao
             width={larguraBotoes}
             height="35px"
+            padding="5px"
             backgroundColor={Cores.branco}
             borderRadius="3px"
             borderColor={Cores.branco}
