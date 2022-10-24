@@ -1,6 +1,4 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
-import { ScrollView } from "react-native";
 import { Button, Text, View, ScrollView } from "react-native";
 
 function Home({ navigation }) {
