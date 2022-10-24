@@ -48,11 +48,15 @@ export const ViewFotoNome = styled.View`
   margin-bottom: 5%;
 `;
 
-export const Foto = styled.Image`
+export const Foto = styled.View`
   width: 100px;
   height: 100px;
-  margin-bottom: 20px;
-  background-color: green;
+  border-radius: 4px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 `;
 
 export const Nome = styled.Text`

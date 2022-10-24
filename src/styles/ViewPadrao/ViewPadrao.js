@@ -5,7 +5,7 @@ export const ViewPadrao = styled.View`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: ${(props) => props.width??"100%"};
   max-height: ${(props) => props.maxHeight??"100%"};
   margin-bottom: 5%;
   border-style: solid;

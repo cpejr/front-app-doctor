@@ -297,13 +297,10 @@ export const EnviandoFormularioPaciente = async (
     });
   return;
 };
-
 export const GetFormularioEspecifico = async (id) => {
   let dadosFormulario = {};
-
   await requesterService
     .requisicaoFormularioEspecifico(id)
-
     .then((res) => {
       dadosFormulario = res.data;
     })
@@ -312,6 +309,7 @@ export const GetFormularioEspecifico = async (id) => {
     });
   return dadosFormulario;
 };
+
 
 export const GetFormularios = async () => {
   let dadosFormularios = {};
@@ -365,4 +363,66 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
     });
 
   return false;
+};
+
+export const GetArquivoPorChave= async (chave) => {
+
+  let arquivo = "";
+  await requesterService
+    .requisicaoArquivo(chave)
+    .then((res) => {
+      arquivo = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return arquivo;
+  
+};
+
+export const PegarExamesMarcadosUsuario = async () => {
+  const resposta = await AsyncStorage.getItem("@AirBnbApp:email").then(
+    (res) => {
+      return requesterService.requisicaoDadosUsuario(res).then((res) => {
+        return requesterService
+          .requisicaoExamesMarcadosPorId(res.data.id)
+          .then((res) => {
+            return res.data;
+          })
+          .catch((error) => {
+            requisicaoErro(error);
+            return;
+          });
+      });
+    }
+  );
+  return resposta;
+};
+
+export const UpdateFotoDePerfil = async (id, file) => {
+  await requesterService
+    .updateFotoDePerfil(id, file)
+    .then(() => {
+      Alert.alert("", "Foto atualizada com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
+
+
+
+export const deletarFotoDePerfil = async (id, file) => {
+  await requesterService
+    .deleteFotoDePerfil(id, file)
+    .then(() => {
+      Alert.alert("", "Foto deletada com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
 };
