@@ -266,6 +266,7 @@ function Routes() {
           name="AlterarSenhaComEmail"
           component={AlterarSenhaComEmail}
         />
+        <Stack.Screen name="LGPD" component={LGPD} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>
