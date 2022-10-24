@@ -33,27 +33,42 @@ export const ContainerScrollView = styled.ScrollView`
   height: auto;
 `
 
-export const ContainerComentarios = styled.View`
+export const ContainerComentariosEResposta = styled.View`
   display: flex;
+  margin-bottom: 10%;
+  height: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center; 
-  padding-top: ${(props) => props.paddingTop};
-  padding-bottom: ${(props) => props.paddingBottom};
-  margin-bottom: ${(props) => props.paddingBottom};
-
 `
 
-export const ContainerComentarioIndividual = styled.View`
+export const ContainerComentarios = styled.View`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: auto;
-  width: 87%;
+  width: 100%;
+  padding-right: 2%;
+  padding-left: 2%;
   align-items: center;
-  margin-bottom: 13%;
+  margin-bottom: ${(props) => props.marginBottom};
+`
+
+export const ContainerResposta = styled.View`
+  margin-top: 5%;
+  margin-bottom: 5%;
 `
 
 export const TextoComentario = styled.Text`
   font-size: 15px;
   text-align: center;
+  font-style: italic;
+`
+
+export const TextoResposta = styled.Text`
+  font-size: 15px;
+  text-align: center;
+  color: #3C3C3C;
 `
 
 
