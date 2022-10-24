@@ -11,12 +11,11 @@ function Comentarios({ navigation }) {
   const tamanhoIcone = width > 480 ? 20 : 25;
 
 
-  const comentarios = ["Depois de Deus...tenho o Dr. Guilherme como referência em minha vida!! Ele ajudou muito no tratamento da minha mãe. Apresentava quadros de crises epiléticas parciais, e confusão mental. Como a mudança da medicação ela retornou a ter vida normal e estamos na luta para lhe dar cada dia mais qualidade de vida. Obrigada pela atenção e carinho nesse momento tão dificil em minha vida!! Você é um ser que não existe, literalmente um presente de Deus\"",
+  const comentarios = ["Depois de Deus...tenho o Dr. Guilherme como referência em minha vida!! Ele ajudou muito no tratamento da minha mãe. Apresentava quadros de crises epiléticas parciais, e confusão mental. Como a mudança da medicação ela retornou a ter vida normal e estamos na luta para lhe dar cada dia mais qualidade de vida. Obrigada pela atenção e carinho nesse momento tão dificil em minha vida!! Você é um ser que não existe, literalmente um presente de Deus. \"",
     "\"O dr. Guilherme é extremamente profissional e atencioso. Recomendo.  Tratou minha mãe com muita atenção e carinho. Ótimo neurologista\"",
     "\"Excelente profissional, muito atencioso e competente. Tempo de consulta satisfatório, permitindo uma boa propedêutica de tratamento\"",
     "\"Excelente profissional, competente atencioso carinhoso humano, educado paciente. Ele trata meu irmão que tem demência daí devido à atenção dedicada me tornei também paciente.Gostamos muito do Dr Guilherme\"",
-    "\"Passei por diversos especialistas (angiologista, ortopedista, reumatologista, nutróloga, hematologista e hepatologista) na busca de um diagnóstico para o constante desconforto que sentia nas pernas, que tornava uma tortura assistir a um filme no cinema ou a uma peça no teatro, sem falar na exaustão que sentia pela manhã, por acordar diversas vezes à noite.\"",
-    "\"Meus exames eram todos inconclusivos: não tinha varizes, não tinha insônia, praticava atividade física regular, alimentação saudável e sem tendência a depressão. Ao pesquisar na internet li o comentário de uma paciente com sintomas parecidos e decidi procurar o Dr. Guilherme. Só tenho a agradecer pela precisão do diagnóstico, assertividade na indicação do medicamento, disponibilidade e profissionalismo com que fui atendida. Que continue sempre assim!!! Estamos carentes de profissionais que de fato se preocupam com seus pacientes e se interessam em acolhê-los nesses momentos de fragilidade.\"",
+    "\"Passei por diversos especialistas (angiologista, ortopedista, reumatologista, nutróloga, hematologista e hepatologista) na busca de um diagnóstico para o constante desconforto que sentia nas pernas, que tornava uma tortura assistir a um filme no cinema ou a uma peça no teatro, sem falar na exaustão que sentia pela manhã, por acordar diversas vezes à noite. Meus exames eram todos inconclusivos: não tinha varizes, não tinha insônia, praticava atividade física regular, alimentação saudável e sem tendência a depressão. Ao pesquisar na internet li o comentário de uma paciente com sintomas parecidos e decidi procurar o Dr. Guilherme. Só tenho a agradecer pela precisão do diagnóstico, assertividade na indicação do medicamento, disponibilidade e profissionalismo com que fui atendida. Que continue sempre assim!!! Estamos carentes de profissionais que de fato se preocupam com seus pacientes e se interessam em acolhê-los nesses momentos de fragilidade.\"",
     "\"Excelente médico, atencioso,simpático, educado. Faz uma investigação minuciosa para descobrir o diagnóstico. Estou em tratamento com ele , e só tenho elogios a citar, exemplo de médico a seguir. Super indico\"",
     "\"Excelente profissional. Inteligente, estudioso, atencioso, concentrado. Acompanhei minha mãe na consulta. Fez todas as perguntas possíveis, levantou todo o histórico familiar, fez testes, avaliou exames. Atendeu minha mãe com muito carinho, acolhedor. Um exemplo do que deve ser a medicina!\"",
     "\"Sou muito grato pela ajuda que tive depois da consulta para conseguir a internação e fazer todos os exames necessários. Tentei por conta própria e não deu certo. Se não fosse pelos telefonemas que ele fez, não teria feito meu tratamento e não estaria bem hoje. Muito obrigado!\"",
@@ -35,7 +34,6 @@ function Comentarios({ navigation }) {
   ]
 
   const respostas = [
-    "",
     "",
     "",
     "",
