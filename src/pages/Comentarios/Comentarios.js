@@ -56,7 +56,6 @@ function Comentarios({ navigation }) {
     "Dr. Guilherme Marques: fique sempre à vontade para perguntar e esclarecer todas as dúvidas!",
     "Dr. Guilherme Marques: obrigado pela opinião! Até o retorno!",
     "Dr. Guilherme Marques: fico feliz que tenha sido fácil entender orientações tão complexas! O esclarecimento é o primeiro passo para o sucesso do tratamento!",
-
   ]
 
   const comentariosERespostas = [
