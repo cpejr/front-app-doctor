@@ -10,6 +10,7 @@ export const Corpo = styled.View`
   height: 100%;
   background-color: ${Cores.azul};
 `;
+
 export const Botaoo = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
@@ -43,7 +44,6 @@ export const Perfil = styled.View`
   border-width: 0px;
   background-color: ${Cores.azul};
   /*background-color: ${Cores.cinza[3]};*/
-
 `;
 
 export const Foto = styled.View`
