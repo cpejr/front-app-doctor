@@ -367,3 +367,17 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
   return false;
 };
 
+export const GetArquivoPorChave= async (chave) => {
+
+  let arquivo = "";
+  await requesterService
+    .requisicaoArquivo(chave)
+    .then((res) => {
+      arquivo = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return arquivo;
+  
+};

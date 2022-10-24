@@ -78,7 +78,7 @@ function HomeStackScreen() {
   return (
     <HomeStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Login"
+      initialRouteName="Home"
     >
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Comentarios" component={Comentarios} />

@@ -74,3 +74,5 @@ export const requisicaoFormularioEspecifico = (id) =>
   api.get(`/formularios/${id}`);
 
 export const requisicaoFormularios = () => api.get(`/formularios/`);
+
+export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);

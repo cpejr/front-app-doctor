@@ -30,18 +30,32 @@ export const CaixaTitulo = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 4%;
+  margin-bottom: 12%;
+  width: 50%;
+`;
+
+export const CaixaCima = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 8%;
   margin-bottom: 4%;
+  padding: 0 5% 0 5%;
 `;
 
 export const Titulo = styled.Text`
   font-size: 30px;
+  width: ${(props) => props.width};
 `;
+
 
 export const CaixaInputs = styled.View`
   width: 100%;
   padding-left: 10%;
   padding-right: 10%;
+  margin-top: 2%;
   height: auto;
   bottom: 0;
   background-color: ${Cores.branco};
@@ -62,6 +76,35 @@ export const CaixaBotoes = styled.View`
   width: 70%;
   margin-top: 5%;
   margin-bottom: 5%;
+`;
+
+export const Foto = styled.View`
+  width: 100px;
+  height: 100px;
+  border-radius: 2px;
+  background-color: ${Cores.branco};
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
+
+export const BotaoAlterarImagem = styled.TouchableOpacity`
+  background-color: green;
+  margin-top: 10%;
+`;
+
+export const TextoAlterarImagem = styled.Text`
+ color: ${Cores.azul};
+ text-decoration: underline;
+`;
+
+export const ContainerFotoEAlterarImagem = styled.View`
+ display: flex;
+ flex: 1;
+ width: 50%;
+ height: 100%;
+ flex-direction: column;
+ align-items: center;
 `;
 
 export const Data = styled(DatePicker)`
