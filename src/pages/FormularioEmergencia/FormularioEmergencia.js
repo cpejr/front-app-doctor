@@ -68,9 +68,6 @@ function FormularioEmergencia({ navigation }) {
 
   useEffect(() => {
     GetFormulariosEmergenciaPaciente();
-    console.log(height);
-    console.log(width);
-    console.log(heightCorpo);
     pegandoDadosPaciente();
   }, []);
 
@@ -86,7 +83,6 @@ function FormularioEmergencia({ navigation }) {
 
   async function enviandoFormularioPaciente() {
     setCarregando(true);
-    console.log(formularioPacienteDeEmergencia.id_formulario);
     await managerService.EnviandoFormularioPaciente(
       false,
       true,
