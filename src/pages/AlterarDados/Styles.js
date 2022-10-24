@@ -11,6 +11,59 @@ export const Body = styled.View`
   background-color: ${Cores.branco};
 `;
 
+export const PaginaCarregando = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70%;
+`;
+
+
+export const CaixaModalUpdateFoto = styled.View`
+  height: ${(props) => props.height};
+  width: 80%;
+  margin-top: ${(props) => props.marginTop};
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 10%;
+  padding-top:0%;
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  border: 4px;
+  border-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const CaixaModalDeleteFoto = styled.View`
+  height: ${(props) => props.height};
+  width: 80%;
+  margin-top: ${(props) => props.marginTop};
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 10%;
+  padding-top:0%;
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  border: 4px;
+  border-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const CaixaFechar = styled.View`
+  width: 100%;
+  height: 10%;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-right: 5%;
+  padding-top: 5%;
+`;
+
 export const CaixaAlterarDados = styled.View`
   display: flex;
   flex-direction: column;
@@ -43,6 +96,7 @@ export const CaixaCima = styled.View`
   margin-top: 8%;
   margin-bottom: 4%;
   padding: 0 5% 0 5%;
+  background-color:${Cores.branco}
 `;
 
 export const Titulo = styled.Text`
@@ -88,22 +142,33 @@ export const Foto = styled.View`
   display: flex;
 `;
 
-export const BotaoAlterarImagem = styled.TouchableOpacity`
-  background-color: green;
-  margin-top: 10%;
+export const BotaoAlterarEDeletarImagem = styled.TouchableOpacity`
+  margin-top: 3%;
+  align-items:center;
 `;
 
-export const TextoAlterarImagem = styled.Text`
+export const TextoAlterarEDeleterImagem = styled.Text`
  color: ${Cores.azul};
  text-decoration: underline;
+`;
+
+export const CaixaBotoesAlterarEDeletarImagem = styled.View`
+ display: flex;
+ margin-top: 5%;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+ 
 `;
 
 export const ContainerFotoEAlterarImagem = styled.View`
  display: flex;
  flex: 1;
- width: 50%;
- height: 100%;
+ width: 100%;
+ height: auto;
  flex-direction: column;
+ justify-content: center;
  align-items: center;
 `;
 
@@ -187,4 +252,54 @@ export const Lgpd = styled.Text`
   text-align: right;
   color: #151b57;
   text-decoration: underline;
+`;
+
+export const CaixaTituloModal = styled.View`
+  width: 80%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+export const CaixaTituloModalExcluir = styled.View`
+  width: 80%;
+  height: 45%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ImagemModal = styled.Image`
+ width: ${(props) => props.width};
+ height: ${(props) => props.height};
+ margin-top: 25px;
+
+`
+
+export const CaixaImagemBotao = styled.View`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+
+`
+
+export const TituloModal = styled.Text`
+  font-size: 18px;
+  font-weight:600;
+  text-align: center;
+`;
+
+export const CaixaBotoesCancelarConfirmarModalExcluirFoto = styled.View`
+  width: 100%;
+  display: flex;
+  margin-top: 1%;
+  flex-direction: row;
+  justify-content: space-around;
 `;

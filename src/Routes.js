@@ -93,6 +93,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <HomeStack.Screen name="ListaFormularios" component={ListaFormularios} />
       <HomeStack.Screen name="ListaExames" component={ListaExames} />
+      <HomeStack.Screen name="SolicitarExame" component={SolicitarExame} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
       <HomeStack.Screen name="FormularioEmergencia" component={FormularioEmergencia} />
@@ -155,7 +156,7 @@ function ExamesStackScreen() {
     >
       <ExamesStack.Screen name="Exames" component={Exames} />
       <ExamesStack.Screen name="FormaPagamento" component={FormaPagamento} />
-      <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
+      {/*  <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} /> */}
     </ExamesStack.Navigator>
   );
 }

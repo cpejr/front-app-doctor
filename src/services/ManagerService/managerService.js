@@ -400,3 +400,31 @@ export const PegarExamesMarcadosUsuario = async () => {
   );
   return resposta;
 };
+
+export const UpdateFotoDePerfil = async (id, file) => {
+  await requesterService
+    .updateFotoDePerfil(id, file)
+    .then(() => {
+      Alert.alert("", "Foto atualizada com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
+
+
+
+export const deletarFotoDePerfil = async (id, file) => {
+  await requesterService
+    .deleteFotoDePerfil(id, file)
+    .then(() => {
+      Alert.alert("", "Foto deletada com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};

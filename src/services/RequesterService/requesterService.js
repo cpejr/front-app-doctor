@@ -77,3 +77,14 @@ export const requisicaoFormularios = () => api.get(`/formularios/`);
 
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
   export const requisicaoExamesMarcadosPorId = (id) => api.get(`/exame_marcados/${id}`);
+
+
+export const updateFotoDePerfil = (id, base64) =>
+  api.post(`/usuariosimagem/${id}`,{
+    file: base64
+  });
+
+export const deleteFotoDePerfil = (id, base64) =>
+  api.put(`/usuariosdeletarimagem/${id}`,{
+    file: base64
+  });
