@@ -46,9 +46,6 @@ function FormularioEmergencia({ navigation }) {
 
   useEffect(() => {
     GetFormulariosEmergenciaPaciente();
-    console.log(height);
-    console.log(width);
-    console.log(heightCorpo);
 
   }, []);
 
