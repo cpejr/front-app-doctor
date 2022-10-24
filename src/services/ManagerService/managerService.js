@@ -381,3 +381,22 @@ export const GetArquivoPorChave= async (chave) => {
   return arquivo;
   
 };
+
+export const PegarExamesMarcadosUsuario = async () => {
+  const resposta = await AsyncStorage.getItem("@AirBnbApp:email").then(
+    (res) => {
+      return requesterService.requisicaoDadosUsuario(res).then((res) => {
+        return requesterService
+          .requisicaoExamesMarcadosPorId(res.data.id)
+          .then((res) => {
+            return res.data;
+          })
+          .catch((error) => {
+            requisicaoErro(error);
+            return;
+          });
+      });
+    }
+  );
+  return resposta;
+};

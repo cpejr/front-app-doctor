@@ -29,6 +29,7 @@ import Arquivos from "./pages/Arquivos";
 import FormularioEmergencia from "./pages/FormularioEmergencia";
 import BarraLateral from "./pages/BarraLateral/BarraLateral";
 import ConversaAberta from "./pages/ConversaAberta/ConversaAberta";
+import ListaExames from "./pages/ListaExames";
 
 import IonIcon from "react-native-vector-icons/Ionicons";
 import AntIcon from "react-native-vector-icons/AntDesign";
@@ -91,6 +92,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="AlterarSenha" component={AlterarSenha} />
       <HomeStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <HomeStack.Screen name="ListaFormularios" component={ListaFormularios} />
+      <HomeStack.Screen name="ListaExames" component={ListaExames} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
       <HomeStack.Screen name="FormularioEmergencia" component={FormularioEmergencia} />

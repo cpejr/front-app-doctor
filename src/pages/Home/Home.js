@@ -1,8 +1,10 @@
 import React from "react";
 import { Button, Text, View } from "react-native";
+import { ScrollView } from "react-native";
 
 function Home({ navigation }) {
   return (
+    <ScrollView>
     <View>
       <Text>Home</Text>
       <Button
@@ -73,7 +75,12 @@ function Home({ navigation }) {
         title="Go to Conversa Aberta"
         onPress={() => navigation.navigate("ConversaAberta")}
       />
+      <Button
+        title="Go to ListaExames"
+        onPress={() => navigation.navigate("ListaExames")}
+      />
     </View>
+    </ScrollView>
   );
 }
 
