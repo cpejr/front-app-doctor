@@ -533,7 +533,6 @@ function AlterarDados({ navigation }) {
                         borderWidth="3px"
                         boxShadow="none"
                         onPress={() => selecionaImagem()}
-                        //marginTop="25px"
                       >
                         <ConteudoBotao
                           width="90px"
