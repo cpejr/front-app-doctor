@@ -43,8 +43,7 @@ export const verificarSenha = (email, senha) =>
 export const alterarSenha = (id, senha) =>
   api.put(`/usuarios/${id}`, { senha: senha });
 
-export const recuperarSenha = (email) => 
-  api.put(`/alterar_senha/${email}`);
+export const recuperarSenha = (email) => api.put(`/alterar_senha/${email}`);
 
 export const deletarEnderecoEUsuario = (id_endereco) =>
   api.delete(`/enderecos/${id_endereco}`);
@@ -52,8 +51,29 @@ export const deletarEnderecoEUsuario = (id_endereco) =>
 export const requisicaoFormularioPacienteEspecifico = (id) =>
   api.get(`/formularios_pacientes/${id}`);
 
-  export const updateRespostasFormularioPaciente = (id, respostas) =>
+export const updateRespostasFormularioPaciente = (id, respostas) =>
   api.put(`/formularios_pacientes/${id}`, {
     respostas: respostas,
     status: true,
   });
+
+export const enviarFormularioPaciente = (
+  status,
+  notificacao_ativa,
+  id_formulario,
+  id_usuario
+) =>
+  api.post("/formularios_pacientes", {
+    status,
+    notificacao_ativa,
+    id_formulario,
+    id_usuario,
+  });
+
+export const requisicaoFormularioEspecifico = (id) =>
+  api.get(`/formularios/${id}`);
+
+export const requisicaoFormularios = () => api.get(`/formularios/`);
+
+export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
+  export const requisicaoExamesMarcadosPorId = (id) => api.get(`/exame_marcados/${id}`);
