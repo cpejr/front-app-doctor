@@ -10,6 +10,7 @@ export const Corpo = styled.View`
   height: 100%;
   background-color: ${Cores.azul};
 `;
+
 export const Botaoo = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
@@ -41,7 +42,22 @@ export const Perfil = styled.View`
   border-radius: 25px;
   border: ${Cores.preto};
   border-width: 0px;
-  background-color: green;
+  background-color: ${Cores.azul};
   /*background-color: ${Cores.cinza[3]};*/
+`;
 
+export const Foto = styled.View`
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+`;
+
+export const AnimacaoCarregandoViewNome = styled.View`
+  position: relative;
+  top: 0%;
+  height: 35px;
 `;

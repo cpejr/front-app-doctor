@@ -39,3 +39,13 @@ export const TextoPrimeiroTopico = styled.Text`
   text-align: justify;
   color: #8A8181;
 `;
+
+export const ViewBotao = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  height: 12%;
+  width: 100%;
+
+`
