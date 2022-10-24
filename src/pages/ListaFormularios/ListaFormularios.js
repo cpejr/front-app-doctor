@@ -26,6 +26,8 @@ import {
   CaixaLoading,
   HeaderListaFormularios,
   Titulo,
+  CaixaTextoCima,
+  TextoCima,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -169,6 +171,13 @@ function ListaFormularios({ navigation }) {
     setTelaRespondido(false);
   }
 
+  const compararDataAntiga = (a, b) => {
+    var data1 = new Date(a.data_hora || a.data_criacao);
+    var data2 = new Date(b.data_hora || b.data_criacao);
+
+    return data2 - data1;
+  };
+
   const corRespondido = telaRespondido ? Cores.azulEscuro : Cores.cinza[2];
   const corPendente = telaRespondido ? Cores.cinza[2] : Cores.azulEscuro;
   const linhaRespondido = telaRespondido ? "1.5px" : "0px";
@@ -185,6 +194,9 @@ function ListaFormularios({ navigation }) {
         </Titulo>
       </HeaderListaFormularios>
       <Body>
+        <CaixaTextoCima>
+          <TextoCima> Formulários </TextoCima>
+        </CaixaTextoCima>
         <BarraPesquisa>
           <InputPesquisa
             placeholder="Pesquisar formulário"
@@ -212,7 +224,7 @@ function ListaFormularios({ navigation }) {
             </FiltroNaoRespondido>
           </TouchableOpacity>
         </TabView>
-        {formulariosFiltrados?.sort(ordenarFormularios).map((valor) => (
+        {formulariosFiltrados?.sort(compararDataAntiga).sort(ordenarFormularios).map((valor) => (
           <CaixaLista key={valor.id}>
             <TouchableOpacity
               onPress={() => {
@@ -242,7 +254,11 @@ function ListaFormularios({ navigation }) {
                     <CaixaTipoData width={larguraCaixaTipoData}>
                       <TextoTipoData>Tipo: {valor.tipo}</TextoTipoData>
                       <TextoTipoData>
-                        {formatandoData(valor.data_criacao)}
+                        {valor.data_criacao.slice(8, 10) +
+                          "/" +
+                          valor.data_criacao.slice(5, 7) +
+                          "/" +
+                          valor.data_criacao.slice(0, 4)}
                       </TextoTipoData>
                     </CaixaTipoData>
                   </>
