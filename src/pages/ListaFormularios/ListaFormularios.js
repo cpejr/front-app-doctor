@@ -46,6 +46,7 @@ function ListaFormularios({ navigation }) {
   const larguraCaixaTipoData = width < 700 ? "88%" : "95%";
   const tamanhoIcone = width > 480 ? 20 : 25;
 
+  const idFormularioUrgencia = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
   const [listaOriginal, setListaOriginal] = useState([]);
   const [formulariosPaciente, setFormulariosPaciente] = useState([]);
   const [listaFormRespondido, setListaFormRespondido] = useState([]);
@@ -83,7 +84,7 @@ function ListaFormularios({ navigation }) {
           resposta.forEach((formulario) => {
             if (formulario.status === true) {
               listaFormRespondido.push(formulario);
-            } else {
+            } else if (formulario.id_formulario !== idFormularioUrgencia) {
               listaFormPendente.push(formulario);
             }
           });
@@ -93,6 +94,25 @@ function ListaFormularios({ navigation }) {
       })
       .catch((error) => alert(error));
   }
+
+  const ordenarFormularios = (a, b) => {
+    var formulario1 = a.id_formulario;
+    var formulario2 = b.id_formulario;
+
+    if (
+      formulario1 === idFormularioUrgencia &&
+      formulario2 !== idFormularioUrgencia
+    ) {
+      return -1;
+    }
+    if (
+      formulario1 !== idFormularioUrgencia &&
+      formulario2 === idFormularioUrgencia
+    ) {
+      return 1;
+    }
+    return a.titulo.localeCompare(b.titulo);
+  };
 
   useEffect(() => {
     pegandoFormulariosPaciente();
@@ -204,7 +224,7 @@ function ListaFormularios({ navigation }) {
             </FiltroNaoRespondido>
           </TouchableOpacity>
         </TabView>
-        {formulariosFiltrados?.sort(compararDataAntiga).map((valor) => (
+        {formulariosFiltrados?.sort(compararDataAntiga).sort(ordenarFormularios).map((valor) => (
           <CaixaLista key={valor.id}>
             <TouchableOpacity
               onPress={() => {
