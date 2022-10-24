@@ -64,6 +64,18 @@ function Home({ navigation }) {
         onPress={() => navigation.navigate("Arquivos")}
       />
       <Button
+        title="Go to Formulário de Emergência"
+        onPress={() => navigation.navigate("FormularioEmergencia")}
+      />
+        <Button
+        title="Go to Barra Lateral"
+        onPress={() => navigation.navigate("BarraLateral")}
+      />
+        <Button
+        title="Go to Conversa Aberta"
+        onPress={() => navigation.navigate("ConversaAberta")}
+      />
+      <Button
         title="Go to ListaExames"
         onPress={() => navigation.navigate("ListaExames")}
       />

@@ -51,7 +51,7 @@ function ListaExames({ navigation }) {
 
   async function PegandoExamesMarcadosdoUsuario() {
     setCarregando(true);
-    const resposta = await managerService.PegarExamesMarcadosIndividual();
+    const resposta = await managerService.PegarExamesMarcadosUsuario();
     setExamesMarcados(resposta);
     setCarregando(false);
   }

@@ -1,12 +1,11 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useWindowDimensions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AlterarDados from "./pages/AlterarDados";
 import AlterarSenha from "./pages/AlterarSenha";
 import AlterarSenhaComEmail from "./pages/AlterarSenhaComEmail";
 import Cadastro from "./pages/Cadastro";
-import Chat from "./pages/Chat";
 import Comentarios from "./pages/Comentarios";
 import Consultas from "./pages/Consultas";
 import Emergencia from "./pages/Emergencia";
@@ -27,45 +26,52 @@ import SolicitarExame from "./pages/SolicitarExame";
 import Header from "./pages/Header";
 import LGPD from "./pages/LGPD/Lgpd";
 import Arquivos from "./pages/Arquivos";
+import FormularioEmergencia from "./pages/FormularioEmergencia";
+import BarraLateral from "./pages/BarraLateral/BarraLateral";
+import ConversaAberta from "./pages/ConversaAberta/ConversaAberta";
 import ListaExames from "./pages/ListaExames";
+
+import IonIcon from "react-native-vector-icons/Ionicons";
+import AntIcon from "react-native-vector-icons/AntDesign";
+import { Cores } from "./variaveis";
 
 import { View, Image } from "react-native";
 
 function HomeIcon() {
   return (
-    <View>
-      <Image source={require("./assets/homeicon.png")} />
+    <View width={35} >
+      <IonIcon name="home-outline" size={35} color={Cores.branco}  />
     </View>
   );
 }
-function FormulariosIcon() {
+function ArquivosIcon() {
   return (
-    <View>
-      <Image source={require("./assets/formulariosicon.png")} />
+    <View width={35}>
+      <IonIcon name="file-tray-full-outline" size={35} color={Cores.branco}  />
     </View>
   );
 }
-function ExamesIcon() {
-  return (
-    <View>
-      <Image source={require("./assets/examesicon.png")} />
-    </View>
-  );
-}
+// function ExamesIcon() {
+//   return (
+//     <View>
+//       <Image source={require("./assets/examesicon.png")} />
+//     </View>
+//   );
+// }
 function ConsultasIcon() {
   return (
-    <View>
-      <Image source={require("./assets/consultasicon.png")} />
+    <View width={35}>
+      <AntIcon name="calendar" size={35} color={Cores.branco}  />
     </View>
   );
 }
-function ChatIcon() {
-  return (
+ function ChatIcon() {
+   return (
     <View>
-      <Image source={require("./assets/chaticon.png")} />
-    </View>
-  );
-}
+       <Image source={require("./assets/chaticon.png")} />
+     </View>
+   );
+ }
 
 const HomeStack = createNativeStackNavigator();
 
@@ -73,7 +79,7 @@ function HomeStackScreen() {
   return (
     <HomeStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Login"
+      initialRouteName="Home"
     >
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Comentarios" component={Comentarios} />
@@ -89,6 +95,10 @@ function HomeStackScreen() {
       <HomeStack.Screen name="ListaExames" component={ListaExames} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
+      <HomeStack.Screen name="FormularioEmergencia" component={FormularioEmergencia} />
+
+      <HomeStack.Screen name="BarraLateral" component={BarraLateral} />
+      <HomeStack.Screen name="ConversaAberta" component={ConversaAberta} />
     </HomeStack.Navigator>
   );
 }
@@ -101,14 +111,8 @@ function ArquivosStackScreen() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Arquivos"
     >
-      <ArquivosStack.Screen
-        name="Arquivos"
-        component={Arquivos}
-      />
-      <ArquivosStack.Screen
-        name="ListaReceitas"
-        component={ListaReceitas}
-      />
+      <ArquivosStack.Screen name="Arquivos" component={Arquivos} />
+      <ArquivosStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <ArquivosStack.Screen
         name="ListaFormularios"
         component={ListaFormularios}
@@ -117,7 +121,6 @@ function ArquivosStackScreen() {
         name="PreencherFormulario"
         component={PreencherFormulario}
       />
-
     </ArquivosStack.Navigator>
   );
 }
@@ -184,9 +187,16 @@ function ChatStackScreen() {
   return (
     <ChatStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Chat"
+      initialRouteName="BarraLateral"
     >
-      <ChatStack.Screen name="Chat" component={Chat} />
+      <ChatStack.Screen
+        name="BarraLateral"
+        component={BarraLateral}
+      />
+      <ChatStack.Screen
+        name="ConversaAberta"
+        component={ConversaAberta}
+      />
     </ChatStack.Navigator>
   );
 }
@@ -201,7 +211,7 @@ function TabScreen() {
         headerBackground: (props) => <Header {...props} />,
         headerStyle: {
           backgroundColor: "#151B57",
-          height: 100,
+          height: 70,
         },
         tabBarStyle: {
           backgroundColor: "#151B57",
@@ -224,13 +234,18 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao2"
-        options={{ tabBarIcon: FormulariosIcon, title: "Arquivos" }}
+        options={{ tabBarIcon: ArquivosIcon, title: "Arquivos" }}
         component={ArquivosStackScreen}
       />
       <Tab.Screen
-        name="botao4"
+        name="botao3"
         options={{ tabBarIcon: ConsultasIcon, title: "Consultas" }}
         component={ConsultasStackScreen}
+      />
+      <Tab.Screen
+        name="botao4"
+        options={{ tabBarIcon: ChatIcon, title: "Chat" }}
+        component={ChatStackScreen}
       />
     </Tab.Navigator>
   );
@@ -247,7 +262,10 @@ function Routes() {
       >
         <Stack.Screen name="Tabs" component={TabScreen} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="AlterarSenhaComEmail" component={AlterarSenhaComEmail} />
+        <Stack.Screen
+          name="AlterarSenhaComEmail"
+          component={AlterarSenhaComEmail}
+        />
         <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>
