@@ -7,6 +7,7 @@ export const Botao = styled.TouchableOpacity`
   justify-content: center;
   /*Medidas*/
   margin-top: ${(props) => props.marginTop?? "2%"};
+  margin-bottom: ${(props) => props.marginBottom?? "0%"};
   margin-right: ${(props) => props.marginRight?? "0%"};
   height: ${(props) => props.height};
   width: ${(props) => props.width};
@@ -17,5 +18,7 @@ export const Botao = styled.TouchableOpacity`
   border-radius: ${(props) => props.borderRadius};
   border-color: ${(props) => props.borderColor};
   border-width: ${(props) => props.borderWidth};
+
+  padding: ${(props) => props.padding?? "0%"};
 `;
 export default Botao;
