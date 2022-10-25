@@ -290,9 +290,7 @@ export const EnviandoFormularioPaciente = async (
       id_formulario,
       id_usuario
     )
-    .then(() => {
-      
-    })
+    .then(() => {})
     .catch((error) => {
       requisicaoErro(error);
       return false;
