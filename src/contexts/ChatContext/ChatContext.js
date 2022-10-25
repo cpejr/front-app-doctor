@@ -2,8 +2,7 @@ import React, { createContext, useRef, useState, useEffect } from "react";
 import * as managerService from "../../services/ManagerService/managerService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const imagemPerfilPadrão =
-  "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg";
+const imagemPerfilPadrão = require("../../assets/logoGuilherme.png");
 
 export const ChatContext = createContext();
 
