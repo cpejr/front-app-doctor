@@ -380,3 +380,16 @@ export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
 
   return mensagensAtualizadas;
 };
+
+export const GetConversasUsuario = async (id_usuario) => {
+  let dadosConversas = {};
+  await requesterService
+    .requisicaoConversasPorUsuario(id_usuario)
+    .then((res) => {
+      dadosConversas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversas;
+};

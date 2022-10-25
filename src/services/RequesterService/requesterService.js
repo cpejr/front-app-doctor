@@ -77,3 +77,6 @@ export const requisicaoFormularios = () => api.get(`/formularios/`);
 
 export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
+
+  export const requisicaoConversasPorUsuario = (id_usuario) =>
+  api.get(`/conversas/${id_usuario}/usuario`);

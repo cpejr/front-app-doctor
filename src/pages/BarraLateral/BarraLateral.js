@@ -26,6 +26,8 @@ function BarraLateral({ navigation }) {
   const lowerBusca = busca.toLowerCase();
   const onChangeBusca = (busca) => setBusca(busca);
   const [carregando, setCarregando] = useState(false);
+  const componenteEstaMontadoRef = useRef(null);
+  const [carregandoConversas, setCarregandoConversas] = useState(true);
 
   const {
     usuarioId,
@@ -35,39 +37,56 @@ function BarraLateral({ navigation }) {
     imagemPerfilPadrão,
   } = useContext(ChatContext);
 
-  const cliqueNaConversa = (conversa) => {
-    return async (e) => {
-      e.preventDefault();
+  useEffect(() => {
+    if (!usuarioId) return;
+    componenteEstaMontadoRef.current = true;
 
-      const index = conversas.findIndex(({ id }) => id === conversa.id);
-      const copiaConversas = objCopiaProfunda(conversas);
-
-      const conversaNaLista = copiaConversas[index];
-
-      if (conversaNaLista.mensagensNaoVistas) {
-        conversaNaLista.mensagensNaoVistas = 0;
-        await managerService.UpdateMensagensVisualizadas(
-          usuarioId,
-          conversa.id
-        );
+    async function getConversas() {
+      setCarregandoConversas(true);
+      //await managerService.deletarConversasInativas(usuarioId);
+      const resposta = await managerService.GetConversasUsuario(usuarioId);
+      if (componenteEstaMontadoRef.current) {
+        setConversas(resposta);
+        setCarregandoConversas(false);
       }
+    }
+    getConversas();
+    return () => (componenteEstaMontadoRef.current = false);
+  }, [usuarioId]);
 
-      setConversaSelecionada(conversaNaLista);
-      setConversas(copiaConversas);
-    };
-  };
+  // const cliqueNaConversa = (conversa) => {
+  //   return async (e) => {
+  //     e.preventDefault();
 
-  const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
-    if (lowerBusca === "") return vetorUsuariosMensagem;
-    else
-      return (
-        msg?.nome
-          ?.toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .includes(lowerBusca) || msg?.nome?.toLowerCase().includes(lowerBusca)
-      );
-  });
+  //     const index = conversas.findIndex(({ id }) => id === conversa.id);
+  //     const copiaConversas = objCopiaProfunda(conversas);
+
+  //     const conversaNaLista = copiaConversas[index];
+
+  //     if (conversaNaLista.mensagensNaoVistas) {
+  //       conversaNaLista.mensagensNaoVistas = 0;
+  //       await managerService.UpdateMensagensVisualizadas(
+  //         usuarioId,
+  //         conversa.id
+  //       );
+  //     }
+
+  //     setConversaSelecionada(conversaNaLista);
+  //     setConversas(copiaConversas);
+  //   };
+  // };
+
+  // const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
+  //   if (lowerBusca === "") return vetorUsuariosMensagem;
+  //   else
+  //     return (
+  //       msg?.nome
+  //         ?.toLowerCase()
+  //         .normalize("NFD")
+  //         .replace(/[\u0300-\u036f]/g, "")
+  //         .includes(lowerBusca) || msg?.nome?.toLowerCase().includes(lowerBusca)
+  //     );
+  // });
 
   // async function abrirMensagemClicada(conversa) {
   //   if (conversa.id) {
@@ -106,7 +125,7 @@ function BarraLateral({ navigation }) {
                 <CaixaImagem>
                   <ImagemUsuario
                     border-radius="3px"
-                    source={value.conversaCom.imagemPerfil}
+                    source={value.conversaCom.avatar_url || imagemPerfilPadrão}
                   ></ImagemUsuario>
                 </CaixaImagem>
                 <CaixaTexto>

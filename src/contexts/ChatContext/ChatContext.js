@@ -22,18 +22,17 @@ export function ChatProvider({ children }) {
   //   return () => (isMounted = false);
   // }
 
-  async function getEmailUsuario() {
-    await AsyncStorage.getItem("@AirBnbApp:email");
-  }
+
 
   useEffect(() => {
-    console.log("entrou")
+    
     let isMounted = true;
 
     async function pegandoIdUsuario() {
+      const email = await AsyncStorage.getItem("@AirBnbApp:email");;
       const {
         dadosUsuario: { id },
-      } = await managerService.GetDadosUsuario(getEmailUsuario());
+      } = await managerService.GetDadosUsuario(email);
       if (isMounted) setUsuarioId(id);
     }
 
