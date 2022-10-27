@@ -23,7 +23,7 @@ import {
 function GrupoAMIE() {
   const { width } = useWindowDimensions();
   const { height } = useWindowDimensions();
-  const tamanhoIcone = width > 480 ? 20 : 25;
+  const tamanhoIcone = width > 480 ? 55 : 55;
   const WidthImagemMedicos = width > height ? 450 : 280;
   const HeightImagemMedicos = width > height ? 350 : 180;
   const WidthImagemLogo = width > height ? 300 : 250;
