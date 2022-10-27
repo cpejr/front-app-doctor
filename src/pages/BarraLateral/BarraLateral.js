@@ -11,6 +11,8 @@ import {
   TextoCaixa,
   CaixaUsuarioMensagem,
   PaginaCarregando,
+  BolaAzul,
+  UltimaMensagem,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -28,6 +30,7 @@ function BarraLateral({ navigation }) {
   const [carregando, setCarregando] = useState(false);
   const componenteEstaMontadoRef = useRef(null);
   const [carregandoConversas, setCarregandoConversas] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const {
     usuarioId,
@@ -43,7 +46,6 @@ function BarraLateral({ navigation }) {
 
     async function getConversas() {
       setCarregandoConversas(true);
-      //await managerService.deletarConversasInativas(usuarioId);
       const resposta = await managerService.GetConversasUsuario(usuarioId);
       if (componenteEstaMontadoRef.current) {
         setConversas(resposta);
@@ -54,49 +56,43 @@ function BarraLateral({ navigation }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, [usuarioId]);
 
-  // const cliqueNaConversa = (conversa) => {
-  //   return async (e) => {
-  //     e.preventDefault();
+  const cliqueNaConversa = (conversa) => {
+    return async (e) => {
+      e.preventDefault();
 
-  //     const index = conversas.findIndex(({ id }) => id === conversa.id);
-  //     const copiaConversas = objCopiaProfunda(conversas);
+      const index = conversas.findIndex(({ id }) => id === conversa.id);
+      const copiaConversas = objCopiaProfunda(conversas);
 
-  //     const conversaNaLista = copiaConversas[index];
+      const conversaNaLista = copiaConversas[index];
 
-  //     if (conversaNaLista.mensagensNaoVistas) {
-  //       conversaNaLista.mensagensNaoVistas = 0;
-  //       await managerService.UpdateMensagensVisualizadas(
-  //         usuarioId,
-  //         conversa.id
-  //       );
-  //     }
+      if (conversaNaLista.mensagensNaoVistas) {
+        conversaNaLista.mensagensNaoVistas = 0;
+        await managerService.UpdateMensagensVisualizadas(
+          usuarioId,
+          conversa.id
+        );
+      }
 
-  //     setConversaSelecionada(conversaNaLista);
-  //     setConversas(copiaConversas);
-  //   };
-  // };
+      setConversaSelecionada(conversaNaLista);
+      setConversas(copiaConversas);
 
-  // const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
-  //   if (lowerBusca === "") return vetorUsuariosMensagem;
-  //   else
-  //     return (
-  //       msg?.nome
-  //         ?.toLowerCase()
-  //         .normalize("NFD")
-  //         .replace(/[\u0300-\u036f]/g, "")
-  //         .includes(lowerBusca) || msg?.nome?.toLowerCase().includes(lowerBusca)
-  //     );
-  // });
+      navigation.push("ConversaAberta", {
+        paramKey: conversa,
+      });
+    };
+  };
 
-  // async function abrirMensagemClicada(conversa) {
-  //   if (conversa.id) {
-  //     navigation.push("ConversaAberta", {
-  //       paramKey: conversa,
-  //     });
-  //   } else {
-  //     Alert.alert("Erro ao abrir a conversa.");
-  //   }
-  // }
+  const ConversasFiltradas = conversas.filter((c) => {
+    if (lowerBusca === "") return conversas;
+    else
+      return (
+        c?.conversaCom.nome
+          ?.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(lowerBusca) || c?.conversaCom.nome?.toLowerCase().includes(lowerBusca)
+      );
+  });
 
   return (
     <Body>
@@ -114,35 +110,39 @@ function BarraLateral({ navigation }) {
         </PaginaCarregando>
       ) : (
         <ScrollView>
-          {conversas?.map((value, idx) => (
-            <TouchableOpacity
-              key={idx}
-              onPress={() => {
-                cliqueNaConversa(value);
-              }}
-            >
-              <CaixaUsuarioMensagem>
-                <CaixaImagem>
-                  <ImagemUsuario
-                    border-radius="3px"
-                    source={value.conversaCom.avatar_url || imagemPerfilPadrão}
-                  ></ImagemUsuario>
-                </CaixaImagem>
-                <CaixaTexto>
-                  <TextoCaixa fontSize="17px">
-                    {value.conversaCom.nome}
-                  </TextoCaixa>
-                  <TextoCaixa
-                    fontSize="13px"
-                    naoVisto={value.mensagensNaoVistas}
-                  >
-                    {value?.ultima_mensagem?.pertenceAoUsuarioAtual && "Você: "}
-                    {value?.ultima_mensagem?.conteudo}
-                  </TextoCaixa>
-                </CaixaTexto>
-              </CaixaUsuarioMensagem>
-            </TouchableOpacity>
-          ))}
+          {ConversasFiltradas
+            .map((c, idx) => (
+              <TouchableOpacity
+                key={idx}
+                onPress={cliqueNaConversa(c)}
+              >
+                <CaixaUsuarioMensagem>
+                  <CaixaImagem>
+                    <ImagemUsuario
+                      border-radius="3px"
+                      source={c.avatar_url || imagemPerfilPadrão}
+                    ></ImagemUsuario>
+                  </CaixaImagem>
+                  <CaixaTexto>
+                    <TextoCaixa fontSize="17px">
+                      {c.conversaCom.nome}
+                    </TextoCaixa>
+                    <UltimaMensagem>
+                      <TextoCaixa
+                        fontSize="13px"
+                        naoVisto={c.mensagensNaoVistas}
+                      >
+                        {c?.ultima_mensagem?.pertenceAoUsuarioAtual && "Você: "}
+                        {c?.ultima_mensagem?.conteudo}
+                      </TextoCaixa>
+                      {c.mensagensNaoVistas > 0 && (
+                        <BolaAzul>{c.mensagensNaoVistas}</BolaAzul>
+                      )}
+                    </UltimaMensagem>
+                  </CaixaTexto>
+                </CaixaUsuarioMensagem>
+              </TouchableOpacity>
+            ))}
         </ScrollView>
       )}
 

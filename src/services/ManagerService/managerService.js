@@ -393,3 +393,19 @@ export const GetConversasUsuario = async (id_usuario) => {
     });
   return dadosConversas;
 };
+
+export const GetMensagensPorConversaUsuario = async (
+  id_usuario,
+  id_conversa
+) => {
+  let dadosMensagens = {};
+  await requesterService
+    .requisicaoMensagensPorConversaUsuario(id_usuario, id_conversa)
+    .then((res) => {
+      dadosMensagens = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagens;
+};

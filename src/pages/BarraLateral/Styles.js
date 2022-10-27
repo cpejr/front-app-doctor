@@ -16,31 +16,42 @@ export const Body = styled.View`
   padding-bottom: 20px;
 `;
 
-export const HeaderChat = styled.View`
-
-`;
+export const HeaderChat = styled.View``;
 
 export const CaixaUsuarioMensagem = styled.View`
-    display:flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 97%;
-    height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 97%;
+  height: 100px;
 `;
 
 export const CaixaImagem = styled.View`
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
 `;
 
-export const TextoCaixa = styled.Text.attrs(()=>({
-  numberOfLines: 1
+export const TextoCaixa = styled.Text.attrs(() => ({
+  numberOfLines: 1,
 }))`
   font-size: ${(props) => props.fontSize};
   padding-bottom: 5px;
-  
+`;
+
+export const UltimaMensagem = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const BolaAzul = styled.Text`
+  border-radius: 50px;
+  color: white;
+  text-align: center;
+  background-color: ${Cores.lilas[1]};
+  width: 9%;
 `;
 
 export const PaginaCarregando = styled.View`
@@ -50,18 +61,18 @@ export const PaginaCarregando = styled.View`
 `;
 
 export const CaixaTexto = styled.View`
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 70%;
-    height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  height: 100px;
 `;
 
 export const BarraPesquisa = styled.View`
-  display:flex;
+  display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
   width: 100%;
   height: 45px;
   background-color: ${Cores.cinza[10]};
@@ -76,21 +87,21 @@ export const BarraPesquisa = styled.View`
 `;
 
 export const InputPesquisa = styled.TextInput`
-height:100%;
-font-size: 17px;
-width:90%;
+  height: 100%;
+  font-size: 17px;
+  width: 90%;
 `;
 
 export const IconPesquisa = styled.Image`
-width:23px;
-height:23px;
-margin-right:1px;
+  width: 23px;
+  height: 23px;
+  margin-right: 1px;
 `;
 
 export const ImagemUsuario = styled.Image`
   display: flex;
   justify-content: center;
-  align-items:center;
+  align-items: center;
   width: 60.3px;
   height: 60.3px;
 `;

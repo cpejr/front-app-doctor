@@ -80,3 +80,8 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
 
   export const requisicaoConversasPorUsuario = (id_usuario) =>
   api.get(`/conversas/${id_usuario}/usuario`);
+
+  export const requisicaoMensagensPorConversaUsuario = (
+    id_usuario,
+    id_conversa
+  ) => api.get(`/mensagems/${id_conversa}/conversa/${id_usuario}`);
