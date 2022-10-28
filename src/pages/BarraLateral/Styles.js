@@ -23,8 +23,7 @@ export const HeaderChat = styled.View`
   height: 65px;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 10px;
+  justify-content: center;
 
 `;
 
@@ -80,18 +79,17 @@ export const BarraPesquisa = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content:space-between;
-  width: 88%;
+  width: 97%;
   height: 45px;
   background-color: ${Cores.cinza[10]};
   border-radius: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
   border: ${Cores.lilas[5]};
   border-width: 1.5px;
   font-size: 12px;
   margin-bottom: 30px;
-  margin-right: 5px;
 `;
 
 export const InputPesquisa = styled.TextInput`
@@ -178,8 +176,8 @@ export const CaixaExterna = styled.View`
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 3;
-
+    
+    
 `;
 
 export const CaixaInterna = styled.View`

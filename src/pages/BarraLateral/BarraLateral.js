@@ -146,10 +146,6 @@ useEffect(() => {
           />
           <IconPesquisa source={searchIcon} />
         </BarraPesquisa>
-        <ContainerIcone>
-          <IconeAddConversa name="add-circle-outline" size={40} color={Cores.azulEscuro} marginBot = {10} onPress={() => setModalNovaMensagem(true)}/>
-        
-        </ContainerIcone>
       </HeaderChat>
       {carregando ? (
         <PaginaCarregando>
@@ -247,6 +243,20 @@ useEffect(() => {
           ))}
         </ScrollView>
       )}
+       <Botao
+        height="40px"
+        width="70%"
+        backgroundColor={Cores.lilas[5]}
+        borderRadius="10px"
+        borderWidth="1px"
+        borderColor={Cores.azul}
+        marginTop="15px"
+        onPress = {()=> setModalNovaMensagem(true)}
+      >
+        <ConteudoBotao fontSize="15px" color={Cores.branco} width="100%">
+          Iniciar Nova Conversa
+        </ConteudoBotao>
+      </Botao>
     </Body>
   );
 }
