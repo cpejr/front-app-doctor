@@ -33,9 +33,10 @@ import { ChatContext } from "../../contexts/ChatContext/ChatContext";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import * as managerService from "../../services/ManagerService/managerService";
 import checarObjVazio from "../../utils/checarObjVazio";
+import moverArray from '../../utils/moverArray';
 
 function ConversaAberta({ navigation, route, socket }) {
-  const conversaClicada = route.params.paramKey;
+ // const conversaSelecionada = route.params.paramKey;
   //console.log("cv clicada:", conversaClicada);
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [conversinha, setConversinha] = useState({});
@@ -83,7 +84,7 @@ function ConversaAberta({ navigation, route, socket }) {
 
       const resposta = await managerService.GetMensagensPorConversaUsuario(
         usuarioId,
-        conversaClicada.id
+        conversaSelecionada.id
       );
       if (componenteEstaMontadoRef.current) setMensagens(resposta);
     }
@@ -112,7 +113,7 @@ function ConversaAberta({ navigation, route, socket }) {
 
   const enviarConversa = async (ultima_mensagem) => {
     const index = conversas.findIndex(
-      ({ id }) => id === conversaClicada.id
+      ({ id }) => id === conversaSelecionada.id
     );
     const copiaConversas = objCopiaProfunda(conversas);
     const conversaNaLista = copiaConversas[index];
@@ -122,7 +123,7 @@ function ConversaAberta({ navigation, route, socket }) {
     setConversaSelecionada(conversaNaLista);
     setConversas(copiaConversas);
 
-    await managerService.UpdateConversaAtiva(conversaClicada.id);
+    await managerService.UpdateConversaAtiva(conversaSelecionada.id);
 
     const {
       id,
@@ -157,7 +158,7 @@ function ConversaAberta({ navigation, route, socket }) {
     if (!inputMensagemConteudo) return;
 
     const horaAtual = new Date().getHours();
-    const horarioComercial = horaAtual >= 7 && horaAtual < 19 ? true : false;
+    const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
 
     const remetente =
       conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
@@ -195,10 +196,10 @@ function ConversaAberta({ navigation, route, socket }) {
     };
 
     if (conversaSelecionada.ativada) {
-      socket.emit("enviarMensagem", {
-        novaMensagem,
-        receptorId: conversaSelecionada.conversaCom.id,
-      });
+      // socket.emit("enviarMensagem", {
+      //   novaMensagem,
+      //   receptorId: conversaSelecionada.conversaCom.id,
+      // });
     } else {
       enviarConversa(novaMensagem);
     }
@@ -225,10 +226,10 @@ function ConversaAberta({ navigation, route, socket }) {
           color={Cores.azul}
           onPress={() => navigation.navigate("BarraLateral")}
         />
-        <ImagemUsuario source={conversaClicada?.conversaCom?.avatar_url || imagemPerfilPadrão} />
+        <ImagemUsuario source={conversaSelecionada?.conversaCom?.avatar_url || imagemPerfilPadrão} />
         <CaixaTexto>
         <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-          {conversaClicada.conversaCom.nome}
+          {conversaSelecionada.conversaCom.nome}
         </TextoMensagem>
         </CaixaTexto>
       </HeaderConversaAberta>

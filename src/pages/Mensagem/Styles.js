@@ -11,9 +11,14 @@ export const MensagemEnviada = styled.View`
   margin-top: 8px;
   margin-bottom: 8px;
   border-radius: 5px;
+  align-items:center;
   align-self:  ${({ pertenceAoUsuarioAtual }) => pertenceAoUsuarioAtual ?  'flex-end' : 'flex-start'};
   background-color: ${({ pertenceAoUsuarioAtual }) => pertenceAoUsuarioAtual ?  Cores.lilas[4] : 'white'};
   ${({ pertenceAoUsuarioAtual }) => pertenceAoUsuarioAtual && css`margin-top: 0%;`}
+`;
+
+export const CorpoScroll = styled.ScrollView`
+  display: flex;
 `;
 
 export const DataHoraMensagem = styled.View`

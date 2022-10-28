@@ -438,6 +438,19 @@ export const UpdateMensagemVisualizada = async (id, atualizacoes) => {
   
 };
 
+export const deletarConversasInativas = async (id_usaurio) => {
+  let conversasApagadas = {};
+  await requesterService
+    .deletarConversasInativas(id_usaurio)
+    .then((res) => {
+      conversasApagadas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return conversasApagadas;
+};
+
 export const UpdateConversaAtiva = async (id) => {
   let dadosConversa = {};
   await requesterService
