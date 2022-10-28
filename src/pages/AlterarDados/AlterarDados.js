@@ -4,7 +4,7 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import Input from "../../styles/Input";
 import InputMask from "../../styles/InputMask/InputMask";
 import { useWindowDimensions, ScrollView, TouchableOpacity, } from "react-native";
-import { Alert } from "react-native";
+import { Alert  } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { ActivityIndicator, Colors, Checkbox } from "react-native-paper";
 import {

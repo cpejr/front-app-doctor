@@ -3,6 +3,7 @@ import { Cores } from "../../variaveis";
 import { View, Text } from "react-native";
 import { TextInput } from "react-native";
 import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
+import { Picker } from "@react-native-picker/picker";
 
 export const Body = styled.View`
   display: flex;
@@ -112,3 +113,79 @@ export const ImagemUsuario = styled.Image`
   width: 60.3px;
   height: 60.3px;
 `;
+
+
+export const CaixaModalGrande = styled.View`
+  height:  ${(props) => props.height};
+  width: 80%;
+  max-width: 600px;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 5%;
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  border: 4px;
+  border-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+`;
+
+export const CaixaFechar = styled.View`
+  width: 100%;
+  height: auto;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 25px;
+`;
+export const CaixaTituloModal = styled.View`
+  width: 80%;
+
+
+`;
+export const TituloModal = styled.Text`
+  font-size: 24px;
+  text-align: center;
+`;
+
+
+export const PickerView = styled.View`
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  width: 100%;
+  background-color: #e4e6f4;
+  border-radius: 5px;
+  border-color: ${Cores.azul};
+  border-width: 1.5px;
+  overflow: hidden;
+`;
+
+export const PickerSecretaria = styled(Picker)`
+  display: flex;
+  background-color: #e4e6f4;
+  width: 100%;
+`;
+
+export const CaixaExterna = styled.View`
+    height: ${(props) => props.height};
+    width: ${(props) => props.width};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+`;
+
+export const CaixaInterna = styled.View`
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+

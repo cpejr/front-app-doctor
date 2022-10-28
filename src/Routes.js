@@ -29,7 +29,6 @@ import Arquivos from "./pages/Arquivos";
 import FormularioEmergencia from "./pages/FormularioEmergencia";
 import BarraLateral from "./pages/BarraLateral/BarraLateral";
 import ConversaAberta from "./pages/ConversaAberta/ConversaAberta";
-import ModalNovaConversa from "./pages/ModalnovaConversa/ModalNovaConversa";
 
 import IonIcon from "react-native-vector-icons/Ionicons";
 import AntIcon from "react-native-vector-icons/AntDesign";
@@ -196,10 +195,7 @@ function ChatStackScreen() {
         name="ConversaAberta"
         component={ConversaAberta}
       />
-      <ChatStack.Screen
-        name="ModalNovaConversa"
-        component={ModalNovaConversa}
-      />
+     
 
     </ChatStack.Navigator>
   );
