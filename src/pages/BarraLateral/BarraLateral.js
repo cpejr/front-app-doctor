@@ -76,7 +76,7 @@ function BarraLateral({ navigation }) {
       setConversaSelecionada(conversaNaLista);
       setConversas(copiaConversas);
 
-      navigation.push("ConversaAberta", {
+      navigation.navigate("ConversaAberta", {
         paramKey: conversa,
       });
     };

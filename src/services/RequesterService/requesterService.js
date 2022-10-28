@@ -85,3 +85,8 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
     id_usuario,
     id_conversa
   ) => api.get(`/mensagems/${id_conversa}/conversa/${id_usuario}`);
+
+  export const updateMensagemVisualizada = (id, atualizacoes) =>
+  api.put(`/mensagems/${id}`, atualizacoes);
+
+  export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);

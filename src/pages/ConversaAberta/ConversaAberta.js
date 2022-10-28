@@ -21,7 +21,9 @@ import {
   CaixaTexto,
   PaginaCarregando,
 } from "./Styles";
+//import { Tooltip } from 'react-native-elements';
 import { Cores } from "../../variaveis";
+import  Mensagem  from '../Mensagem/Mensagem';
 import IconeMaterial from "react-native-vector-icons/MaterialIcons";
 import IconeIon from "react-native-vector-icons/Ionicons";
 import IconeFoundation from "react-native-vector-icons/Foundation";
@@ -32,9 +34,11 @@ import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import * as managerService from "../../services/ManagerService/managerService";
 import checarObjVazio from "../../utils/checarObjVazio";
 
-function ConversaAberta({ navigation, route }) {
+function ConversaAberta({ navigation, route, socket }) {
   const conversaClicada = route.params.paramKey;
+  //console.log("cv clicada:", conversaClicada);
   const [usuarioAtual, setUsuarioAtual] = useState({});
+  const [conversinha, setConversinha] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
@@ -146,16 +150,16 @@ function ConversaAberta({ navigation, route }) {
     });
   };
   const enviarMensagem = async (e) => {
+    console.log("Teste Mensagem ", e.target )
     e.preventDefault();
 
     if (!inputMensagemConteudo) return;
 
-    const horaAtual = moment().hours();
+    const horaAtual = new Date().getHours();
     const horarioComercial = horaAtual >= 7 && horaAtual < 19 ? true : false;
 
     const remetente =
-      conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
-        .conversaCom;
+      conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
@@ -204,12 +208,12 @@ function ConversaAberta({ navigation, route }) {
 
     setCarregandoEnvioMensagem(false);
   };
-
-  const verificarEnter = (e) => {
-    if (e.key === "Enter" && inputMensagemConteudo) {
-      enviarMensagem(e);
-    }
-  };
+  // const verificarEnter = (e) => {
+  //   console.log("testando enter:", e)
+  //   if (e.key === "Enter" && inputMensagemConteudo) {
+  //     enviarMensagem(e);
+  //   }
+  // };
 
   return (
     <Body>
@@ -218,89 +222,43 @@ function ConversaAberta({ navigation, route }) {
           name="arrow-left"
           size={32}
           color={Cores.azul}
-          onPress={() => navigation.push("BarraLateral")}
+          onPress={() => navigation.navigate("BarraLateral")}
         />
-        <ImagemUsuario source={conversaClicada.imagemPerfil} />
+        <ImagemUsuario source={conversaClicada?.conversaCom?.avatar_url || imagemPerfilPadrão} />
         <CaixaTexto>
         <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-          {conversaClicada.nome}
+          {conversaClicada.conversaCom.nome}
         </TextoMensagem>
         </CaixaTexto>
       </HeaderConversaAberta>
 
       <FundoConversaAberta>
-      {carregando ? 
+      <ScrollView>
+      {carregandoConversa?( 
         <PaginaCarregando>
           <ActivityIndicator animating={true} color={Colors.black} />
-        </PaginaCarregando> :
-        <ScrollView>
-        <MensagemEnviada>
-          <TextoMensagemEnviada>
-            Lorem ipsum dolor sit amet. Eos eaque minima qui aliquid tempora non
-            fuga omnis.
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:00</HoraMensagem>
-        </MensagemEnviada>
-        <MensagemEnviada>
-          <TextoMensagemEnviada>
-            oi.
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:02</HoraMensagem>
-        </MensagemEnviada>
-        <MensagemRecebida>
-          <TextoMensagemEnviada>
-            Lorem ipsum dolor sit amet. Non officiis deserunt ex delectus animi
-            non exercitationem eius aut dolores facere? Qui saepe possimus non
-            earum architecto vel autem nihil ut veniam quos nam fuga odio. Eos
-            eaque minima qui aliquid tempora non fuga omnis.
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:04</HoraMensagem>
-        </MensagemRecebida>
-        <MensagemRecebida>
-          <TextoMensagemEnviada>
-            Lorem ipsum dolor sit amet. 
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:08</HoraMensagem>
-        </MensagemRecebida>
-        <MensagemRecebida>
-          <TextoMensagemEnviada>
-            Lorem ipsum dolor sit amet. 
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:08</HoraMensagem>
-        </MensagemRecebida>
-        <MensagemRecebida>
-          <TextoMensagemEnviada>
-            Lorem ipsum dolor sit amet. 
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:08</HoraMensagem>
-        </MensagemRecebida>
-        <MensagemRecebida>
-          <TextoMensagemEnviada>
-            Lorem ipsum dolor sit amet. 
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:08</HoraMensagem>
-        </MensagemRecebida>
-        <MensagemRecebida>
-          <TextoMensagemEnviada>
-            Lorem ipsum dolor sit amet. 
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:08</HoraMensagem>
-        </MensagemRecebida>
-        <MensagemRecebida>
-          <TextoMensagemEnviada>
-            Lorem ipsum dolor sit amet. 
-          </TextoMensagemEnviada>
-          <HoraMensagem>11:08</HoraMensagem>
-        </MensagemRecebida>
-        </ScrollView>}
+        </PaginaCarregando>) : (
+          mensagens?.map((m, idx) => (
+            <Mensagem
+              key={idx}
+              pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
+              conteudo={m.conteudo}
+              scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
+              data_criacao={m.data_criacao}
+            />
+          ))
+        )}
+        </ScrollView>
       </FundoConversaAberta>
 
       <FooterConversaAberta>
         <IconeFoundation name="paperclip" size={33} color={Cores.azulEscuro} />
         <BarraEnviarMensagemConversaAberta
-        placeholder="Mensagem">
+          placeholder="Mensagem" onChangeText={(e) => setInputMensagemConteudo(e)}
+          value={inputMensagemConteudo}
+          ref={inputMensagemConteudoRef}>
         </BarraEnviarMensagemConversaAberta>
-        <IconeMaterial name="send" size={30} color={Cores.azulEscuro} />
+        <IconeMaterial name="send" size={30} color={Cores.azulEscuro} onPress={enviarMensagem}/>
       </FooterConversaAberta>
     </Body>
   );

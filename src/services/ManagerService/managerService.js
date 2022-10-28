@@ -394,6 +394,19 @@ export const GetConversasUsuario = async (id_usuario) => {
   return dadosConversas;
 };
 
+export const CriandoMensagem = async (mensagem) => {
+  let dadosMensagemCriada = {};
+  await requesterService
+    .criarMensagem(mensagem)
+    .then((res) => {
+      dadosMensagemCriada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagemCriada;
+};
+
 export const GetMensagensPorConversaUsuario = async (
   id_usuario,
   id_conversa
@@ -408,4 +421,18 @@ export const GetMensagensPorConversaUsuario = async (
       requisicaoErro(error);
     });
   return dadosMensagens;
+};
+
+export const UpdateMensagemVisualizada = async (id, atualizacoes) => {
+  let mensagemAtualizada = {};
+  await requesterService
+    .updateMensagemVisualizada(id, atualizacoes)
+    .then((res) => {
+      mensagemAtualizada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return mensagemAtualizada;
 };
