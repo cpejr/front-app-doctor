@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { Linking, useWindowDimensions } from "react-native";
+import { Linking, ScrollView, useWindowDimensions } from "react-native";
 import { Cores } from "../../variaveis";
 import { useFonts } from "expo-font";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -35,9 +35,16 @@ function ExameNormal({ navigation }) {
     }
   }, [urlWhatsApp]);
 
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const tamanhoIconeWhatsapp = width > 480 ? 25 : 23;
   const tamanhoIconeSeta = width > 480 ? 36 : 33;
+  const tamanhoCaixaContato = height > 480 ? "33%" : "60%";
+  const tamanhoCaixaFaleConosco = height > 480 ? "26%" : "42%";
+  const larguraCaixaFaleConosco = width > 749 ? "35%" : "55%";
+  const margemCaixaFaleConosco = width > 749 ? "5%" : "0%";
+  const tamanhoCaixaTextoCima = height > 480 ? "15%" : "35%";
+  const margemCaixaTextoCima = height > 480 ? "0%" : "5%";
+
 
   const [loaded] = useFonts({
     barlow: require("../../assets/fonts/Barlow-Medium.ttf"),
@@ -50,8 +57,8 @@ function ExameNormal({ navigation }) {
 
   return (
         <Body>
-
-            <CaixaTextoCima>
+          
+            <CaixaTextoCima height = {tamanhoCaixaTextoCima} marginBottom = {margemCaixaTextoCima}>
               <Icon 
                     name="arrow-back-circle-outline" 
                     size={tamanhoIconeSeta} 
@@ -60,9 +67,9 @@ function ExameNormal({ navigation }) {
               <Titulo>Marcar Exame</Titulo>
             </CaixaTextoCima>
 
-            <CaixaContato>
+            <CaixaContato height = {tamanhoCaixaContato}>
                 <TextoCaixaContato fontFamily = "barlowLight">Entre em contato conosco pelo Whatsapp para marcarmos o seu exame:</TextoCaixaContato>
-                <CaixaFaleConosco>
+                <CaixaFaleConosco height = {tamanhoCaixaFaleConosco} width = {larguraCaixaFaleConosco} marginTop = {margemCaixaFaleConosco}>
                   <Icon 
                     name="logo-whatsapp" 
                     size={tamanhoIconeWhatsapp} 
@@ -71,7 +78,7 @@ function ExameNormal({ navigation }) {
                   <TextoCaixa>FALE CONOSCO</TextoCaixa>      
                 </CaixaFaleConosco>
             </CaixaContato>
-               
+
         </Body>
   );
 }

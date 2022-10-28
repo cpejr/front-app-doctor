@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
+import { Button, Text, View,ScrollView } from "react-native";
 
 function Home({ navigation }) {
   return (
-    <View>
+    <ScrollView>
       <Text>Home</Text>
       <Button
         title="Go to Cadastro"
@@ -71,7 +71,7 @@ function Home({ navigation }) {
         title="Go to ExameNormal"
         onPress={() => navigation.navigate("ExameNormal")}
       />
-    </View>
+    </ScrollView>
   );
 }
 

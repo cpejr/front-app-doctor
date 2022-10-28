@@ -8,7 +8,6 @@ export const Body = styled.View`
   width: 100%;
   height: 100%;
   background-color: ${Cores.branco};
-
 `;
 
 export const CaixaTextoCima = styled.View`
@@ -19,9 +18,9 @@ export const CaixaTextoCima = styled.View`
   justify-content: space-around;
   flex-direction: row;
   width: 100%;
-  height: 15%;
+  height:${(props) => props.height};
   background-color: ${Cores.branco};
-
+  margin-bottom:${(props) => props.marginBottom}; 
 `;
 
 export const CaixaContato = styled.View`
@@ -31,7 +30,7 @@ export const CaixaContato = styled.View`
   align-items: center;
   justify-content: space-between;
   width: 77%;
-  height: 30%;
+  height:${(props) => props.height};
   border: solid;
   border-color:${Cores.preto};
   border-radius: 3px;
@@ -69,14 +68,14 @@ export const CaixaFaleConosco = styled.View`
   align-items: center;
   padding: 0 3% 0 2%;
   justify-content: space-around;
-  width: 55%;
-  height: 26%;
+  width:${(props) => props.width}; 
+  height:${(props) => props.height};        
   border-width: 1px;
   border-color:${Cores.azulEscuro};
   border-radius: 2px;
   border-width: 1.2px;
   elevation: 6;
   background-color: ${Cores.branco};
-
+  margin-top:${(props) => props.marginTop}; 
 `;
 
