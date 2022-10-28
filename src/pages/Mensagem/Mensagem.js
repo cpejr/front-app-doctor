@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { MensagemEnviada, DataHoraMensagem, HoraMensagem } from './Styles';
-import { View, Text,ScrollView } from "react-native";
+import { View, Text,ScrollView, RefreshControl } from "react-native";
 
 export default function Mensagem({
   scrollRef,
@@ -12,7 +12,7 @@ export default function Mensagem({
   return (
     <MensagemEnviada
       pertenceAoUsuarioAtual={pertenceAoUsuarioAtual}
-      createRef = {scrollRef}
+      refreshing = {scrollRef}
     >
        <Text>{conteudo}</Text>
       <DataHoraMensagem>

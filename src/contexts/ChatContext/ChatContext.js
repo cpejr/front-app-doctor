@@ -36,7 +36,7 @@ export function ChatProvider({ children }) {
     }
 
     pegandoIdUsuario();
-    console.log(usuarioId)
+
 
     return () => (isMounted = false);
   }, []);

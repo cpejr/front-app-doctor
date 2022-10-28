@@ -83,7 +83,7 @@ function ConversaAberta({ navigation, route, socket }) {
 
       const resposta = await managerService.GetMensagensPorConversaUsuario(
         usuarioId,
-        conversaSelecionada.id
+        conversaClicada.id
       );
       if (componenteEstaMontadoRef.current) setMensagens(resposta);
     }
@@ -112,7 +112,7 @@ function ConversaAberta({ navigation, route, socket }) {
 
   const enviarConversa = async (ultima_mensagem) => {
     const index = conversas.findIndex(
-      ({ id }) => id === conversaSelecionada.id
+      ({ id }) => id === conversaClicada.id
     );
     const copiaConversas = objCopiaProfunda(conversas);
     const conversaNaLista = copiaConversas[index];
@@ -122,7 +122,7 @@ function ConversaAberta({ navigation, route, socket }) {
     setConversaSelecionada(conversaNaLista);
     setConversas(copiaConversas);
 
-    await managerService.UpdateConversaAtiva(conversaSelecionada.id);
+    await managerService.UpdateConversaAtiva(conversaClicada.id);
 
     const {
       id,
@@ -148,9 +148,10 @@ function ConversaAberta({ navigation, route, socket }) {
       novaConversa: conversaParaEnvio,
       receptorId,
     });
+    console.log("nova mensagem:, ", novaConversa)
   };
   const enviarMensagem = async (e) => {
-    console.log("Teste Mensagem ", e.target )
+    
     e.preventDefault();
 
     if (!inputMensagemConteudo) return;

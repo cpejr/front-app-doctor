@@ -435,4 +435,18 @@ export const UpdateMensagemVisualizada = async (id, atualizacoes) => {
     });
 
   return mensagemAtualizada;
+  
+};
+
+export const UpdateConversaAtiva = async (id) => {
+  let dadosConversa = {};
+  await requesterService
+    .updateConversaAtiva(id)
+    .then((res) => {
+      dadosConversa = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversa;
 };
