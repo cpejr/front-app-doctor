@@ -178,6 +178,7 @@ export const CaixaExterna = styled.View`
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 3;
 
 `;
 

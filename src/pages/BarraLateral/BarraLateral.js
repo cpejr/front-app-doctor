@@ -33,7 +33,7 @@ import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
 import IconeAddConversa from "react-native-vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Tooltip from 'react-native-walkthrough-tooltip';
+
 
 
 function BarraLateral({ navigation }) {
@@ -147,8 +147,8 @@ useEffect(() => {
           <IconPesquisa source={searchIcon} />
         </BarraPesquisa>
         <ContainerIcone>
-          <IconeAddConversa name="add-circle-outline" size={40} color={Cores.azulEscuro} marginBot = {10} onPress={() => setModalNovaMensagem(true)}>
-          </IconeAddConversa>
+          <IconeAddConversa name="add-circle-outline" size={40} color={Cores.azulEscuro} marginBot = {10} onPress={() => setModalNovaMensagem(true)}/>
+        
         </ContainerIcone>
       </HeaderChat>
       {carregando ? (
