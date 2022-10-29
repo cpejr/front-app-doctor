@@ -22,10 +22,11 @@ export const PaginaCarregando = styled.View`
 export const CaixaModalUpdateFoto = styled.View`
   height: ${(props) => props.height};
   width: 80%;
+  max-width: 600px;
   margin-top: ${(props) => props.marginTop};
   margin-left: 10%;
   margin-right: 10%;
-  padding-bottom: 10%;
+  padding-bottom: 5%;
   padding-top:0%;
   background-color: #f7f7f7;
   border-radius: 6px;
@@ -36,13 +37,23 @@ export const CaixaModalUpdateFoto = styled.View`
   justify-content: flex-start;
 `;
 
+export const CaixaExterna = styled.View`
+  height: ${(props) => props.height};
+  width:  ${(props) => props.width};
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const CaixaModalDeleteFoto = styled.View`
   height: ${(props) => props.height};
   width: 80%;
+  max-width: 400px;
   margin-top: ${(props) => props.marginTop};
   margin-left: 10%;
   margin-right: 10%;
-  padding-bottom: 10%;
+  padding-bottom: 5%;
   padding-top:0%;
   background-color: #f7f7f7;
   border-radius: 6px;
@@ -50,7 +61,7 @@ export const CaixaModalDeleteFoto = styled.View`
   border-color: #c4c4c4;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 export const CaixaFechar = styled.View`
