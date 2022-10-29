@@ -119,14 +119,15 @@ export const CaixaModalGrande = styled.View`
   max-width: 600px;
   margin-left: 10%;
   margin-right: 10%;
-  padding: 5%;
-  background-color: #f7f7f7;
+  padding: 3%;
+  background-color: white;
   border-radius: 6px;
   border: 4px;
   border-color: #c4c4c4;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  opacity: 1;
 
 `;
 
@@ -138,16 +139,16 @@ export const CaixaFechar = styled.View`
   align-items: flex-end;
   justify-content: flex-start;
   padding-right: 10px;
-  padding-top: 10px;
-  padding-bottom: 25px;
+  padding-top: 5px;
+  padding-bottom: 8px;
 `;
 export const CaixaTituloModal = styled.View`
-  width: 80%;
+  width: 100%;
 
 
 `;
 export const TituloModal = styled.Text`
-  font-size: 24px;
+  font-size: 18px;
   text-align: center;
 `;
 
@@ -156,7 +157,7 @@ export const PickerView = styled.View`
   display: flex;
   justify-content:center;
   align-items:center;
-  width: 100%;
+  width: 85%;
   background-color: #e4e6f4;
   border-radius: 5px;
   border-color: ${Cores.azul};
@@ -176,7 +177,7 @@ export const CaixaExterna = styled.View`
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    background-color: rgba(0,0,0,0.6);
     
 `;
 

@@ -47,8 +47,8 @@ function BarraLateral({ navigation }) {
   const [secretariaSelecionada, setSecretariaSelecionada] = useState();
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
-  const alturaModal = (width > height) ? "85%" : "50%";
-  const tamanhoIcone = width > 480 ? 20 : 25;
+  const alturaModal = (width > height) ? "70%" : "35%";
+  const tamanhoIcone = width > 480 ? 35 : 25;
 
   const imagemPerfilPadrão = require("../../assets/logoGuilherme.png");
 
@@ -157,6 +157,7 @@ useEffect(() => {
               animationType="slide"
               transparent={true}
               visible={modalNovaMensagem}
+              destroyOnClose
             >
               <CaixaExterna width={width} height={height}>
               <CaixaModalGrande  height={alturaModal}>
@@ -212,7 +213,7 @@ useEffect(() => {
                     color={Cores.branco}
                     width="100%"
                   >
-                    Enviar
+                    Confirmar
                   </ConteudoBotao>
                 </Botao>
                 </CaixaInterna>
