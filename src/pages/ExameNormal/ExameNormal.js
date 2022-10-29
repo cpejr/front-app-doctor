@@ -11,6 +11,7 @@ import {
     CaixaFaleConosco,
     TextoCaixa,
     TextoCaixaContato,
+    ScrollViewBranco,
 } from "./Styles";
 
 function ExameNormal({ navigation }) {
@@ -38,14 +39,19 @@ function ExameNormal({ navigation }) {
   const { width, height } = useWindowDimensions();
   const tamanhoIconeWhatsapp = width > 480 ? 25 : 23;
   const tamanhoIconeSeta = width > 480 ? 36 : 33;
-  const tamanhoCaixaContato = height > 480 ? "33%" : "60%";
-  const tamanhoCaixaFaleConosco = height > 480 ? "26%" : "42%";
-  const larguraCaixaFaleConosco = width > 749 ? "35%" : "55%";
-  const margemCaixaFaleConosco = width > 749 ? "5%" : "0%";
-  const tamanhoCaixaTextoCima = height > 480 ? "15%" : "35%";
-  const margemCaixaTextoCima = height > 480 ? "0%" : "5%";
+  const tamanhoCaixaContato = height > 480 ? "33%" : "55%";
+  const comparaTamanhoCaixaFalaConosco = width > 680 ? "38%" : "26%";
+  const tamanhoCaixaFalaConosco = width > 1065 ? "83%" : comparaTamanhoCaixaFalaConosco;
+  const larguraCaixaFaleConosco = width > 749 ? "28%" : "55%";
+  const margemCaixaFaleConosco = width > 749 ? "5%" : "3%";
+  const tamanhoCaixaTextoCima = height > 480 ? "15%" : "30%";
+  const caixaTextoCimaPaddingTop = width > 749 ? "3%" : "7%";
+  const comparaCaixaTextoCimaPaddingRight = width > 682 ? "35%" : "28%";
+  const caixaTextoCimaPaddingRight = width > 1060 ? "40%" : comparaCaixaTextoCimaPaddingRight;
+  const margemCaixaTextoCima = height > 480 ? "2%" : "3%";
 
 
+console.log("testreeeee:", width)
   const [loaded] = useFonts({
     barlow: require("../../assets/fonts/Barlow-Medium.ttf"),
     barlowLight: require("../../assets/fonts/Barlow-Light.ttf"),
@@ -56,26 +62,27 @@ function ExameNormal({ navigation }) {
   }
 
   return (
+    
         <Body>
           
-            <CaixaTextoCima height = {tamanhoCaixaTextoCima} marginBottom = {margemCaixaTextoCima}>
+            <CaixaTextoCima height = {tamanhoCaixaTextoCima} marginBottom = {margemCaixaTextoCima} paddingTop = {caixaTextoCimaPaddingTop} paddingRight = {caixaTextoCimaPaddingRight}>
               <Icon 
                     name="arrow-back-circle-outline" 
                     size={tamanhoIconeSeta} 
-                    color={Cores.azul} 
+                    color="green"
                     onPress={() => navigation.navigate("Exames")}/>
               <Titulo>Marcar Exame</Titulo>
             </CaixaTextoCima>
 
             <CaixaContato height = {tamanhoCaixaContato}>
                 <TextoCaixaContato fontFamily = "barlowLight">Entre em contato conosco pelo Whatsapp para marcarmos o seu exame:</TextoCaixaContato>
-                <CaixaFaleConosco height = {tamanhoCaixaFaleConosco} width = {larguraCaixaFaleConosco} marginTop = {margemCaixaFaleConosco}>
+                <CaixaFaleConosco height = {tamanhoCaixaFalaConosco} width = {larguraCaixaFaleConosco} marginTop = {margemCaixaFaleConosco}>
                   <Icon 
                     name="logo-whatsapp" 
                     size={tamanhoIconeWhatsapp} 
                     color = "green" 
                     onPress={renderizarUrl} />
-                  <TextoCaixa>FALE CONOSCO</TextoCaixa>      
+                  <TextoCaixa onPress={renderizarUrl}>FALE CONOSCO</TextoCaixa>      
                 </CaixaFaleConosco>
             </CaixaContato>
 

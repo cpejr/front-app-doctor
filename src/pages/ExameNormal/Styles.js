@@ -10,12 +10,20 @@ export const Body = styled.View`
   background-color: ${Cores.branco};
 `;
 
+
+export const ScrollViewBranco = styled.ScrollView`
+  background-color: ${Cores.branco};
+`;
+
+
 export const CaixaTextoCima = styled.View`
 
   display: flex;
-  padding: 7% 20% 0% 0%;
+  padding-top: ${(props) => props.paddingTop}; 
+  padding-left: 5%; 
+  padding-right: ${(props) => props.paddingRight}; 
   align-items: flex-start;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: row;
   width: 100%;
   height:${(props) => props.height};
@@ -26,7 +34,7 @@ export const CaixaTextoCima = styled.View`
 export const CaixaContato = styled.View`
 
   display: flex;
-  padding: 4% 3% 6% 3%;
+  padding: 4% 3% 8% 3%;
   align-items: center;
   justify-content: space-between;
   width: 77%;
@@ -37,7 +45,6 @@ export const CaixaContato = styled.View`
   border-width: 1px;
   elevation: 8;
   background-color: ${Cores.cinza[7]};
-
 `;
 
 export const Titulo = styled.Text`
