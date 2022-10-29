@@ -505,7 +505,12 @@ function AlterarDados({ navigation }) {
             </CaixaBotoesAlterarEDeletarImagem>
             <Modal
               animationType="slide"
-              transparent={true}
+              transparent={false}
+              style={
+                {
+                  backgroundColor: "rgba(0,0,0,0.3)"
+                }
+              }
               visible={modalAdicionarFoto}
             >
               <CaixaExterna height={height} width={width}>

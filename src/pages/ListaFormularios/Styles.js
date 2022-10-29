@@ -7,6 +7,19 @@ export const Scroll = styled.ScrollView`
   background-color: ${Cores.branco};
 `;
 
+export const TextoCima = styled.Text`
+  font-size: 33px;
+  font-weight: 600;
+  color: ${Cores.azulEscuro};
+`;
+
+export const CaixaTextoCima = styled.View`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  margin-top: 15px;
+`;
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
@@ -15,7 +28,7 @@ export const Body = styled.View`
   background-color: ${Cores.branco};
   padding-left: 5%;
   padding-right: 5%;
-  padding-top: 10px;
+  padding-top: 0px;
   padding-bottom: 50px;
 `;
 
@@ -28,7 +41,7 @@ export const BarraPesquisa = styled.View`
   background-color: ${Cores.cinza[10]};
   border-radius: 5px;
   padding-left: 10px;
-  margin-top: 10px;
+  margin-top: 0px;
   border: ${Cores.lilas[5]};
   border-width: 1.5px;
   font-size: 12px;
@@ -113,7 +126,7 @@ export const FormNome = styled.Text`
 text-decoration: underline;
 width: 58%;
 font-size:17px;
-font-weight: 700;
+font-weight: bold;
 color:${Cores.azulEscuro};
 /* background-color: green; */
 

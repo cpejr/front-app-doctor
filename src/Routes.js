@@ -29,6 +29,7 @@ import Arquivos from "./pages/Arquivos";
 import FormularioEmergencia from "./pages/FormularioEmergencia";
 import BarraLateral from "./pages/BarraLateral/BarraLateral";
 import ConversaAberta from "./pages/ConversaAberta/ConversaAberta";
+import ListaExames from "./pages/ListaExames";
 
 import IonIcon from "react-native-vector-icons/Ionicons";
 import AntIcon from "react-native-vector-icons/AntDesign";
@@ -78,7 +79,7 @@ function HomeStackScreen() {
   return (
     <HomeStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Login"
+      initialRouteName="Home"
     >
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Comentarios" component={Comentarios} />
@@ -91,6 +92,8 @@ function HomeStackScreen() {
       <HomeStack.Screen name="AlterarSenha" component={AlterarSenha} />
       <HomeStack.Screen name="ListaReceitas" component={ListaReceitas} />
       <HomeStack.Screen name="ListaFormularios" component={ListaFormularios} />
+      <HomeStack.Screen name="ListaExames" component={ListaExames} />
+      <HomeStack.Screen name="SolicitarExame" component={SolicitarExame} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
       <HomeStack.Screen name="FormularioEmergencia" component={FormularioEmergencia} />
@@ -153,7 +156,7 @@ function ExamesStackScreen() {
     >
       <ExamesStack.Screen name="Exames" component={Exames} />
       <ExamesStack.Screen name="FormaPagamento" component={FormaPagamento} />
-      <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
+      {/*  <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} /> */}
     </ExamesStack.Navigator>
   );
 }
@@ -264,6 +267,7 @@ function Routes() {
           name="AlterarSenhaComEmail"
           component={AlterarSenhaComEmail}
         />
+        <Stack.Screen name="LGPD" component={LGPD} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>
     </NavigationContainer>
