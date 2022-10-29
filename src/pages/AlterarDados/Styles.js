@@ -28,7 +28,7 @@ export const CaixaModalUpdateFoto = styled.View`
   margin-right: 10%;
   padding-bottom: 5%;
   padding-top:0%;
-  background-color: #f7f7f7;
+  background-color: white;
   border-radius: 6px;
   border: 4px;
   border-color: #c4c4c4;
@@ -40,7 +40,7 @@ export const CaixaModalUpdateFoto = styled.View`
 export const CaixaExterna = styled.View`
   height: ${(props) => props.height};
   width:  ${(props) => props.width};
-  background-color: transparent;
+  background-color: rgba(0,0,0,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,7 +55,7 @@ export const CaixaModalDeleteFoto = styled.View`
   margin-right: 10%;
   padding-bottom: 5%;
   padding-top:0%;
-  background-color: #f7f7f7;
+  background-color: white;
   border-radius: 6px;
   border: 4px;
   border-color: #c4c4c4;
