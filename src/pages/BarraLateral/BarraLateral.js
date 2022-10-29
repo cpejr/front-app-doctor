@@ -33,10 +33,18 @@ import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
 import IconeAddConversa from "react-native-vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { ChatContext } from '../../contexts/ChatContext';
 
+const camposVaziosReferencia = {
+	id_usuario: false,
+};
 
+const estadoIncial = {
+	id_usuario: "",
+};
 
-function BarraLateral({ navigation }) {
+function BarraLateral({ navigation, route }) {
+
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const onChangeBusca = (busca) => setBusca(busca);
@@ -45,6 +53,14 @@ function BarraLateral({ navigation }) {
   const [tooltipVisivel, setTooltipVisivel] = useState(false);
   const [usuario, setUsuario] = useState([]);
   const [secretariaSelecionada, setSecretariaSelecionada] = useState();
+  const [usuarios, setUsuarios] = useState([]);
+  const [camposVazios, setCamposVazios] = useState({});
+  const [estado, setEstado] = useState(estadoIncial);
+  const [selecionaUsuarioId, setSelecionaUsuarioId] = useState('');
+  const { usuarioId, conversas, setConversas, setConversaSelecionada } =
+    useContext(ChatContext);
+  const componenteEstaMontadoRef = useRef(null);
+
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
   const alturaModal = (width > height) ? "85%" : "50%";
@@ -119,21 +135,102 @@ function BarraLateral({ navigation }) {
       Alert.alert("Erro ao abrir a conversa.");
     }
   }
-
+useEffect(() => {
   async function pegandoUsuarios(){
-    //await sleep(1500);
+
+    if (!usuarioId) return;
+
+    componenteEstaMontadoRef.current = true;
+
     const resposta = await managerService.GetTodosUsuarios();
     const pegaSecretaria = resposta.filter(
         (item) => item.tipo === "SECRETARIA(O)"
     );
+    const conversasUsuariosIds = conversas.map(
+      ({ conversaCom }) => conversaCom.id
+    );
     setUsuario(pegaSecretaria);
+
+    if (componenteEstaMontadoRef.current) {
+      setUsuarios(usuarios);
+      setCarregando(false);
+    }
+  }
     
+  pegandoUsuarios();
+
+  return () => (componenteEstaMontadoRef.current = false);
+}, [conversas, usuarioId]);
+
+function preenchendoDados(value) {
+  setSelecionaUsuarioId(value)
+
+  if (camposVazios.id_usuario)
+    setCamposVazios({ id_usuario: false });
+
+  setEstado({ id_usuario: value });
+}
+
+async function criarNovarConversa(e) {
+
+  e.preventDefault();
+
+  const camposVaziosAtual = {
+    id_usuario: !estado.id_usuario,
+  };
+
+  setCamposVazios(camposVaziosAtual);
+
+  if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+    toast.warn("Preencha todos os campos");
+    return;
+  }
+
+  setCarregando(true);
+
+  const usuarioSelecionadoDados = usuarios.find(
+    (usuario) => usuario.id === selecionaUsuarioId
+  );
+  const dadosParaCriarNovaConversa = {
+    id_criador: usuarioId,
+    id_receptor: usuarioSelecionadoDados.id,
+    ativada: false,
+  };
+  const { id } = await managerService.CriandoConversa(
+    dadosParaCriarNovaConversa,
+    {
+      mensagemSucesso: "Conversa criada com sucesso",
+      tempo: 1500,
+    }
+  );
+
+  const novaConversa = {
+    id,
+    ativada: false,
+    mensagensNaoVistas: 0,
+    conversaCom: {
+      id: usuarioSelecionadoDados.id,
+      nome: usuarioSelecionadoDados.nome,
+      avatar_url: usuarioSelecionadoDados.avatar_url,
+    },
+  };
+
+
+  setEstado(camposVaziosReferencia);
+  setCamposVazios({});
+  setModalAdicionar(false);
+  setCarregando(false);
+  setSelecionaUsuarioId(null);
+  setConversaSelecionada(novaConversa);
+  setConversas((conversasLista) => [novaConversa, ...conversasLista]);
+
 }
 
 
-useEffect(() => {
-    pegandoUsuarios();
-},[]);
+
+// useEffect(() => {
+//     pegandoUsuarios();
+// },[]);
 
   return (
     <Body>
@@ -178,13 +275,14 @@ useEffect(() => {
                 <PickerView>
                     <PickerSecretaria
                         selectedValue={secretariaSelecionada}
+
                         onValueChange={(itemValue) => {
                           setSecretariaSelecionada(itemValue);
                         }}
                     >   
                         <Picker.Item
                         style={{ fontSize: 15, color: "grey" }}
-                        value=""
+                        value={secretariaSelecionada}
                         label={"Selecione um(a) Secretário(a)"}
                         />
                         
@@ -206,6 +304,7 @@ useEffect(() => {
                   borderRadius="10px"
                   borderWidth="1px"
                   borderColor={Cores.azul}
+                  onPress={criarNovarConversa}
                 >
                   <ConteudoBotao
                     fontSize="15px"
