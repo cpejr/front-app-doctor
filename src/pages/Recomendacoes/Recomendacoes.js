@@ -48,7 +48,7 @@ function Recomendacoes() {
       <CaixaScroll height={alturaScroll}>
         <ScrollView style={{width:"85%"}}>
           {Exames.map((exame) => (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=> console.log(Exames)}>
               <CaixaExames>
                 <NomeExame>
                   {exame.nome}
