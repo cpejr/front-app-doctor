@@ -140,7 +140,7 @@ function PreencherFormulario({ route, navigation }) {
             borderWidth="3px"
             boxShadow="none"
             marginTop="0"
-            onPress={() => console.log(width, height) /* requisicaoEnviandoRespostas(resposta) */}
+            onPress={() =>  requisicaoEnviandoRespostas(resposta) }
           >
             <ConteudoBotao width="90%" fontSize="15px" color={Cores.branco}>
               ENVIAR
