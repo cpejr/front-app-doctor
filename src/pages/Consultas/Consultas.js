@@ -37,6 +37,7 @@ import {
   TextoSemConsulta,
   CaixaDadosModal,
   CaixaAvaliacaoModal,
+  CaixaExterna,
 } from "./Styles";
 import ViewPadrao from "../../styles/ViewPadrao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
@@ -264,7 +265,7 @@ function Consultas({ navigation }) {
                         <ScrollView>
                           <Modal
                             animationType="slide"
-                            transparent={true}
+                            transparent={false}
                             visible={modalOcorrida}
                           >
                             <CaixaModalGrande>
@@ -318,9 +319,10 @@ function Consultas({ navigation }) {
                         <ScrollView>
                           <Modal
                             animationType="slide"
-                            transparent={true}
+                            transparent={false}
                             visible={modalOcorrida}
                           >
+                            <CaixaExterna width={width} height={height}>
                             <CaixaModal>
                               <CaixaFechar>
                                 <TouchableOpacity
@@ -366,6 +368,7 @@ function Consultas({ navigation }) {
                                 </Botao>
                               </CaixaAvaliacaoModal>
                             </CaixaModal>
+                            </CaixaExterna>
                           </Modal>
                         </ScrollView>
                       )}

@@ -128,7 +128,16 @@ export const CaixaBotao = styled.TouchableOpacity`
 export const IconeBotao = styled.Image`
   height: 18.5px;
   width: 18.5px;
+
 `;
+
+export const CaixaExterna = styled.View`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  background-color: red;
+`;
+
+
 export const CaixaModal = styled.View`
   height: 50%;
   width: 80%;
@@ -137,7 +146,7 @@ export const CaixaModal = styled.View`
   margin-right: 10%;
   padding-bottom: 10%;
   padding-top:0%;
-  background-color: #f7f7f7;
+  background-color: white;
   border-radius: 6px;
   border: 4px;
   border-color: #c4c4c4;
@@ -153,7 +162,7 @@ export const CaixaModalGrande = styled.View`
   margin-right: 10%;
   padding-bottom: 20%;
   padding-top:0%;
-  background-color: #f7f7f7;
+  background-color: white;
   border-radius: 6px;
   border: 4px;
   border-color: #c4c4c4;
