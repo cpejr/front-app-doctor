@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
-
+import { Dimensions } from "react-native";
 
 
 export const Body = styled.View`
@@ -132,13 +132,16 @@ export const IconeBotao = styled.Image`
 `;
 
 export const CaixaExterna = styled.View`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  background-color: red;
+  height: ${Dimensions.get("window").height}px;
+  width: ${Dimensions.get("window").width}px;
+  background-color: rgba(0,0,0,0.6);
+  z-index:2;
+  elevation: 10;
 `;
 
 
 export const CaixaModal = styled.View`
+  
   height: 50%;
   width: 80%;
   margin-top: 40%;

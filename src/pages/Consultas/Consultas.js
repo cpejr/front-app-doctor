@@ -262,12 +262,13 @@ function Consultas({ navigation }) {
                       key={value.id}
                     >
                       {width > height ? (
-                        <ScrollView>
+                        
                           <Modal
                             animationType="slide"
                             transparent={false}
                             visible={modalOcorrida}
                           >
+                            <CaixaExterna>
                             <CaixaModalGrande>
                               <CaixaFechar>
                                 <TouchableOpacity
@@ -313,16 +314,17 @@ function Consultas({ navigation }) {
                                 </Botao>
                               </CaixaAvaliacaoModal>
                             </CaixaModalGrande>
+                            </CaixaExterna>
                           </Modal>
-                        </ScrollView>
+                        
                       ) : (
-                        <ScrollView>
+                      
                           <Modal
                             animationType="slide"
                             transparent={false}
                             visible={modalOcorrida}
                           >
-                            <CaixaExterna width={width} height={height}>
+                            <CaixaExterna>
                             <CaixaModal>
                               <CaixaFechar>
                                 <TouchableOpacity
@@ -370,7 +372,7 @@ function Consultas({ navigation }) {
                             </CaixaModal>
                             </CaixaExterna>
                           </Modal>
-                        </ScrollView>
+                       
                       )}
                       <CaixaConsulta>
                         <CaixaData>
@@ -423,6 +425,7 @@ function Consultas({ navigation }) {
                             transparent={true}
                             visible={modalNaoOcorrida}
                           >
+                            <CaixaExterna>
                             <CaixaModalGrande>
                               <CaixaFechar>
                                 <TouchableOpacity
@@ -451,6 +454,7 @@ function Consultas({ navigation }) {
                                 </CaixaDadosModal>
                               </CaixaConteudoModal>
                             </CaixaModalGrande>
+                            </CaixaExterna>
                           </Modal>
                         </ScrollView>
                       ) : (
@@ -460,6 +464,7 @@ function Consultas({ navigation }) {
                             transparent={true}
                             visible={modalNaoOcorrida}
                           >
+                            <CaixaExterna>
                             <CaixaModal>
                               <CaixaFechar>
                                 <TouchableOpacity
@@ -488,6 +493,7 @@ function Consultas({ navigation }) {
                                 </CaixaDadosModal>
                               </CaixaConteudoModal>
                             </CaixaModal>
+                            </CaixaExterna>
                           </Modal>
                         </ScrollView>
                       )}
