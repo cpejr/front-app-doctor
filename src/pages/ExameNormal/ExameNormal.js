@@ -50,8 +50,6 @@ function ExameNormal({ navigation }) {
   const caixaTextoCimaPaddingRight = width > 1060 ? "40%" : comparaCaixaTextoCimaPaddingRight;
   const margemCaixaTextoCima = height > 480 ? "2%" : "3%";
 
-
-console.log("testreeeee:", width)
   const [loaded] = useFonts({
     barlow: require("../../assets/fonts/Barlow-Medium.ttf"),
     barlowLight: require("../../assets/fonts/Barlow-Light.ttf"),
