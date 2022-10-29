@@ -11,7 +11,7 @@ function Comentarios({ navigation }) {
   const tamanhoIcone = width > 480 ? 20 : 25;
 
 
-  const comentarios = ["Depois de Deus...tenho o Dr. Guilherme como referência em minha vida!! Ele ajudou muito no tratamento da minha mãe. Apresentava quadros de crises epiléticas parciais, e confusão mental. Como a mudança da medicação ela retornou a ter vida normal e estamos na luta para lhe dar cada dia mais qualidade de vida. Obrigada pela atenção e carinho nesse momento tão dificil em minha vida!! Você é um ser que não existe, literalmente um presente de Deus. \"",
+  const comentarios = ["\"Depois de Deus...tenho o Dr. Guilherme como referência em minha vida!! Ele ajudou muito no tratamento da minha mãe. Apresentava quadros de crises epiléticas parciais, e confusão mental. Como a mudança da medicação ela retornou a ter vida normal e estamos na luta para lhe dar cada dia mais qualidade de vida. Obrigada pela atenção e carinho nesse momento tão dificil em minha vida!! Você é um ser que não existe, literalmente um presente de Deus. \"",
     "\"O dr. Guilherme é extremamente profissional e atencioso. Recomendo.  Tratou minha mãe com muita atenção e carinho. Ótimo neurologista\"",
     "\"Excelente profissional, muito atencioso e competente. Tempo de consulta satisfatório, permitindo uma boa propedêutica de tratamento\"",
     "\"Excelente profissional, competente atencioso carinhoso humano, educado paciente. Ele trata meu irmão que tem demência daí devido à atenção dedicada me tornei também paciente.Gostamos muito do Dr Guilherme\"",
