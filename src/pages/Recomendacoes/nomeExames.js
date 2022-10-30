@@ -25,15 +25,20 @@ const MedicosFono = [
 ]
 
 const MedicosOdonto = [
-    {nome:"Dra. Heloisa Lima Z. de Abreu",local:"",telefone:"(31) 99182-6683/(31) 3224-4190"},
-    {nome:"Dra. Ana Paula Assis de Oliveira",local:"",telefone:"(31) 98689-1083/(31) 3282-5585"},
-    {nome:"Dra. Beatriz Gonçalves Peixoto",local:"",telefone:"(31) 98838-4933"},
-    {nome:"Dra. Maria de Lourdes R. Guimarães",local:"",telefone:"(31) 98775-7671/(31) 3227-3825"},
+    {nome:"Dra. Heloisa Lima Z. de Abreu",local:"Consultório",telefone:"(31) 99182-6683/(31) 3224-4190"},
+    {nome:"Dra. Ana Paula Assis de Oliveira",local:"Consultório",telefone:"(31) 98689-1083/(31) 3282-5585"},
+    {nome:"Dra. Beatriz Gonçalves Peixoto",local:"Consultório",telefone:"(31) 98838-4933"},
+    {nome:"Dra. Maria de Lourdes R. Guimarães",local:"Consultório",telefone:"(31) 98775-7671/(31) 3227-3825"},
 ]
 
 const MedicosPsicologia = [
     {nome:"Dra. Jéssica Diniz",local:"Rua Matias Cardoso 129/Pilotis - Santo Agostinho/BH",telefone:"(31) 98292-1336"},
 ]
+
+const MedicosAvaliação = [
+    {nome:"",local:"",telefone:""},
+]
+
 
 
 export const Exames = [
@@ -58,7 +63,7 @@ export const Exames = [
     {nome:"Psicologia - TCC insônia",
      descricao:"Psicóloga especialista em Terapia Cognitivo Comportamental (TCC). Referência para o tratamento TCC para insônia. Membro da Liga Mineira do Sono",
      medicos:MedicosPsicologia},
-    {nome:"Avaliação Neuropsicológica", descricao:"", medicos:""},
+    {nome:"Avaliação Neuropsicológica", descricao:"", medicos:MedicosAvaliação},
   ]
 
 

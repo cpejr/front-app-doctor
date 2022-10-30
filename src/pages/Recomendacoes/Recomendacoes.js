@@ -27,20 +27,21 @@ import {
   Info,
 } from "./Styles";
 import { Exames }  from "./nomeExames";
+import { Cores } from "../../variaveis";
 
 
 
-function Recomendacoes() {
+function Recomendacoes({ navigation }) {
   const tamanhoIcone = width > 900 ? 48 : 48;
   const tamanhoIconeFechar = width > 900 ? 30 : 30;
   const height = useWindowDimensions().height;
   const width = useWindowDimensions().width;
-  const alturaModal = width > height ? "90%" : "55%";
+  const alturaModal = width > height ? "85%" : "55%";
   const alturaScroll = width > height ? "25%" : "60%";
   const [abrirModal, setAbrirModal] = useState(false);
   const [tituloExame, setTituloExame] = useState("");
   const [descricaoExame, setdescricaoExame] = useState("");
-  const [medicasExame, setMedicasExame] = useState({});
+  const [medicasExame, setMedicasExame] = useState(Exames[1].medicos);
   const [alturaScrollModal, setAlturaScrollModal] = useState("");
 
   function abrindoModal(exame){
@@ -53,7 +54,7 @@ function Recomendacoes() {
       setAlturaScrollModal("60%");
     }
     else{
-      setAlturaScrollModal("30%");
+      setAlturaScrollModal("33%");
     }
   
     setAbrirModal(true);
@@ -64,11 +65,11 @@ function Recomendacoes() {
   return (
     <Body>
       <CaixaSeta>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push("Home")}>
           <Icone
             name="arrow-left"
             size={tamanhoIcone}
-            /* color={Cores.azul} */ color="green"
+            color={Cores.azul}
           />
         </TouchableOpacity>
       </CaixaSeta>
@@ -116,17 +117,17 @@ function Recomendacoes() {
                 <Contatos>
                   <CaixaNomeMedica>
                     <NomeMedica>
-                      Dra Ana Luiza Batista
+                      {contato.nome}
                     </NomeMedica>
                   </CaixaNomeMedica>
                   <CaixaInfo>
                     <Info>
-                      Local: Hermes Pardini
+                      Local: {contato.local}
                     </Info>
                   </CaixaInfo>
                   <CaixaInfo>
                     <Info>
-                      Telefone: (31)99999-9999/(31)2323-2323
+                      Telefone: {contato.telefone}
                     </Info>
                   </CaixaInfo>
                 </Contatos>
