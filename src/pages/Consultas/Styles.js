@@ -144,9 +144,6 @@ export const CaixaModal = styled.View`
   
   height: 50%;
   width: 80%;
-  margin-top: 40%;
-  margin-left: 10%;
-  margin-right: 10%;
   padding-bottom: 10%;
   padding-top:0%;
   background-color: white;
@@ -160,9 +157,6 @@ export const CaixaModal = styled.View`
 export const CaixaModalGrande = styled.View`
   height: 80%;
   width: 80%;
-  margin-top: 5%;
-  margin-left: 10%;
-  margin-right: 10%;
   padding-bottom: 20%;
   padding-top:0%;
   background-color: white;
