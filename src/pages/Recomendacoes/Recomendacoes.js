@@ -112,7 +112,7 @@ function Recomendacoes() {
            </CaixaDescricaoModal>
            <CaixaContatos height={alturaScrollModal}>
             <ScrollView>
-             {/*  {medicasExame.map((contato) => ( */}
+             {medicasExame.map((contato) => ( 
                 <Contatos>
                   <CaixaNomeMedica>
                     <NomeMedica>
@@ -130,7 +130,7 @@ function Recomendacoes() {
                     </Info>
                   </CaixaInfo>
                 </Contatos>
-        {/*       ))}  */}
+               ))}  
             </ScrollView>
            </CaixaContatos>          
           </CaixaModal>
