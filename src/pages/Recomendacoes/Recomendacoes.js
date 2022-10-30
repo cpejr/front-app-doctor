@@ -36,7 +36,7 @@ function Recomendacoes({ navigation }) {
   const tamanhoIconeFechar = width > 900 ? 30 : 30;
   const height = useWindowDimensions().height;
   const width = useWindowDimensions().width;
-  const alturaModal = width > height ? "85%" : "55%";
+  const alturaModal = width > height ? "88%" : "55%";
   const alturaScroll = width > height ? "25%" : "60%";
   const [abrirModal, setAbrirModal] = useState(false);
   const [tituloExame, setTituloExame] = useState("");
@@ -54,7 +54,7 @@ function Recomendacoes({ navigation }) {
       setAlturaScrollModal("60%");
     }
     else{
-      setAlturaScrollModal("33%");
+      setAlturaScrollModal("34%");
     }
   
     setAbrirModal(true);

@@ -90,7 +90,8 @@ export const CaixaExterna = styled.View`
 `;
 
 export const CaixaModal = styled.View`
-  height: ${(props) => props.height};
+  max-height: ${(props) => props.height};
+  height: auto;
   width: 80%;
   padding:0% 5% 5% 5%;
   background-color: white;
