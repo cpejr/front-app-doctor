@@ -44,7 +44,7 @@ export const Exames = [
      descricao:"A clínica conta com ressonância magnética de crânio, resolução de 3 tesla, investigação de epilepsia. Agendar em Equipamento de 3 Tesla e direcionar laudo aos cuidados do médico aqui indicado.", 
      medicos:MedicosRessonanciaEpilepsia},
     {nome:"Punção Lombar",
-     descricao:"Procedimento feito por profissional treinado. Não é necessário jejum, e recomenda-se acompanhante. Não pode ser realizado na vigencia de anticoagulantes ou presença de distúrbios de coagulação grave. Obrigatório solocitaçã0. ",
+     descricao:"Procedimento feito por profissional treinado. Não é necessário jejum, e recomenda-se acompanhante. Não pode ser realizado na vigencia de anticoagulantes ou presença de distúrbios de coagulação grave. Obrigatório solocitação. ",
      medicos:MedicosPuncaoLombar},
     {nome:"Fisioterapia CPAP",
      descricao:"Fisioterapia em Apneia do sono. Adaptação de CPAP.",
