@@ -22,12 +22,15 @@ export const CaixaTitulo = styled.View`
   align-items: center;
   justify-content: center;
   margin-top: ${(props) => props.marginTop};
-  margin-bottom: 8%;
+  margin-bottom: 1%;
+  width: 175px;
+  height: 200px;
 `;
 
 export const Logo = styled.Image`
-  width: 90px;
-  height: 90px;
+  width: 80%;
+  height: 80%;
+  border-radius: 10px;
 `;
 
 export const CaixaInputs = styled.View`
@@ -38,6 +41,15 @@ export const CaixaInputs = styled.View`
   bottom: 0px;
   align-items: center;
   margin-bottom: 4%;
+`;
+
+export const TituloInput = styled.Text`
+   font-size: 18px;
+   color: ${Cores.azul};
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   margin-top: 5px;
 `;
 
 export const SenhaCadastro = styled.View`
@@ -81,4 +93,10 @@ export const Icone = styled.View`
   justify-content: center;
   align-items: center;
   width: 20%;
+`;
+
+export const AnimacaoCarregandoView = styled.View`
+  position: relative;
+  top: 0%;
+  height: 35px;
 `;

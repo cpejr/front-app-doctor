@@ -14,6 +14,8 @@ import {
   BotoesAlternativos,
   ConteudoIcone,
   Icone,
+  TituloInput,
+  AnimacaoCarregandoView,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
@@ -30,6 +32,7 @@ function Login({ navigation }) {
   const [carregando, setCarregando] = useState();
 
   async function requisicaoLogin() {
+    setCarregando(true);
     if (
       email?.length === 0 ||
       senha?.length === 0 ||
@@ -37,14 +40,19 @@ function Login({ navigation }) {
       senha === null
     ) {
       Alert.alert("Erro", "Preencha os campos email e senha!");
+      setCarregando(false);
     } else {
       const resposta = await managerService.requisicaoLogin(email, senha);
       const verificaTipo = await managerService.GetDadosUsuario(email);
+      console.log(resposta);
       if (resposta === true && verificaTipo.dadosUsuario.tipo === "PACIENTE") {
         Alert.alert("Bem vindo!", "Login efetuado com sucesso");
         navigation.navigate("Tabs");
       } else {
-        if (verificaTipo.dadosUsuario.tipo !== "PACIENTE") {
+        if (
+          resposta === true &&
+          verificaTipo.dadosUsuario.tipo !== "PACIENTE"
+        ) {
           setEmail(null);
           setSenha(null);
           Alert.alert("Erro", "Usuário não permitido no sistema!");
@@ -54,6 +62,7 @@ function Login({ navigation }) {
           setEmail(null);
           setSenha(null);
         }
+        setCarregando(false);
       }
     }
   }
@@ -94,12 +103,14 @@ function Login({ navigation }) {
               </CaixaTitulo>
 
               <CaixaInputs>
+                <TituloInput>Email:</TituloInput>
                 <Input
                   placeholder="Email"
                   keyboardType="web-search"
                   onChangeText={(e) => setEmail(e)}
                   value={email}
                 />
+                <TituloInput>Senha:</TituloInput>
                 <Input
                   placeholder="Senha"
                   keyboardType="web-search"
@@ -119,13 +130,19 @@ function Login({ navigation }) {
                 boxShadow="none"
                 onPress={() => requisicaoLogin()}
               >
-                <ConteudoBotao
-                  width={larguraConteudoBotaoEntrar}
-                  fontSize={tamanhoFonte}
-                  color={Cores.branco}
-                >
-                  ENTRAR
-                </ConteudoBotao>
+                {carregando ? (
+                  <AnimacaoCarregandoView>
+                    <ActivityIndicator animating={true} color={Colors.black} />{" "}
+                  </AnimacaoCarregandoView>
+                ) : (
+                  <ConteudoBotao
+                    width={larguraConteudoBotaoEntrar}
+                    fontSize={tamanhoFonte}
+                    color={Cores.branco}
+                  >
+                    ENTRAR
+                  </ConteudoBotao>
+                )}
               </Botao>
 
               <SenhaCadastro>
