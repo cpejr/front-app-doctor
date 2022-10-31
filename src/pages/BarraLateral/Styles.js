@@ -37,6 +37,8 @@ export const TextoCaixa = styled.Text.attrs(() => ({
   numberOfLines: 1,
 }))`
   font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => (props.naoVisto > 0 ? "bold" : 400)};
+  color: ${Cores.azulEscuro};
   padding-bottom: 5px;
 `;
 
@@ -48,7 +50,7 @@ export const UltimaMensagem = styled.View`
 
 export const BolaAzul = styled.Text`
   border-radius: 50px;
-  color: white;
+  color: ${Cores.branco};
   text-align: center;
   background-color: ${Cores.lilas[1]};
   width: 9%;
@@ -104,4 +106,11 @@ export const ImagemUsuario = styled.Image`
   align-items: center;
   width: 60.3px;
   height: 60.3px;
+`;
+
+export const TextoBasico = styled.Text`
+  text-align: center;
+  margin-top: 55%;
+  font-size: 17px;
+  color: ${Cores.cinza[2]};
 `;

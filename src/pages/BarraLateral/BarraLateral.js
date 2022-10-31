@@ -13,6 +13,7 @@ import {
   PaginaCarregando,
   BolaAzul,
   UltimaMensagem,
+  TextoBasico
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -22,10 +23,10 @@ import { Cores } from "../../variaveis";
 import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
 import { ChatContext } from "../../contexts/ChatContext/ChatContext";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
-import io from 'socket.io-client';
-import checarObjVazio from '../../utils/checarObjVazio';
+import io from "socket.io-client";
+import checarObjVazio from "../../utils/checarObjVazio";
 
-const BACK_END_URL = 'http://127.0.0.1:3333';
+const BACK_END_URL = "http://127.0.0.1:3333";
 
 function BarraLateral({ navigation }) {
   const [busca, setBusca] = useState("");
@@ -69,7 +70,6 @@ function BarraLateral({ navigation }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, [usuarioId]);
 
-
   useEffect(() => {
     if (!usuarioId) return;
     componenteEstaMontadoRef.current = true;
@@ -91,13 +91,13 @@ function BarraLateral({ navigation }) {
 
     socket.current = io(BACK_END_URL);
 
-    socket.current.emit('adicionarUsuario', usuarioId);
+    socket.current.emit("adicionarUsuario", usuarioId);
 
-    socket.current.on('mensagemRecebida', (novaMensagem) => {
+    socket.current.on("mensagemRecebida", (novaMensagem) => {
       setMensagemRecebida(novaMensagem);
     });
 
-    socket.current.on('conversaRecebida', (novaConversa) => {
+    socket.current.on("conversaRecebida", (novaConversa) => {
       setConversaRecebida(novaConversa);
     });
 
@@ -200,7 +200,8 @@ function BarraLateral({ navigation }) {
           ?.toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
-          .includes(lowerBusca) || c?.conversaCom.nome?.toLowerCase().includes(lowerBusca)
+          .includes(lowerBusca) ||
+        c?.conversaCom.nome?.toLowerCase().includes(lowerBusca)
       );
   });
 
@@ -220,39 +221,44 @@ function BarraLateral({ navigation }) {
         </PaginaCarregando>
       ) : (
         <ScrollView>
-          {ConversasFiltradas
-            .map((c, idx) => (
-              <TouchableOpacity
-                key={idx}
-                onPress={cliqueNaConversa(c)}
-              >
-                <CaixaUsuarioMensagem>
-                  <CaixaImagem>
-                    <ImagemUsuario
-                      border-radius="3px"
-                      source={c.avatar_url || imagemPerfilPadrão}
-                    ></ImagemUsuario>
-                  </CaixaImagem>
-                  <CaixaTexto>
-                    <TextoCaixa fontSize="17px">
-                      {c.conversaCom.nome}
-                    </TextoCaixa>
-                    <UltimaMensagem>
-                      <TextoCaixa
-                        fontSize="13px"
-                        naoVisto={c.mensagensNaoVistas}
-                      >
-                        {c?.ultima_mensagem?.pertenceAoUsuarioAtual && "Você: "}
-                        {c?.ultima_mensagem?.conteudo}
+          {conversas.length === 0 ? (
+            <View>
+              <TextoBasico>Bem-vindo! Você ainda não tem nenhuma conversa.</TextoBasico>
+            </View>
+          ) : (
+            <View>
+              {ConversasFiltradas.map((c, idx) => (
+                <TouchableOpacity key={idx} onPress={cliqueNaConversa(c)}>
+                  <CaixaUsuarioMensagem>
+                    <CaixaImagem>
+                      <ImagemUsuario
+                        border-radius="3px"
+                        source={c.avatar_url || imagemPerfilPadrão}
+                      ></ImagemUsuario>
+                    </CaixaImagem>
+                    <CaixaTexto>
+                      <TextoCaixa fontSize="17px">
+                        {c.conversaCom.nome}
                       </TextoCaixa>
-                      {c.mensagensNaoVistas > 0 && (
-                        <BolaAzul>{c.mensagensNaoVistas}</BolaAzul>
-                      )}
-                    </UltimaMensagem>
-                  </CaixaTexto>
-                </CaixaUsuarioMensagem>
-              </TouchableOpacity>
-            ))}
+                      <UltimaMensagem>
+                        <TextoCaixa
+                          fontSize="13px"
+                          naoVisto={c.mensagensNaoVistas}
+                        >
+                          {c?.ultima_mensagem?.pertenceAoUsuarioAtual &&
+                            "Você: "}
+                          {c?.ultima_mensagem?.conteudo}
+                        </TextoCaixa>
+                        {c.mensagensNaoVistas > 0 && (
+                          <BolaAzul>{c.mensagensNaoVistas}</BolaAzul>
+                        )}
+                      </UltimaMensagem>
+                    </CaixaTexto>
+                  </CaixaUsuarioMensagem>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
         </ScrollView>
       )}
 
