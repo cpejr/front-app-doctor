@@ -133,10 +133,6 @@ function Comentarios({ navigation }) {
       comentario: comentarios[18],
       resposta: respostas[18]
     },
-    {
-      comentario: comentarios[19],
-      resposta: respostas[19]
-    },
   ]
 
 
