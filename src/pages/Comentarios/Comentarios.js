@@ -160,7 +160,7 @@ function Comentarios({ navigation }) {
           ))}
         </ContainerComentariosEResposta>
         <ContainerComentariosEResposta>
-          <ContainerComentarios marginBottom='0%'>
+          <ContainerComentarios marginBottom='0%' marginTop='-10%'>
             <TextoComentario>{comentarios[19]}</TextoComentario>
             <ContainerResposta>
               <TextoResposta>{respostas[19]}</TextoResposta>

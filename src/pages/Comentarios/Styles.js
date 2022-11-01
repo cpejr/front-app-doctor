@@ -52,6 +52,8 @@ export const ContainerComentarios = styled.View`
   padding-left: 2%;
   align-items: center;
   margin-bottom: ${(props) => props.marginBottom};
+  margin-top: ${(props) => props.marginTop ?? "0px"};
+  
 `
 
 export const ContainerResposta = styled.View`
