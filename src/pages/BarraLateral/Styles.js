@@ -24,10 +24,7 @@ export const HeaderChat = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-export const HeaderChat = styled.View``;
-
 `;
-
 
 export const ContainerIcone = styled.View`
   display: flex;
@@ -94,7 +91,7 @@ export const BarraPesquisa = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
   width: 97%;
   height: 45px;
   background-color: ${Cores.cinza[10]};
@@ -128,9 +125,8 @@ export const ImagemUsuario = styled.Image`
   height: 60.3px;
 `;
 
-
 export const CaixaModalGrande = styled.View`
-  height:  ${(props) => props.height};
+  height: ${(props) => props.height};
   width: 80%;
   max-width: 600px;
   margin-left: 10%;
@@ -144,7 +140,6 @@ export const CaixaModalGrande = styled.View`
   align-items: center;
   justify-content: flex-start;
   opacity: 1;
-
 `;
 
 export const CaixaFechar = styled.View`
@@ -160,19 +155,16 @@ export const CaixaFechar = styled.View`
 `;
 export const CaixaTituloModal = styled.View`
   width: 100%;
-
-
 `;
 export const TituloModal = styled.Text`
   font-size: 18px;
   text-align: center;
 `;
 
-
 export const PickerView = styled.View`
   display: flex;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   width: 85%;
   background-color: #e4e6f4;
   border-radius: 5px;
@@ -188,23 +180,21 @@ export const PickerSecretaria = styled(Picker)`
 `;
 
 export const CaixaExterna = styled.View`
-    height: ${(props) => props.height};
-    width: ${(props) => props.width};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0,0.6);
-    
+  height: ${(props) => props.height};
+  width: ${(props) => props.width};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 export const CaixaInterna = styled.View`
-    height: 80%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
-
 
 export const TextoBasico = styled.Text`
   text-align: center;

@@ -1,5 +1,14 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { Text, View, ScrollView, Image, TouchableOpacity, Modal, useWindowDimensions, TouchableHighlight } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Modal,
+  useWindowDimensions,
+  TouchableHighlight,
+} from "react-native";
 import {
   BarraPesquisa,
   Body,
@@ -14,7 +23,7 @@ import {
   PaginaCarregando,
   BolaAzul,
   UltimaMensagem,
-  TextoBasico
+  TextoBasico,
   ContainerIcone,
   CaixaModal,
   CaixaModalGrande,
@@ -42,10 +51,10 @@ import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const camposVaziosReferencia = {
-	id_usuario: false,
+  id_usuario: false,
 };
 const estadoIncial = {
-	id_usuario: "",
+  id_usuario: "",
 };
 const BACK_END_URL = "http://127.0.0.1:3333";
 function BarraLateral({ navigation }) {
@@ -65,22 +74,14 @@ function BarraLateral({ navigation }) {
   const [usuarios, setUsuarios] = useState([]);
   const [camposVazios, setCamposVazios] = useState({});
   const [estado, setEstado] = useState(estadoIncial);
-  const [selecionaUsuarioId, setSelecionaUsuarioId] = useState('');
+  const [selecionaUsuarioId, setSelecionaUsuarioId] = useState("");
   const { usuarioId, conversas, setConversas, setConversaSelecionada } =
     useContext(ChatContext);
-  const componenteEstaMontadoRef = useRef(null);
 
-  const {
-    usuarioId,
-    conversas,
-    setConversas,
-    setConversaSelecionada,
-    imagemPerfilPadrão,
-  } = useContext(ChatContext);
   const socket = useRef(null);
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
-  const alturaModal = (width > height) ? "70%" : "35%";
+  const alturaModal = width > height ? "70%" : "35%";
   const tamanhoIcone = width > 480 ? 35 : 25;
 
   const imagemPerfilPadrão = require("../../assets/logoGuilherme.png");
@@ -242,17 +243,17 @@ function BarraLateral({ navigation }) {
       );
   });
 
-    const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
-    if (lowerBusca === "") return vetorUsuariosMensagem;
-    else
-      return (
-        msg?.nome
-          ?.toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .includes(lowerBusca) || msg?.nome?.toLowerCase().includes(lowerBusca)
-      );
-  });
+  // const MensagensFiltradas = vetorUsuariosMensagem.filter((msg) => {
+  //   if (lowerBusca === "") return vetorUsuariosMensagem;
+  //   else
+  //     return (
+  //       msg?.nome
+  //         ?.toLowerCase()
+  //         .normalize("NFD")
+  //         .replace(/[\u0300-\u036f]/g, "")
+  //         .includes(lowerBusca) || msg?.nome?.toLowerCase().includes(lowerBusca)
+  //     );
+  // });
 
   async function abrirMensagemClicada(conversa) {
     if (conversa.id) {
@@ -263,102 +264,95 @@ function BarraLateral({ navigation }) {
       Alert.alert("Erro ao abrir a conversa.");
     }
   }
-useEffect(() => {
-  async function pegandoUsuarios(){
+  useEffect(() => {
+    async function pegandoUsuarios() {
+      if (!usuarioId) return;
 
-    if (!usuarioId) return;
+      componenteEstaMontadoRef.current = true;
 
-    componenteEstaMontadoRef.current = true;
-
-    const resposta = await managerService.GetTodosUsuarios();
-    const pegaSecretaria = resposta.filter(
+      const resposta = await managerService.GetTodosUsuarios();
+      const pegaSecretaria = resposta.filter(
         (item) => item.tipo === "SECRETARIA(O)"
-    );
-    const conversasUsuariosIds = conversas.map(
-      ({ conversaCom }) => conversaCom.id
-    );
-    setUsuario(pegaSecretaria);
+      );
+      const conversasUsuariosIds = conversas.map(
+        ({ conversaCom }) => conversaCom.id
+      );
+      setUsuario(pegaSecretaria);
 
-    if (componenteEstaMontadoRef.current) {
-      setUsuarios(usuarios);
-      setCarregando(false);
+      if (componenteEstaMontadoRef.current) {
+        setUsuarios(usuarios);
+        setCarregando(false);
+      }
     }
-  }
-    
-  pegandoUsuarios();
 
-  return () => (componenteEstaMontadoRef.current = false);
-}, [conversas, usuarioId]);
+    pegandoUsuarios();
 
-function preenchendoDados(value) {
-  setSelecionaUsuarioId(value)
+    return () => (componenteEstaMontadoRef.current = false);
+  }, [conversas, usuarioId]);
 
-  if (camposVazios.id_usuario)
-    setCamposVazios({ id_usuario: false });
+  function preenchendoDados(value) {
+    setSelecionaUsuarioId(value);
 
-  setEstado({ id_usuario: value });
-}
+    if (camposVazios.id_usuario) setCamposVazios({ id_usuario: false });
 
-async function criarNovarConversa(e) {
-
-  e.preventDefault();
-
-  const camposVaziosAtual = {
-    id_usuario: !estado.id_usuario,
-  };
-
-  setCamposVazios(camposVaziosAtual);
-
-  if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
-    toast.warn("Preencha todos os campos");
-    return;
+    setEstado({ id_usuario: value });
   }
 
-  setCarregando(true);
+  async function criarNovarConversa(e) {
+    e.preventDefault();
 
-  const usuarioSelecionadoDados = usuarios.find(
-    (usuario) => usuario.id === selecionaUsuarioId
-  );
-  const dadosParaCriarNovaConversa = {
-    id_criador: usuarioId,
-    id_receptor: usuarioSelecionadoDados.id,
-    ativada: false,
-  };
-  const { id } = await managerService.CriandoConversa(
-    dadosParaCriarNovaConversa,
-    {
-      mensagemSucesso: "Conversa criada com sucesso",
-      tempo: 1500,
+    const camposVaziosAtual = {
+      id_usuario: !estado.id_usuario,
+    };
+
+    setCamposVazios(camposVaziosAtual);
+
+    if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+      toast.warn("Preencha todos os campos");
+      return;
     }
-  );
 
-  const novaConversa = {
-    id,
-    ativada: false,
-    mensagensNaoVistas: 0,
-    conversaCom: {
-      id: usuarioSelecionadoDados.id,
-      nome: usuarioSelecionadoDados.nome,
-      avatar_url: usuarioSelecionadoDados.avatar_url,
-    },
-  };
+    setCarregando(true);
 
+    const usuarioSelecionadoDados = usuarios.find(
+      (usuario) => usuario.id === selecionaUsuarioId
+    );
+    const dadosParaCriarNovaConversa = {
+      id_criador: usuarioId,
+      id_receptor: usuarioSelecionadoDados.id,
+      ativada: false,
+    };
+    const { id } = await managerService.CriandoConversa(
+      dadosParaCriarNovaConversa,
+      {
+        mensagemSucesso: "Conversa criada com sucesso",
+        tempo: 1500,
+      }
+    );
 
-  setEstado(camposVaziosReferencia);
-  setCamposVazios({});
-  setModalAdicionar(false);
-  setCarregando(false);
-  setSelecionaUsuarioId(null);
-  setConversaSelecionada(novaConversa);
-  setConversas((conversasLista) => [novaConversa, ...conversasLista]);
+    const novaConversa = {
+      id,
+      ativada: false,
+      mensagensNaoVistas: 0,
+      conversaCom: {
+        id: usuarioSelecionadoDados.id,
+        nome: usuarioSelecionadoDados.nome,
+        avatar_url: usuarioSelecionadoDados.avatar_url,
+      },
+    };
 
-}
+    setEstado(camposVaziosReferencia);
+    setCamposVazios({});
+    setModalAdicionar(false);
+    setCarregando(false);
+    setSelecionaUsuarioId(null);
+    setConversaSelecionada(novaConversa);
+    setConversas((conversasLista) => [novaConversa, ...conversasLista]);
+  }
 
-
-
-// useEffect(() => {
-//     pegandoUsuarios();
-// },[]);
+  // useEffect(() => {
+  //     pegandoUsuarios();
+  // },[]);
 
   return (
     <Body>
@@ -378,14 +372,14 @@ async function criarNovarConversa(e) {
         </PaginaCarregando>
       ) : (
         <ScrollView>
-           <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalNovaMensagem}
-              destroyOnClose
-            >
-              <CaixaExterna width={width} height={height}>
-              <CaixaModalGrande  height={alturaModal}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalNovaMensagem}
+            destroyOnClose
+          >
+            <CaixaExterna width={width} height={height}>
+              <CaixaModalGrande height={alturaModal}>
                 <CaixaFechar>
                   <TouchableOpacity
                     onPress={() => {
@@ -396,60 +390,59 @@ async function criarNovarConversa(e) {
                   </TouchableOpacity>
                 </CaixaFechar>
                 <CaixaInterna>
-                <CaixaTituloModal>
-                  <TituloModal>
-                  Iniciar uma nova Conversa
-                  </TituloModal>
+                  <CaixaTituloModal>
+                    <TituloModal>Iniciar uma nova Conversa</TituloModal>
                   </CaixaTituloModal>
-                <PickerView>
+                  <PickerView>
                     <PickerSecretaria
-                        selectedValue={secretariaSelecionada}
-
-                        onValueChange={(itemValue) => {
-                          setSecretariaSelecionada(itemValue);
-                        }}
-                    >   
-                        <Picker.Item
+                      selectedValue={secretariaSelecionada}
+                      onValueChange={(itemValue) => {
+                        setSecretariaSelecionada(itemValue);
+                      }}
+                    >
+                      <Picker.Item
                         style={{ fontSize: 15, color: "grey" }}
                         value={secretariaSelecionada}
                         label={"Selecione um(a) Secretário(a)"}
-                        />
-                        
-                    {usuario.map((value) => (
+                      />
+
+                      {usuario.map((value) => (
                         <Picker.Item
-                            key={value.id}
-                            style={{ fontSize: 15, color: "black" }}
-                            value={value.nome}
-                            label={value.nome}
+                          key={value.id}
+                          style={{ fontSize: 15, color: "black" }}
+                          value={value.nome}
+                          label={value.nome}
                         />
-                    ))}    
+                      ))}
                     </PickerSecretaria>
-                </PickerView>
-                <Botao
-                  height="40px"
-                  width="50%"
-                  marginTop="0px"
-                  backgroundColor={Cores.lilas[5]}
-                  borderRadius="10px"
-                  borderWidth="1px"
-                  borderColor={Cores.azul}
-                  onPress={criarNovarConversa}
-                >
-                  <ConteudoBotao
-                    fontSize="15px"
-                    color={Cores.branco}
-                    width="100%"
+                  </PickerView>
+                  <Botao
+                    height="40px"
+                    width="50%"
+                    marginTop="0px"
+                    backgroundColor={Cores.lilas[5]}
+                    borderRadius="10px"
+                    borderWidth="1px"
+                    borderColor={Cores.azul}
+                    onPress={criarNovarConversa}
                   >
-                    Confirmar
-                  </ConteudoBotao>
-                </Botao>
+                    <ConteudoBotao
+                      fontSize="15px"
+                      color={Cores.branco}
+                      width="100%"
+                    >
+                      Confirmar
+                    </ConteudoBotao>
+                  </Botao>
                 </CaixaInterna>
               </CaixaModalGrande>
-              </CaixaExterna>
-            </Modal>
+            </CaixaExterna>
+          </Modal>
           {conversas.length === 0 ? (
             <View>
-              <TextoBasico>Bem-vindo! Você ainda não tem nenhuma conversa.</TextoBasico>
+              <TextoBasico>
+                Bem-vindo! Você ainda não tem nenhuma conversa.
+              </TextoBasico>
             </View>
           ) : (
             <View>
@@ -487,7 +480,7 @@ async function criarNovarConversa(e) {
           )}
         </ScrollView>
       )}
-       <Botao
+      <Botao
         height="40px"
         width="70%"
         backgroundColor={Cores.lilas[5]}
@@ -495,7 +488,7 @@ async function criarNovarConversa(e) {
         borderWidth="1px"
         borderColor={Cores.azul}
         marginTop="15px"
-        onPress = {()=> setModalNovaMensagem(true)}
+        onPress={() => setModalNovaMensagem(true)}
       >
         <ConteudoBotao fontSize="15px" color={Cores.branco} width="100%">
           Iniciar Nova Conversa
