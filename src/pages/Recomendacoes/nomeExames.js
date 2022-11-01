@@ -1,38 +1,38 @@
 
 
 const MedicosEletroneuromiografia = [
-    {nome:"Dr. Igor Ornelas", local:"Hermes Pardini", telefone:"(31) 3228-6888"},
-    {nome:"Dr. Bernardo Dias", local:"Conrad", telefone:"(31) 3247-3450"},
-    {nome:"Dr. Lucas Roquim", local:"Consultório", telefone:"(31) 3223-0644"},
+    {nome:"Dr. Igor Ornelas", local:"Hermes Pardini", telefone:"(31)3228-6888"},
+    {nome:"Dr. Bernardo Dias", local:"Conrad", telefone:"(31)3247-3450"},
+    {nome:"Dr. Lucas Roquim", local:"Consultório", telefone:"(31)3223-0644"},
 ]
 
 const MedicosRessonanciaEpilepsia = [
-    {nome:"Dr. Frederico Abreu B. Guimarães", local:"Clínica ", telefone:"(31) 3228-6888"},
+    {nome:"Dr. Frederico Abreu B. Guimarães", local:"Clínica ", telefone:"(31)3228-6888"},
 ]
 
 const MedicosPuncaoLombar = [
-    {nome:"", local:"Hermes Pardini(Unidade Aimorés), particular e convênios", telefone:"(31) 3228-6200"},
-    {nome:"", local:"CPS SAnta efigência (UNIMED), segundas-feiras, 13h00.", telefone:"(31) 3247-3450"},
+    {nome:"", local:"Hermes Pardini(Unidade Aimorés), particular e convênios", telefone:"(31)3228-6200"},
+    {nome:"", local:"CPS SAnta efigência (UNIMED), segundas-feiras, 13h00.", telefone:"(31)3247-3450"},
     
 ]
 
 const MedicosFisioterapia = [
-    {nome:"Dra. Flávia Baggio Nerbass/Dra. Liliane Mendes",local:"The Clinic",telefone:"(31) 3586-2246/(31) 98113-7721"},
+    {nome:"Dra. Flávia Baggio Nerbass/Dra. Liliane Mendes",local:"The Clinic",telefone:"(31)3586-2246 / (31)98113-7721"},
 ]
 
 const MedicosFono = [
-    {nome:"Dra. Ana Paula Gasparini",local:"Rua Alagoas 1000/1102 Savassi - BH",telefone:"(31) 4102-2829/(31) 97144-2829"},
+    {nome:"Dra. Ana Paula Gasparini",local:"Rua Alagoas 1000/1102 Savassi - BH",telefone:"(31)4102-2829 / (31)97144-2829"},
 ]
 
 const MedicosOdonto = [
-    {nome:"Dra. Heloisa Lima Z. de Abreu",local:"Consultório",telefone:"(31) 99182-6683/(31) 3224-4190"},
-    {nome:"Dra. Ana Paula Assis de Oliveira",local:"Consultório",telefone:"(31) 98689-1083/(31) 3282-5585"},
-    {nome:"Dra. Beatriz Gonçalves Peixoto",local:"Consultório",telefone:"(31) 98838-4933"},
-    {nome:"Dra. Maria de Lourdes R. Guimarães",local:"Consultório",telefone:"(31) 98775-7671/(31) 3227-3825"},
+    {nome:"Heloisa Lima Z. de Abreu",local:"Consultório",telefone:"(31)99182-6683 / (31)3224-4190"},
+    {nome:"Ana Paula Assis de Oliveira",local:"Consultório",telefone:"(31)98689-1083 / (31)3282-5585"},
+    {nome:"Beatriz Gonçalves Peixoto",local:"Consultório",telefone:"(31) 98838-4933"},
+    {nome:"Maria de Lourdes R. Guimarães",local:"Consultório",telefone:"(31)98775-7671 / (31)3227-3825"},
 ]
 
 const MedicosPsicologia = [
-    {nome:"Dra. Jéssica Diniz",local:"Rua Matias Cardoso 129/Pilotis - Santo Agostinho/BH",telefone:"(31) 98292-1336"},
+    {nome:"Dra. Jéssica Diniz",local:"Rua Matias Cardoso 129/Pilotis - Santo Agostinho/BH",telefone:"(31)98292-1336"},
 ]
 
 const MedicosAvaliação = [

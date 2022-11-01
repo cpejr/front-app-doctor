@@ -37,12 +37,13 @@ function Recomendacoes({ navigation }) {
   const height = useWindowDimensions().height;
   const width = useWindowDimensions().width;
   const alturaModal = width > height ? "88%" : "55%";
-  const alturaScroll = width > height ? "25%" : "60%";
+  const alturaScroll = width > height ? "34%" : "64%";
   const [abrirModal, setAbrirModal] = useState(false);
   const [tituloExame, setTituloExame] = useState("");
   const [descricaoExame, setdescricaoExame] = useState("");
   const [medicasExame, setMedicasExame] = useState(Exames[1].medicos);
   const [alturaScrollModal, setAlturaScrollModal] = useState("");
+  const [margemDescricao, setMargemDescricao] = useState("0px");
 
   function abrindoModal(exame){
     setTituloExame(exame.nome);
@@ -52,9 +53,11 @@ function Recomendacoes({ navigation }) {
 
     if(exame.descricao === ""){
       setAlturaScrollModal("60%");
+      setMargemDescricao("0px");
     }
     else{
       setAlturaScrollModal("34%");
+      setMargemDescricao("20px");
     }
   
     setAbrirModal(true);
@@ -106,7 +109,7 @@ function Recomendacoes({ navigation }) {
                 {tituloExame}
               </TituloModal>
             </CaixaTituloModal>  
-            <CaixaDescricaoModal>
+            <CaixaDescricaoModal marginBottom={margemDescricao}>
               <DescricaoModal>
                 {descricaoExame}
               </DescricaoModal>

@@ -22,17 +22,17 @@ export const CaixaSeta = styled.View`
 `;
 
 export const CaixaTitulo = styled.View`
-  width: 75%;
+  width: 77%;
   height: auto;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 `;
 
 export const Titulo = styled.Text`
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 600;
   color: ${Cores.preto};
   text-align: center;
@@ -49,7 +49,7 @@ export const SubTitulo = styled.Text`
   text-align: center;
   font-weight: normal;
   color: ${Cores.preto};
-  margin-bottom: 15px;
+ 
 `;
 
 export const CaixaScroll = styled.View`
@@ -117,7 +117,7 @@ export const CaixaTituloModal = styled.View`
   display: flex;
   flex-direction: row;
   margin-top: 2%;
-  margin-bottom:25px;
+  margin-bottom:20px;
   justify-content: center;
 `;
 export const TituloModal = styled.Text`
@@ -128,7 +128,8 @@ export const TituloModal = styled.Text`
 export const CaixaDescricaoModal = styled.View`
   width: 100%;
   height: auto;
-  margin-bottom:25px;
+  margin-bottom: ${(props) => props.marginBottom};
+  
 `;
 
 export const DescricaoModal = styled.Text`
@@ -172,6 +173,7 @@ export const Info = styled.Text`
   font-size: 15px;
   text-align: left;
   margin-bottom: 4px;
+  flex-wrap: wrap;
 `;
 
 
