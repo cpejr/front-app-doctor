@@ -2,7 +2,7 @@ export const Cores = {
   cinza: {
     // 1: "#807D7D",
     2: "#8D8D8D",
-    // 3: "#c4c4c4",
+    3: "#c4c4c4",
     // 4: "#dcdff9",
     // 5: "#eaebf8",
     6: "#5a5d76", 
@@ -26,6 +26,7 @@ export const Cores = {
 
   azul: "#151B57", 
   azulEscuro: "#0A0E3C",
+  amarelo: "#fdf1d1",
   preto: "black", 
   branco: "white",
   vermelho: "red",

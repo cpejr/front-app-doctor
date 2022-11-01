@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useWindowDimensions, ScrollView, Alert, View } from "react-native";
+import Icon from 'react-native-vector-icons/AntDesign';
+import { useWindowDimensions, ScrollView, Alert, View, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import Botao from "../../styles/Botao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
-
 import * as managerService from "../../services/ManagerService/managerService";
 
 import {
@@ -31,6 +31,7 @@ import {
   ScrollViewBranco,
 } from "./Styles";
 import { Cores } from "../../variaveis";
+import  {sleep} from "../../utils/sleep";
 
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -40,9 +41,9 @@ function Perfil({ navigation }) {
   const [cpf, setCpf] = useState("");
   const [cep, setCep] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
-
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
   const [carregando, setCarregando] = useState(true);
-
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [cpfMasked, setCpfMasked] = useState("");
   const [cepMasked, setCepMasked] = useState("");
   const [dataMasked, setDataMasked] = useState("");
@@ -69,7 +70,10 @@ function Perfil({ navigation }) {
       AsyncStorage.removeItem("@AirBnbApp:token");
       AsyncStorage.removeItem("@AirBnbApp:email");
       new Alert.alert("", "Usuário deslogado com sucesso!");
-      navigation.push("Login");
+      navigation.reset({
+        index:0,
+        routes: [{name: "Login"}]
+      })
     } catch (error) {
       alert(error);
     }
@@ -135,7 +139,7 @@ function Perfil({ navigation }) {
 
   useEffect(() => {
     pegandoDados();
-  }, []);
+  }, [usuario]);
 
   const confirmacaoExcluir = () =>
     Alert.alert("", "Tem certeza que quer excluir sua conta?", [
@@ -151,11 +155,32 @@ function Perfil({ navigation }) {
     navigation.push("Login");
   }
 
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url;
+    
+    if (chave === null || chave === "" || chave === undefined)
+    {
+      await sleep(1500);
+      setCarregandoFoto(false);
+      return false;
+    }
+
+    setCarregandoFoto(true);
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
+  }
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario.avatar_url]);
+
   const larguraBotoesMaior = width < 600 ? "50%" : "35%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
   const paddingBody = width < 330 ? "5%" : "10%";
   const fontSizeTitulos = fontSize < 1080 ? "20px" : "23px";
-  const fontSizeDados = fontSize < 1080 ? "15px" : "18px";
+  const fontSizeDados = fontSize < 1080 ? "14px" : "16px";
   const fontSizeNascido = fontSize < 1080 ? "12px" : "14px";
   const larguraViews = width < 750 ? "100%" : "70%";
 
@@ -187,21 +212,47 @@ function Perfil({ navigation }) {
               </AnimacaoCarregandoViewNome>
             ) : (
               <>
-                <Foto />
-                <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
-                <CaixaDataCpf>
-                  <CaixaNascidoData>
-                    <TextNascido fontSize={fontSizeNascido}>
-                      Nascido em:
-                    </TextNascido>
-                    <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
-                  </CaixaNascidoData>
-                  <CaixaNascidoData>
-                    <TextNascido fontSize={fontSizeNascido}>CPF:</TextNascido>
-                    <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
-                  </CaixaNascidoData>
-                </CaixaDataCpf>
-              </>
+              {usuario.avatar_url === null || usuario.avatar_url === "" || usuario.avatar_url === undefined ? (
+              <Foto>
+              {carregandoFoto ? (
+              <AnimacaoCarregandoViewNome>
+                <ActivityIndicator animating={true} color={Colors.blue900}/>
+              </AnimacaoCarregandoViewNome>
+              ) : (
+                <>
+                <Icon name="user" size={80} color={Cores.preto}/> 
+                </>
+              )}
+              </Foto>
+            ) : (
+              <Foto>
+              {carregandoFoto ? (
+              <AnimacaoCarregandoViewNome>
+                <ActivityIndicator animating={true} color={Colors.blue900}/>
+              </AnimacaoCarregandoViewNome>
+              ) : (
+                <>
+                  <Image
+                    source={{uri:(fotoDePerfil)}}
+                    style={{
+                    height:"100%",
+                    width:"100%"}}
+                  ></Image>
+                </>
+              )}
+              </Foto>
+              )}
+              <Nome fontSize={fontSizeTitulos}>{usuario.nome}</Nome>
+              <CaixaDataCpf>
+                <CaixaNascidoData>
+                  <TextNascido fontSize={fontSizeNascido}>
+                    Nascido em:
+                  </TextNascido>
+                  <TextData fontSize={fontSizeDados}>{dataMasked}</TextData>
+                </CaixaNascidoData>
+                <Dados fontSize={fontSizeDados}>{cpfMasked}</Dados>
+              </CaixaDataCpf>
+             </>
             )}
           </ViewFotoNome>
           <ViewContatoEndereco width={larguraViews}>
@@ -260,8 +311,8 @@ function Perfil({ navigation }) {
           <CaixaBotoesAlterar>
             <Botao
               width={larguraBotoes}
-              height="30px"
-              backgroundColor="green"
+              height="40px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -274,9 +325,10 @@ function Perfil({ navigation }) {
             </Botao>
             <Botao
               width={larguraBotoes}
-              height="30px"
+              height="40px"
               marginTop="3%"
-              backgroundColor="green"
+              padding="5px"
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
               borderColor={Cores.lilas[2]}
               borderWidth="2px"
@@ -292,6 +344,7 @@ function Perfil({ navigation }) {
           <Botao
             width={larguraBotoes}
             height="35px"
+            padding="5px"
             backgroundColor={Cores.branco}
             borderRadius="3px"
             borderColor={Cores.branco}
