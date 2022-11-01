@@ -134,6 +134,9 @@ export const IconeBotao = styled.Image`
 export const CaixaExterna = styled.View`
   height: ${Dimensions.get("window").height}px;
   width: ${Dimensions.get("window").width}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(0,0,0,0.6);
   z-index:2;
   elevation: 10;
