@@ -110,3 +110,5 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   export const deletarConversasInativas = (id_usuario) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
   
+  export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
+  

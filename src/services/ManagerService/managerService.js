@@ -522,3 +522,17 @@ export const deletarFotoDePerfil = async (id, file) => {
   return;
 };
 
+export const CriandoConversa = async (
+  conversa
+) => {
+  let dadosConversaCriada = {};
+  await requesterService
+    .criarConversa(conversa)
+    .then((res) => {
+      return (dadosConversaCriada = res.data);
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversaCriada;
+};

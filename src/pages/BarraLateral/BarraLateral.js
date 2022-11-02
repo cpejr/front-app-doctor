@@ -305,36 +305,24 @@ function BarraLateral({ navigation }) {
       id_receptor: secretariaSelecionada.id,
       ativada: false,
     };
-    console.log(
-      "🚀 ~ file: BarraLateral.js ~ line 309 ~ criarNovarConversa ~ dadosParaCriarNovaConversa",
-      dadosParaCriarNovaConversa
-    );
     const { id } = await managerService.CriandoConversa(
       dadosParaCriarNovaConversa,
-      {
-        mensagemSucesso: "Conversa criada com sucesso",
-        tempo: 1500,
-      }
     );
-    console.log(
-      "🚀 ~ file: BarraLateral.js ~ line 311 ~ criarNovarConversa ~ id",
-      id
-    );
-    // const novaConversa = {
-    //   id,
-    //   ativada: false,
-    //   mensagensNaoVistas: 0,
-    //   conversaCom: {
-    //     id: secretariaSelecionada.id,
-    //     nome: secretariaSelecionada.nome,
-    //     avatar_url: secretariaSelecionada.avatar_url,
-    //   },
-    // };
+    const novaConversa = {
+      id,
+      ativada: false,
+      mensagensNaoVistas: 0,
+      conversaCom: {
+        id: secretariaSelecionada.id,
+        nome: secretariaSelecionada.nome,
+        avatar_url: secretariaSelecionada.avatar_url,
+      },
+    };
 
-    // setModalAdicionar(false);
-    // setSecretariaSelecionada({})
-    // setConversaSelecionada(novaConversa);
-    // setConversas((conversasLista) => [novaConversa, ...conversasLista]);
+    setModalNovaMensagem(false);
+    setSecretariaSelecionada({})
+    setConversaSelecionada(novaConversa);
+    setConversas((conversasLista) => [novaConversa, ...conversasLista]);
     setCarregando(false);
   }
 
