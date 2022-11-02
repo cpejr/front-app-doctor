@@ -23,6 +23,8 @@ import {
   PaginaCarregando,
   HeaderListaReceitas,
   Titulo,
+  CaixaTextoCima,
+  TextoCima
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import Icon from "react-native-vector-icons/Entypo";
@@ -44,6 +46,7 @@ function ListaReceitas({ navigation }) {
   async function pegandoReceitas() {
     setCarregando(true);
     const resposta = await managerService.GetDadosReceitas();
+    setCarregando(false);
     setReceitas(resposta.dadosReceitas[0].receita);
     setCarregando(false);
   }
@@ -81,6 +84,9 @@ function ListaReceitas({ navigation }) {
             Arquivos
           </Titulo>
         </HeaderListaReceitas>
+        <CaixaTextoCima>
+          <TextoCima> Receitas </TextoCima>
+        </CaixaTextoCima>
       <ContainerCima height={heightPesquisar}>
         <BarraPesquisa>
           <InputPesquisa

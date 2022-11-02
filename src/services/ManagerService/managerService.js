@@ -290,9 +290,7 @@ export const EnviandoFormularioPaciente = async (
       id_formulario,
       id_usuario
     )
-    .then(() => {
-      
-    })
+    .then(() => {})
     .catch((error) => {
       requisicaoErro(error);
       return false;
@@ -367,6 +365,7 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
   return false;
 };
 
+
 export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
   let mensagensAtualizadas = {};
   await requesterService
@@ -377,7 +376,6 @@ export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
     .catch((error) => {
       requisicaoErro(error);
     });
-
   return mensagensAtualizadas;
 };
 
@@ -463,3 +461,64 @@ export const UpdateConversaAtiva = async (id) => {
     });
   return dadosConversa;
 };
+export const GetArquivoPorChave= async (chave) => {
+  let arquivo = "";
+  await requesterService
+    .requisicaoArquivo(chave)
+    .then((res) => {
+      arquivo = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return arquivo;
+  
+};
+
+export const PegarExamesMarcadosUsuario = async () => {
+  const resposta = await AsyncStorage.getItem("@AirBnbApp:email").then(
+    (res) => {
+      return requesterService.requisicaoDadosUsuario(res).then((res) => {
+        return requesterService
+          .requisicaoExamesMarcadosPorId(res.data.id)
+          .then((res) => {
+            return res.data;
+          })
+          .catch((error) => {
+            requisicaoErro(error);
+            return;
+          });
+      });
+    }
+  );
+  return resposta;
+};
+
+export const UpdateFotoDePerfil = async (id, file) => {
+  await requesterService
+    .updateFotoDePerfil(id, file)
+    .then(() => {
+      Alert.alert("", "Foto atualizada com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
+
+
+
+export const deletarFotoDePerfil = async (id, file) => {
+  await requesterService
+    .deleteFotoDePerfil(id, file)
+    .then(() => {
+      Alert.alert("", "Foto deletada com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
+
