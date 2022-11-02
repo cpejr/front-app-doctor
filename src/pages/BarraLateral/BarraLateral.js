@@ -71,6 +71,7 @@ function BarraLateral({ navigation }) {
   const [tooltipVisivel, setTooltipVisivel] = useState(false);
   const [usuario, setUsuario] = useState([]);
   const [secretariaSelecionada, setSecretariaSelecionada] = useState();
+  const [nomeSecretariaSelecionada, setNomeSecretariaSelecionada] = useState();
   const [usuarios, setUsuarios] = useState([]);
   const [camposVazios, setCamposVazios] = useState({});
   const [estado, setEstado] = useState(estadoIncial);
@@ -298,30 +299,16 @@ function BarraLateral({ navigation }) {
     setEstado({ id_usuario: value });
   }
 
-  async function criarNovarConversa(e) {
-    e.preventDefault();
-
-    const camposVaziosAtual = {
-      id_usuario: !estado.id_usuario,
-    };
-
-    setCamposVazios(camposVaziosAtual);
-
-    if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
-      toast.warn("Preencha todos os campos");
-      return;
-    }
-
-    setCarregando(true);
-
-    const usuarioSelecionadoDados = usuarios.find(
-      (usuario) => usuario.id === selecionaUsuarioId
-    );
+  async function criarNovarConversa() {
     const dadosParaCriarNovaConversa = {
       id_criador: usuarioId,
-      id_receptor: usuarioSelecionadoDados.id,
+      id_receptor: secretariaSelecionada.id,
       ativada: false,
     };
+    console.log(
+      "🚀 ~ file: BarraLateral.js ~ line 309 ~ criarNovarConversa ~ dadosParaCriarNovaConversa",
+      dadosParaCriarNovaConversa
+    );
     const { id } = await managerService.CriandoConversa(
       dadosParaCriarNovaConversa,
       {
@@ -329,25 +316,26 @@ function BarraLateral({ navigation }) {
         tempo: 1500,
       }
     );
+    console.log(
+      "🚀 ~ file: BarraLateral.js ~ line 311 ~ criarNovarConversa ~ id",
+      id
+    );
+    // const novaConversa = {
+    //   id,
+    //   ativada: false,
+    //   mensagensNaoVistas: 0,
+    //   conversaCom: {
+    //     id: secretariaSelecionada.id,
+    //     nome: secretariaSelecionada.nome,
+    //     avatar_url: secretariaSelecionada.avatar_url,
+    //   },
+    // };
 
-    const novaConversa = {
-      id,
-      ativada: false,
-      mensagensNaoVistas: 0,
-      conversaCom: {
-        id: usuarioSelecionadoDados.id,
-        nome: usuarioSelecionadoDados.nome,
-        avatar_url: usuarioSelecionadoDados.avatar_url,
-      },
-    };
-
-    setEstado(camposVaziosReferencia);
-    setCamposVazios({});
-    setModalAdicionar(false);
+    // setModalAdicionar(false);
+    // setSecretariaSelecionada({})
+    // setConversaSelecionada(novaConversa);
+    // setConversas((conversasLista) => [novaConversa, ...conversasLista]);
     setCarregando(false);
-    setSelecionaUsuarioId(null);
-    setConversaSelecionada(novaConversa);
-    setConversas((conversasLista) => [novaConversa, ...conversasLista]);
   }
 
   // useEffect(() => {
@@ -395,9 +383,10 @@ function BarraLateral({ navigation }) {
                   </CaixaTituloModal>
                   <PickerView>
                     <PickerSecretaria
-                      selectedValue={secretariaSelecionada}
-                      onValueChange={(itemValue) => {
-                        setSecretariaSelecionada(itemValue);
+                      selectedValue={nomeSecretariaSelecionada}
+                      onValueChange={(itemValue, itemPosition) => {
+                        setNomeSecretariaSelecionada(itemValue);
+                        setSecretariaSelecionada(usuario[itemPosition - 1]);
                       }}
                     >
                       <Picker.Item
@@ -424,7 +413,7 @@ function BarraLateral({ navigation }) {
                     borderRadius="10px"
                     borderWidth="1px"
                     borderColor={Cores.azul}
-                    onPress={criarNovarConversa}
+                    onPress={() => criarNovarConversa()}
                   >
                     <ConteudoBotao
                       fontSize="15px"
