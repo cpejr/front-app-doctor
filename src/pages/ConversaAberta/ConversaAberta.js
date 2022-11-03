@@ -23,7 +23,7 @@ import {
 } from "./Styles";
 //import { Tooltip } from 'react-native-elements';
 import { Cores } from "../../variaveis";
-import  Mensagem  from '../Mensagem/Mensagem';
+import Mensagem from "../Mensagem/Mensagem";
 import IconeMaterial from "react-native-vector-icons/MaterialIcons";
 import IconeIon from "react-native-vector-icons/Ionicons";
 import IconeFoundation from "react-native-vector-icons/Foundation";
@@ -33,10 +33,10 @@ import { ChatContext } from "../../contexts/ChatContext/ChatContext";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import * as managerService from "../../services/ManagerService/managerService";
 import checarObjVazio from "../../utils/checarObjVazio";
-import moverArray from '../../utils/moverArray';
+import moverArray from "../../utils/moverArray";
 
 function ConversaAberta({ navigation, route, socket }) {
- // const conversaSelecionada = route.params.paramKey;
+  // const conversaSelecionada = route.params.paramKey;
   //console.log("cv clicada:", conversaClicada);
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [conversinha, setConversinha] = useState({});
@@ -149,10 +149,9 @@ function ConversaAberta({ navigation, route, socket }) {
       novaConversa: conversaParaEnvio,
       receptorId,
     });
-    console.log("nova mensagem:, ", novaConversa)
+    console.log("nova mensagem:, ", novaConversa);
   };
   const enviarMensagem = async (e) => {
-    
     e.preventDefault();
 
     if (!inputMensagemConteudo) return;
@@ -161,7 +160,8 @@ function ConversaAberta({ navigation, route, socket }) {
     const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
 
     const remetente =
-      conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
+      conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
+        .conversaCom;
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
@@ -216,6 +216,24 @@ function ConversaAberta({ navigation, route, socket }) {
   //     enviarMensagem(e);
   //   }
   // };
+  const scrollViewRef = useRef();
+
+  const autoScroll = () => {
+    let offset = 0;
+    // setInterval(() => {
+    //   offset += 20;
+    //   scrollViewRef.current?.scrollTo({ x: 0, y: offset, animated: false });
+    //   console.log("🚀 ~ file: ConversaAberta.js ~ line 226 ~ setInterval ~ scrollViewRef.current", scrollViewRef.current)
+    // });
+    scrollViewRef.current?.scrollTo({
+      x: 0,
+      y: offset + 2000,
+      animated: false,
+    });
+  };
+  useEffect(() => {
+    autoScroll();
+  }, [mensagens]);
 
   return (
     <Body>
@@ -226,41 +244,52 @@ function ConversaAberta({ navigation, route, socket }) {
           color={Cores.azul}
           onPress={() => navigation.navigate("BarraLateral")}
         />
-        <ImagemUsuario source={conversaSelecionada?.conversaCom?.avatar_url || imagemPerfilPadrão} />
+        <ImagemUsuario
+          source={
+            conversaSelecionada?.conversaCom?.avatar_url || imagemPerfilPadrão
+          }
+        />
         <CaixaTexto>
-        <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-          {conversaSelecionada.conversaCom.nome}
-        </TextoMensagem>
+          <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
+            {conversaSelecionada.conversaCom.nome}
+          </TextoMensagem>
         </CaixaTexto>
       </HeaderConversaAberta>
 
       <FundoConversaAberta>
-      <ScrollView>
-      {carregandoConversa?( 
-        <PaginaCarregando>
-          <ActivityIndicator animating={true} color={Colors.black} />
-        </PaginaCarregando>) : (
-          mensagens?.map((m, idx) => (
-            <Mensagem
-              key={idx}
-              pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
-              conteudo={m.conteudo}
-              scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
-              data_criacao={m.data_criacao}
-            />
-          ))
-        )}
+        <ScrollView ref={scrollViewRef}>
+          {carregandoConversa ? (
+            <PaginaCarregando>
+              <ActivityIndicator animating={true} color={Colors.black} />
+            </PaginaCarregando>
+          ) : (
+            mensagens?.map((m, idx) => (
+              <Mensagem
+                key={idx}
+                pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
+                conteudo={m.conteudo}
+                scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
+                data_criacao={m.data_criacao}
+              />
+            ))
+          )}
         </ScrollView>
       </FundoConversaAberta>
 
       <FooterConversaAberta>
         <IconeFoundation name="paperclip" size={33} color={Cores.azulEscuro} />
         <BarraEnviarMensagemConversaAberta
-          placeholder="Mensagem" onChangeText={(e) => setInputMensagemConteudo(e)}
+          placeholder="Mensagem"
+          onChangeText={(e) => setInputMensagemConteudo(e)}
           value={inputMensagemConteudo}
-          ref={inputMensagemConteudoRef}>
-        </BarraEnviarMensagemConversaAberta>
-        <IconeMaterial name="send" size={30} color={Cores.azulEscuro} onPress={enviarMensagem}/>
+          ref={inputMensagemConteudoRef}
+        ></BarraEnviarMensagemConversaAberta>
+        <IconeMaterial
+          name="send"
+          size={30}
+          color={Cores.azulEscuro}
+          onPress={enviarMensagem}
+        />
       </FooterConversaAberta>
     </Body>
   );
