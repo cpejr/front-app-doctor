@@ -116,6 +116,15 @@ function BarraLateral({ navigation }) {
     async function getConversas() {
       setCarregandoConversas(true);
       const resposta = await managerService.GetConversasUsuario(usuarioId);
+
+      for (var i = 0; i < resposta.length; i++) {
+        if (resposta[i].conversaCom.avatar_url) {
+          const imagem = await managerService.GetArquivoPorChave(
+            resposta[i].conversaCom.avatar_url
+          );
+          resposta[i].conversaCom.imagem = imagem;
+        }
+      }
       if (componenteEstaMontadoRef.current) {
         setConversas(resposta);
         setCarregandoConversas(false);
@@ -306,7 +315,7 @@ function BarraLateral({ navigation }) {
       ativada: false,
     };
     const { id } = await managerService.CriandoConversa(
-      dadosParaCriarNovaConversa,
+      dadosParaCriarNovaConversa
     );
     const novaConversa = {
       id,
@@ -320,7 +329,7 @@ function BarraLateral({ navigation }) {
     };
 
     setModalNovaMensagem(false);
-    setSecretariaSelecionada({})
+    setSecretariaSelecionada({});
     setConversaSelecionada(novaConversa);
     setConversas((conversasLista) => [novaConversa, ...conversasLista]);
     setCarregando(false);
@@ -423,30 +432,40 @@ function BarraLateral({ navigation }) {
             </View>
           ) : (
             <View>
-              {ConversasFiltradas.map((c, idx) => (
-                <TouchableOpacity key={idx} onPress={cliqueNaConversa(c)}>
+              {ConversasFiltradas.map((conversa, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  onPress={cliqueNaConversa(conversa)}
+                >
                   <CaixaUsuarioMensagem>
                     <CaixaImagem>
-                      <ImagemUsuario
-                        border-radius="3px"
-                        source={c.avatar_url || imagemPerfilPadrão}
-                      ></ImagemUsuario>
+                      {conversa.conversaCom.imagem ? (
+                        <ImagemUsuario
+                          border-radius="3px"
+                          source={{ uri: conversa.conversaCom.imagem }}
+                        ></ImagemUsuario>
+                      ) : (
+                        <ImagemUsuario
+                          border-radius="3px"
+                          source={imagemPerfilPadrão}
+                        ></ImagemUsuario>
+                      )}
                     </CaixaImagem>
                     <CaixaTexto>
                       <TextoCaixa fontSize="17px">
-                        {c.conversaCom.nome}
+                        {conversa.conversaCom.nome}
                       </TextoCaixa>
                       <UltimaMensagem>
                         <TextoCaixa
                           fontSize="13px"
-                          naoVisto={c.mensagensNaoVistas}
+                          naoVisto={conversa.mensagensNaoVistas}
                         >
-                          {c?.ultima_mensagem?.pertenceAoUsuarioAtual &&
+                          {conversa?.ultima_mensagem?.pertenceAoUsuarioAtual &&
                             "Você: "}
-                          {c?.ultima_mensagem?.conteudo}
+                          {conversa?.ultima_mensagem?.conteudo}
                         </TextoCaixa>
-                        {c.mensagensNaoVistas > 0 && (
-                          <BolaAzul>{c.mensagensNaoVistas}</BolaAzul>
+                        {conversa.mensagensNaoVistas > 0 && (
+                          <BolaAzul>{conversa.mensagensNaoVistas}</BolaAzul>
                         )}
                       </UltimaMensagem>
                     </CaixaTexto>
