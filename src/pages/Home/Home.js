@@ -80,6 +80,16 @@ function Home({ navigation }) {
         title="Go to Solicitar Exame"
         onPress={() => navigation.navigate("SolicitarExame")}
       />
+
+      <Button
+        title="Go to Exames"
+        onPress={() => navigation.navigate("Exames")}
+      />
+
+      <Button
+        title="Go to ExameNormal"
+        onPress={() => navigation.navigate("ExameNormal")}
+      />
       </ScrollView>
     </View>
     </ScrollView>
