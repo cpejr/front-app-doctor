@@ -1,7 +1,12 @@
-import React, { useRef} from 'react';
-import dayjs from 'dayjs';
-import { MensagemEnviada, DataHoraMensagem, HoraMensagem, CorpoScroll } from './Styles';
-import { View, Text,ScrollView, RefreshControl } from "react-native";
+import React, { useRef } from "react";
+import dayjs from "dayjs";
+import {
+  MensagemEnviada,
+  DataHoraMensagem,
+  HoraMensagem,
+  CorpoScroll,
+} from "./Styles";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 
 export default function Mensagem({
   //scrollViewRef,
@@ -11,17 +16,19 @@ export default function Mensagem({
 }) {
   const scrollViewRef = useRef();
   return (
-
     <MensagemEnviada
       pertenceAoUsuarioAtual={pertenceAoUsuarioAtual}
-      ref = {scrollViewRef}
-      onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+      ref={scrollViewRef}
+      onContentSizeChange={() =>
+        scrollViewRef.current.scrollToEnd({ animated: true })
+      }
     >
-       <Text>{conteudo}</Text>
+      <Text>{conteudo}</Text>
       <DataHoraMensagem>
-        <HoraMensagem>{dayjs(data_criacao).format('DD/MM/YYYY HH:mm')}</HoraMensagem>
+        <HoraMensagem>
+          {dayjs(data_criacao).subtract(1,'hours').format("DD/MM/YYYY HH:mm")}
+        </HoraMensagem>
       </DataHoraMensagem>
     </MensagemEnviada>
   );
 }
-

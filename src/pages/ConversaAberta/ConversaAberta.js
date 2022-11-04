@@ -5,7 +5,7 @@ import React, {
   useRef,
   useDebugValue,
 } from "react";
-import { Text, View, ScrollView, Image } from "react-native";
+import { Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
 import {
   Body,
   HeaderConversaAberta,
@@ -34,9 +34,9 @@ import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import * as managerService from "../../services/ManagerService/managerService";
 import checarObjVazio from "../../utils/checarObjVazio";
 import moverArray from "../../utils/moverArray";
+import { sleep } from "../../utils/sleep";
 
 function ConversaAberta({ navigation, route, socket }) {
-  // const conversaSelecionada = route.params.paramKey;
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [conversinha, setConversinha] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
@@ -69,7 +69,6 @@ function ConversaAberta({ navigation, route, socket }) {
         setCarregandoConversa(false);
       }
     }
-
     getDadosUsuarioAtual();
 
     return () => (componenteEstaMontadoRef.current = false);
@@ -85,7 +84,9 @@ function ConversaAberta({ navigation, route, socket }) {
         usuarioId,
         conversaSelecionada.id
       );
-      if (componenteEstaMontadoRef.current) setMensagens(resposta);
+      if (componenteEstaMontadoRef.current) {
+        setMensagens(resposta);
+      }
     }
 
     getMensagens();
@@ -224,11 +225,17 @@ function ConversaAberta({ navigation, route, socket }) {
           color={Cores.azul}
           onPress={() => navigation.navigate("BarraLateral")}
         />
-        <ImagemUsuario
-          source={
-            conversaSelecionada?.conversaCom?.avatar_url || imagemPerfilPadrão
-          }
-        />
+        {conversaSelecionada.conversaCom.imagem ? (
+          <ImagemUsuario
+            border-radius="3px"
+            source={{ uri: conversaSelecionada.conversaCom.imagem }}
+          ></ImagemUsuario>
+        ) : (
+          <ImagemUsuario
+            border-radius="3px"
+            source={imagemPerfilPadrão}
+          ></ImagemUsuario>
+        )}
         <CaixaTexto>
           <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
             {conversaSelecionada.conversaCom.nome}
@@ -250,13 +257,12 @@ function ConversaAberta({ navigation, route, socket }) {
               <ActivityIndicator animating={true} color={Colors.black} />
             </PaginaCarregando>
           ) : (
-            mensagens?.map((m, idx) => (
+            mensagens?.map((mensagem, idx) => (
               <Mensagem
                 key={idx}
-                pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
-                conteudo={m.conteudo}
-                scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
-                data_criacao={m.data_criacao}
+                pertenceAoUsuarioAtual={mensagem.pertenceAoUsuarioAtual}
+                conteudo={mensagem.conteudo}
+                data_criacao={mensagem.data_criacao}
               />
             ))
           )}
