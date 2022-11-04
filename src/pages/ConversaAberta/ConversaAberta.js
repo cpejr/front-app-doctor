@@ -37,7 +37,6 @@ import moverArray from "../../utils/moverArray";
 
 function ConversaAberta({ navigation, route, socket }) {
   // const conversaSelecionada = route.params.paramKey;
-  //console.log("cv clicada:", conversaClicada);
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [conversinha, setConversinha] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
@@ -149,7 +148,6 @@ function ConversaAberta({ navigation, route, socket }) {
       novaConversa: conversaParaEnvio,
       receptorId,
     });
-    console.log("nova mensagem:, ", novaConversa);
   };
   const enviarMensagem = async (e) => {
     e.preventDefault();
@@ -216,24 +214,6 @@ function ConversaAberta({ navigation, route, socket }) {
   //     enviarMensagem(e);
   //   }
   // };
-  const scrollViewRef = useRef();
-
-  const autoScroll = () => {
-    let offset = 0;
-    // setInterval(() => {
-    //   offset += 20;
-    //   scrollViewRef.current?.scrollTo({ x: 0, y: offset, animated: false });
-    //   console.log("🚀 ~ file: ConversaAberta.js ~ line 226 ~ setInterval ~ scrollViewRef.current", scrollViewRef.current)
-    // });
-    scrollViewRef.current?.scrollTo({
-      x: 0,
-      y: offset + 2000,
-      animated: false,
-    });
-  };
-  useEffect(() => {
-    autoScroll();
-  }, [mensagens]);
 
   return (
     <Body>
@@ -257,7 +237,14 @@ function ConversaAberta({ navigation, route, socket }) {
       </HeaderConversaAberta>
 
       <FundoConversaAberta>
-        <ScrollView ref={scrollViewRef}>
+        <ScrollView
+          ref={(ref) => {
+            this.scrollView = ref;
+          }}
+          onContentSizeChange={() =>
+            this.scrollView.scrollToEnd({ animated: true })
+          }
+        >
           {carregandoConversa ? (
             <PaginaCarregando>
               <ActivityIndicator animating={true} color={Colors.black} />
