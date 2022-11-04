@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, useWindowDimensions, TouchableOpacity, ScrollView, Modal } from "react-native";
+import {
+  Text,
+  View,
+  useWindowDimensions,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+} from "react-native";
 import Icone from "react-native-vector-icons/Entypo";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
@@ -26,10 +33,8 @@ import {
   CaixaInfo,
   Info,
 } from "./Styles";
-import { Exames }  from "./nomeExames";
+import { Exames } from "./nomeExames";
 import { Cores } from "../../variaveis";
-
-
 
 function Recomendacoes({ navigation }) {
   const tamanhoIcone = width > 900 ? 48 : 48;
@@ -45,54 +50,39 @@ function Recomendacoes({ navigation }) {
   const [alturaScrollModal, setAlturaScrollModal] = useState("");
   const [margemDescricao, setMargemDescricao] = useState("0px");
 
-  function abrindoModal(exame){
+  function abrindoModal(exame) {
     setTituloExame(exame.nome);
     setdescricaoExame(exame.descricao);
-    setMedicasExame(exame.medicos)
-    
+    setMedicasExame(exame.medicos);
 
-    if(exame.descricao === ""){
+    if (exame.descricao === "") {
       setAlturaScrollModal("60%");
       setMargemDescricao("0px");
-    }
-    else{
+    } else {
       setAlturaScrollModal("34%");
       setMargemDescricao("20px");
     }
-  
+
     setAbrirModal(true);
   }
-  
-
 
   return (
     <Body>
       <CaixaSeta>
         <TouchableOpacity onPress={() => navigation.push("Home")}>
-          <Icone
-            name="arrow-left"
-            size={tamanhoIcone}
-            color={Cores.azul}
-          />
+          <Icone name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
         </TouchableOpacity>
       </CaixaSeta>
       <CaixaTitulo>
-        <Titulo>Indicações e Sugestões de Profissionais para
-        Exames </Titulo>
+        <Titulo>Indicações e Sugestões de Profissionais para Exames </Titulo>
       </CaixaTitulo>
       <CaixaSubTitulo>
         <SubTitulo>
-        São sugestões de profissionais de confiança
-        para realização de exames ou tratamentos
-        específicos, não oferecidos em meu consultório:
+          São sugestões de profissionais de confiança para realização de exames
+          ou tratamentos específicos, não oferecidos em meu consultório:
         </SubTitulo>
       </CaixaSubTitulo>
-      <Modal
-          animationType="slide"
-          transparent={true}
-          visible={abrirModal}
-          
-        >
+      <Modal animationType="slide" transparent={true} visible={abrirModal}>
         <CaixaExterna height={height} width={width}>
           <CaixaModal height={alturaModal}>
             <CaixaFechar>
@@ -105,51 +95,42 @@ function Recomendacoes({ navigation }) {
               </TouchableOpacity>
             </CaixaFechar>
             <CaixaTituloModal>
-              <TituloModal>
-                {tituloExame}
-              </TituloModal>
-            </CaixaTituloModal>  
+              <TituloModal>{tituloExame}</TituloModal>
+            </CaixaTituloModal>
             <CaixaDescricaoModal marginBottom={margemDescricao}>
-              <DescricaoModal>
-                {descricaoExame}
-              </DescricaoModal>
-           </CaixaDescricaoModal>
-           <CaixaContatos height={alturaScrollModal}>
-            <ScrollView>
-             {medicasExame.map((contato) => ( 
-                <Contatos>
-                  <CaixaNomeMedica>
-                    <NomeMedica>
-                      {contato.nome}
-                    </NomeMedica>
-                  </CaixaNomeMedica>
-                  <CaixaInfo>
-                    <Info>
-                      Local: {contato.local}
-                    </Info>
-                  </CaixaInfo>
-                  <CaixaInfo>
-                    <Info>
-                      Telefone: {contato.telefone}
-                    </Info>
-                  </CaixaInfo>
-                </Contatos>
-               ))}  
-            </ScrollView>
-           </CaixaContatos>          
+              <DescricaoModal>{descricaoExame}</DescricaoModal>
+            </CaixaDescricaoModal>
+            <CaixaContatos height={alturaScrollModal}>
+              <ScrollView>
+                {medicasExame.map((contato) => (
+                  <Contatos key={contato.nome}>
+                    <CaixaNomeMedica>
+                      <NomeMedica>{contato.nome}</NomeMedica>
+                    </CaixaNomeMedica>
+                    <CaixaInfo>
+                      <Info>Local: {contato.local}</Info>
+                    </CaixaInfo>
+                    <CaixaInfo>
+                      <Info>Telefone: {contato.telefone}</Info>
+                    </CaixaInfo>
+                  </Contatos>
+                ))}
+              </ScrollView>
+            </CaixaContatos>
           </CaixaModal>
         </CaixaExterna>
       </Modal>
       <CaixaScroll height={alturaScroll}>
-        <ScrollView style={{width:"85%"}}>
+        <ScrollView style={{ width: "85%" }}>
           {Exames.map((exame) => (
-            <TouchableOpacity onPress={()=> abrindoModal(exame)} key={exame.nome}>
+            <TouchableOpacity
+              onPress={() => abrindoModal(exame)}
+              key={exame.nome}
+            >
               <CaixaExames>
-                <NomeExame>
-                  {exame.nome}
-                </NomeExame>
+                <NomeExame>{exame.nome}</NomeExame>
               </CaixaExames>
-            </TouchableOpacity>  
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </CaixaScroll>
