@@ -69,7 +69,7 @@ export const BotaoSobreMim = styled.TouchableOpacity`
   margin-left: 9%;
 `;
 
-export const ConteudoAmie = styled.TouchableOpacity`
+export const ConteudoAmie = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-around;

@@ -25,6 +25,8 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import { Cores } from "../../variaveis";
 import AntIcon from "react-native-vector-icons/AntDesign";
+import Carousel from "react-native-snap-carousel";
+import Foto from "../../assets/amie_logo.png";
 
 function Home({ navigation }) {
   {
@@ -114,6 +116,31 @@ onPress={() => navigation.navigate("ExameNormal")}
 />
 </ScrollView> */
   }
+
+  const CarrosselItens = [
+    {
+      titulo: "Mini André",
+      imagem: Foto,
+    },
+    {
+      titulo: "Vermelho André",
+      imagem: Foto,
+    },
+    {
+      titulo: "Cansado André",
+      imagem: Foto,
+    }
+  ];
+
+  function renderizarCarrossel ({item}) {
+    return(
+    <CorpoCard>
+      <TituloCard color={Cores.preto}>{item.titulo}</TituloCard>
+      <Image source={require("../../assets/amie_logo.png")}/>
+    </CorpoCard>
+    );
+  };
+
   return (
     <ScrollView>
       <Corpo>
@@ -180,7 +207,15 @@ onPress={() => navigation.navigate("ExameNormal")}
           </CorpoCard>
         </Card>
 
-        <Card backgroundColor={Cores.branco}></Card>
+        <Card backgroundColor={Cores.branco}>
+          <Carousel
+          layout="stack"
+          data={CarrosselItens}
+          sliderWidth={350}
+          itemWidth={350}
+          renderItem={renderizarCarrossel}
+          />
+        </Card>
 
         <Card backgroundColor={"#FBCB4C"}>
           <CorpoCard>
