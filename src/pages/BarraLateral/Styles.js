@@ -168,7 +168,19 @@ export const PickerView = styled.View`
   width: 85%;
   background-color: #e4e6f4;
   border-radius: 5px;
-  border-color: ${Cores.azul};
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if( props.camposVazios){
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
   border-width: 1.5px;
   overflow: hidden;
 `;
