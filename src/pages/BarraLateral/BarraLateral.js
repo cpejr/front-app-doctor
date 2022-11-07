@@ -417,7 +417,7 @@ function BarraLateral({ navigation }) {
                         style={{ fontSize: 15, color: "grey" }}
                         value=""
                         label={"Selecione um(a) Secretário(a)"}
-                        //enabled={false}
+                        enabled={false}
                       />
 
                       {usuario.map((value, index) => (
