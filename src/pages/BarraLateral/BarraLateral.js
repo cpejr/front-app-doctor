@@ -49,6 +49,8 @@ import checarObjVazio from "../../utils/checarObjVazio";
 import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Alert } from "react-native";
+import { useIsFocused } from '@react-navigation/native';
+
 
 const camposVaziosReferencia = {
   id_usuario: false,
@@ -77,6 +79,8 @@ function BarraLateral({ navigation }) {
   const [camposVazios, setCamposVazios] = useState({});
   const [estado, setEstado] = useState(estadoIncial);
   const [selecionaUsuarioId, setSelecionaUsuarioId] = useState("");
+  const [value, setValue] = useState(0);
+  const [pickerValue, setPickerValue] = useState(null);
   const { usuarioId, conversas, setConversas, setConversaSelecionada } =
     useContext(ChatContext);
 
@@ -86,6 +90,7 @@ function BarraLateral({ navigation }) {
   const alturaModal = width > height ? "70%" : "35%";
   const tamanhoIcone = width > 480 ? 35 : 25;
   const [campoVazioModal, setCampoVazioModal] = useState(false);
+  const isFocused = useIsFocused();
 
   const imagemPerfilPadrão = require("../../assets/logoGuilherme.png");
 
@@ -312,10 +317,9 @@ function BarraLateral({ navigation }) {
   }
 
 
-
   async function criarNovarConversa() {
 
-    if(secretariaSelecionada === "")
+    if(secretariaSelecionada === "" || secretariaSelecionada === undefined )
     {
       setCampoVazioModal(true);
       Alert.alert("Erro!", "Selecione um usuário.");
@@ -352,13 +356,15 @@ function BarraLateral({ navigation }) {
       
     };
 
-
     
   }
+  function limparModal(){
+    setModalNovaMensagem(0);
+  }
 
-  // useEffect(() => {
-  //     pegandoUsuarios();
-  // },[]);
+  function abreModal(){
+    setModalNovaMensagem(true);
+  }
 
   return (
     <Body>
@@ -382,14 +388,13 @@ function BarraLateral({ navigation }) {
             animationType="slide"
             transparent={true}
             visible={modalNovaMensagem}
-            destroyOnClose
           >
             <CaixaExterna width={width} height={height}>
               <CaixaModalGrande height={alturaModal}>
                 <CaixaFechar>
                   <TouchableOpacity
                     onPress={() => {
-                      setModalNovaMensagem(false);
+                      limparModal();
                     }}
                   >
                     <Icon name="close" size={tamanhoIcone}></Icon>
@@ -400,27 +405,27 @@ function BarraLateral({ navigation }) {
                     <TituloModal>Iniciar uma nova Conversa</TituloModal>
                   </CaixaTituloModal>
                   <PickerView camposVazios={campoVazioModal}>
-                    <PickerSecretaria
+                 <PickerSecretaria
                       selectedValue={nomeSecretariaSelecionada}
                       onValueChange={(itemValue, itemPosition) => {
                         setNomeSecretariaSelecionada(itemValue);
                         setCampoVazioModal(false);
                         setSecretariaSelecionada(usuario[itemPosition - 1]);
-                      }}
-                    >
+                      }} 
+                    > 
                       <Picker.Item
                         style={{ fontSize: 15, color: "grey" }}
-                        value={secretariaSelecionada}
+                        value=""
                         label={"Selecione um(a) Secretário(a)"}
-                        disable 
+                        //enabled={false}
                       />
 
-                      {usuario.map((value) => (
+                      {usuario.map((value, index) => (
                         <Picker.Item
-                          key={value.id}
+                          key={index}
                           style={{ fontSize: 15, color: "black" }}
                           value={value.nome}
-                          label={value.nome}
+                          label={value.nome}   
                         />
                       ))}
                     </PickerSecretaria>
@@ -510,7 +515,7 @@ function BarraLateral({ navigation }) {
         borderWidth="1px"
         borderColor={Cores.azul}
         marginTop="15px"
-        onPress={() => setModalNovaMensagem(true)}
+        onPress={() => abreModal()}
       >
         <ConteudoBotao fontSize="15px" color={Cores.branco} width="100%">
           Iniciar Nova Conversa
