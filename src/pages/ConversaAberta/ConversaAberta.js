@@ -244,6 +244,11 @@ function ConversaAberta({ navigation, route, socket }) {
       </HeaderConversaAberta>
 
       <FundoConversaAberta>
+         {carregandoConversa ? (
+            <PaginaCarregando>
+              <ActivityIndicator animating={true} color={Colors.black} />
+            </PaginaCarregando>
+          ) : (
         <ScrollView
           ref={(ref) => {
             this.scrollView = ref;
@@ -251,22 +256,17 @@ function ConversaAberta({ navigation, route, socket }) {
           onContentSizeChange={() =>
             this.scrollView.scrollToEnd({ animated: true })
           }
-        >
-          {carregandoConversa ? (
-            <PaginaCarregando>
-              <ActivityIndicator animating={true} color={Colors.black} />
-            </PaginaCarregando>
-          ) : (
-            mensagens?.map((mensagem, idx) => (
+        >  
+            {mensagens?.map((mensagem, idx) => (
               <Mensagem
                 key={idx}
                 pertenceAoUsuarioAtual={mensagem.pertenceAoUsuarioAtual}
                 conteudo={mensagem.conteudo}
                 data_criacao={mensagem.data_criacao}
               />
-            ))
-          )}
+            ))}  
         </ScrollView>
+        )}
       </FundoConversaAberta>
 
       <FooterConversaAberta>
