@@ -426,3 +426,29 @@ export const deletarFotoDePerfil = async (id, file) => {
     });
   return;
 };
+
+export const pegarTodosExames = async () => {
+  let dadosExame = {};
+  await requesterService
+    .requisicaoTodosExames()
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
+};
+
+export const GetExameEspecifico = async (id) => {
+  let dadosExame = {};
+  await requesterService
+    .requisicaoExameEspecifico(id)
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
+};

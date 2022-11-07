@@ -71,7 +71,7 @@ export const CaixaDescricao = styled.View`
   align-items: center;
   justify-content: center;
   elevation: 5;
-  background-color: green;
+  background-color: ${Cores.cinza[7]};
   
 `;
 

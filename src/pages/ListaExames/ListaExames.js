@@ -42,6 +42,7 @@ function ListaExames({ navigation }) {
   const [estadoExamesMarcados, setEstadoExamesMarcados] = useState(false);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [carregando, setCarregando] = useState();
+  const [todosExames, setTodosExames] = useState([]);
 
   function alterarEstado() {
     setCarregando(true);
@@ -56,6 +57,15 @@ function ListaExames({ navigation }) {
     setCarregando(false);
   }
 
+  async function PegandoTodosExames() {
+    const resposta = await managerService.pegarTodosExames();
+    setTodosExames(resposta);
+  }
+
+  useEffect(() => {
+    PegandoTodosExames();
+  },[]);
+
   useEffect(() => {
     PegandoExamesMarcadosdoUsuario();
   }, [estadoExamesMarcados]);
@@ -69,6 +79,17 @@ function ListaExames({ navigation }) {
       return 1;
     }
   }
+
+  async function abrirExameClicado(exame) {
+    if (exame.id) {
+      navigation.push("SolicitarExame", {
+        paramKey: exame,
+      });
+    } else {
+      Alert.alert("Erro ao abrir o exame.");
+    }
+  }
+
 
   return (
     <Body>
@@ -99,26 +120,30 @@ function ListaExames({ navigation }) {
         <Scroll>
           <CaixaBaixo>
             <Quadro>
-              <TextoQuadro>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
+              <TextoQuadro>Se precisar de agendar algum dos exames abaixo, preencha os campos do formulatório específico. A mensagem será encaminhada para a secretaria da Clínica para confirmação e agendamento do exame.
               </TextoQuadro>
               <ContainerBotao>
-                <Botao
-                  marginTop="0"
-                  marginRight="0"
-                  height="15%"
-                  width="100%"
-                  backgroundColor={Cores.cinza[7]}
-                  borderRadius="3px"
-                  borderColor={Cores.azul}
-                  borderWidth="2px"
-                >
-                  <ConteudoBotao fontSize="16px" color="green" width="100%">
-                    EEG (Eletroencefalograma)
-                  </ConteudoBotao>
-                </Botao>
+                {todosExames?.map((value) => (
+                  <Botao
+                    marginTop="0"
+                    marginRight="0"
+                    height="15%"
+                    width="100%"
+                    backgroundColor={Cores.cinza[7]}
+                    borderRadius="3px"
+                    borderColor={Cores.azul}
+                    borderWidth="2px"
+                    onPress={() => {
+                      abrirExameClicado(value)
+                    }} 
+                  >
+                    <ConteudoBotao fontSize="16px" color={Cores.azulEscuro} width="100%">
+                      {value?.titulo}
+                    </ConteudoBotao>
+                    </Botao>
+                  ))
+                }
+                {/* 
                 <Botao
                   marginTop="0"
                   marginRight="0"
@@ -146,7 +171,7 @@ function ListaExames({ navigation }) {
                   <ConteudoBotao fontSize="16px" color="green" width="100%">
                     Actigrafia
                   </ConteudoBotao>
-                </Botao>
+                </Botao> */}
                 <Botao
                   marginTop="0"
                   marginRight="0"

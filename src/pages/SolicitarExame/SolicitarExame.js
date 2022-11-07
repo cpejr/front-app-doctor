@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -20,13 +21,29 @@ import {
 } from "./Styles";
 import Icon from "react-native-vector-icons/Entypo";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
 import Botao from "../../styles/Botao";
 
-function SolicitarExame() {
+function SolicitarExame({route, navigation}) {
+
   const { width } = useWindowDimensions();
   const tamanhoIcone = width > 900 ? 48 : 48;
   const larguraBotoesMaior = width < 600 ? "60%" : "50%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
+
+  const exameEspecifico = route.params.paramKey;
+  const [exameClicado, setExameClicado] = useState({});
+
+  // async function pegarExameEspecifico() {
+  //   const exameAux = await managerService.GetExameEspecifico(
+  //     exameEspecifico.id
+  //   );
+  //   setExameClicado(exameAux);
+  // }
+
+  // useEffect(() => {
+  //   pegarExameEspecifico();
+  // }, []);
 
   return (
     <Body>
@@ -40,19 +57,14 @@ function SolicitarExame() {
         </TouchableOpacity>
       </CaixaSeta>
       <CaixaTitulo>
-        <Titulo>Exame específico</Titulo>
+        <Titulo>Exame {exameEspecifico.titulo}</Titulo>
       </CaixaTitulo>
       <CaixaCentro>
         <CaixaScroll>
           <CaixaDescricao>
             <ScrollView>          
               <Descricao>
-                Você me ama? Perguntou Alice. — Não, não te amo! Respondeu o
-                Coelho Branco. Alice franziu a testa e juntou as mãos como fazia
-                sempre que se sentia ferida. —Vês? Retorquiu o Coelho Branco.
-                Agora vais começar a perguntar-te o que te torna tão imperfeita
-                e o que fizeste de mal para que eu não consiga amar-te pelo
-                menos um pouco. Sabes, é por esta razão que não te posso amar.
+                {exameEspecifico.texto}
               </Descricao>
             </ScrollView>
           </CaixaDescricao>
@@ -70,7 +82,7 @@ function SolicitarExame() {
           borderWidth="2px"
           boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
         >
-          <TextoBotao>Agendar Exame Específico</TextoBotao>
+          <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
         </Botao>
       </CaixaBotao>
     </Body>
