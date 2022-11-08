@@ -43,7 +43,7 @@ export const CaixaTitulo = styled.View`
 export const Titulo = styled.Text`
   font-size: 25px;
   font-weight: 600;
-  color: green;
+  color: ${Cores.azulEscuro};
 `;
 
 export const CaixaScroll = styled.View`

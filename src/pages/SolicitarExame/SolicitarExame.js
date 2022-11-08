@@ -1,11 +1,12 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import {
   Text,
   View,
   TouchableOpacity,
   useWindowDimensions,
   ScrollView,
+  Linking,
 } from "react-native";
 import {
   Body,
@@ -23,6 +24,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import Botao from "../../styles/Botao";
+import { sleep } from "../../utils/sleep";
 
 function SolicitarExame({route, navigation}) {
 
@@ -31,19 +33,42 @@ function SolicitarExame({route, navigation}) {
   const larguraBotoesMaior = width < 600 ? "60%" : "50%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
 
+  const [usuario, setUsuario] = useState({});
+  const [nomeUsuario, setNomeUsuario] = useState();
   const exameEspecifico = route.params.paramKey;
-  const [exameClicado, setExameClicado] = useState({});
 
-  // async function pegarExameEspecifico() {
-  //   const exameAux = await managerService.GetExameEspecifico(
-  //     exameEspecifico.id
-  //   );
-  //   setExameClicado(exameAux);
-  // }
+  const mensagemPadrao = `Ola, meu nome e: ${nomeusuarioo} e gostaria de realizar um agendamento para o exame: ${exameEspecifico.titulo}`;
+  const telefoneContato = "5579981375018";
+  const [urlWhatsApp, setUrlWhatsApp] = useState(
+    `https://api.whatsapp.com/send?phone=${telefoneContato}&text=${mensagemPadrao}`
+  );
 
-  // useEffect(() => {
-  //   pegarExameEspecifico();
-  // }, []);
+  const nomeusuarioo = JSON.stringify(nomeUsuario);
+
+  async function pegandoDadosUsuarioLogado() {
+    const resposta = await managerService.GetDadosUsuario();
+    setUsuario(resposta.dadosUsuario);
+    setNomeUsuario(resposta.dadosUsuario.nome);
+    //console.log(usuario)
+  }
+
+  useEffect(() => {
+    pegandoDadosUsuarioLogado();
+  }, [usuario]);
+  
+   useEffect(() => {
+    setUrlWhatsApp(encodeURI(urlWhatsApp));
+  }, []);
+
+  const renderizarUrl = useCallback(async () => {
+    const checarUrl = await Linking.canOpenURL(urlWhatsApp);
+    if (checarUrl) {
+      await Linking.openURL(urlWhatsApp);
+    } else {
+      Alert.alert(`Não foi possível abrir a URL: ${urlWhatsApp}`);
+    }
+  }, [urlWhatsApp]);
+
 
   return (
     <Body>
@@ -70,21 +95,43 @@ function SolicitarExame({route, navigation}) {
           </CaixaDescricao>
         </CaixaScroll>
       </CaixaCentro>
-      <CaixaBotao>
-        <Botao
-          width={larguraBotoes}
-          height="40px"
-          marginTop="0%"
-          /*   backgroundColor={Cores.cinza[11]} */
-          backgroundColor="green"
-          borderRadius="3px"
-          borderColor={Cores.azul}
-          borderWidth="2px"
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
-        >
-          <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
-        </Botao>
-      </CaixaBotao>
+      {(exameEspecifico.titulo === "Actigrafia" || exameEspecifico.titulo === "Biologix") ? (
+        <>
+          <CaixaBotao>
+            <Botao
+              width={larguraBotoes}
+              height="40px"
+              marginTop="0%"
+              backgroundColor="green"
+              borderRadius="3px"
+              borderColor={Cores.azul}
+              borderWidth="2px"
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
+            >
+              <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
+            </Botao>
+          </CaixaBotao>
+        </> 
+        ) : (
+          <>
+            <CaixaBotao>
+            <Botao
+              width={larguraBotoes}
+              height="40px"
+              marginTop="0%"
+              backgroundColor={Cores.cinza[11]}
+              borderRadius="3px"
+              borderColor={Cores.azul}
+              borderWidth="2px"
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
+              onPress={renderizarUrl}
+            >
+              <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
+            </Botao>
+          </CaixaBotao>
+          </>
+        )
+      }
     </Body>
   );
 }
