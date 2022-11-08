@@ -16,6 +16,7 @@ import {
   Icone,
   TituloInput,
   AnimacaoCarregandoView,
+  Rotulo,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
@@ -24,46 +25,128 @@ import ConteudoBotao from "./../../styles/ConteudoBotao";
 import Input from "./../../styles/Input";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";
+import _ from "lodash";
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState(false);
+  const [camposVazios, setCamposVazios] = useState({
+    email: false,
+    senha: false,
+  });
   const { width, height } = useWindowDimensions();
   const [carregando, setCarregando] = useState();
+  const [estado, setEstado] = useState({
+    email: "",
+    senha: "",
+  });
+
+  const errors = {};
+  const teste = {
+    email: false,
+    senha: false,
+  };
+
+  async function verificandoErros() {
+    if (!estado.email) errors.email = true;
+    if (!estado.senha) errors.senha = true;
+    if (erro.email === true) errors.email = true;
+    if (erro.senha === true) errors.senha = true;
+
+    for (const propriedade_errors in errors) {
+      if (errors[propriedade_errors] === true) {
+        for (const propriedade_campos in camposVazios) {
+          if (propriedade_campos === propriedade_errors) {
+            camposVazios[propriedade_campos] = true;
+          }
+        }
+      }
+    }
+
+    if (_.isEqual(camposVazios, teste)) {
+      requisicaoLogin();
+    } else {
+      Alert.alert(
+        "Erro",
+        "Preencha todos os campos obrigatórios corretamente!"
+      );
+      await sleep(1500);
+      setCarregando(false);
+    }
+  }
+
+  function setandoCamposNulos(inputIdentifier, enteredValue) {
+    if (
+      enteredValue === "" ||
+      enteredValue === undefined ||
+      enteredValue === null
+    ) {
+      setCamposVazios({ ...camposVazios, [inputIdentifier]: true });
+    } else {
+      setCamposVazios({ ...camposVazios, [inputIdentifier]: false });
+    }
+  }
+
+  function preenchendoSenha(inputIdentifier, enteredValue) {
+    if (inputIdentifier === "senha" && enteredValue.length < 8) {
+      setErro({ ...erro, [inputIdentifier]: true });
+    } else {
+      setErro({ ...erro, [inputIdentifier]: false });
+    }
+
+    setandoCamposNulos(inputIdentifier, enteredValue);
+
+    setEstado((curEstado) => {
+      return {
+        ...curEstado,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
+
+  function preenchendoEmail(inputIdentifier, enteredValue) {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    if (inputIdentifier === "email") {
+      if (!regEx.test(enteredValue)) {
+        setErro({ ...erro, [inputIdentifier]: true });
+      } else {
+        setErro({ ...erro, [inputIdentifier]: false });
+      }
+    }
+
+    setandoCamposNulos(inputIdentifier, enteredValue);
+
+    setEstado((curEstado) => {
+      return {
+        ...curEstado,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
 
   async function requisicaoLogin() {
     setCarregando(true);
-    if (
-      email?.length === 0 ||
-      senha?.length === 0 ||
-      email === null ||
-      senha === null
-    ) {
-      Alert.alert("Erro", "Preencha os campos email e senha!");
-      setCarregando(false);
-    } else {
-      const resposta = await managerService.requisicaoLogin(email, senha);
-      const verificaTipo = await managerService.GetDadosUsuario(email);
-      console.log(resposta);
-      if (resposta === true && verificaTipo.dadosUsuario.tipo === "PACIENTE") {
-        Alert.alert("Bem vindo!", "Login efetuado com sucesso");
-        navigation.navigate("Tabs");
-      } else {
-        if (
-          resposta === true &&
-          verificaTipo.dadosUsuario.tipo !== "PACIENTE"
-        ) {
-          setEmail(null);
-          setSenha(null);
-          Alert.alert("Erro", "Usuário não permitido no sistema!");
-        }
+    const email = estado.email;
+    const senha = estado.senha;
+    const resposta = await managerService.requisicaoLogin(email, senha);
+    const verificaTipo = await managerService.GetDadosUsuario(email);
 
-        if (resposta === false) {
-          setEmail(null);
-          setSenha(null);
-        }
-        setCarregando(false);
+    if (resposta === true && verificaTipo.dadosUsuario.tipo === "PACIENTE") {
+      Alert.alert("Bem vindo!", "Login efetuado com sucesso");
+      navigation.navigate("Tabs");
+    } else {
+      if (resposta === true && verificaTipo.dadosUsuario.tipo !== "PACIENTE") {
+        setEmail(null);
+        setSenha(null);
+        Alert.alert("Erro", "Usuário não permitido no sistema!");
       }
+
+      if (resposta === false) {
+        setEmail(null);
+        setSenha(null);
+      }
+      setCarregando(false);
     }
   }
 
@@ -81,6 +164,7 @@ function Login({ navigation }) {
   }, []);
 
   const margemSuperior = height < 200 ? "5px" : "100px";
+  const alturaBotao = height < 400 ? "40px" : "55px";
   const tamanhoFonte = width > 500 ? "17px" : "11px";
   const tamanhoIcone = width > 480 ? 20 : 18;
   const larguraConteudoBotaoEntrar = width > 480 ? "35%" : "40%";
@@ -107,17 +191,34 @@ function Login({ navigation }) {
                 <Input
                   placeholder="Email"
                   keyboardType="web-search"
-                  onChangeText={(e) => setEmail(e)}
-                  value={email}
+                  label="email"
+                  onChangeText={(text) => {
+                    preenchendoEmail("email", text);
+                  }}
+                  value={estado.email}
+                  erro={erro.email}
+                  camposVazios={camposVazios.email}
                 />
+                {erro.email && (
+                  <Rotulo>Digite um email no formato email@email.com</Rotulo>
+                )}
+
                 <TituloInput>Senha:</TituloInput>
                 <Input
                   placeholder="Senha"
                   keyboardType="web-search"
                   secureTextEntry
-                  onChangeText={(e) => setSenha(e)}
-                  value={senha}
+                  label="Senha"
+                  onChangeText={(text) => {
+                    preenchendoSenha("senha", text);
+                  }}
+                  value={estado.senha}
+                  camposVazios={camposVazios.senha}
+                  erro={erro.senha}
                 />
+                {erro.senha && (
+                  <Rotulo>Digite uma senha com no minimo 8 digitos</Rotulo>
+                )}
               </CaixaInputs>
 
               <Botao
@@ -128,12 +229,10 @@ function Login({ navigation }) {
                 borderColor={Cores.azul}
                 borderWidth="3px"
                 boxShadow="none"
-                onPress={() => requisicaoLogin()}
+                onPress={() => verificandoErros()}
               >
                 {carregando ? (
-                  <AnimacaoCarregandoView>
-                    <ActivityIndicator animating={true} color={Colors.black} />{" "}
-                  </AnimacaoCarregandoView>
+                  <ActivityIndicator animating={true} color={Colors.white} />
                 ) : (
                   <ConteudoBotao
                     width={larguraConteudoBotaoEntrar}
@@ -150,7 +249,7 @@ function Login({ navigation }) {
                   backgroundColor="transparent"
                   borderColor="transparent"
                   width="100%"
-                  height="40px"
+                  height={alturaBotao}
                   borderRadius="3px"
                   borderWidth="3px"
                   boxShadow="none"

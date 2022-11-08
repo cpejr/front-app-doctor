@@ -7,6 +7,7 @@ export const Body = styled.View`
   width: 100%;
   height: 100%;
   overflow: scroll;
+  padding-bottom: 5%;
 `;
 
 export const PaginaCarregando = styled.View`
@@ -44,7 +45,7 @@ export const CaixaInputs = styled.View`
 `;
 
 export const TituloInput = styled.Text`
-   font-size: 18px;
+   font-size: 16px;
    color: ${Cores.azul};
    width: 100%;
    display: flex;
@@ -99,4 +100,12 @@ export const AnimacaoCarregandoView = styled.View`
   position: relative;
   top: 0%;
   height: 35px;
+`;
+
+export const Rotulo = styled.Text`
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  color: #E00000;
+  margin-bottom: 2%;
 `;
