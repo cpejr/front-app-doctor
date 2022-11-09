@@ -1,22 +1,15 @@
 import React from "react";
-import {
-  Button,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { ScrollView, Image, useWindowDimensions } from "react-native";
 import {
   Corpo,
   Card,
   TextoCard,
   TituloCard,
   Video,
-  TituloSobreMim,
-  TextoSobreMim,
+  TituloInformacao,
+  TextoInfomacao,
   CorpoCard,
-  BotaoSobreMim,
+  BotaoSaibaMais,
   ConteudoAmie,
   ImagemAmie,
   TextoAmie,
@@ -26,7 +19,6 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import { Cores } from "../../variaveis";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import Carousel from "react-native-snap-carousel";
-import Foto from "../../assets/amie_logo.png";
 
 function Home({ navigation }) {
   {
@@ -117,40 +109,44 @@ onPress={() => navigation.navigate("ExameNormal")}
 </ScrollView> */
   }
 
+  const { height } = useWindowDimensions();
+
   const CarrosselItens = [
     {
       titulo: "Mini André",
-      imagem: Foto,
     },
     {
       titulo: "Vermelho André",
-      imagem: Foto,
     },
     {
       titulo: "Cansado André",
-      imagem: Foto,
-    }
+    },
   ];
 
-  function renderizarCarrossel ({item}) {
-    return(
-    <CorpoCard>
-      <TituloCard color={Cores.preto}>{item.titulo}</TituloCard>
-      <Image source={require("../../assets/amie_logo.png")}/>
-    </CorpoCard>
+  function renderizarCarrossel({ item }) {
+    return (
+      <CorpoCard>
+        <TituloCard color={Cores.preto}>{item.titulo}</TituloCard>
+        <Image source={require("../../assets/amie_logo.png")} />
+      </CorpoCard>
     );
-  };
+  }
+
+  const alturaVideo = height < 800 ? "50%" : "60%";
+  const larguraVideo = height < 800 ? "60%" : "80%";
+  const alturaImagem = height < 800 ? "80%" : "40%";
+  const alturaCard = height < 800 ? "350px" : "320px";
 
   return (
     <ScrollView>
       <Corpo>
-        <Card backgroundColor={Cores.branco}>
+        <Card backgroundColor={Cores.branco} height={alturaCard}>
           <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
           <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
-          <Video></Video>
+          <Video height={alturaVideo} width={larguraVideo}></Video>
         </Card>
 
-        <Card backgroundColor={Cores.branco}>
+        <Card backgroundColor={Cores.branco} height={alturaCard}>
           <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
           <TextoCard>
             Para ter acesso a chat com o doutor, marcar exames e muito mais
@@ -184,96 +180,90 @@ onPress={() => navigation.navigate("ExameNormal")}
           </Botao>
         </Card>
 
-        <Card backgroundColor={"#7757a0"}>
+        <Card backgroundColor={"#7757a0"} height={alturaCard}>
           <CorpoCard>
-            <TituloSobreMim color={Cores.branco}>Sobre mim</TituloSobreMim>
-            <TextoSobreMim color={Cores.branco}>
+            <TituloInformacao color={Cores.branco}>Sobre mim</TituloInformacao>
+            <TextoInfomacao color={Cores.branco}>
               Com formação em Neurologia e Neurofisiologia Clínica, atuo na
               investigação, diagnóstico e tratamento de variadas doenças e
               transtornos neurológicos. Após especialização no Hospital das
               Clínicas da Universidade de São Paulo - USP - Ribeirão Preto,
               retorno a Belo Horizonte para atuação em neurologia geral tanto
-              hospitalar de urgência quanto ambulatorial, trazendo o
-              conhecimento e experiência adquiridos em um dos maiores centros de
-              Neurologia do país.
-            </TextoSobreMim>
+              hospitalar de urgência quanto ambulatorial.
+            </TextoInfomacao>
 
-            <BotaoSobreMim>
-              <ConteudoBotao fontSize="16px" color={Cores.branco} width="100%">
+            <BotaoSaibaMais>
+              <ConteudoBotao fontSize="16px" color={Cores.branco} width="30%">
                 SAIBA MAIS
-                <AntIcon name="right" size={25} color={Cores.branco} />
               </ConteudoBotao>
-            </BotaoSobreMim>
+              <AntIcon name="right" size={25} color={Cores.branco} />
+            </BotaoSaibaMais>
           </CorpoCard>
         </Card>
 
-        <Card backgroundColor={Cores.branco}>
+        <Card backgroundColor={Cores.branco} height={"320px"}>
           <Carousel
-          layout="stack"
-          data={CarrosselItens}
-          sliderWidth={350}
-          itemWidth={350}
-          renderItem={renderizarCarrossel}
+            data={CarrosselItens}
+            sliderWidth={350}
+            itemWidth={350}
+            renderItem={renderizarCarrossel}
           />
         </Card>
 
-        <Card backgroundColor={"#FBCB4C"}>
+        <Card backgroundColor={"#FBCB4C"} height={alturaCard}>
           <CorpoCard>
-            <TituloSobreMim color={Cores.preto}>
+            <TituloInformacao color={Cores.preto}>
               Indicações e Sugestões
-            </TituloSobreMim>
-            <TextoSobreMim color={Cores.preto}>
+            </TituloInformacao>
+            <TextoInfomacao color={Cores.preto}>
               São sugestões de profissionais de confiança para realização de
-              exames ou tratamentos específicos, não oferecidos em meu
-              consultório:
+              exames ou tratamentos específicos:
               {"\n"}
               {"\n"}- Eletroneuromiografia
               {"\n"}- Ressonância Magnética em Epilepsia
-              {"\n"}- Punção Lombar
               {"\n"}
               {"\n"}Entre outros ...
-            </TextoSobreMim>
+            </TextoInfomacao>
 
-            <BotaoSobreMim>
-              <ConteudoBotao fontSize="16px" color={Cores.preto} width="100%">
+            <BotaoSaibaMais>
+              <ConteudoBotao fontSize="16px" color={Cores.preto} width="30%">
                 SAIBA MAIS
-                <AntIcon name="right" size={25} color={Cores.preto} />
               </ConteudoBotao>
-            </BotaoSobreMim>
+              <AntIcon name="right" size={25} color={Cores.preto} />
+            </BotaoSaibaMais>
           </CorpoCard>
         </Card>
 
-        <Card backgroundColor={"#434B97"}>
+        <Card backgroundColor={"#434B97"} height={alturaCard}>
           <CorpoCard>
-            <TituloSobreMim color={Cores.branco}>
+            <TituloInformacao color={Cores.branco}>
               Comentários e Depoimentos
-            </TituloSobreMim>
-            <TextoSobreMim color={Cores.branco}>
-              "Excelente profissional, competente atencioso carinhoso humano,
-              educado paciente. Ele trata meu irmão que tem demência daí devido
-              à atenção dedicada me tornei também paciente. Gostamos muito do Dr
-              Guilherme"
+            </TituloInformacao>
+            <TextoInfomacao color={Cores.branco}>
+              "O dr. Guilherme é extremamente profissional e atencioso.
+              Recomendo. Tratou minha mãe com muita atenção e carinho. Ótimo
+              neurologista"
               {"\n"}
               {"\n"}
               "Excelente profissional, muito atencioso e competente. Tempo de
               consulta satisfatório, permitindo uma boa propedêutica de
               tratamento"
-            </TextoSobreMim>
+            </TextoInfomacao>
 
-            <BotaoSobreMim>
-              <ConteudoBotao fontSize="16px" color={Cores.branco} width="100%">
+            <BotaoSaibaMais>
+              <ConteudoBotao fontSize="16px" color={Cores.branco} width="30%">
                 SAIBA MAIS
-                <AntIcon name="right" size={25} color={Cores.branco} />
               </ConteudoBotao>
-            </BotaoSobreMim>
+              <AntIcon name="right" size={25} color={Cores.branco} />
+            </BotaoSaibaMais>
           </CorpoCard>
         </Card>
 
-        <Card backgroundColor={Cores.branco}>
+        <Card backgroundColor={Cores.branco} height={"320px"}>
           <CorpoCard>
-            <TituloSobreMim color={Cores.preto}>
+            <TituloInformacao color={Cores.preto}>
               Grupo AMIE (Epilepsia)
-            </TituloSobreMim>
+            </TituloInformacao>
             <ConteudoAmie>
               <TextoAmie color={Cores.preto}>
                 O grupo AMIE foi fundado pela união de três médicos que se
@@ -282,14 +272,17 @@ onPress={() => navigation.navigate("ExameNormal")}
                 equipe. Hoje contamos com vários profissionais, unidos em uma
                 equipe multidisciplinar.
               </TextoAmie>
-              <ImagemAmie source={require("../../assets/amie_logo.png")} />
+              <ImagemAmie
+                height={alturaImagem}
+                source={require("../../assets/amie_logo.png")}
+              />
             </ConteudoAmie>
-            <BotaoSobreMim>
-              <ConteudoBotao fontSize="16px" color={Cores.preto} width="100%">
+            <BotaoSaibaMais>
+              <ConteudoBotao fontSize="16px" color={Cores.preto} width="30%">
                 SAIBA MAIS
-                <AntIcon name="right" size={25} color={Cores.preto} />
               </ConteudoBotao>
-            </BotaoSobreMim>
+              <AntIcon name="right" size={25} color={Cores.preto} />
+            </BotaoSaibaMais>
           </CorpoCard>
         </Card>
       </Corpo>

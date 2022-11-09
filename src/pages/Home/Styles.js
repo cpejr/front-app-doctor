@@ -13,9 +13,9 @@ export const Card = styled.View`
   display: flex;
   align-items: center;
   width: 90%;
-  height: 320px;
+  height: ${(props) => props.height};
   border-radius: 10px;
-  margin-top: 20px;
+  margin-top: 5%;
   background-color: ${(props) => props.backgroundColor};
 `;
 
@@ -37,9 +37,7 @@ export const TextoCard = styled.Text`
 export const Video = styled.View`
   display: flex;
   align-items: center;
-  width: 80%;
-  height: 60%;
-  margin-top: 2%;
+  margin-top: 1%;
   background-color: green;
 `;
 
@@ -48,25 +46,29 @@ export const CorpoCard = styled.View`
   align-items: flex-start;
 `;
 
-export const TituloSobreMim = styled.Text`
+export const TituloInformacao = styled.Text`
   font-size: 20px;
   margin-top: 6%;
   margin-left: 9%;
   color: ${(props) => props.color};
 `;
 
-export const TextoSobreMim = styled.Text`
+export const TextoInfomacao = styled.Text`
   text-align: justify;
-  font-size: 12px;
-  margin-top: 6%;
+  font-size: 14px;
+  margin-top: 4%;
   margin-left: 9%;
   margin-right: 9%;
   color: ${(props) => props.color};
 `;
 
-export const BotaoSobreMim = styled.TouchableOpacity`
+export const BotaoSaibaMais = styled.TouchableOpacity`
   margin-top: 5%;
   margin-left: 9%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: green;
 `;
 
 export const ConteudoAmie = styled.View`
@@ -78,10 +80,10 @@ export const ConteudoAmie = styled.View`
 `;
 
 export const ImagemAmie = styled.Image`
-  height: 40%;
+  height: ${(props) => props.height};
   width: 35%;
   margin-right: 9%;
-  margin-top: 10%;
+  margin-top: 9%;
 `;
 
 export const TextoAmie = styled.Text`
@@ -91,5 +93,5 @@ export const TextoAmie = styled.Text`
   margin-left: 9%;
   margin-right: 9%;
   width: 50%;
-  color: ${(props) => props.color}
+  color: ${(props) => props.color};
 `;
