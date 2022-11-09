@@ -92,8 +92,7 @@ export const CaixaBotao = styled.View`
   justify-content: center;
   background-color: ${Cores.branco};
   padding: 3%;
-
- 
+  margin-bottom: 1%;
 `;
 
 export const TextoBotao = styled.Text`

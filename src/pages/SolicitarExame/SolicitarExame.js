@@ -49,7 +49,6 @@ function SolicitarExame({route, navigation}) {
     const resposta = await managerService.GetDadosUsuario();
     setUsuario(resposta.dadosUsuario);
     setNomeUsuario(resposta.dadosUsuario.nome);
-    //console.log(usuario)
   }
 
   useEffect(() => {
@@ -77,7 +76,8 @@ function SolicitarExame({route, navigation}) {
           <Icon
             name="arrow-left"
             size={tamanhoIcone}
-            /* color={Cores.azul} */ color="green"
+            color={Cores.azul} /*color="green"*/
+            onPress={() => navigation.push("ListaExames")}
           />
         </TouchableOpacity>
       </CaixaSeta>
@@ -103,12 +103,13 @@ function SolicitarExame({route, navigation}) {
               height="40px"
               marginTop="0%"
               backgroundColor="green"
+              //backgroundColor={Cores.cinza[11]}
               borderRadius="3px"
               borderColor={Cores.azul}
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
             >
-              <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
+              <TextoBotao>Agendar Exame{exameEspecifico.titulo}</TextoBotao>
             </Botao>
           </CaixaBotao>
         </> 
@@ -117,7 +118,7 @@ function SolicitarExame({route, navigation}) {
             <CaixaBotao>
             <Botao
               width={larguraBotoes}
-              height="40px"
+              height="52px"
               marginTop="0%"
               backgroundColor={Cores.cinza[11]}
               borderRadius="3px"
