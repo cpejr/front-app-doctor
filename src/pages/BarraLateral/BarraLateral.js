@@ -49,8 +49,7 @@ import checarObjVazio from "../../utils/checarObjVazio";
 import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Alert } from "react-native";
-import { useIsFocused } from '@react-navigation/native';
-
+import { useIsFocused } from "@react-navigation/native";
 
 const camposVaziosReferencia = {
   id_usuario: false,
@@ -71,7 +70,7 @@ function BarraLateral({ navigation }) {
   const [carregandoConversas, setCarregandoConversas] = useState(true);
   const [modalNovaMensagem, setModalNovaMensagem] = useState(false);
   const [tooltipVisivel, setTooltipVisivel] = useState(false);
-  const [carregandoNovaConversa, setCarregandoNovaConversa] = useState(false)
+  const [carregandoNovaConversa, setCarregandoNovaConversa] = useState(false);
   const [usuario, setUsuario] = useState([]);
   const [secretariaSelecionada, setSecretariaSelecionada] = useState("");
   const [nomeSecretariaSelecionada, setNomeSecretariaSelecionada] = useState();
@@ -307,7 +306,6 @@ function BarraLateral({ navigation }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, [conversas, usuarioId]);
 
-
   function preenchendoDados(value) {
     setSelecionaUsuarioId(value);
 
@@ -316,16 +314,11 @@ function BarraLateral({ navigation }) {
     setEstado({ id_usuario: value });
   }
 
-
   async function criarNovarConversa() {
-
-    if(secretariaSelecionada === "" || secretariaSelecionada === undefined )
-    {
+    if (secretariaSelecionada === "" || secretariaSelecionada === undefined) {
       setCampoVazioModal(true);
       Alert.alert("Erro!", "Selecione um usuário.");
-    }
-    else
-    {
+    } else {
       setCarregandoNovaConversa(true);
       const dadosParaCriarNovaConversa = {
         id_criador: usuarioId,
@@ -344,7 +337,7 @@ function BarraLateral({ navigation }) {
           nome: secretariaSelecionada.nome,
           avatar_url: secretariaSelecionada.avatar_url,
         },
-      }
+      };
 
       Alert.alert("Sucesso!", "Conversa iniciada com sucesso.");
       setCarregandoNovaConversa(false);
@@ -353,16 +346,13 @@ function BarraLateral({ navigation }) {
       setConversaSelecionada(novaConversa);
       setConversas((conversasLista) => [novaConversa, ...conversasLista]);
       setCarregando(false);
-      
-    };
-
-    
+    }
   }
-  function limparModal(){
+  function limparModal() {
     setModalNovaMensagem(0);
   }
 
-  function abreModal(){
+  function abreModal() {
     setModalNovaMensagem(true);
   }
 
@@ -388,6 +378,9 @@ function BarraLateral({ navigation }) {
             animationType="slide"
             transparent={true}
             visible={modalNovaMensagem}
+            onShow={() => {
+              setNomeSecretariaSelecionada("");
+            }}
           >
             <CaixaExterna width={width} height={height}>
               <CaixaModalGrande height={alturaModal}>
@@ -405,14 +398,14 @@ function BarraLateral({ navigation }) {
                     <TituloModal>Iniciar uma nova Conversa</TituloModal>
                   </CaixaTituloModal>
                   <PickerView camposVazios={campoVazioModal}>
-                 <PickerSecretaria
+                    <PickerSecretaria
                       selectedValue={nomeSecretariaSelecionada}
                       onValueChange={(itemValue, itemPosition) => {
                         setNomeSecretariaSelecionada(itemValue);
                         setCampoVazioModal(false);
                         setSecretariaSelecionada(usuario[itemPosition - 1]);
-                      }} 
-                    > 
+                      }}
+                    >
                       <Picker.Item
                         style={{ fontSize: 15, color: "grey" }}
                         value=""
@@ -425,7 +418,7 @@ function BarraLateral({ navigation }) {
                           key={index}
                           style={{ fontSize: 15, color: "black" }}
                           value={value.nome}
-                          label={value.nome}   
+                          label={value.nome}
                         />
                       ))}
                     </PickerSecretaria>
@@ -440,16 +433,20 @@ function BarraLateral({ navigation }) {
                     borderColor={Cores.azul}
                     onPress={() => criarNovarConversa()}
                   >
-                 
-                    {carregandoNovaConversa? 
-                    <ActivityIndicator animating={true} color={Colors.black} />:  
-                    <ConteudoBotao
-                    fontSize="15px"
-                    color={Cores.branco}
-                    width="100%"
-                    >
-                      Confirmar
-                    </ConteudoBotao>}
+                    {carregandoNovaConversa ? (
+                      <ActivityIndicator
+                        animating={true}
+                        color={Colors.black}
+                      />
+                    ) : (
+                      <ConteudoBotao
+                        fontSize="15px"
+                        color={Cores.branco}
+                        width="100%"
+                      >
+                        Confirmar
+                      </ConteudoBotao>
+                    )}
                   </Botao>
                 </CaixaInterna>
               </CaixaModalGrande>
