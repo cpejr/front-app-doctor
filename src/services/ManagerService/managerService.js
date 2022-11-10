@@ -365,8 +365,103 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
   return false;
 };
 
-export const GetArquivoPorChave= async (chave) => {
 
+export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
+  let mensagensAtualizadas = {};
+  await requesterService
+    .updateMensagensVisualizadas(id_usuario, id_conversa)
+    .then((res) => {
+      mensagensAtualizadas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return mensagensAtualizadas;
+};
+
+export const GetConversasUsuario = async (id_usuario) => {
+  let dadosConversas = {};
+  await requesterService
+    .requisicaoConversasPorUsuario(id_usuario)
+    .then((res) => {
+      dadosConversas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversas;
+};
+
+export const CriandoMensagem = async (mensagem) => {
+  let dadosMensagemCriada = {};
+  await requesterService
+    .criarMensagem(mensagem)
+    .then((res) => {
+      dadosMensagemCriada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagemCriada;
+};
+
+export const GetMensagensPorConversaUsuario = async (
+  id_usuario,
+  id_conversa
+) => {
+  let dadosMensagens = {};
+  await requesterService
+    .requisicaoMensagensPorConversaUsuario(id_usuario, id_conversa)
+    .then((res) => {
+      dadosMensagens = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagens;
+};
+
+export const UpdateMensagemVisualizada = async (id, atualizacoes) => {
+  let mensagemAtualizada = {};
+  await requesterService
+    .updateMensagemVisualizada(id, atualizacoes)
+    .then((res) => {
+      mensagemAtualizada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return mensagemAtualizada;
+  
+};
+
+export const deletarConversasInativas = async (id_usaurio) => {
+  let conversasApagadas = {};
+  await requesterService
+    .deletarConversasInativas(id_usaurio)
+    .then((res) => {
+      conversasApagadas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return conversasApagadas;
+};
+
+export const UpdateConversaAtiva = async (id) => {
+  let dadosConversa = {};
+  await requesterService
+    .updateConversaAtiva(id)
+    .then((res) => {
+      dadosConversa = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversa;
+};
+export const GetArquivoPorChave= async (chave) => {
   let arquivo = "";
   await requesterService
     .requisicaoArquivo(chave)
@@ -425,6 +520,21 @@ export const deletarFotoDePerfil = async (id, file) => {
       return;
     });
   return;
+};
+
+export const CriandoConversa = async (
+  conversa
+) => {
+  let dadosConversaCriada = {};
+  await requesterService
+    .criarConversa(conversa)
+    .then((res) => {
+      return (dadosConversaCriada = res.data);
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversaCriada;
 };
 
 export const pegarTodosExames = async () => {
