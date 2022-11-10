@@ -143,35 +143,6 @@ function ListaExames({ navigation }) {
                     </Botao>
                   ))
                 }
-                {/* 
-                <Botao
-                  marginTop="0"
-                  marginRight="0"
-                  height="15%"
-                  width="100%"
-                  backgroundColor={Cores.cinza[7]}
-                  borderRadius="3px"
-                  borderColor={Cores.azul}
-                  borderWidth="2px"
-                >
-                  <ConteudoBotao fontSize="16px" color="green" width="100%">
-                    Polissonografia
-                  </ConteudoBotao>
-                </Botao>
-                <Botao
-                  marginTop="0"
-                  marginRight="0"
-                  height="15%"
-                  width="100%"
-                  backgroundColor={Cores.cinza[7]}
-                  borderRadius="3px"
-                  borderColor={Cores.azul}
-                  borderWidth="2px"
-                >
-                  <ConteudoBotao fontSize="16px" color="green" width="100%">
-                    Actigrafia
-                  </ConteudoBotao>
-                </Botao> */}
                 <Botao
                   marginTop="0"
                   marginRight="0"
