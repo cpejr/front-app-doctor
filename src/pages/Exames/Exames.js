@@ -21,6 +21,11 @@ function Exames({ navigation }) {
         title="Go to SolicitarExame"
         onPress={() => navigation.navigate("SolicitarExameScreen")}
       />
+
+      <Button
+        title="Go to ExameNormal"
+        onPress={() => navigation.navigate("ExameNormal")}
+      />
     </View>
   );
 }
