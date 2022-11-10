@@ -89,3 +89,26 @@ export const deleteFotoDePerfil = (id, base64) =>
   api.put(`/usuariosdeletarimagem/${id}`,{
     file: base64
   });
+export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
+  api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
+
+  export const requisicaoConversasPorUsuario = (id_usuario) =>
+  api.get(`/conversas/${id_usuario}/usuario`);
+
+  export const requisicaoMensagensPorConversaUsuario = (
+    id_usuario,
+    id_conversa
+  ) => api.get(`/mensagems/${id_conversa}/conversa/${id_usuario}`);
+
+  export const updateMensagemVisualizada = (id, atualizacoes) =>
+  api.put(`/mensagems/${id}`, atualizacoes);
+
+  export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
+
+  export const updateConversaAtiva = (id) => api.put(`/conversas/ativacao/${id}`);
+
+  export const deletarConversasInativas = (id_usuario) =>
+  api.delete(`/conversas/${id_usuario}/usuario`);
+  
+  export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
+  
