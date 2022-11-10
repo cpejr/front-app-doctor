@@ -209,12 +209,6 @@ function ConversaAberta({ navigation, route, socket }) {
 
     setCarregandoEnvioMensagem(false);
   };
-  // const verificarEnter = (e) => {
-  //   console.log("testando enter:", e)
-  //   if (e.key === "Enter" && inputMensagemConteudo) {
-  //     enviarMensagem(e);
-  //   }
-  // };
 
   return (
     <Body>
