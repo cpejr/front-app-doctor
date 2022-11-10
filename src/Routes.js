@@ -202,6 +202,8 @@ function ChatStackScreen() {
         name="ConversaAberta"
         component={ConversaAberta}
       />
+     
+
     </ChatStack.Navigator>
   );
 }
