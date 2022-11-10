@@ -28,35 +28,26 @@ import { sleep } from "../../utils/sleep";
 
 function SolicitarExame({route, navigation}) {
 
+  const exameEspecifico = route.params.paramKey;
+
   const { width } = useWindowDimensions();
   const tamanhoIcone = width > 900 ? 48 : 48;
   const larguraBotoesMaior = width < 600 ? "60%" : "50%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
 
   const [usuario, setUsuario] = useState({});
-  const [nomeUsuario, setNomeUsuario] = useState();
-  const exameEspecifico = route.params.paramKey;
 
-  const mensagemPadrao = `Ola, meu nome e: ${nomeusuarioo} e gostaria de realizar um agendamento para o exame: ${exameEspecifico.titulo}`;
+  const mensagemPadrao = `Ola, meu nome e: ${usuario?.nome} e gostaria de realizar um agendamento para o exame: ${exameEspecifico.titulo}`;
   const telefoneContato = "5579981375018";
-  const [urlWhatsApp, setUrlWhatsApp] = useState(
-    `https://api.whatsapp.com/send?phone=${telefoneContato}&text=${mensagemPadrao}`
-  );
-
-  const nomeusuarioo = JSON.stringify(nomeUsuario);
+  const urlWhatsApp = encodeURI(`https://api.whatsapp.com/send?phone=${telefoneContato}&text=${mensagemPadrao}`);
 
   async function pegandoDadosUsuarioLogado() {
     const resposta = await managerService.GetDadosUsuario();
     setUsuario(resposta.dadosUsuario);
-    setNomeUsuario(resposta.dadosUsuario.nome);
   }
 
   useEffect(() => {
     pegandoDadosUsuarioLogado();
-  }, [usuario]);
-  
-   useEffect(() => {
-    setUrlWhatsApp(encodeURI(urlWhatsApp));
   }, []);
 
   const renderizarUrl = useCallback(async () => {
@@ -67,7 +58,6 @@ function SolicitarExame({route, navigation}) {
       Alert.alert(`Não foi possível abrir a URL: ${urlWhatsApp}`);
     }
   }, [urlWhatsApp]);
-
 
   return (
     <Body>
