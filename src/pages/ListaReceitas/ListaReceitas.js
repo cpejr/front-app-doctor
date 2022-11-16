@@ -34,6 +34,8 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import * as FileSystem from "expo-file-system";
 import { StorageAccessFramework } from "expo-file-system";
+import { startActivityAsync, ActivityAction } from 'expo-intent-launcher';
+import * as IntentLauncher from 'expo-intent-launcher';
 
 function ListaReceitas({ navigation }) {
   const [receitas, setReceitas] = useState([]);
@@ -41,6 +43,7 @@ function ListaReceitas({ navigation }) {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const { width } = useWindowDimensions();
+  const [pastaAcessivel, setPastaAcessivel] = useState(false);
 
   const tamanhoIcone = width > 480 ? 20 : 25;
 

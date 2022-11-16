@@ -2743,6 +2743,11 @@ expo-image-picker@^13.3.1:
     expo-image-loader "~3.2.0"
     uuid "7.0.2"
 
+expo-intent-launcher@^10.3.1:
+  version "10.3.1"
+  resolved "https://registry.yarnpkg.com/expo-intent-launcher/-/expo-intent-launcher-10.3.1.tgz#1479400f5f63096f73361f506bb4f7e067b050e6"
+  integrity sha512-T48ENkhcAkOkzKs3edGjNaCljfoEs/cyDQzAryjQdR8Wy5/BZwAPBd+ihf2Hzx1NhExatKFcWuKbwXvKDS+xkA==
+
 expo-keep-awake@~10.0.2:
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.0.2.tgz#706bda839782bb3e8ad4cbe43bde471a56368813"
