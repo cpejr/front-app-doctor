@@ -5,6 +5,8 @@ export const CorpoScroll = styled.ScrollView`
   display: flex;
   width: 100%;
   background-color: ${Cores.cinza[11]};
+  height: ${(props) => props.height};
+  
 `;
 export const Body = styled.View`
   display: flex;
@@ -67,9 +69,12 @@ export const CaixaFormulario = styled.View`
 
 export const CaixaBotao = styled.View`
   width: 90%;
-  height: 20%;
-  padding-top: 5%;
+  height: auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
   display: flex;
+  position: absolute;
+  bottom: 0px;
   background-color: ${Cores.cinza[11]};
   align-items: flex-end;
 `;
