@@ -47,7 +47,8 @@ import {
   CaixaTituloModalExcluir,
   PaginaCarregando,
   CaixaModalDeleteFoto,
-  CaixaModalUpdateFoto
+  CaixaModalUpdateFoto,
+  CaixaExterna
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
 import { estados } from "./estados";
@@ -98,14 +99,14 @@ function AlterarDados({ navigation }) {
 
   function deixandoModaisResponsivos() {
     if (width > height){
-      setHeightModalDeletarFoto("65%");
-      setHeightModalUpdateFoto("90%");
-      setMarginTopModais("2%");
+      setHeightModalDeletarFoto("55%");
+      setHeightModalUpdateFoto("85%");
+      setMarginTopModais("0%");
     } 
     else {
       setHeightModalDeletarFoto("35%");
-      setHeightModalUpdateFoto("53%");
-      setMarginTopModais("40%");
+      setHeightModalUpdateFoto("60%");
+      setMarginTopModais("0%");
     }
   }
 
@@ -504,14 +505,10 @@ function AlterarDados({ navigation }) {
             </CaixaBotoesAlterarEDeletarImagem>
             <Modal
               animationType="slide"
-              transparent={false}
-              style={
-                {
-                  backgroundColor: "rgba(0,0,0,0.3)"
-                }
-              }
+              transparent={true}
               visible={modalAdicionarFoto}
             >
+              <CaixaExterna height={height} width={width}>
               <CaixaModalUpdateFoto height={heightModalUpdateFoto} marginTop={marginTopModais}>
                 <CaixaFechar>
                   <TouchableOpacity
@@ -536,7 +533,6 @@ function AlterarDados({ navigation }) {
                         borderWidth="3px"
                         boxShadow="none"
                         onPress={() => selecionaImagem()}
-                        //marginTop="25px"
                       >
                         <ConteudoBotao
                           width="90px"
@@ -599,12 +595,14 @@ function AlterarDados({ navigation }) {
                   </CaixaBotoesCancelarConfirmarModalExcluirFoto>
                 </CaixaTituloModal>
               </CaixaModalUpdateFoto>
+              </CaixaExterna>
             </Modal>
             <Modal
               animationType="slide"
               transparent={true}
               visible={modalExcluirFoto}
             >
+              <CaixaExterna height={height} width={width}>
               <CaixaModalDeleteFoto height={heightModalDeletarFoto} marginTop={marginTopModais}>
                 <CaixaFechar>
                   <TouchableOpacity
@@ -666,9 +664,10 @@ function AlterarDados({ navigation }) {
                   </Botao>
                 </CaixaBotoesCancelarConfirmarModalExcluirFoto>
               </CaixaModalDeleteFoto>
+              </CaixaExterna>
             </Modal>
 
-            <CaixaInputs width={tamanhoInputs}>
+            <CaixaInputs width={tamanhoInputs} >
               <CaixaTitulosRotulos>
                 <TituloRotulos>Nome:</TituloRotulos>
               </CaixaTitulosRotulos>

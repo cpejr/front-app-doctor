@@ -10,6 +10,7 @@ import Comentarios from "./pages/Comentarios";
 import Consultas from "./pages/Consultas";
 import Emergencia from "./pages/Emergencia";
 import Exames from "./pages/Exames";
+import ExameNormal from "./pages/ExameNormal";
 import FormaPagamento from "./pages/FormaPagamento";
 import GrupoAMIE from "./pages/GrupoAMIE";
 import Home from "./pages/Home";
@@ -100,6 +101,8 @@ function HomeStackScreen() {
 
       <HomeStack.Screen name="BarraLateral" component={BarraLateral} />
       <HomeStack.Screen name="ConversaAberta" component={ConversaAberta} />
+      <HomeStack.Screen name="Exames" component={Exames} />
+      <HomeStack.Screen name="ExameNormal" component={ExameNormal} />
     </HomeStack.Navigator>
   );
 }
@@ -156,7 +159,8 @@ function ExamesStackScreen() {
     >
       <ExamesStack.Screen name="Exames" component={Exames} />
       <ExamesStack.Screen name="FormaPagamento" component={FormaPagamento} />
-      {/*  <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} /> */}
+      <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
+      <ExamesStack.Screen name="ExameNormal" component={ExameNormal} />
     </ExamesStack.Navigator>
   );
 }
@@ -198,6 +202,8 @@ function ChatStackScreen() {
         name="ConversaAberta"
         component={ConversaAberta}
       />
+     
+
     </ChatStack.Navigator>
   );
 }

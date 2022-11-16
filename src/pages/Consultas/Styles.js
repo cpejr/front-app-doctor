@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { Cores } from "../../variaveis";
-
+import { Dimensions } from "react-native";
 
 
 export const Body = styled.View`
@@ -128,16 +128,28 @@ export const CaixaBotao = styled.TouchableOpacity`
 export const IconeBotao = styled.Image`
   height: 18.5px;
   width: 18.5px;
+
 `;
+
+export const CaixaExterna = styled.View`
+  height: ${Dimensions.get("window").height}px;
+  width: ${Dimensions.get("window").width}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.6);
+  z-index:2;
+  elevation: 10;
+`;
+
+
 export const CaixaModal = styled.View`
+  
   height: 50%;
   width: 80%;
-  margin-top: 40%;
-  margin-left: 10%;
-  margin-right: 10%;
   padding-bottom: 10%;
   padding-top:0%;
-  background-color: #f7f7f7;
+  background-color: white;
   border-radius: 6px;
   border: 4px;
   border-color: #c4c4c4;
@@ -148,12 +160,9 @@ export const CaixaModal = styled.View`
 export const CaixaModalGrande = styled.View`
   height: 80%;
   width: 80%;
-  margin-top: 5%;
-  margin-left: 10%;
-  margin-right: 10%;
   padding-bottom: 20%;
   padding-top:0%;
-  background-color: #f7f7f7;
+  background-color: white;
   border-radius: 6px;
   border: 4px;
   border-color: #c4c4c4;
