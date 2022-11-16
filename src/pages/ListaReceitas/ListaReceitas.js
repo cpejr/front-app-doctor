@@ -71,10 +71,34 @@ function ListaReceitas({ navigation }) {
     }
   }
 
+  // async function baixarPdf(receita) {
+  //   const chave = receita.pdf_url;
+  //   const tituloPdf = receita.titulo;
+  //   const resposta = await managerService.GetArquivoPorChave(chave);
+
+  //   const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
+  //   if (!permissions.granted) {
+  //       return;
+  //   }
+
+  //   try {
+  //       await StorageAccessFramework.createFileAsync(permissions.directoryUri, "Receita-GuilhermeMarques-" + tituloPdf, 'application/pdf')
+  //           .then(async(uri) => {
+  //               await FileSystem.writeAsStringAsync(uri, resposta, { encoding: FileSystem.EncodingType.Base64 });
+  //               Alert.alert('Arquivo Salvo', 'Sua receita foi baixada com sucesso!');
+  //           })
+  //           .catch((e) => {
+  //             Alert.alert('Erro', 'Parece que houve um erro ao tentar baixar sua receita :/')
+  //           });
+  //   } catch (e) {
+  //       throw new Error(e);
+  //   }}
+
   async function baixarPdf(receita) {
     const chave = receita.pdf_url;
     const tituloPdf = receita.titulo;
     const resposta = await managerService.GetArquivoPorChave(chave);
+
 
     const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
     if (!permissions.granted) {
@@ -86,13 +110,20 @@ function ListaReceitas({ navigation }) {
             .then(async(uri) => {
                 await FileSystem.writeAsStringAsync(uri, resposta, { encoding: FileSystem.EncodingType.Base64 });
                 Alert.alert('Arquivo Salvo', 'Sua receita foi baixada com sucesso!');
+
+                IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+                      data: uri,
+                      flags: 1,
+                      type: 'application/pdf'
+                   });
             })
             .catch((e) => {
               Alert.alert('Erro', 'Parece que houve um erro ao tentar baixar sua receita :/')
             });
     } catch (e) {
         throw new Error(e);
-    }}
+    }
+  }
 
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "") return receitas;
