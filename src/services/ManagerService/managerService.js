@@ -536,3 +536,17 @@ export const CriandoConversa = async (
     });
   return dadosConversaCriada;
 };
+
+
+export const pegandoDescricaoPagRecomendacoes = async () => {
+  let result = {};
+  await requesterService
+    .pegandoDescricaoPagRecomendacoes()
+    .then((res) => {
+      result = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return result;
+};
