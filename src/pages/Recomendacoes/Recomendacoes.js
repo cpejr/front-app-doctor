@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
@@ -35,7 +35,6 @@ import {
 } from "./Styles";
 import { Exames } from "./nomeExames";
 import { Cores } from "../../variaveis";
-import { Spin } from 'antd';
 
 function Recomendacoes({ navigation }) {
   const tamanhoIcone = width > 900 ? 48 : 48;
@@ -45,16 +44,11 @@ function Recomendacoes({ navigation }) {
   const alturaModal = width > height ? "88%" : "55%";
   const alturaScroll = width > height ? "34%" : "64%";
   const [abrirModal, setAbrirModal] = useState(false);
-  
-  const [alturaScrollModal, setAlturaScrollModal] = useState("");
-  const [margemDescricao, setMargemDescricao] = useState("0px");
-
-  const [carregando, setCarregando] = useState(false);
-  const [subtitulo, setSubtitulo] = useState("");
-  const [indicacoesEspecificas, setIndicacoesEspecificas] = useState([]);
   const [tituloExame, setTituloExame] = useState("");
   const [descricaoExame, setdescricaoExame] = useState("");
   const [medicasExame, setMedicasExame] = useState(Exames[1].medicos);
+  const [alturaScrollModal, setAlturaScrollModal] = useState("");
+  const [margemDescricao, setMargemDescricao] = useState("0px");
 
   function abrindoModal(exame) {
     setTituloExame(exame.nome);
@@ -72,32 +66,16 @@ function Recomendacoes({ navigation }) {
     setAbrirModal(true);
   }
 
-
-  async function pegandoSubtitulo() {
-    setCarregando(true);
-    const resposta = await managerService.pegandoDescricaoPagRecomendacoes();
-    setSubtitulo(resposta[0].texto);
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    pegandoSubtitulo();
-  }, []);
-
-
-
   return (
     <Body>
       <CaixaSeta>
-        <TouchableOpacity onPress={() => console.log(subtitulo) /* navigation.push("Home") */}>
+        <TouchableOpacity onPress={() => navigation.push("Home")}>
           <Icone name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
         </TouchableOpacity>
       </CaixaSeta>
       <CaixaTitulo>
         <Titulo>Indicações e Sugestões de Profissionais para Exames </Titulo>
       </CaixaTitulo>
-      {carregando? <Spin indicator={antIcon} /> : 
-      <>
       <CaixaSubTitulo>
         <SubTitulo>
           São sugestões de profissionais de confiança para realização de exames
@@ -155,8 +133,7 @@ function Recomendacoes({ navigation }) {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </CaixaScroll> 
-      </> }
+      </CaixaScroll>
     </Body>
   );
 }
