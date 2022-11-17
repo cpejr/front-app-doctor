@@ -112,3 +112,4 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   
   export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
   
+  export const pegandoDescricaoPagRecomendacoes = () => api.get(`/indicacaos`);

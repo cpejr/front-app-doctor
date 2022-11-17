@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 import { Alert } from "react-native";
 import { sleep } from "../../utils/sleep";
+import { ContainerFotoEAlterarImagem } from "../../pages/AlterarDados/Styles";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
   const dadosEmail = await requesterService.requisicaoDadosUsuario(
@@ -535,4 +536,18 @@ export const CriandoConversa = async (
       requisicaoErro(error);
     });
   return dadosConversaCriada;
+};
+
+export const pegandoDescricaoPagRecomendacoes = async () => {
+  let result = {};
+  await requesterService
+    .pegandoDescricaoPagRecomendacoes()
+    .then((res) => {
+      result = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return result;
 };

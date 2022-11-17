@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -35,6 +35,8 @@ import {
 } from "./Styles";
 import { Exames } from "./nomeExames";
 import { Cores } from "../../variaveis";
+import { ActivityIndicator,  } from "react-native-paper";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Recomendacoes({ navigation }) {
   const tamanhoIcone = width > 900 ? 48 : 48;
@@ -49,6 +51,11 @@ function Recomendacoes({ navigation }) {
   const [medicasExame, setMedicasExame] = useState(Exames[1].medicos);
   const [alturaScrollModal, setAlturaScrollModal] = useState("");
   const [margemDescricao, setMargemDescricao] = useState("0px");
+
+
+  const [carregando, setCarregando] = useState(false);
+  const [Subtitulo, setSubtitulo] = useState("");
+
 
   function abrindoModal(exame) {
     setTituloExame(exame.nome);
@@ -66,6 +73,17 @@ function Recomendacoes({ navigation }) {
     setAbrirModal(true);
   }
 
+  async function pegandoSubtitulo() {
+    setCarregando(true);
+    const resposta = await managerService.pegandoDescricaoPagRecomendacoes();
+    setSubtitulo(resposta[0].texto);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoSubtitulo();
+  }, []);
+
   return (
     <Body>
       <CaixaSeta>
@@ -76,10 +94,11 @@ function Recomendacoes({ navigation }) {
       <CaixaTitulo>
         <Titulo>Indicações e Sugestões de Profissionais para Exames </Titulo>
       </CaixaTitulo>
+      { carregando?  <ActivityIndicator animating={true} color={Cores.azul} /> :
+      <>
       <CaixaSubTitulo>
         <SubTitulo>
-          São sugestões de profissionais de confiança para realização de exames
-          ou tratamentos específicos, não oferecidos em meu consultório:
+          { Subtitulo }
         </SubTitulo>
       </CaixaSubTitulo>
       <Modal animationType="slide" transparent={true} visible={abrirModal}>
@@ -134,6 +153,7 @@ function Recomendacoes({ navigation }) {
           ))}
         </ScrollView>
       </CaixaScroll>
+      </>}
     </Body>
   );
 }
