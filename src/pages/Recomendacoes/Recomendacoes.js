@@ -58,9 +58,9 @@ function Recomendacoes({ navigation }) {
   const [medicasExame, setMedicasExame] = useState(
     [
       {
-        nome:"Valor incial",
-        telefone: "Valor inicial",
-        local_atendimento:"Valor incial"
+        nome:"",
+        telefone: "",
+        local_atendimento:""
       }
     ]
   );
@@ -74,10 +74,24 @@ function Recomendacoes({ navigation }) {
     setdescricaoExame(exame.texto);
     setCarregando(true);
 
-    const resposta = await managerService.medicosIndicadosPorId(exame.id);
-    setMedicasExame(resposta);
-
     
+    const resposta = await managerService.medicosIndicadosPorId(exame.id);
+
+    if (resposta.lenght === 0 )
+    {
+      setMedicasExame(
+        {
+          nome:"",
+          telefone: "",
+          local_atendimento:""
+        }
+      )
+    }
+    else
+    {
+      setMedicasExame(resposta)
+    }
+
 
     if (exame.texto === "") {
       setAlturaScrollModal("60%");
@@ -105,12 +119,7 @@ function Recomendacoes({ navigation }) {
     setCarregando(false);
   }
 
-  async function pegandoFormularioEspecifico() {
-    
-    const resposta = await managerService.GetFormularioEspecifico(id);
-    setFormularioEspecifico(resposta);
-    setCarregando(false);
-  }
+
 
   useEffect(() => {
     pegandoSubtitulo();
@@ -159,7 +168,7 @@ function Recomendacoes({ navigation }) {
             <CaixaContatos height={alturaScrollModal}>
               <ScrollView>
                  {medicasExame.map((contato) => (
-                  <Contatos key={contato.nome}>
+                  <Contatos key={contato.id}>
                     <CaixaNomeMedica>
                       <NomeMedica>{contato.nome}</NomeMedica>
                     </CaixaNomeMedica>
@@ -181,7 +190,7 @@ function Recomendacoes({ navigation }) {
           {Exames.map((exame) => (
             <TouchableOpacity
               onPress={() => abrindoModal(exame)}
-              key={exame.titulo}
+              key={exame.id}
             >
               <CaixaExames>
                 <NomeExame>{exame.titulo}</NomeExame>
