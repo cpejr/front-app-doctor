@@ -32,8 +32,9 @@ import {
   NomeMedica,
   CaixaInfo,
   Info,
+  PaginaCarregando,
 } from "./Styles";
-import { Exames } from "./nomeExames";
+//import { Exames } from "./nomeExames";
 import { Cores } from "../../variaveis";
 import { ActivityIndicator,  } from "react-native-paper";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -45,31 +46,48 @@ function Recomendacoes({ navigation }) {
   const width = useWindowDimensions().width;
   const alturaModal = width > height ? "88%" : "55%";
   const alturaScroll = width > height ? "34%" : "64%";
-  const [abrirModal, setAbrirModal] = useState(false);
-  const [tituloExame, setTituloExame] = useState("");
-  const [descricaoExame, setdescricaoExame] = useState("");
-  const [medicasExame, setMedicasExame] = useState(Exames[1].medicos);
   const [alturaScrollModal, setAlturaScrollModal] = useState("");
   const [margemDescricao, setMargemDescricao] = useState("0px");
 
 
+  const [abrirModal, setAbrirModal] = useState(false);
   const [carregando, setCarregando] = useState(false);
+
   const [Subtitulo, setSubtitulo] = useState("");
+  const [Exames, setExames] = useState([]);
+  const [medicasExame, setMedicasExame] = useState(
+    [
+      {
+        nome:"Valor incial",
+        telefone: "Valor inicial",
+        local_atendimento:"Valor incial"
+      }
+    ]
+  );
+  const [tituloExame, setTituloExame] = useState("");
+  const [descricaoExame, setdescricaoExame] = useState("");
+  
 
 
-  function abrindoModal(exame) {
-    setTituloExame(exame.nome);
-    setdescricaoExame(exame.descricao);
-    setMedicasExame(exame.medicos);
+  async function abrindoModal(exame) {
+    setTituloExame(exame.titulo);
+    setdescricaoExame(exame.texto);
+    setCarregando(true);
 
-    if (exame.descricao === "") {
+    const resposta = await managerService.medicosIndicadosPorId(exame.id);
+    setMedicasExame(resposta);
+
+    
+
+    if (exame.texto === "") {
       setAlturaScrollModal("60%");
       setMargemDescricao("0px");
     } else {
       setAlturaScrollModal("34%");
       setMargemDescricao("20px");
     }
-
+    
+    setCarregando(false);
     setAbrirModal(true);
   }
 
@@ -80,8 +98,23 @@ function Recomendacoes({ navigation }) {
     setCarregando(false);
   }
 
+  async function pegandoIndicacoesEspecificas() {
+    setCarregando(true);
+    const resposta = await managerService.pegandoIndicacoesEspecificas();
+    setExames(resposta);
+    setCarregando(false);
+  }
+
+  async function pegandoFormularioEspecifico() {
+    
+    const resposta = await managerService.GetFormularioEspecifico(id);
+    setFormularioEspecifico(resposta);
+    setCarregando(false);
+  }
+
   useEffect(() => {
     pegandoSubtitulo();
+    pegandoIndicacoesEspecificas();
   }, []);
 
   return (
@@ -91,11 +124,15 @@ function Recomendacoes({ navigation }) {
           <Icone name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
         </TouchableOpacity>
       </CaixaSeta>
+      { carregando?  
+       <PaginaCarregando height={height} width={width}>
+            <ActivityIndicator animating={true} color={Cores.azul} />
+        </PaginaCarregando>:
+      <>
       <CaixaTitulo>
         <Titulo>Indicações e Sugestões de Profissionais para Exames </Titulo>
       </CaixaTitulo>
-      { carregando?  <ActivityIndicator animating={true} color={Cores.azul} /> :
-      <>
+     
       <CaixaSubTitulo>
         <SubTitulo>
           { Subtitulo }
@@ -121,19 +158,19 @@ function Recomendacoes({ navigation }) {
             </CaixaDescricaoModal>
             <CaixaContatos height={alturaScrollModal}>
               <ScrollView>
-                {medicasExame.map((contato) => (
+                 {medicasExame.map((contato) => (
                   <Contatos key={contato.nome}>
                     <CaixaNomeMedica>
                       <NomeMedica>{contato.nome}</NomeMedica>
                     </CaixaNomeMedica>
                     <CaixaInfo>
-                      <Info>Local: {contato.local}</Info>
+                      <Info>Local: {contato.local_atendimento}</Info>
                     </CaixaInfo>
                     <CaixaInfo>
                       <Info>Telefone: {contato.telefone}</Info>
                     </CaixaInfo>
                   </Contatos>
-                ))}
+                ))} 
               </ScrollView>
             </CaixaContatos>
           </CaixaModal>
@@ -144,10 +181,10 @@ function Recomendacoes({ navigation }) {
           {Exames.map((exame) => (
             <TouchableOpacity
               onPress={() => abrindoModal(exame)}
-              key={exame.nome}
+              key={exame.titulo}
             >
               <CaixaExames>
-                <NomeExame>{exame.nome}</NomeExame>
+                <NomeExame>{exame.titulo}</NomeExame>
               </CaixaExames>
             </TouchableOpacity>
           ))}

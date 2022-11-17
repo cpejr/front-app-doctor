@@ -551,3 +551,31 @@ export const pegandoDescricaoPagRecomendacoes = async () => {
     });
   return result;
 };
+
+export const pegandoIndicacoesEspecificas = async () => {
+  let result = {};
+  await requesterService
+    .pegandoIndicacoesEspecificas()
+    .then((res) => {
+      result = res.data;
+      
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return result;
+};
+
+export const medicosIndicadosPorId = async (id) => {
+  let resposta = {};
+  await requesterService
+    .medicosIndicadosPorId(id)
+    .then((res) => {
+      resposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return resposta;
+};
