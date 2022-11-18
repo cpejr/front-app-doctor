@@ -111,4 +111,8 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
   
   export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
+
+  export const requisicaoHome = () => api.get(`/homes/`);
+ 
+  export const requisicaoImagemCarrossel = () => api.get(`/imagem_carrossels/`);
   

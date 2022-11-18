@@ -13,11 +13,12 @@ export const Card = styled.View`
   display: flex;
   align-items: center;
   width: 90%;
-  height: ${(props) => props.height};
   border-radius: 10px;
   margin-top: 5%;
-  background-color: ${(props) => props.backgroundColor};
   elevation: 20;
+  padding-bottom: 2%;
+  background-color: ${(props) => props.backgroundColor};
+  height: ${(props) => props.height};
 `;
 
 export const TituloCard = styled.Text`
@@ -87,11 +88,11 @@ export const ConteudoAmie = styled.View`
 `;
 
 export const ImagemAmie = styled.Image`
-  height: ${(props) => props.height};
   width: 35%;
   margin-right: 9%;
   margin-left: 3%;
   object-fit: contain;
+  height: ${(props) => props.height};
 `;
 
 export const TextoAmie = styled.Text`
@@ -103,8 +104,8 @@ export const TextoAmie = styled.Text`
 `;
 
 export const ImagemCarrossel = styled.Image`
- width: 100%;
- height: 250px;
- border-radius: 5px;
- margin-top: 10%;
+  width: 100%;
+  height: 250px;
+  border-radius: 5px;
+  margin-top: 10%;
 `;

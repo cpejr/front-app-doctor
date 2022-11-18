@@ -21,6 +21,8 @@ import { Cores } from "../../variaveis";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import Carousel from "react-native-snap-carousel";
 import { useState, useEffect } from "react";
+import * as managerService from "../../services/ManagerService/managerService";
+import { sleep } from "../../utils/sleep";
 
 function Home({ navigation }) {
   {
@@ -112,40 +114,54 @@ onPress={() => navigation.navigate("ExameNormal")}
   }
 
   const { height, width } = useWindowDimensions();
+  const [altura, setAltura] = useState();
+  const [largura, setLargura] = useState();
+  const [home, setHome] = useState({});
+  const [fotoAmie, setFotoAmie] = useState("");
+  const [imagens, setImagens] = useState("");
 
-  const CarrosselItens = [
-    {
-      titulo: "Mini André",
-      imgUrl:
-        "https://static.wixstatic.com/media/97dbcb_38688b3ec5bf4f5b8f51b2948ba2b2b5~mv2.jpg/v1/fill/w_400,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/beee29b9-9f1b-4d5e-b320-6ec39c7d797f_JPG.jpg",
-    },
-    {
-      titulo: "Vermelho André",
-      imgUrl:
-        "https://static.wixstatic.com/media/97dbcb_55fa99c79bea487da08a010417113663~mv2_d_6016_4016_s_4_2.jpg/v1/fill/w_942,h_620,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/DrGuilhermeMarques_VA_2730_JPG.jpg",
-    },
-    {
-      titulo: "Cansado André",
-      imgUrl:
-        "https://static.wixstatic.com/media/97dbcb_2dafcde55abd4c02bc1ffecd7689027f~mv2_d_3024_4032_s_4_2.jpeg/v1/crop/x_0,y_1169,w_3024,h_2197/fill/w_789,h_576,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Foto%20perfil%20escolha.jpeg",
-    },
-  ];
+  async function pegandoDados() {
+    const resposta = await managerService.GetHomeInfo();
+    const res = await managerService.GetImagemCarrossel();
+
+    const info = resposta[0];
+    setHome(info);
+
+    const requests = res.map(({ imagem }) =>
+      managerService.GetArquivoPorChave(imagem)
+    );
+    const responses = await Promise.all(requests);
+    setImagens(responses);
+  }
+
+  async function setandoFotoAmie() {
+    const chave = home.imagem_quatro;
+
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoAmie(arquivo);
+    await sleep(1500);
+  }
 
   function renderizarCarrossel({ item }) {
     return (
       <CorpoCard>
-        <ImagemCarrossel source={{ uri: `${item.imgUrl}` }} />
+        <ImagemCarrossel source={{ uri: `${item}` }} />
       </CorpoCard>
     );
   }
-
-  const [altura, setAltura] = useState();
-  const [largura, setLargura] = useState();
-
+  
   function setandoImagem() {
     setAltura((150 / 305) * 0.3 * width);
     setLargura(0.3 * width);
   }
+  
+  useEffect(() => {
+    setandoFotoAmie();
+  }, [home.imagem_quatro]);
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
   useEffect(() => {
     setandoImagem();
@@ -199,16 +215,13 @@ onPress={() => navigation.navigate("ExameNormal")}
           </Botao>
         </Card>
 
-        <Card backgroundColor={"#7757a0"} height={alturaCard}>
+        <Card backgroundColor={"#7757a0"} height="auto">
           <CorpoCard>
-            <TituloInformacao color={Cores.branco}>Sobre mim</TituloInformacao>
+            <TituloInformacao color={Cores.branco}>
+              {home.titulo_um}
+            </TituloInformacao>
             <TextoInfomacao color={Cores.branco}>
-              Com formação em Neurologia e Neurofisiologia Clínica, atuo na
-              investigação, diagnóstico e tratamento de variadas doenças e
-              transtornos neurológicos. Após especialização no Hospital das
-              Clínicas da Universidade de São Paulo - USP - Ribeirão Preto,
-              retorno a Belo Horizonte para atuação em neurologia geral tanto
-              hospitalar de urgência quanto ambulatorial.
+              {home.texto_um}
             </TextoInfomacao>
 
             <BotaoSaibaMais>
@@ -222,26 +235,20 @@ onPress={() => navigation.navigate("ExameNormal")}
 
         <Card backgroundColor={Cores.branco} height={"320px"}>
           <Carousel
-            data={CarrosselItens}
+            data={imagens}
             sliderWidth={350}
             itemWidth={350}
             renderItem={renderizarCarrossel}
           />
         </Card>
 
-        <Card backgroundColor={"#FBCB4C"} height={alturaCard}>
+        <Card backgroundColor={"#FBCB4C"} height="auto">
           <CorpoCard>
             <TituloInformacao color={Cores.preto}>
-              Indicações e Sugestões
+              {home.titulo_dois}
             </TituloInformacao>
             <TextoInfomacao color={Cores.preto}>
-              São sugestões de profissionais de confiança para realização de
-              exames ou tratamentos específicos:
-              {"\n"}
-              {"\n"}- Eletroneuromiografia
-              {"\n"}- Ressonância Magnética em Epilepsia
-              {"\n"}
-              {"\n"}Entre outros ...
+              {home.texto_dois}
             </TextoInfomacao>
 
             <BotaoSaibaMais>
@@ -253,20 +260,13 @@ onPress={() => navigation.navigate("ExameNormal")}
           </CorpoCard>
         </Card>
 
-        <Card backgroundColor={"#434B97"} height={alturaCard}>
+        <Card backgroundColor={"#434B97"} height="auto">
           <CorpoCard>
             <TituloInformacao color={Cores.branco}>
-              Comentários e Depoimentos
+              {home.titulo_tres}
             </TituloInformacao>
             <TextoInfomacao color={Cores.branco}>
-              "O dr. Guilherme é extremamente profissional e atencioso.
-              Recomendo. Tratou minha mãe com muita atenção e carinho. Ótimo
-              neurologista"
-              {"\n"}
-              {"\n"}
-              "Excelente profissional, muito atencioso e competente. Tempo de
-              consulta satisfatório, permitindo uma boa propedêutica de
-              tratamento"
+              {home.texto_tres}
             </TextoInfomacao>
 
             <BotaoSaibaMais>
@@ -281,26 +281,20 @@ onPress={() => navigation.navigate("ExameNormal")}
         <Card backgroundColor={Cores.branco} height="auto">
           <CorpoCard>
             <TituloInformacao color={Cores.preto}>
-              Grupo AMIE (Epilepsia)
+              {home.titulo_quatro}
             </TituloInformacao>
             <ConteudoAmie>
-              <TextoAmie color={Cores.preto}>
-                O grupo AMIE foi fundado pela união de três médicos que se
-                especializaram no tratamento da epilepsia de difícil controle.
-                Em agosto de 2018, foi iniciado o projeto para estruturação da
-                equipe. Hoje contamos com vários profissionais, unidos em uma
-                equipe multidisciplinar.
-              </TextoAmie>
+              <TextoAmie color={Cores.preto}>{home.texto_quatro}</TextoAmie>
               <View>
                 <Image
                   style={{
                     width: largura,
                     marginRight: "9%",
                     marginLeft: "3%",
-                    objectFit: "contain",
+                    //objectFit: "contain",
                     height: altura,
                   }}
-                  source={require("../../assets/amie_logo.png")}
+                  source={{ uri: fotoAmie }}
                 />
               </View>
             </ConteudoAmie>
