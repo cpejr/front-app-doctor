@@ -109,3 +109,8 @@ export const ImagemCarrossel = styled.Image`
   border-radius: 5px;
   margin-top: 10%;
 `;
+
+export const AnimacaoCarregando = styled.View`
+  position: relative;
+  margin-top: 70%;
+`;

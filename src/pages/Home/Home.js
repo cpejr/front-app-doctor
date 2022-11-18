@@ -14,11 +14,13 @@ import {
   ImagemAmie,
   TextoAmie,
   ImagemCarrossel,
+  AnimacaoCarregando,
 } from "./Styles";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import { Cores } from "../../variaveis";
 import AntIcon from "react-native-vector-icons/AntDesign";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import { useState, useEffect } from "react";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -119,8 +121,11 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [home, setHome] = useState({});
   const [fotoAmie, setFotoAmie] = useState("");
   const [imagens, setImagens] = useState("");
+  const [carregando, setCarregando] = useState(true);
 
   async function pegandoDados() {
+    setCarregando(true);
+
     const resposta = await managerService.GetHomeInfo();
     const res = await managerService.GetImagemCarrossel();
 
@@ -132,6 +137,8 @@ onPress={() => navigation.navigate("ExameNormal")}
     );
     const responses = await Promise.all(requests);
     setImagens(responses);
+
+    setCarregando(false);
   }
 
   async function setandoFotoAmie() {
@@ -149,12 +156,12 @@ onPress={() => navigation.navigate("ExameNormal")}
       </CorpoCard>
     );
   }
-  
+
   function setandoImagem() {
     setAltura((150 / 305) * 0.3 * width);
     setLargura(0.3 * width);
   }
-  
+
   useEffect(() => {
     setandoFotoAmie();
   }, [home.imagem_quatro]);
@@ -174,138 +181,166 @@ onPress={() => navigation.navigate("ExameNormal")}
   return (
     <ScrollView>
       <Corpo>
-        <Card backgroundColor={Cores.branco} height={alturaCard}>
-          <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
-          <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
-          <Video height={alturaVideo} width={larguraVideo}></Video>
-        </Card>
+        {carregando ? (
+          <AnimacaoCarregando>
+            <ActivityIndicator animating={true} color={Colors.blue900} />
+          </AnimacaoCarregando>
+        ) : (
+          <>
+            <Card backgroundColor={Cores.branco} height={alturaCard}>
+              <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
+              <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
+              <Video height={alturaVideo} width={larguraVideo}></Video>
+            </Card>
 
-        <Card backgroundColor={Cores.branco} height="auto">
-          <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
-          <TextoCard>
-            Para ter acesso a chat com o doutor, marcar exames e muito mais
-          </TextoCard>
-          <Botao
-            height="40px"
-            width="50%"
-            backgroundColor={Cores.lilas[5]}
-            borderRadius="10px"
-            borderWidth="2px"
-            borderColor={Cores.azulEscuro}
-            onPress={() => navigation.navigate("Cadastro")}
-          >
-            <ConteudoBotao fontSize="15px" color={Cores.branco} width="100%">
-              INSCREVA-SE
-            </ConteudoBotao>
-          </Botao>
-          <TextoCard>Já possui conta?</TextoCard>
-          <Botao
-            height="40px"
-            width="30%"
-            backgroundColor={Cores.lilas[3]}
-            borderRadius="10px"
-            borderWidth="2px"
-            marginBottom="30px"
-            borderColor={Cores.azulEscuro}
-            onPress={() => navigation.navigate("Login")}
-          >
-            <ConteudoBotao fontSize="15px" color={Cores.preto} width="100%">
-              ENTRAR
-            </ConteudoBotao>
-          </Botao>
-        </Card>
+            <Card backgroundColor={Cores.branco} height="auto">
+              <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
+              <TextoCard>
+                Para ter acesso a chat com o doutor, marcar exames e muito mais
+              </TextoCard>
+              <Botao
+                height="40px"
+                width="50%"
+                backgroundColor={Cores.lilas[5]}
+                borderRadius="10px"
+                borderWidth="2px"
+                borderColor={Cores.azulEscuro}
+                onPress={() => navigation.navigate("Cadastro")}
+              >
+                <ConteudoBotao
+                  fontSize="15px"
+                  color={Cores.branco}
+                  width="100%"
+                >
+                  INSCREVA-SE
+                </ConteudoBotao>
+              </Botao>
+              <TextoCard>Já possui conta?</TextoCard>
+              <Botao
+                height="40px"
+                width="30%"
+                backgroundColor={Cores.lilas[3]}
+                borderRadius="10px"
+                borderWidth="2px"
+                marginBottom="30px"
+                borderColor={Cores.azulEscuro}
+                onPress={() => navigation.navigate("Login")}
+              >
+                <ConteudoBotao fontSize="15px" color={Cores.preto} width="100%">
+                  ENTRAR
+                </ConteudoBotao>
+              </Botao>
+            </Card>
 
-        <Card backgroundColor={"#7757a0"} height="auto">
-          <CorpoCard>
-            <TituloInformacao color={Cores.branco}>
-              {home.titulo_um}
-            </TituloInformacao>
-            <TextoInfomacao color={Cores.branco}>
-              {home.texto_um}
-            </TextoInfomacao>
+            <Card backgroundColor={"#7757a0"} height="auto">
+              <CorpoCard>
+                <TituloInformacao color={Cores.branco}>
+                  {home.titulo_um}
+                </TituloInformacao>
+                <TextoInfomacao color={Cores.branco}>
+                  {home.texto_um}
+                </TextoInfomacao>
 
-            <BotaoSaibaMais>
-              <ConteudoBotao fontSize="16px" color={Cores.branco} width="30%">
-                SAIBA MAIS
-              </ConteudoBotao>
-              <AntIcon name="right" size={25} color={Cores.branco} />
-            </BotaoSaibaMais>
-          </CorpoCard>
-        </Card>
+                <BotaoSaibaMais>
+                  <ConteudoBotao
+                    fontSize="16px"
+                    color={Cores.branco}
+                    width="30%"
+                  >
+                    SAIBA MAIS
+                  </ConteudoBotao>
+                  <AntIcon name="right" size={25} color={Cores.branco} />
+                </BotaoSaibaMais>
+              </CorpoCard>
+            </Card>
 
-        <Card backgroundColor={Cores.branco} height={"320px"}>
-          <Carousel
-            data={imagens}
-            sliderWidth={350}
-            itemWidth={350}
-            renderItem={renderizarCarrossel}
-          />
-        </Card>
+            <Card backgroundColor={Cores.branco} height={"320px"}>
+              <Carousel
+                data={imagens}
+                sliderWidth={350}
+                itemWidth={350}
+                renderItem={renderizarCarrossel}
+              />
+            </Card>
 
-        <Card backgroundColor={"#FBCB4C"} height="auto">
-          <CorpoCard>
-            <TituloInformacao color={Cores.preto}>
-              {home.titulo_dois}
-            </TituloInformacao>
-            <TextoInfomacao color={Cores.preto}>
-              {home.texto_dois}
-            </TextoInfomacao>
+            <Card backgroundColor={"#FBCB4C"} height="auto">
+              <CorpoCard>
+                <TituloInformacao color={Cores.preto}>
+                  {home.titulo_dois}
+                </TituloInformacao>
+                <TextoInfomacao color={Cores.preto}>
+                  {home.texto_dois}
+                </TextoInfomacao>
 
-            <BotaoSaibaMais>
-              <ConteudoBotao fontSize="16px" color={Cores.preto} width="30%">
-                SAIBA MAIS
-              </ConteudoBotao>
-              <AntIcon name="right" size={25} color={Cores.preto} />
-            </BotaoSaibaMais>
-          </CorpoCard>
-        </Card>
+                <BotaoSaibaMais>
+                  <ConteudoBotao
+                    fontSize="16px"
+                    color={Cores.preto}
+                    width="30%"
+                  >
+                    SAIBA MAIS
+                  </ConteudoBotao>
+                  <AntIcon name="right" size={25} color={Cores.preto} />
+                </BotaoSaibaMais>
+              </CorpoCard>
+            </Card>
 
-        <Card backgroundColor={"#434B97"} height="auto">
-          <CorpoCard>
-            <TituloInformacao color={Cores.branco}>
-              {home.titulo_tres}
-            </TituloInformacao>
-            <TextoInfomacao color={Cores.branco}>
-              {home.texto_tres}
-            </TextoInfomacao>
+            <Card backgroundColor={"#434B97"} height="auto">
+              <CorpoCard>
+                <TituloInformacao color={Cores.branco}>
+                  {home.titulo_tres}
+                </TituloInformacao>
+                <TextoInfomacao color={Cores.branco}>
+                  {home.texto_tres}
+                </TextoInfomacao>
 
-            <BotaoSaibaMais>
-              <ConteudoBotao fontSize="16px" color={Cores.branco} width="30%">
-                SAIBA MAIS
-              </ConteudoBotao>
-              <AntIcon name="right" size={25} color={Cores.branco} />
-            </BotaoSaibaMais>
-          </CorpoCard>
-        </Card>
+                <BotaoSaibaMais>
+                  <ConteudoBotao
+                    fontSize="16px"
+                    color={Cores.branco}
+                    width="30%"
+                  >
+                    SAIBA MAIS
+                  </ConteudoBotao>
+                  <AntIcon name="right" size={25} color={Cores.branco} />
+                </BotaoSaibaMais>
+              </CorpoCard>
+            </Card>
 
-        <Card backgroundColor={Cores.branco} height="auto">
-          <CorpoCard>
-            <TituloInformacao color={Cores.preto}>
-              {home.titulo_quatro}
-            </TituloInformacao>
-            <ConteudoAmie>
-              <TextoAmie color={Cores.preto}>{home.texto_quatro}</TextoAmie>
-              <View>
-                <Image
-                  style={{
-                    width: largura,
-                    marginRight: "9%",
-                    marginLeft: "3%",
-                    //objectFit: "contain",
-                    height: altura,
-                  }}
-                  source={{ uri: fotoAmie }}
-                />
-              </View>
-            </ConteudoAmie>
-            <BotaoSaibaMais>
-              <ConteudoBotao fontSize="16px" color={Cores.preto} width="30%">
-                SAIBA MAIS
-              </ConteudoBotao>
-              <AntIcon name="right" size={25} color={Cores.preto} />
-            </BotaoSaibaMais>
-          </CorpoCard>
-        </Card>
+            <Card backgroundColor={Cores.branco} height="auto">
+              <CorpoCard>
+                <TituloInformacao color={Cores.preto}>
+                  {home.titulo_quatro}
+                </TituloInformacao>
+                <ConteudoAmie>
+                  <TextoAmie color={Cores.preto}>{home.texto_quatro}</TextoAmie>
+                  <View>
+                    <Image
+                      style={{
+                        width: largura,
+                        marginRight: "9%",
+                        marginLeft: "3%",
+                        //objectFit: "contain",
+                        height: altura,
+                      }}
+                      source={{ uri: fotoAmie }}
+                    />
+                  </View>
+                </ConteudoAmie>
+                <BotaoSaibaMais>
+                  <ConteudoBotao
+                    fontSize="16px"
+                    color={Cores.preto}
+                    width="30%"
+                  >
+                    SAIBA MAIS
+                  </ConteudoBotao>
+                  <AntIcon name="right" size={25} color={Cores.preto} />
+                </BotaoSaibaMais>
+              </CorpoCard>
+            </Card>
+          </>
+        )}
       </Corpo>
     </ScrollView>
   );
