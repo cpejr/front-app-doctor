@@ -364,12 +364,12 @@ function Cadastro({ navigation }) {
   }
 
   //responsividade paisagem
-  const larguraCaixaTituloMaior = width < 600 ? "50%" : "60%";
-  const larguraTituloMaior = width < 600 ? "50%" : "60%";
+  const larguraCaixaTituloMaior = width < 600 ? "80%" : "60%";
+  const larguraTituloMaior = width < 600 ? "35%" : "40%";
   //responsividade aparelhos
   const margemSuperior = height < 200 ? "5px" : "100px";
   const tamanhoInputs = width < 400 ? "85%" : "80%";
-  const larguraCaixaTitulo = width < 400 ? "70%" : larguraCaixaTituloMaior;
+  const larguraCaixaTitulo = width < 400 ? "80%" : larguraCaixaTituloMaior;
   const larguraTitulo = width < 300 ? "45%" : larguraTituloMaior;
 
   const [checked, setChecked] = useState(false);
