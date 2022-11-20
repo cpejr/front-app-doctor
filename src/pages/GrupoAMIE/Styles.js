@@ -37,7 +37,7 @@ export const ImagemMedicos = styled.Image`
 
 export const CaixaSeta = styled.View`
   width: 100%;
-  height: 10%;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
