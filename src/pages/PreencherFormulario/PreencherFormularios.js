@@ -34,9 +34,11 @@ function PreencherFormulario({ route, navigation }) {
   const [uiSchema, setUiSchema] = useState({});
   const FormularioEspecifico = route.params.paramKey;
   const tamanhoIcone = width > 480 ? 20 : 25;
-  const { width } = useWindowDimensions();
+  const height = useWindowDimensions().height;
+  const width = useWindowDimensions().width;
   const heightTela = `${Dimensions.get("window").height}px`;
   const [formularioPaciente, setFormularioPaciente] = useState({});
+  const heightScroll = width > height ? "60%" : "93%";
 
   async function getFormularioPaciente() {
     const formulariosAux = await managerService.GetFormularioPacienteEspecifico(
@@ -46,10 +48,12 @@ function PreencherFormulario({ route, navigation }) {
     setFormularioPaciente(formulariosAux);
     setSchema(FormularioEspecifico.perguntas);
     setCarregando(false);
+    
   }
 
   useEffect(() => {
     getFormularioPaciente();
+
   }, []);
 
   let resposta;
@@ -101,7 +105,7 @@ function PreencherFormulario({ route, navigation }) {
                 {FormularioEspecifico.titulo}
               </Titulo>
             </CaixaTitulo>
-            <CorpoScroll>
+            <CorpoScroll height={heightScroll}>
               <CaixaFormulario>
                 {carregando ? (
                   <ActivityIndicator
@@ -136,7 +140,7 @@ function PreencherFormulario({ route, navigation }) {
             borderWidth="3px"
             boxShadow="none"
             marginTop="0"
-            onPress={() => requisicaoEnviandoRespostas(resposta)}
+            onPress={() =>  requisicaoEnviandoRespostas(resposta) }
           >
             <ConteudoBotao width="90%" fontSize="15px" color={Cores.branco}>
               ENVIAR
