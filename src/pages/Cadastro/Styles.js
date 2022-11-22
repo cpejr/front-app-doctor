@@ -22,8 +22,10 @@ export const CaixaTitulo = styled.View`
 `;
 
 export const Logo = styled.Image`
-  width: 70px;
-  height: 70px;
+  width: 120px;
+  height: 135px;
+  border-radius: 10px;
+  margin-right: 20px;
 `;
 
 export const Titulo = styled.Text`
