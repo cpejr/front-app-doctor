@@ -1,31 +1,29 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Text, View, ScrollView, Alert } from "react-native";
-import Form from "react-native-jsonschema-form";
+import React, { useEffect, useState } from "react";
 import {
-  Corpo,
-  HeaderFormularios,
-  Titulo,
-  CaixaTitulo,
-  CaixaFormulario,
-  CaixaBotao,
-  CaixaCima,
-  CaixaPagina,
-  CorpoScroll,
-  Body,
-} from "./Styles";
-import { Cores } from "../../variaveis";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as managerService from "../../services/ManagerService/managerService";
-import Icon from "react-native-vector-icons/Entypo";
-import {
-  useWindowDimensions,
-  TouchableOpacity,
   ActivityIndicator,
+  Alert,
+  Dimensions,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from "react-native";
+import Form from "react-native-jsonschema-form";
+import Icon from "react-native-vector-icons/Entypo";
+import * as managerService from "../../services/ManagerService/managerService";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
-import { Dimensions } from "react-native";
+import { Cores } from "../../variaveis";
+import {
+  Body,
+  CaixaBotao,
+  CaixaCima,
+  CaixaFormulario,
+  CaixaTitulo,
+  Corpo,
+  CorpoScroll,
+  HeaderFormularios,
+  Titulo,
+} from "./Styles";
 
 function PreencherFormulario({ route, navigation }) {
   const [carregando, setCarregando] = useState(true);
@@ -48,12 +46,10 @@ function PreencherFormulario({ route, navigation }) {
     setFormularioPaciente(formulariosAux);
     setSchema(FormularioEspecifico.perguntas);
     setCarregando(false);
-    
   }
 
   useEffect(() => {
     getFormularioPaciente();
-
   }, []);
 
   let resposta;
@@ -140,7 +136,7 @@ function PreencherFormulario({ route, navigation }) {
             borderWidth="3px"
             boxShadow="none"
             marginTop="0"
-            onPress={() =>  requisicaoEnviandoRespostas(resposta) }
+            onPress={() => requisicaoEnviandoRespostas(resposta)}
           >
             <ConteudoBotao width="90%" fontSize="15px" color={Cores.branco}>
               ENVIAR
