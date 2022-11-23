@@ -20,13 +20,10 @@ function GrupoAMIE() {
     <View>
       <Text>GrupoAMIE</Text>
     <YoutubePlayer
-    javaScriptCanOpenWindowsAutomatically={true}
-    mediaPlaybackRequiresUserAction={true}
     javaScriptEnabled={true}
-    width={350}
     height={300}
     play={playing}
-    videoId={"z-0AMvyarjE"}
+    videoId={"LOrALdmPWVU"}
     onChangeState={onStateChange}
   />
   <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
