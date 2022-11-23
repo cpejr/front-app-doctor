@@ -97,6 +97,6 @@ export const CaixaBotao = styled.View`
 
 export const TextoBotao = styled.Text`
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   color: ${Cores.azulEscuro};
 `;

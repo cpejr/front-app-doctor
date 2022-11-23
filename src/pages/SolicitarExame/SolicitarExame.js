@@ -110,9 +110,9 @@ function SolicitarExame({route, navigation}) {
               width={larguraBotoes}
               height="52px"
               marginTop="0%"
-              backgroundColor={Cores.cinza[11]}
+              backgroundColor={Cores.lilas[3]}
               borderRadius="3px"
-              borderColor={Cores.azul}
+              borderColor={Cores.lilas[2]}
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
               onPress={renderizarUrl}
