@@ -1,8 +1,26 @@
-import React from "react";
-import { Text, View, Button } from "react-native";
+import React, { useState, useCallback, useRef } from "react";
+import { Button, View, Text, Alert } from "react-native";
+import YoutubePlayer from "react-native-youtube-iframe";
+import {WebView} from "react-native-webview";
 
 function Exames({ navigation }) {
+
+  const [playing, setPlaying] = useState(false);
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
+  
+
   return (
+    <>
     <View>
       <Text>Exames</Text>
       <Button
@@ -27,6 +45,18 @@ function Exames({ navigation }) {
         onPress={() => navigation.navigate("ExameNormal")}
       />
     </View>
+
+  <View>
+  <Text>Video</Text>
+  <YoutubePlayer
+  javaScriptEnabled={true}
+  height={300}
+  play={playing}
+  videoId={"LOrALdmPWVU"}
+  onChangeState={onStateChange}
+  />
+  </View>
+  </>
   );
 }
 
