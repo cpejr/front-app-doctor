@@ -16,6 +16,7 @@ function GrupoAMIE() {
   const togglePlaying = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
+  
   return (
     <View>
       <Text>GrupoAMIE</Text>
@@ -26,7 +27,6 @@ function GrupoAMIE() {
     videoId={"LOrALdmPWVU"}
     onChangeState={onStateChange}
   />
-  <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
   </View>
   );
 }
