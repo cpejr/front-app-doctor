@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useCallback, useRef } from "react";
+import { Button, View, Text, Alert } from "react-native";
+import YoutubePlayer from "react-native-youtube-iframe";
+import {WebView} from "react-native-webview";
 import {
-  Text,
-  View,
   TouchableOpacity,
   useWindowDimensions,
   ScrollView,
@@ -21,6 +22,7 @@ import {
 } from "./Styles";
 
 function GrupoAMIE() {
+  
   const { width } = useWindowDimensions();
   const { height } = useWindowDimensions();
   const tamanhoIcone = width > 480 ? 55 : 55;
