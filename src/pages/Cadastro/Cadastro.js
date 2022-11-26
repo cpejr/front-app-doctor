@@ -385,7 +385,7 @@ function Cadastro({ navigation }) {
     <ScrollView>
       <Body>
         <CaixaTitulo marginTop={margemSuperior} width={larguraCaixaTitulo}>
-          <Logo source={logoGuilherme} />
+          <Logo source={logoGuilherme} width={110} height={110}/>
           <Titulo width={larguraTitulo}>Faça seu Cadastro</Titulo>
         </CaixaTitulo>
 
