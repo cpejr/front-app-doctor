@@ -26,7 +26,7 @@ export default function Mensagem({
       <Text>{conteudo}</Text>
       <DataHoraMensagem>
         <HoraMensagem>
-          {dayjs(data_criacao).subtract(1,'hours').format("DD/MM/YYYY HH:mm")}
+          {dayjs(data_criacao).format("DD/MM/YYYY HH:mm")}
         </HoraMensagem>
       </DataHoraMensagem>
     </MensagemEnviada>
