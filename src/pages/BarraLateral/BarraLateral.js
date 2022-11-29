@@ -50,6 +50,7 @@ import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Alert } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
+import { sleep } from "../../utils/sleep";
 
 const camposVaziosReferencia = {
   id_usuario: false,
@@ -62,7 +63,7 @@ function BarraLateral({ navigation }) {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const onChangeBusca = (busca) => setBusca(busca);
-  const [carregando, setCarregando] = useState(false);
+  const [carregando, setCarregando] = useState(true);
   const componenteEstaMontadoRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [mensagemRecebida, setMensagemRecebida] = useState({});
@@ -93,14 +94,13 @@ function BarraLateral({ navigation }) {
 
   const imagemPerfilPadrão = require("../../assets/logoGuilherme.png");
   async function getConversas(componenteEstaMontadoRef) {
-    setCarregandoConversas(true);
-
     await managerService.deletarConversasInativas(usuarioId);
     const resposta = await managerService.GetConversasUsuario(usuarioId);
 
     if (componenteEstaMontadoRef) {
       setConversas(resposta);
-      setCarregandoConversas(false);
+
+      setCarregando(false);
     }
 
     getConversas(componenteEstaMontadoRef);
@@ -131,7 +131,6 @@ function BarraLateral({ navigation }) {
       setConversas(resposta);
       setCarregandoConversas(false);
     }
-
     getConversas(componenteEstaMontadoRef);
   }
   useEffect(() => {
@@ -307,6 +306,7 @@ function BarraLateral({ navigation }) {
 
     if (componenteEstaMontadoRef.current) {
       setUsuarios(usuarios);
+      await sleep(1500);
       setCarregando(false);
     }
     pegandoUsuarios();
