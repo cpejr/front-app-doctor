@@ -86,6 +86,10 @@ function ConversaAberta({ navigation, route, socket }) {
 
     if (componenteEstaMontadoRef) {
       setMensagens(resposta);
+      await managerService.UpdateMensagensVisualizadas(
+        usuarioId,
+        conversaSelecionada.id
+      );
     }
     getMensagens(componenteEstaMontadoRef);
   }
@@ -213,13 +217,6 @@ function ConversaAberta({ navigation, route, socket }) {
 
     setCarregandoEnvioMensagem(false);
   };
-
-  function consolando() {
-    console.log(
-      "🚀 ~ file: ConversaAberta.js ~ line 219 ~ ConversaAberta ~ mensagens",
-      mensagens
-    );
-  }
   return (
     <Body>
       <HeaderConversaAberta>
@@ -227,7 +224,7 @@ function ConversaAberta({ navigation, route, socket }) {
           name="arrow-left"
           size={32}
           color={Cores.azul}
-          onPress={() => navigation.navigate("BarraLateral")}
+          onPress={() => navigation.push("BarraLateral")}
         />
         {conversaSelecionada.conversaCom.imagem ? (
           <ImagemUsuario
