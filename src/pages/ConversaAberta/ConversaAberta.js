@@ -91,9 +91,17 @@ function ConversaAberta({ navigation, route, socket }) {
         conversaSelecionada.id
       );
     }
-    getMensagens(componenteEstaMontadoRef);
   }
+  var frequencia;
 
+  function startTemporizador() {
+    frequencia = setInterval(function () {
+      getMensagens();
+    }, 5000);
+  }
+  useEffect(() => {
+    startTemporizador();
+  }, []);
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
 

@@ -102,9 +102,17 @@ function BarraLateral({ navigation }) {
 
       setCarregando(false);
     }
-
-    getConversas(componenteEstaMontadoRef);
   }
+  var frequencia;
+
+  function startTemporizador() {
+    frequencia = setInterval(function () {
+      getConversas();
+    }, 5000);
+  }
+  useEffect(() => {
+    startTemporizador();
+  }, []);
   useEffect(() => {
     if (!usuarioId) return;
 
