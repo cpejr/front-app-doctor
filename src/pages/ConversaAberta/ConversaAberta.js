@@ -58,38 +58,42 @@ function ConversaAberta({ navigation, route, socket }) {
   const scrollRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
 
+  async function getDadosUsuarioAtual(componenteEstaMontadoRef) {
+    const { dadosUsuario } = await managerService.GetDadosUsuario();
+
+    if (componenteEstaMontadoRef) {
+      setUsuarioAtual(dadosUsuario);
+      setCarregandoConversa(false);
+    }
+
+    getDadosUsuarioAtual(componenteEstaMontadoRef);
+  }
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
 
-    async function getDadosUsuarioAtual() {
-      const { dadosUsuario } = await managerService.GetDadosUsuario();
-
-      if (componenteEstaMontadoRef.current) {
-        setUsuarioAtual(dadosUsuario);
-        setCarregandoConversa(false);
-      }
-    }
-    getDadosUsuarioAtual();
+    getDadosUsuarioAtual(componenteEstaMontadoRef.current);
 
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
 
+  async function getMensagens(componenteEstaMontadoRef) {
+    if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
+
+    const resposta = await managerService.GetMensagensPorConversaUsuario(
+      usuarioId,
+      conversaSelecionada.id
+    );
+
+    if (componenteEstaMontadoRef) {
+      setMensagens(resposta);
+    }
+    getMensagens(componenteEstaMontadoRef);
+  }
+
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
 
-    async function getMensagens() {
-      if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
-
-      const resposta = await managerService.GetMensagensPorConversaUsuario(
-        usuarioId,
-        conversaSelecionada.id
-      );
-      if (componenteEstaMontadoRef.current) {
-        setMensagens(resposta);
-      }
-    }
-
-    getMensagens();
+    getMensagens(componenteEstaMontadoRef.current);
 
     return () => (componenteEstaMontadoRef.current = false);
   }, [conversaSelecionada, usuarioId]);
@@ -210,6 +214,12 @@ function ConversaAberta({ navigation, route, socket }) {
     setCarregandoEnvioMensagem(false);
   };
 
+  function consolando() {
+    console.log(
+      "🚀 ~ file: ConversaAberta.js ~ line 219 ~ ConversaAberta ~ mensagens",
+      mensagens
+    );
+  }
   return (
     <Body>
       <HeaderConversaAberta>
@@ -238,19 +248,19 @@ function ConversaAberta({ navigation, route, socket }) {
       </HeaderConversaAberta>
 
       <FundoConversaAberta>
-         {carregandoConversa ? (
-            <PaginaCarregando>
-              <ActivityIndicator animating={true} color={Colors.black} />
-            </PaginaCarregando>
-          ) : (
-        <ScrollView
-          ref={(ref) => {
-            this.scrollView = ref;
-          }}
-          onContentSizeChange={() =>
-            this.scrollView.scrollToEnd({ animated: true })
-          }
-        >  
+        {carregandoConversa ? (
+          <PaginaCarregando>
+            <ActivityIndicator animating={true} color={Colors.black} />
+          </PaginaCarregando>
+        ) : (
+          <ScrollView
+            ref={(ref) => {
+              this.scrollView = ref;
+            }}
+            onContentSizeChange={() =>
+              this.scrollView.scrollToEnd({ animated: true })
+            }
+          >
             {mensagens?.map((mensagem, idx) => (
               <Mensagem
                 key={idx}
@@ -258,8 +268,8 @@ function ConversaAberta({ navigation, route, socket }) {
                 conteudo={mensagem.conteudo}
                 data_criacao={mensagem.data_criacao}
               />
-            ))}  
-        </ScrollView>
+            ))}
+          </ScrollView>
         )}
       </FundoConversaAberta>
 
