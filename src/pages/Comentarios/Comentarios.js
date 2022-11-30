@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, Dimensions, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import { Cores } from "../../variaveis";
-import { Container, ContainerComentarios, ContainerComentariosEResposta, ContainerIconeSeta, ContainerScrollView, TextoComentario, Titulo, TextoResposta, ContainerResposta } from "./Styles";
+import { Container, ContainerComentarios, ContainerComentariosEResposta, ContainerIconeSeta, ContainerScrollView, TextoComentario, Titulo, TextoResposta, ContainerResposta, PaginaCarregando } from "./Styles";
+import * as managerService from "../../services/ManagerService/managerService";
+import { ActivityIndicator, Colors, Checkbox, Button } from "react-native-paper";
 
 function Comentarios({ navigation }) {
 
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
-  const tamanhoIcone = width > 480 ? 20 : 25;
+  const tamanhoIcone = width > 900 ? 48 : 48;
+  const [comentariosRespostas, setComentariosRespostas] = useState([]);
+  const [carregando, setCarregando] = useState(false);
+
+  async function pegandoComentarios() {
+    setCarregando(true);
+    const resposta = await managerService.GetComentarios();
+    setComentariosRespostas(resposta);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoComentarios();
+  }, []);
+
+  
 
 
-  const comentarios = ["\"Depois de Deus...tenho o Dr. Guilherme como referência em minha vida!! Ele ajudou muito no tratamento da minha mãe. Apresentava quadros de crises epiléticas parciais, e confusão mental. Como a mudança da medicação ela retornou a ter vida normal e estamos na luta para lhe dar cada dia mais qualidade de vida. Obrigada pela atenção e carinho nesse momento tão dificil em minha vida!! Você é um ser que não existe, literalmente um presente de Deus. \"",
+/*   const comentarios = ["\"Depois de Deus...tenho o Dr. Guilherme como referência em minha vida!! Ele ajudou muito no tratamento da minha mãe. Apresentava quadros de crises epiléticas parciais, e confusão mental. Como a mudança da medicação ela retornou a ter vida normal e estamos na luta para lhe dar cada dia mais qualidade de vida. Obrigada pela atenção e carinho nesse momento tão dificil em minha vida!! Você é um ser que não existe, literalmente um presente de Deus. \"",
     "\"O dr. Guilherme é extremamente profissional e atencioso. Recomendo.  Tratou minha mãe com muita atenção e carinho. Ótimo neurologista\"",
     "\"Excelente profissional, muito atencioso e competente. Tempo de consulta satisfatório, permitindo uma boa propedêutica de tratamento\"",
     "\"Excelente profissional, competente atencioso carinhoso humano, educado paciente. Ele trata meu irmão que tem demência daí devido à atenção dedicada me tornei também paciente.Gostamos muito do Dr Guilherme\"",
@@ -54,9 +71,10 @@ function Comentarios({ navigation }) {
     "Dr. Guilherme Marques: fique sempre à vontade para perguntar e esclarecer todas as dúvidas!",
     "Dr. Guilherme Marques: obrigado pela opinião! Até o retorno!",
     "Dr. Guilherme Marques: fico feliz que tenha sido fácil entender orientações tão complexas! O esclarecimento é o primeiro passo para o sucesso do tratamento!",
-  ]
+   ] */
+  
 
-  const comentariosERespostas = [
+/*   const comentariosERespostas = [
     {
       comentario: comentarios[0],
       resposta: respostas[0]
@@ -133,7 +151,7 @@ function Comentarios({ navigation }) {
       comentario: comentarios[18],
       resposta: respostas[18]
     },
-  ]
+  ] */
 
 
   return (
@@ -144,14 +162,19 @@ function Comentarios({ navigation }) {
         </TouchableOpacity>
       </ContainerIconeSeta>
       <Titulo>Comentários e depoimentos:</Titulo>
+      {carregando ? (
+        <PaginaCarregando>
+          <ActivityIndicator animating={true} color={Colors.black} />
+        </PaginaCarregando>
+      ) : (
       <ContainerScrollView>
         <ContainerComentariosEResposta>
-          {comentariosERespostas.map((comentarioEResposta) => (
+          {comentariosRespostas.map((comentarioEResposta) => (
             <ContainerComentarios marginBottom='15%'>
-              <TextoComentario>{comentarioEResposta.comentario}</TextoComentario>
+              <TextoComentario>"{comentarioEResposta.comentario}"</TextoComentario>
               {comentarioEResposta.resposta !== "" ? (
                 <ContainerResposta>
-                  <TextoResposta>{comentarioEResposta.resposta}</TextoResposta>
+                  <TextoResposta>Dr. Guilherme Marques: {comentarioEResposta.resposta}</TextoResposta>
                 </ContainerResposta>
               ) : (
                 <></>
@@ -159,15 +182,7 @@ function Comentarios({ navigation }) {
             </ContainerComentarios>
           ))}
         </ContainerComentariosEResposta>
-        <ContainerComentariosEResposta>
-          <ContainerComentarios marginBottom='0%' marginTop='-10%'>
-            <TextoComentario>{comentarios[19]}</TextoComentario>
-            <ContainerResposta>
-              <TextoResposta>{respostas[19]}</TextoResposta>
-            </ContainerResposta>
-          </ContainerComentarios>
-        </ContainerComentariosEResposta>
-      </ContainerScrollView>
+      </ContainerScrollView>)}
     </Container>
   );
 }

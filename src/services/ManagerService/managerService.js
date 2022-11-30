@@ -536,3 +536,18 @@ export const CriandoConversa = async (
     });
   return dadosConversaCriada;
 };
+
+
+export const GetComentarios = async () => {
+  let comentarios = [];
+  await requesterService
+    .GetComentarios()
+    .then((res) => {
+      comentarios = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return comentarios;
+};
+
