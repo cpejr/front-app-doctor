@@ -8,7 +8,7 @@ export const ContainerIconeSeta = styled.View`
   align-items: flex-start;
   justify-content: flex-start;
   padding-top: 10px;
-  padding-bottom: 15px;
+  padding-bottom: 0px;
   padding-left: 10px;
   width: 100%;
 `;
@@ -36,7 +36,7 @@ export const Titulo = styled.Text`
 `;
 
 export const ContainerScrollView = styled.ScrollView`
-  margin-top: 30px;
+  margin-top: 25px;
   background-color: ${Cores.branco};
   height: auto;
   padding-left: 5%;

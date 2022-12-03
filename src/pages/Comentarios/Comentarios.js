@@ -170,7 +170,7 @@ function Comentarios({ navigation }) {
       <ContainerScrollView>
         <ContainerComentariosEResposta>
           {comentariosRespostas.map((comentarioEResposta) => (
-            <ContainerComentarios marginBottom='15%'>
+            <ContainerComentarios marginBottom='5%'>
               <TextoComentario>"{comentarioEResposta.comentario}"</TextoComentario>
               {comentarioEResposta.resposta !== "" ? (
                 <ContainerResposta>
