@@ -63,6 +63,7 @@ export const TituloTexto = styled.Text`
   font-size: 25px;
   font-weight: 500;
   color: ${Cores.azulEscuro};
+  margin-bottom: 5%;
 `;
 
 export const Texto = styled.Text`

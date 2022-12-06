@@ -20,11 +20,13 @@ import GuilhermeMarquesFotoSobreMim from "./Imagens/GuilhermeMarquesFotoSobreMim
 import GuilhermeMarquesTemplateArteSobreMim from "./Imagens/GuilhermeMarquesTemplateArteSobreMim.webp";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native-paper";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function SobreMim({ navigation }) {
   const [carregando, setCarregando] = useState(true);
   const [larguraImagem, setLarguraImagem] = useState();
   const [alturaImagem, setAlturaImagem] = useState();
+  const [dadosSobreMim, setDadosSobreMim] = useState([]);
 
   const larguraTela = useWindowDimensions().width;
 
@@ -32,6 +34,16 @@ function SobreMim({ navigation }) {
     setLarguraImagem(100 * larguraTela);
     setAlturaImagem(((27 * 0.88) / 47) * larguraTela);
   }
+
+  async function infoSobreMim(){
+    const resposta = await managerService.GetSobreMim();
+    setDadosSobreMim(resposta);
+    console.log("teste: ", resposta);
+  }
+
+  useEffect(() => {
+    infoSobreMim();
+  }, []);
 
   useEffect(() => {
     setCarregando(true);
@@ -82,11 +94,13 @@ function SobreMim({ navigation }) {
             }
           ></Image>
         </CaixaImagem>
-
+        {dadosSobreMim?.map((value) => (
+          <>
         <CaixaTexto>
-          <TituloTexto fontFamily="BarlowSemibold">Quem sou</TituloTexto>
+          <TituloTexto fontFamily="BarlowSemibold">{value.titulo_um}</TituloTexto>
           <Texto fontFamily="BarlowLight" textAlign="justify">
-            {"\n"}
+            {value.texto_um}
+            {/* {"\n"}
             {"\t"}
             {"\t"}
             {"\t"}
@@ -132,9 +146,9 @@ function SobreMim({ navigation }) {
             paciente e aos familiares, e assim estabelecer o diagnóstico
             correto, o tratamento eficaz, além de poder esclarecer todas as
             dúvidas e aliviar todos os receios que sempre se apresentam quando
-            nossa saúde está sob risco.
+            nossa saúde está sob risco. */}
           </Texto>
-          <Texto fontFamily="BarlowLight" textAlign="center">
+          {/* <Texto fontFamily="BarlowLight" textAlign="center">
             {"\n"}Dr. Guilherme Marques
             {"\n"}CRM-MG 56.888
             {"\n"}
@@ -145,14 +159,14 @@ function SobreMim({ navigation }) {
             {"\n"}
             {"\n"}Contato do consultório particular:
             {"\n"}Rua Matias Cardoso, 129 - Pilotis, Santo Agostinho - Belo
-            Horizonte
-          </Texto>
-          <Texto fontFamily="BarlowSemibold" textAlign="center">
+            Horizonte 
+          </Texto> */}
+          {/* <Texto fontFamily="BarlowSemibold" textAlign="center">
             {"\n"}Tel.: (31) 97248-8306
-          </Texto>
-          <Texto fontFamily="BarlowLight" textAlign="center">
+          </Texto> */}
+          {/* <Texto fontFamily="BarlowLight" textAlign="center">
             Secretárias: Larissa e Júlia
-          </Texto>
+          </Texto> */}
         </CaixaTexto>
 
         <CaixaImagem>
@@ -173,10 +187,11 @@ function SobreMim({ navigation }) {
 
         <CaixaTexto>
           <TituloTexto fontFamily="BarlowSemibold">
-            Minha Experiência
+            {value.titulo_dois}
           </TituloTexto>
           <Texto fontFamily="BarlowLight" textAlign="justify">
-            {"\n"}Graduação em Medicina pela Faculdade de Medicina da
+            {value.texto_dois}
+            {/* {"\n"}Graduação em Medicina pela Faculdade de Medicina da
             Universidade Federal de Minas Gerais (UFMG), 2006 a 2012
             {"\n"}
             {"\n"}Residência Médica em Neurologia, Hospital das Clínicas da
@@ -209,9 +224,9 @@ function SobreMim({ navigation }) {
             {"\n"}Médico do Sono - Laboratório do Sono - Belo Horizonte
             {"\n"}
             {"\n"}Chefe da Clínica de Neurologia do Hospital da Polícia Militar
-            de Minas Gerais
+            de Minas Gerais */}
           </Texto>
-        </CaixaTexto>
+        </CaixaTexto></>))}
       </View>)}
     </ContainerScroll>
   );

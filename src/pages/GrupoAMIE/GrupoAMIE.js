@@ -21,7 +21,7 @@ import {
   ImagemMedicos,
 } from "./Styles";
 
-function GrupoAMIE({navigation}) {
+function GrupoAMIE() {
   const { width } = useWindowDimensions();
   const { height } = useWindowDimensions();
   const tamanhoIcone = width > 480 ? 55 : 55;
@@ -33,16 +33,34 @@ function GrupoAMIE({navigation}) {
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
 
   const [amies, setAmies] = useState([]);
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
 
   async function getAmies(){
     const resposta = await managerService.GetDadosAmie();
     setAmies(resposta);
+    setandoFotoDePerfil(amies.imagem_um)
     console.log("teste: ", resposta);
   }
 
   useEffect(() => {
     getAmies();
   }, []);
+
+  async function setandoFotoDePerfil() {
+    const chave = amies.imagem_um;
+    if (chave === null || chave === "" || chave === undefined){
+      await sleep(1500);
+      return false;
+    }
+
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+    await sleep(1500);
+  }
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [amies.imagem_um]);
 
 
   return (
@@ -57,13 +75,25 @@ function GrupoAMIE({navigation}) {
         </TouchableOpacity>
       </CaixaSeta>
       <ScrollView>
+        
+        <Body>
+
+        <ImagemLogo 
+          width={WidthImagemLogo}
+          height={HeightImagemLogo}source={logoAmie}>       
+        </ImagemLogo>
+
         {amies?.map((value) => (
-        <Body key={value.id}>
-          <CaixaDescricao>
-          <Descricao> {value.texto}, tamanho: {amies.length}</Descricao></CaixaDescricao>
-          {/* <ImagemLogo 
-           width={WidthImagemLogo}
-           height={HeightImagemLogo}source={logoAmie}></ImagemLogo>
+          <>
+            <CaixaDescricao>
+              <Descricao> {value.texto}</Descricao>
+            </CaixaDescricao>
+            <ImagemMedicos 
+              width={WidthImagemMedicos}
+              height={HeightImagemMedicos}
+              source={fotoDePerfil}>
+            </ImagemMedicos>
+          {/*
           <CaixaDescricao>
             <Descricao>
               O grupo de Avaliação e Manejo Integrado das Epilepsias (AMIE) foi
@@ -78,7 +108,8 @@ function GrupoAMIE({navigation}) {
           width={WidthImagemMedicos}
           height={HeightImagemMedicos}
           source={medicosAmie}></ImagemMedicos> */}
-        </Body>))}
+          </>))}
+        </Body>
       </ScrollView>
     </Container>
   );

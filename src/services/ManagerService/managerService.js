@@ -537,7 +537,7 @@ export const CriandoConversa = async (
   return dadosConversaCriada;
 };
 
-export const GetDadosAmie = async (id_usuario) => {
+export const GetDadosAmie = async () => {
   let dadosAmie = {};
   await requesterService
     .requisicaoAmie()
@@ -548,4 +548,17 @@ export const GetDadosAmie = async (id_usuario) => {
       requisicaoErro(error);
     });
   return dadosAmie;
+};
+
+export const GetSobreMim = async () => {
+  let sobreMim = {};
+  await requesterService
+    .requisicaoSobreMim()
+    .then((res) => {
+      sobreMim = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return sobreMim;
 };

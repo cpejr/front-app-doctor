@@ -113,4 +113,6 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
 
   export const requisicaoAmie = () => api.get(`/amies/`);
+
+  export const requisicaoSobreMim = () => api.get(`/sobremims/`);
   
