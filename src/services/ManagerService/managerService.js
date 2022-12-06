@@ -536,3 +536,35 @@ export const CriandoConversa = async (
     });
   return dadosConversaCriada;
 };
+
+export const enviarArquivoMensagem = async (file) => {
+  let id;
+  await requesterService
+    .enviarArquivoMensagem(file)
+    .then((res) => {
+      Alert.alert("", "Arquivo PDF enviado com sucesso");
+      id = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
+};
+
+export const enviarImagemMensagem = async (imagem) => {
+  let id;
+  await requesterService
+    .enviarImagemMensagem(imagem)
+    .then((res) => {
+      Alert.alert("", "Imagem enviada com sucesso");
+      id = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
+};
