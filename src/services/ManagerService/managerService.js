@@ -536,3 +536,16 @@ export const CriandoConversa = async (
     });
   return dadosConversaCriada;
 };
+
+export const GetDadosAmie = async (id_usuario) => {
+  let dadosAmie = {};
+  await requesterService
+    .requisicaoAmie()
+    .then((res) => {
+      dadosAmie = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosAmie;
+};

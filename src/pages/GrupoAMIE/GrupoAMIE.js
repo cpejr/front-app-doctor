@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -10,6 +10,7 @@ import {
 import Icon from "react-native-vector-icons/Entypo";
 import logoAmie from "./../../assets/logoAmie.jpg";
 import medicosAmie from "./../../assets/medicosAmie.webp";
+import * as managerService from "../../services/ManagerService/managerService";
 import {
   Body,
   CaixaSeta,
@@ -20,7 +21,7 @@ import {
   ImagemMedicos,
 } from "./Styles";
 
-function GrupoAMIE() {
+function GrupoAMIE({navigation}) {
   const { width } = useWindowDimensions();
   const { height } = useWindowDimensions();
   const tamanhoIcone = width > 480 ? 55 : 55;
@@ -30,6 +31,19 @@ function GrupoAMIE() {
   const HeightImagemLogo = width > height ? 200 : 150;
   const larguraBotoesMaior = width < 600 ? "60%" : "50%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
+
+  const [amies, setAmies] = useState({});
+
+  async function getAmies(){
+    const resposta = await managerService.GetDadosAmie();
+    setAmies(resposta);
+    console.log("teste: ");
+  }
+
+  useEffect(() => {
+    getAmies();
+  }, []);
+
 
   return (
     <Container>
