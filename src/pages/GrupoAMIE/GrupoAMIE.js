@@ -32,12 +32,12 @@ function GrupoAMIE({navigation}) {
   const larguraBotoesMaior = width < 600 ? "60%" : "50%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
 
-  const [amies, setAmies] = useState({});
+  const [amies, setAmies] = useState([]);
 
   async function getAmies(){
     const resposta = await managerService.GetDadosAmie();
     setAmies(resposta);
-    console.log("teste: ");
+    console.log("teste: ", resposta);
   }
 
   useEffect(() => {
@@ -57,8 +57,11 @@ function GrupoAMIE({navigation}) {
         </TouchableOpacity>
       </CaixaSeta>
       <ScrollView>
-        <Body>
-          <ImagemLogo 
+        {amies?.map((value) => (
+        <Body key={value.id}>
+          <CaixaDescricao>
+          <Descricao> {value.texto}, tamanho: {amies.length}</Descricao></CaixaDescricao>
+          {/* <ImagemLogo 
            width={WidthImagemLogo}
            height={HeightImagemLogo}source={logoAmie}></ImagemLogo>
           <CaixaDescricao>
@@ -74,8 +77,8 @@ function GrupoAMIE({navigation}) {
           <ImagemMedicos 
           width={WidthImagemMedicos}
           height={HeightImagemMedicos}
-          source={medicosAmie}></ImagemMedicos>
-        </Body>
+          source={medicosAmie}></ImagemMedicos> */}
+        </Body>))}
       </ScrollView>
     </Container>
   );
