@@ -5,7 +5,7 @@ import React, {
   useRef,
   useDebugValue,
 } from "react";
-import { Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
+import { Text, View, ScrollView, Image, TouchableOpacity, useWindowDimensions , Modal} from "react-native";
 import {
   Body,
   HeaderConversaAberta,
@@ -20,6 +20,13 @@ import {
   ImagemUsuario,
   CaixaTexto,
   PaginaCarregando,
+  CaixaExterna,
+  CaixaFechar,
+  CaixaModalUpdateFoto,
+  CaixaTituloModal,
+  TituloModal,
+  ImagemModal,
+  CaixaBotoesCancelarConfirmarModalExcluirFoto,
 } from "./Styles";
 //import { Tooltip } from 'react-native-elements';
 import { Cores } from "../../variaveis";
@@ -28,13 +35,18 @@ import IconeMaterial from "react-native-vector-icons/MaterialIcons";
 import IconeIon from "react-native-vector-icons/Ionicons";
 import IconeFoundation from "react-native-vector-icons/Foundation";
 import Icon from "react-native-vector-icons/Entypo";
-import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
+import Icone from "react-native-vector-icons/AntDesign";
+import { ActivityIndicator, Colors, Searchbar, Provider, Menu, Divider } from "react-native-paper";
 import { ChatContext } from "../../contexts/ChatContext/ChatContext";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import * as managerService from "../../services/ManagerService/managerService";
 import checarObjVazio from "../../utils/checarObjVazio";
 import moverArray from "../../utils/moverArray";
 import { sleep } from "../../utils/sleep";
+import Botao from "../../styles/Botao";
+import ConteudoBotao from "../../styles/ConteudoBotao";
+import { Alert } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 function ConversaAberta({ navigation, route, socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
@@ -43,6 +55,86 @@ function ConversaAberta({ navigation, route, socket }) {
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
   const [carregando, setCarregando] = useState(false);
+  const [modalAdicionarFoto, setModalAdicionarFoto] = useState(false);
+  const [modalAdicionarDocumento, setModalAdicionarDocumento] = useState(false);
+  const { width, height } = useWindowDimensions();
+  const [heightModalUpdateFoto, setHeightModalUpdateFoto] = useState();
+  const [marginTopModais, setMarginTopModais] = useState();
+  const [imagem64, setImagem64] = useState(null);
+  const [imagem, setImagem] = useState(null);
+  const [arquivo, setArquivo] = useState(null);
+  const tamanhoIcone = width > 480 ? 20 : 25;
+  const tamanhoImagem = width > 2000 ? "400" : "180";
+  const tamanhoImagemModal = width > 2000 ? "400px" : "180px";
+  const [carregandoDeletarFoto, setCarregandoDeletarFoto] = useState(false);
+  const [visivel, setVisivel] = React.useState(false);
+
+  const openMenu = () => setVisivel(true);
+
+  const closeMenu = () => setVisivel(false);
+
+  function deixandoModaisResponsivos() {
+    if (width > height){ 
+      setHeightModalUpdateFoto("85%");
+      setMarginTopModais("0%");
+    } 
+    else {
+      setHeightModalUpdateFoto("60%");
+      setMarginTopModais("0%");
+    }
+  }
+
+  useEffect(() => {
+    deixandoModaisResponsivos();
+  }, [width, height]);
+
+  useEffect(() => {
+    (async () => {
+      const StatusDaGaleria =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setPermissaoParaAbrirAGaleria(StatusDaGaleria.status === "granted");
+    })();
+  }, []);
+
+  const selecionaImagem = async () => {
+    let resultado = await ImagePicker.launchImageLibraryAsync({
+      base64: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [3, 3],
+      quality: 1,
+    });
+
+    if (!resultado.cancelled) {
+      setImagem(resultado);
+      setImagem64(`data:image/png;base64,${resultado.base64}`);
+    }
+
+    if (permissaoParaAbrirAGaleria === false) {
+      Alert.alert("Erro", "Sem permissão de acesso à galeria");
+    }
+  };
+
+  const selecionaDocumento = async () => {
+    
+
+    /* Fazer a função aqui  */
+     
+
+  };
+
+  
+
+  function fechandoModalEditarFoto() {
+    setModalAdicionarFoto(false);
+    setImagem(null);
+    setImagem64(null);
+  }
+
+  function fechandoModalDocumento() {
+    setModalAdicionarDocumento(false);
+    setArquivo(null);
+  }
 
   const {
     usuarioId,
@@ -226,6 +318,7 @@ function ConversaAberta({ navigation, route, socket }) {
     setCarregandoEnvioMensagem(false);
   };
   return (
+    <Provider>
     <Body>
       <HeaderConversaAberta>
         <Icon
@@ -279,21 +372,237 @@ function ConversaAberta({ navigation, route, socket }) {
       </FundoConversaAberta>
 
       <FooterConversaAberta>
-        <IconeFoundation name="paperclip" size={33} color={Cores.azulEscuro} />
-        <BarraEnviarMensagemConversaAberta
-          placeholder="Mensagem"
-          onChangeText={(e) => setInputMensagemConteudo(e)}
-          value={inputMensagemConteudo}
-          ref={inputMensagemConteudoRef}
-        ></BarraEnviarMensagemConversaAberta>
-        <IconeMaterial
-          name="send"
-          size={30}
-          color={Cores.azulEscuro}
-          onPress={enviarMensagem}
-        />
-      </FooterConversaAberta>
-    </Body>
+      <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              elevation: 0,
+            }}
+          >
+            <Menu
+            style={{top:510, left:10 , position: 'absolute', zIndex:100, elevation: 100}}
+              visible={visivel}
+              onDismiss={closeMenu}
+              anchorPosition="top"
+              anchor={
+                <TouchableOpacity onPress={openMenu}>
+                  <IconeFoundation
+                    name="paperclip"
+                    size={33}
+                    color={Cores.azulEscuro}
+                  />
+                </TouchableOpacity>
+              }
+            >
+              <Menu.Item onPress={() => {
+                  setModalAdicionarDocumento(true);
+                }} title="Enviar Documento" />
+              <Divider />
+              <Menu.Item onPress={() => {
+                  setModalAdicionarFoto(true);
+                }} title="Enviar Imagem" />
+            </Menu>
+          </View>
+          <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalAdicionarFoto}
+            >
+              <CaixaExterna height={height} width={width}>
+              <CaixaModalUpdateFoto height={heightModalUpdateFoto} marginTop={marginTopModais}>
+                <CaixaFechar>
+                  <TouchableOpacity
+                    onPress={() => {
+                      fechandoModalEditarFoto();
+                    }}
+                  >
+                    <Icone name="close" size={tamanhoIcone}></Icone>
+                  </TouchableOpacity>
+                </CaixaFechar>
+                <CaixaTituloModal>
+                  <TituloModal>
+                    Selecione uma imagem para enviar:
+                  </TituloModal>
+                    {imagem === null ? (
+                      <Botao
+                        width={tamanhoImagemModal}
+                        height={tamanhoImagemModal}
+                        backgroundColor={Cores.cinza[11]}
+                        borderRadius="3px"
+                        borderColor={Cores.cinza[9]}
+                        borderWidth="3px"
+                        boxShadow="none"
+                        onPress={() => selecionaImagem()}
+                      >
+                        <ConteudoBotao
+                          width="90px"
+                          fontSize="20px"
+                          color={Cores.azul}
+                        >
+                          +
+                        </ConteudoBotao>
+                      </Botao>
+                    ) : (
+                      <ImagemModal 
+                       width={tamanhoImagem}
+                       height={tamanhoImagem}
+                       source={imagem}></ImagemModal>
+                    )}
+                  <CaixaBotoesCancelarConfirmarModalExcluirFoto>
+                    <Botao
+                      width="40%"
+                      height="35px"
+                      backgroundColor={Cores.branco}
+                      borderRadius="3px"
+                      borderColor="rgba(255, 0, 0, 0.25)"
+                      borderWidth="3px"
+                      boxShadow="none"
+                      onPress={() => fechandoModalEditarFoto()}
+                    >
+                      <ConteudoBotao
+                        width="100%"
+                        fontSize="12px"
+                        color={Cores.preto}
+                      >
+                        CANCELAR
+                      </ConteudoBotao>
+                    </Botao>
+                    <Botao
+                      width="40%"
+                      height="35px"
+                      backgroundColor={Cores.lilas[1]}
+                      borderRadius="4px"
+                      borderColor={Cores.azul}
+                      borderWidth="3px"
+                      boxShadow="none"
+                      /* onPress={() => updateFoto()} */
+                    >
+                      {carregandoDeletarFoto ? (
+                        <ActivityIndicator
+                          animating={true}
+                          color={Cores.branco}
+                        />
+                      ) : (
+                        <ConteudoBotao
+                          width="100%"
+                          fontSize="12px"
+                          color={Cores.branco}
+                        >
+                          CONFIRMAR
+                        </ConteudoBotao>
+                      )}
+                    </Botao>
+                  </CaixaBotoesCancelarConfirmarModalExcluirFoto>
+                </CaixaTituloModal>
+              </CaixaModalUpdateFoto>
+              </CaixaExterna>
+            </Modal>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalAdicionarDocumento}
+            >
+              <CaixaExterna height={height} width={width}>
+              <CaixaModalUpdateFoto height={heightModalUpdateFoto} marginTop={marginTopModais}>
+                <CaixaFechar>
+                  <TouchableOpacity
+                    onPress={() => {
+                      fechandoModalDocumento();
+                    }}
+                  >
+                    <Icone name="close" size={tamanhoIcone}></Icone>
+                  </TouchableOpacity>
+                </CaixaFechar>
+                <CaixaTituloModal>
+                  <TituloModal>
+                    Selecione um Arquivo PDF para enviar:
+                  </TituloModal>
+                    {arquivo === null ? (
+                      <Botao
+                        width= "auto"
+                        height= "auto"
+                        backgroundColor={Cores.cinza[11]}
+                        borderRadius="3px"
+                        borderColor={Cores.cinza[9]}
+                        borderWidth="3px"
+                        boxShadow="none"
+                        onPress={() => selecionaDocumento()}
+                      >
+                        <ConteudoBotao
+                          width="90px"
+                          fontSize="20px"
+                          color={Cores.azul}
+                        >
+                          Selecionar Arquivo
+                        </ConteudoBotao>
+                      </Botao>
+                    ) : (
+                      <Text>Selecionado</Text>
+                    )}
+                  <CaixaBotoesCancelarConfirmarModalExcluirFoto>
+                    <Botao
+                      width="40%"
+                      height="35px"
+                      backgroundColor={Cores.branco}
+                      borderRadius="3px"
+                      borderColor="rgba(255, 0, 0, 0.25)"
+                      borderWidth="3px"
+                      boxShadow="none"
+                      onPress={() => fechandoModalDocumento()}
+                    >
+                      <ConteudoBotao
+                        width="100%"
+                        fontSize="12px"
+                        color={Cores.preto}
+                      >
+                        CANCELAR
+                      </ConteudoBotao>
+                    </Botao>
+                    <Botao
+                      width="40%"
+                      height="35px"
+                      backgroundColor={Cores.lilas[1]}
+                      borderRadius="4px"
+                      borderColor={Cores.azul}
+                      borderWidth="3px"
+                      boxShadow="none"
+                      /* onPress={() => updateFoto()} */
+                    >
+                      {carregandoDeletarFoto ? (
+                        <ActivityIndicator
+                          animating={true}
+                          color={Cores.branco}
+                        />
+                      ) : (
+                        <ConteudoBotao
+                          width="100%"
+                          fontSize="12px"
+                          color={Cores.branco}
+                        >
+                          CONFIRMAR
+                        </ConteudoBotao>
+                      )}
+                    </Botao>
+                  </CaixaBotoesCancelarConfirmarModalExcluirFoto>
+                </CaixaTituloModal>
+              </CaixaModalUpdateFoto>
+              </CaixaExterna>
+            </Modal>
+          <BarraEnviarMensagemConversaAberta
+            placeholder="Mensagem"
+            onChangeText={(e) => setInputMensagemConteudo(e)}
+            value={inputMensagemConteudo}
+            ref={inputMensagemConteudoRef}
+          ></BarraEnviarMensagemConversaAberta>
+          <IconeMaterial
+            name="send"
+            size={30}
+            color={Cores.azulEscuro}
+            onPress={enviarMensagem}
+          />
+        </FooterConversaAberta>
+      </Body>
+    </Provider>
   );
 }
 
