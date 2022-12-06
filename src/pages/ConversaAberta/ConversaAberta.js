@@ -68,6 +68,8 @@ function ConversaAberta({ navigation, route, socket }) {
   const tamanhoImagemModal = width > 2000 ? "400px" : "180px";
   const [carregandoDeletarFoto, setCarregandoDeletarFoto] = useState(false);
   const [visivel, setVisivel] = React.useState(false);
+  const [permissaoParaAbrirAGaleria, setPermissaoParaAbrirAGaleria] =
+  useState(null);
 
   const openMenu = () => setVisivel(true);
 
@@ -258,6 +260,70 @@ function ConversaAberta({ navigation, route, socket }) {
       receptorId,
     });
   };
+
+  async function enviarMensagemComImagem() {
+
+
+
+    setCarregandoDeletarFoto(true);
+
+    let urlS3 = await managerService.enviarImagemMensagem(imagem64);
+   
+    console.log(urlS3);
+
+    const horaAtual = new Date().getHours();
+    const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
+
+    const remetente =
+      conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
+        .conversaCom;
+
+    let texto = "Imagem";
+
+    if (!horarioComercial) {
+      id_remetente = remetente.id;
+      texto =
+        "Obrigado pela sua mensagem!\n" +
+        "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
+        "Se tiver um assunto urgente favor responder ao formulário de Emergência.";
+    }
+
+   
+    const dadosParaCriarNovaMensagem = {
+      id_conversa: conversaSelecionada.id,
+      id_usuario: usuarioId,
+      media_url: urlS3, 
+      foi_visualizado: false,
+      conteudo: texto,
+    };
+
+
+    const { data_cricao, data_atualizacao, media_url, ...dados } =
+      await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
+
+    const novaMensagem = {
+      ...dados,
+      pertenceAoUsuarioAtual: horarioComercial,
+    };
+
+    if (conversaSelecionada.ativada) {
+      // socket.emit("enviarMensagem", {
+      //   novaMensagem,
+      //   receptorId: conversaSelecionada.conversaCom.id,
+      // });
+    } else {
+      enviarConversa(novaMensagem);
+    }
+
+    atualizarBarraLateral(novaMensagem);
+
+    setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
+
+    setCarregandoDeletarFoto(false);
+
+  };
+
+
   const enviarMensagem = async (e) => {
     e.preventDefault();
 
@@ -285,7 +351,7 @@ function ConversaAberta({ navigation, route, socket }) {
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
       id_usuario: id_remetente,
-      media_url: "nenhuma", // Futuramente permitir a opção de mandar mídias
+      media_url: media_url,
       foi_visualizado: false,
       conteudo: texto,
     };
@@ -365,6 +431,7 @@ function ConversaAberta({ navigation, route, socket }) {
                 pertenceAoUsuarioAtual={mensagem.pertenceAoUsuarioAtual}
                 conteudo={mensagem.conteudo}
                 data_criacao={mensagem.data_criacao}
+                media_url ={mensagem.media_url}
               />
             ))}
           </ScrollView>
@@ -475,7 +542,7 @@ function ConversaAberta({ navigation, route, socket }) {
                       borderColor={Cores.azul}
                       borderWidth="3px"
                       boxShadow="none"
-                      /* onPress={() => updateFoto()} */
+                       onPress={() => enviarMensagemComImagem()} 
                     >
                       {carregandoDeletarFoto ? (
                         <ActivityIndicator

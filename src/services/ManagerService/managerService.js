@@ -462,6 +462,8 @@ export const UpdateConversaAtiva = async (id) => {
   return dadosConversa;
 };
 export const GetArquivoPorChave= async (chave) => {
+
+  console.log("Chamado");
   let arquivo = "";
   await requesterService
     .requisicaoArquivo(chave)

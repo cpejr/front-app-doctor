@@ -8,6 +8,7 @@ import {
   Modal,
   useWindowDimensions,
   TouchableHighlight,
+  Linking
 } from "react-native";
 import {
   BarraPesquisa,
