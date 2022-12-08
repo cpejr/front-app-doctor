@@ -88,6 +88,8 @@ function ConversaAberta({ navigation, route, socket }) {
   const [permissaoParaAbrirAGaleria, setPermissaoParaAbrirAGaleria] =
     useState(null);
 
+  let res;
+
   const openMenu = () => setVisivel(true);
 
   const closeMenu = () => setVisivel(false);
@@ -123,6 +125,8 @@ function ConversaAberta({ navigation, route, socket }) {
       quality: 1,
     });
 
+    
+
     if (!resultado.cancelled) {
       setImagem(resultado);
       setImagem64(`data:image/png;base64,${resultado.base64}`);
@@ -136,13 +140,18 @@ function ConversaAberta({ navigation, route, socket }) {
   const selecionaDocumento = async () => {
     let resultado = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: true,
+      type: 'application/pdf',  
     });
 
-    // FileSystem.readAsStringAsync(resultado.uri, {
-    //   encoding: FileSystem.EncodingType.Base64,
-    // });
-    // console.log(FileSystem.getContentUriAsync(resultado.uri));
+    
 
+    const file64 = await FileSystem.readAsStringAsync(resultado.uri, {
+      encoding: 'base64',
+    });
+
+    
+    setArquivo(`data:application/pdf;base64,${file64}`);
+    
     try {
       const response = await FileSystem.uploadAsync(`http://localhost:3333/arquivofile`, resultado.uri, {
         fieldName: 'file',
@@ -293,8 +302,8 @@ function ConversaAberta({ navigation, route, socket }) {
 
     let urlS3 = await managerService.enviarImagemMensagem(imagem64);
 
-    console.log(urlS3);
-
+    closeMenu();
+    fechandoModalEditarFoto();
     const horaAtual = new Date().getHours();
     const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
 
