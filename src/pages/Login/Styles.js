@@ -7,6 +7,7 @@ export const Body = styled.View`
   width: 100%;
   height: 100%;
   overflow: scroll;
+  padding-bottom: 5%;
 `;
 
 export const PaginaCarregando = styled.View`
@@ -22,12 +23,15 @@ export const CaixaTitulo = styled.View`
   align-items: center;
   justify-content: center;
   margin-top: ${(props) => props.marginTop};
-  margin-bottom: 8%;
+  margin-bottom: 1%;
+  width: 175px;
+  height: 200px;
 `;
 
 export const Logo = styled.Image`
-  width: 90px;
-  height: 90px;
+  width: 67%;
+  height: 65%;
+  border-radius: 10px;
 `;
 
 export const CaixaInputs = styled.View`
@@ -38,6 +42,16 @@ export const CaixaInputs = styled.View`
   bottom: 0px;
   align-items: center;
   margin-bottom: 4%;
+`;
+
+export const TituloInput = styled.Text`
+   font-size: 14px;
+   font-weight: bold;
+   color: ${Cores.preto};
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   margin-top: 5px;
 `;
 
 export const SenhaCadastro = styled.View`
@@ -81,4 +95,23 @@ export const Icone = styled.View`
   justify-content: center;
   align-items: center;
   width: 20%;
+`;
+
+export const AnimacaoCarregandoView = styled.View`
+  position: relative;
+  top: 0%;
+  height: 35px;
+`;
+
+export const Rotulo = styled.Text`
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  color: #E00000;
+  margin-bottom: 2%;
+`;
+
+export const AnimacaoCarregando = styled.View`
+  position: relative;
+  margin-top: 5px;
 `;
