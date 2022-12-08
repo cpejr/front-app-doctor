@@ -35,6 +35,7 @@ import {
   TituloModal,
   ImagemModal,
   CaixaBotoesCancelarConfirmarModalExcluirFoto,
+  ArquivoSelecionado,
 } from "./Styles";
 //import { Tooltip } from 'react-native-elements';
 import { Cores } from "../../variaveis";
@@ -83,12 +84,12 @@ function ConversaAberta({ navigation, route, socket }) {
   const tamanhoIcone = width > 480 ? 20 : 25;
   const tamanhoImagem = width > 2000 ? "400" : "180";
   const tamanhoImagemModal = width > 2000 ? "400px" : "180px";
-  const [carregandoDeletarFoto, setCarregandoDeletarFoto] = useState(false);
+  const [carregandoArquivo, setCarregandoarquivo] = useState(false);
   const [visivel, setVisivel] = React.useState(false);
   const [permissaoParaAbrirAGaleria, setPermissaoParaAbrirAGaleria] =
     useState(null);
 
-  let res;
+  const [nomeArquivo, setNomeArquivo] = useState("");
 
   const openMenu = () => setVisivel(true);
 
@@ -151,7 +152,10 @@ function ConversaAberta({ navigation, route, socket }) {
 
     
     setArquivo(`data:application/pdf;base64,${file64}`);
-    
+
+    setNomeArquivo(resultado.name);
+
+    /* 
     try {
       const response = await FileSystem.uploadAsync(`http://localhost:3333/arquivofile`, resultado.uri, {
         fieldName: 'file',
@@ -160,7 +164,7 @@ function ConversaAberta({ navigation, route, socket }) {
       console.log(JSON.stringify(response, null, 4));
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
 
   function fechandoModalEditarFoto() {
@@ -297,13 +301,29 @@ function ConversaAberta({ navigation, route, socket }) {
     });
   };
 
-  async function enviarMensagemComImagem() {
-    setCarregandoDeletarFoto(true);
 
-    let urlS3 = await managerService.enviarImagemMensagem(imagem64);
+  async function enviarMensagemComMidia( Mediatype ) {
+    setCarregandoarquivo(true);
+
+    let urlS3;
+    let texto;
+
+    if(Mediatype === "Imagem"){
+      urlS3 = await managerService.enviarImagemMensagem(imagem64);
+      texto = "Imagem";
+    }
+    else if(Mediatype === "ArquivoPDF")
+    {
+      urlS3 = await managerService.enviarArquivoMensagem(arquivo);
+      texto = "Arquivo PDF";
+    }
+    else return;
 
     closeMenu();
     fechandoModalEditarFoto();
+    fechandoModalDocumento();
+
+
     const horaAtual = new Date().getHours();
     const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
 
@@ -311,7 +331,7 @@ function ConversaAberta({ navigation, route, socket }) {
       conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
         .conversaCom;
 
-    let texto = "Imagem";
+    
 
     if (!horarioComercial) {
       id_remetente = remetente.id;
@@ -350,8 +370,9 @@ function ConversaAberta({ navigation, route, socket }) {
 
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
 
-    setCarregandoDeletarFoto(false);
+    setCarregandoarquivo(false);
   }
+
 
   const enviarMensagem = async (e) => {
     e.preventDefault();
@@ -585,9 +606,9 @@ function ConversaAberta({ navigation, route, socket }) {
                       borderColor={Cores.azul}
                       borderWidth="3px"
                       boxShadow="none"
-                      onPress={() => enviarMensagemComImagem()}
+                      onPress={() => enviarMensagemComMidia("Imagem")}
                     >
-                      {carregandoDeletarFoto ? (
+                      {carregandoArquivo ? (
                         <ActivityIndicator
                           animating={true}
                           color={Cores.branco}
@@ -632,25 +653,36 @@ function ConversaAberta({ navigation, route, socket }) {
                   </TituloModal>
                   {arquivo === null ? (
                     <Botao
-                      width="170px"
-                      height="170px"
+                      width="auto"
+                      height="auto"
                       backgroundColor={Cores.cinza[11]}
                       borderRadius="3px"
                       borderColor={Cores.cinza[9]}
                       borderWidth="3px"
                       boxShadow="none"
+                      padding="8px;"
                       onPress={() => selecionaDocumento()}
+
                     >
+                      <Icone name="folderopen" size={25} color={Cores.azul} style={{marginRight:10}}  />
                       <ConteudoBotao
-                        width="160px"
+                        width="auto"
                         fontSize="20px"
                         color={Cores.azul}
                       >
-                        Selecionar Arquivo
+                        Selecionar
                       </ConteudoBotao>
                     </Botao>
                   ) : (
-                    <Text>Selecionado</Text>
+                    <ArquivoSelecionado><Icone name="pdffile1" size={25} color={Cores.azul} style={{marginRight:5}} /> 
+                    <ConteudoBotao
+                    width="auto"
+                    fontSize="20px"
+                    color={Cores.azul}
+                  >
+                   {nomeArquivo}
+                  </ConteudoBotao>
+                </ArquivoSelecionado>
                   )}
                   <CaixaBotoesCancelarConfirmarModalExcluirFoto>
                     <Botao
@@ -679,9 +711,9 @@ function ConversaAberta({ navigation, route, socket }) {
                       borderColor={Cores.azul}
                       borderWidth="3px"
                       boxShadow="none"
-                      /* onPress={() => updateFoto()} */
+                      onPress={() => enviarMensagemComMidia("ArquivoPDF")} 
                     >
-                      {carregandoDeletarFoto ? (
+                      {carregandoArquivo ? (
                         <ActivityIndicator
                           animating={true}
                           color={Cores.branco}

@@ -200,3 +200,9 @@ export const ImagemModal = styled.Image`
  margin-top: 25px; 
  
 `;
+
+export const ArquivoSelecionado = styled.View`
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+`;

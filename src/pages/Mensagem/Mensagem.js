@@ -34,7 +34,7 @@ export default function Mensagem({
         scrollViewRef.current.scrollToEnd({ animated: true })
       }
     >
-      {conteudo === "Imagem" ? 
+      {conteudo === "Imagem" && 
       <TouchableOpacity   
             onPress={() => {
               Linking.openURL(media_url);
@@ -47,8 +47,22 @@ export default function Mensagem({
               </Text>
             </BotaoImagem>
            </TouchableOpacity>
-           :
-       <TextoMensagem>{conteudo}</TextoMensagem>}
+      }
+      {conteudo === "Arquivo PDF" && 
+      <TouchableOpacity   
+            onPress={() => {
+              Linking.openURL(media_url);
+            }}>
+            <BotaoImagem> 
+              
+                 <Icon name="pdffile1" size={25} color={Cores.azul} style={{marginRight:5}} />
+              <Text>
+              Arquivo PDF
+              </Text>
+            </BotaoImagem>
+           </TouchableOpacity>
+      }
+      {(conteudo !== "Arquivo PDF" && conteudo !=="Imagem") && <TextoMensagem>{conteudo}</TextoMensagem>}
       
       <DataHoraMensagem>
         <HoraMensagem>
