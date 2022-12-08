@@ -5,7 +5,15 @@ import React, {
   useRef,
   useDebugValue,
 } from "react";
-import { Text, View, ScrollView, Image, TouchableOpacity, useWindowDimensions , Modal} from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  useWindowDimensions,
+  Modal,
+} from "react-native";
 import {
   Body,
   HeaderConversaAberta,
@@ -36,7 +44,14 @@ import IconeIon from "react-native-vector-icons/Ionicons";
 import IconeFoundation from "react-native-vector-icons/Foundation";
 import Icon from "react-native-vector-icons/Entypo";
 import Icone from "react-native-vector-icons/AntDesign";
-import { ActivityIndicator, Colors, Searchbar, Provider, Menu, Divider } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Colors,
+  Searchbar,
+  Provider,
+  Menu,
+  Divider,
+} from "react-native-paper";
 import { ChatContext } from "../../contexts/ChatContext/ChatContext";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -47,6 +62,8 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
 import { Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
 
 function ConversaAberta({ navigation, route, socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
@@ -69,18 +86,17 @@ function ConversaAberta({ navigation, route, socket }) {
   const [carregandoDeletarFoto, setCarregandoDeletarFoto] = useState(false);
   const [visivel, setVisivel] = React.useState(false);
   const [permissaoParaAbrirAGaleria, setPermissaoParaAbrirAGaleria] =
-  useState(null);
+    useState(null);
 
   const openMenu = () => setVisivel(true);
 
   const closeMenu = () => setVisivel(false);
 
   function deixandoModaisResponsivos() {
-    if (width > height){ 
+    if (width > height) {
       setHeightModalUpdateFoto("85%");
       setMarginTopModais("0%");
-    } 
-    else {
+    } else {
       setHeightModalUpdateFoto("60%");
       setMarginTopModais("0%");
     }
@@ -118,14 +134,25 @@ function ConversaAberta({ navigation, route, socket }) {
   };
 
   const selecionaDocumento = async () => {
-    
+    let resultado = await DocumentPicker.getDocumentAsync({
+      copyToCacheDirectory: true,
+    });
 
-    /* Fazer a função aqui  */
-     
+    // FileSystem.readAsStringAsync(resultado.uri, {
+    //   encoding: FileSystem.EncodingType.Base64,
+    // });
+    // console.log(FileSystem.getContentUriAsync(resultado.uri));
 
+    try {
+      const response = await FileSystem.uploadAsync(`http://localhost:3333/arquivofile`, resultado.uri, {
+        fieldName: 'file',
+        httpMethod: 'POST',
+      });
+      console.log(JSON.stringify(response, null, 4));
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  
 
   function fechandoModalEditarFoto() {
     setModalAdicionarFoto(false);
@@ -262,13 +289,10 @@ function ConversaAberta({ navigation, route, socket }) {
   };
 
   async function enviarMensagemComImagem() {
-
-
-
     setCarregandoDeletarFoto(true);
 
     let urlS3 = await managerService.enviarImagemMensagem(imagem64);
-   
+
     console.log(urlS3);
 
     const horaAtual = new Date().getHours();
@@ -288,15 +312,13 @@ function ConversaAberta({ navigation, route, socket }) {
         "Se tiver um assunto urgente favor responder ao formulário de Emergência.";
     }
 
-   
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
       id_usuario: usuarioId,
-      media_url: urlS3, 
+      media_url: urlS3,
       foi_visualizado: false,
       conteudo: texto,
     };
-
 
     const { data_cricao, data_atualizacao, media_url, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
@@ -320,9 +342,7 @@ function ConversaAberta({ navigation, route, socket }) {
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
 
     setCarregandoDeletarFoto(false);
-
-  };
-
+  }
 
   const enviarMensagem = async (e) => {
     e.preventDefault();
@@ -385,61 +405,61 @@ function ConversaAberta({ navigation, route, socket }) {
   };
   return (
     <Provider>
-    <Body>
-      <HeaderConversaAberta>
-        <Icon
-          name="arrow-left"
-          size={32}
-          color={Cores.azul}
-          onPress={() => navigation.push("BarraLateral")}
-        />
-        {conversaSelecionada.conversaCom.imagem ? (
-          <ImagemUsuario
-            border-radius="3px"
-            source={{ uri: conversaSelecionada.conversaCom.imagem }}
-          ></ImagemUsuario>
-        ) : (
-          <ImagemUsuario
-            border-radius="3px"
-            source={imagemPerfilPadrão}
-          ></ImagemUsuario>
-        )}
-        <CaixaTexto>
-          <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-            {conversaSelecionada.conversaCom.nome}
-          </TextoMensagem>
-        </CaixaTexto>
-      </HeaderConversaAberta>
+      <Body>
+        <HeaderConversaAberta>
+          <Icon
+            name="arrow-left"
+            size={32}
+            color={Cores.azul}
+            onPress={() => navigation.push("BarraLateral")}
+          />
+          {conversaSelecionada.conversaCom.imagem ? (
+            <ImagemUsuario
+              border-radius="3px"
+              source={{ uri: conversaSelecionada.conversaCom.imagem }}
+            ></ImagemUsuario>
+          ) : (
+            <ImagemUsuario
+              border-radius="3px"
+              source={imagemPerfilPadrão}
+            ></ImagemUsuario>
+          )}
+          <CaixaTexto>
+            <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
+              {conversaSelecionada.conversaCom.nome}
+            </TextoMensagem>
+          </CaixaTexto>
+        </HeaderConversaAberta>
 
-      <FundoConversaAberta>
-        {carregandoConversa ? (
-          <PaginaCarregando>
-            <ActivityIndicator animating={true} color={Colors.black} />
-          </PaginaCarregando>
-        ) : (
-          <ScrollView
-            ref={(ref) => {
-              this.scrollView = ref;
-            }}
-            onContentSizeChange={() =>
-              this.scrollView.scrollToEnd({ animated: true })
-            }
-          >
-            {mensagens?.map((mensagem, idx) => (
-              <Mensagem
-                key={idx}
-                pertenceAoUsuarioAtual={mensagem.pertenceAoUsuarioAtual}
-                conteudo={mensagem.conteudo}
-                data_criacao={mensagem.data_criacao}
-                media_url ={mensagem.media_url}
-              />
-            ))}
-          </ScrollView>
-        )}
-      </FundoConversaAberta>
+        <FundoConversaAberta>
+          {carregandoConversa ? (
+            <PaginaCarregando>
+              <ActivityIndicator animating={true} color={Colors.black} />
+            </PaginaCarregando>
+          ) : (
+            <ScrollView
+              ref={(ref) => {
+                this.scrollView = ref;
+              }}
+              onContentSizeChange={() =>
+                this.scrollView.scrollToEnd({ animated: true })
+              }
+            >
+              {mensagens?.map((mensagem, idx) => (
+                <Mensagem
+                  key={idx}
+                  pertenceAoUsuarioAtual={mensagem.pertenceAoUsuarioAtual}
+                  conteudo={mensagem.conteudo}
+                  data_criacao={mensagem.data_criacao}
+                  media_url={mensagem.media_url}
+                />
+              ))}
+            </ScrollView>
+          )}
+        </FundoConversaAberta>
 
-      <FooterConversaAberta>
-      <View
+        <FooterConversaAberta>
+          <View
             style={{
               flexDirection: "row",
               justifyContent: "center",
@@ -447,7 +467,13 @@ function ConversaAberta({ navigation, route, socket }) {
             }}
           >
             <Menu
-            style={{top:510, left:10 , position: 'absolute', zIndex:100, elevation: 100}}
+              style={{
+                top: 510,
+                left: 10,
+                position: "absolute",
+                zIndex: 100,
+                elevation: 100,
+              }}
               visible={visivel}
               onDismiss={closeMenu}
               anchorPosition="top"
@@ -461,22 +487,31 @@ function ConversaAberta({ navigation, route, socket }) {
                 </TouchableOpacity>
               }
             >
-              <Menu.Item onPress={() => {
+              <Menu.Item
+                onPress={() => {
                   setModalAdicionarDocumento(true);
-                }} title="Enviar Documento" />
+                }}
+                title="Enviar Documento"
+              />
               <Divider />
-              <Menu.Item onPress={() => {
+              <Menu.Item
+                onPress={() => {
                   setModalAdicionarFoto(true);
-                }} title="Enviar Imagem" />
+                }}
+                title="Enviar Imagem"
+              />
             </Menu>
           </View>
           <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalAdicionarFoto}
-            >
-              <CaixaExterna height={height} width={width}>
-              <CaixaModalUpdateFoto height={heightModalUpdateFoto} marginTop={marginTopModais}>
+            animationType="slide"
+            transparent={true}
+            visible={modalAdicionarFoto}
+          >
+            <CaixaExterna height={height} width={width}>
+              <CaixaModalUpdateFoto
+                height={heightModalUpdateFoto}
+                marginTop={marginTopModais}
+              >
                 <CaixaFechar>
                   <TouchableOpacity
                     onPress={() => {
@@ -487,34 +522,33 @@ function ConversaAberta({ navigation, route, socket }) {
                   </TouchableOpacity>
                 </CaixaFechar>
                 <CaixaTituloModal>
-                  <TituloModal>
-                    Selecione uma imagem para enviar:
-                  </TituloModal>
-                    {imagem === null ? (
-                      <Botao
-                        width={tamanhoImagemModal}
-                        height={tamanhoImagemModal}
-                        backgroundColor={Cores.cinza[11]}
-                        borderRadius="3px"
-                        borderColor={Cores.cinza[9]}
-                        borderWidth="3px"
-                        boxShadow="none"
-                        onPress={() => selecionaImagem()}
+                  <TituloModal>Selecione uma imagem para enviar:</TituloModal>
+                  {imagem === null ? (
+                    <Botao
+                      width={tamanhoImagemModal}
+                      height={tamanhoImagemModal}
+                      backgroundColor={Cores.cinza[11]}
+                      borderRadius="3px"
+                      borderColor={Cores.cinza[9]}
+                      borderWidth="3px"
+                      boxShadow="none"
+                      onPress={() => selecionaImagem()}
+                    >
+                      <ConteudoBotao
+                        width="90px"
+                        fontSize="20px"
+                        color={Cores.azul}
                       >
-                        <ConteudoBotao
-                          width="90px"
-                          fontSize="20px"
-                          color={Cores.azul}
-                        >
-                          +
-                        </ConteudoBotao>
-                      </Botao>
-                    ) : (
-                      <ImagemModal 
-                       width={tamanhoImagem}
-                       height={tamanhoImagem}
-                       source={imagem}></ImagemModal>
-                    )}
+                        +
+                      </ConteudoBotao>
+                    </Botao>
+                  ) : (
+                    <ImagemModal
+                      width={tamanhoImagem}
+                      height={tamanhoImagem}
+                      source={imagem}
+                    ></ImagemModal>
+                  )}
                   <CaixaBotoesCancelarConfirmarModalExcluirFoto>
                     <Botao
                       width="40%"
@@ -542,7 +576,7 @@ function ConversaAberta({ navigation, route, socket }) {
                       borderColor={Cores.azul}
                       borderWidth="3px"
                       boxShadow="none"
-                       onPress={() => enviarMensagemComImagem()} 
+                      onPress={() => enviarMensagemComImagem()}
                     >
                       {carregandoDeletarFoto ? (
                         <ActivityIndicator
@@ -562,15 +596,18 @@ function ConversaAberta({ navigation, route, socket }) {
                   </CaixaBotoesCancelarConfirmarModalExcluirFoto>
                 </CaixaTituloModal>
               </CaixaModalUpdateFoto>
-              </CaixaExterna>
-            </Modal>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalAdicionarDocumento}
-            >
-              <CaixaExterna height={height} width={width}>
-              <CaixaModalUpdateFoto height={heightModalUpdateFoto} marginTop={marginTopModais}>
+            </CaixaExterna>
+          </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalAdicionarDocumento}
+          >
+            <CaixaExterna height={height} width={width}>
+              <CaixaModalUpdateFoto
+                height={heightModalUpdateFoto}
+                marginTop={marginTopModais}
+              >
                 <CaixaFechar>
                   <TouchableOpacity
                     onPress={() => {
@@ -584,28 +621,28 @@ function ConversaAberta({ navigation, route, socket }) {
                   <TituloModal>
                     Selecione um Arquivo PDF para enviar:
                   </TituloModal>
-                    {arquivo === null ? (
-                      <Botao
-                        width= "auto"
-                        height= "auto"
-                        backgroundColor={Cores.cinza[11]}
-                        borderRadius="3px"
-                        borderColor={Cores.cinza[9]}
-                        borderWidth="3px"
-                        boxShadow="none"
-                        onPress={() => selecionaDocumento()}
+                  {arquivo === null ? (
+                    <Botao
+                      width="170px"
+                      height="170px"
+                      backgroundColor={Cores.cinza[11]}
+                      borderRadius="3px"
+                      borderColor={Cores.cinza[9]}
+                      borderWidth="3px"
+                      boxShadow="none"
+                      onPress={() => selecionaDocumento()}
+                    >
+                      <ConteudoBotao
+                        width="160px"
+                        fontSize="20px"
+                        color={Cores.azul}
                       >
-                        <ConteudoBotao
-                          width="90px"
-                          fontSize="20px"
-                          color={Cores.azul}
-                        >
-                          Selecionar Arquivo
-                        </ConteudoBotao>
-                      </Botao>
-                    ) : (
-                      <Text>Selecionado</Text>
-                    )}
+                        Selecionar Arquivo
+                      </ConteudoBotao>
+                    </Botao>
+                  ) : (
+                    <Text>Selecionado</Text>
+                  )}
                   <CaixaBotoesCancelarConfirmarModalExcluirFoto>
                     <Botao
                       width="40%"
@@ -653,8 +690,8 @@ function ConversaAberta({ navigation, route, socket }) {
                   </CaixaBotoesCancelarConfirmarModalExcluirFoto>
                 </CaixaTituloModal>
               </CaixaModalUpdateFoto>
-              </CaixaExterna>
-            </Modal>
+            </CaixaExterna>
+          </Modal>
           <BarraEnviarMensagemConversaAberta
             placeholder="Mensagem"
             onChangeText={(e) => setInputMensagemConteudo(e)}

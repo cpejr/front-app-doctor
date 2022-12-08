@@ -463,7 +463,7 @@ export const UpdateConversaAtiva = async (id) => {
 };
 export const GetArquivoPorChave= async (chave) => {
 
-  console.log("Chamado");
+  //console.log("Chamado");
   let arquivo = "";
   await requesterService
     .requisicaoArquivo(chave)
