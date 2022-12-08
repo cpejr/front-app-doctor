@@ -5,10 +5,11 @@ import { Cores } from "../../variaveis";
 export const ContainerIconeSeta = styled.View`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   padding-top: 10px;
-  padding-bottom: 15px;
-  padding-left: 5px;
+  padding-bottom: 0px;
+  padding-left: 10px;
   width: 100%;
 `;
 
@@ -19,8 +20,15 @@ export const Container = styled.View`
   height: 100%;
   overflow: scroll;
   background-color: ${Cores.branco};
-  padding-right: 5%;
-  padding-left: 5%;
+ 
+`;
+
+export const PaginaCarregando = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 export const Titulo = styled.Text`
@@ -28,9 +36,11 @@ export const Titulo = styled.Text`
 `;
 
 export const ContainerScrollView = styled.ScrollView`
-  margin-top: 30px;
+  margin-top: 25px;
   background-color: ${Cores.branco};
   height: auto;
+  padding-left: 5%;
+  padding-right: 5%;
 `
 
 export const ContainerComentariosEResposta = styled.View`

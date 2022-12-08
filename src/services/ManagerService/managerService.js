@@ -604,3 +604,18 @@ export const GetExameEspecifico = async (id) => {
     });
   return dadosExame;
 };
+
+
+export const GetComentarios = async () => {
+  let comentarios = [];
+  await requesterService
+    .GetComentarios()
+    .then((res) => {
+      comentarios = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return comentarios;
+};
+

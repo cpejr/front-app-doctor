@@ -116,6 +116,8 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
   
   export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
+
+  export const GetComentarios = () => api.get(`/comentarios`);
   
   export const pegandoDescricaoPagRecomendacoes = () => api.get(`/indicacaos`);
 
