@@ -195,11 +195,11 @@ onPress={() => navigation.navigate("ExameNormal")}
     <ScrollView>
       <Corpo>
       <YoutubePlayer
-                    height={300}
-                    play={playing}
-                    videoId={"Y_4jI0_-t_o"}
-                    onChangeState={onStateChange}
-                  />
+          height={300}
+          play={playing}
+          videoId={"Y_4jI0_-t_o"}
+          onChangeState={onStateChange}
+      />
         {carregando ? (
           <AnimacaoCarregando>
             <ActivityIndicator animating={true} color={Colors.blue900} />
