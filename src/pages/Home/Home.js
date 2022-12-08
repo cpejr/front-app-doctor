@@ -1,5 +1,6 @@
-import React from "react";
-import { ScrollView, useWindowDimensions, Image, View } from "react-native";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import YoutubePlayer from "react-native-youtube-iframe";
+import { ScrollView, Button, Alert, useWindowDimensions, Image, View } from "react-native";
 import {
   Corpo,
   Card,
@@ -22,7 +23,6 @@ import { Cores } from "../../variaveis";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
-import { useState, useEffect } from "react";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 
@@ -122,6 +122,17 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [fotoAmie, setFotoAmie] = useState("");
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
+  const [playing, setPlaying] = useState(false);
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
 
   async function pegandoDados() {
     setCarregando(true);
@@ -130,6 +141,7 @@ onPress={() => navigation.navigate("ExameNormal")}
     const res = await managerService.GetImagemCarrossel();
 
     const info = resposta[0];
+    console.log("teste ", resposta);
     setHome(info);
 
     const requests = res.map(({ imagem }) =>
@@ -177,10 +189,17 @@ onPress={() => navigation.navigate("ExameNormal")}
   const alturaVideo = height < 800 ? "50%" : "60%";
   const larguraVideo = height < 800 ? "50%" : "70%";
   const alturaCard = height < 800 ? "350px" : "320px";
+  
 
   return (
     <ScrollView>
       <Corpo>
+      <YoutubePlayer
+                    height={300}
+                    play={playing}
+                    videoId={"Y_4jI0_-t_o"}
+                    onChangeState={onStateChange}
+                  />
         {carregando ? (
           <AnimacaoCarregando>
             <ActivityIndicator animating={true} color={Colors.blue900} />
@@ -190,7 +209,8 @@ onPress={() => navigation.navigate("ExameNormal")}
             <Card backgroundColor={Cores.branco} height={alturaCard}>
               <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
               <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
-              <Video height={alturaVideo} width={larguraVideo}></Video>
+              <Video height={alturaVideo} width={larguraVideo}>
+              </Video>
             </Card>
 
             <Card backgroundColor={Cores.branco} height="auto">
