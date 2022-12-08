@@ -29,8 +29,8 @@ export const CaixaTitulo = styled.View`
 `;
 
 export const Logo = styled.Image`
-  width: 80%;
-  height: 80%;
+  width: 67%;
+  height: 65%;
   border-radius: 10px;
 `;
 
@@ -45,8 +45,9 @@ export const CaixaInputs = styled.View`
 `;
 
 export const TituloInput = styled.Text`
-   font-size: 16px;
-   color: ${Cores.azul};
+   font-size: 14px;
+   font-weight: bold;
+   color: ${Cores.preto};
    width: 100%;
    display: flex;
    flex-direction: column;
@@ -108,4 +109,9 @@ export const Rotulo = styled.Text`
   font-size: 14px;
   color: #E00000;
   margin-bottom: 2%;
+`;
+
+export const AnimacaoCarregando = styled.View`
+  position: relative;
+  margin-top: 5px;
 `;

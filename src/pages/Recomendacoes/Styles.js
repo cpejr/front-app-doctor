@@ -176,4 +176,13 @@ export const Info = styled.Text`
   flex-wrap: wrap;
 `;
 
+export const PaginaCarregando = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: ${(props) => props.height};
+  width: ${(props) => props.width};
+  
+`;
+
 
