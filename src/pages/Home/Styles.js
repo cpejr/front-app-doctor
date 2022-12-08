@@ -40,6 +40,7 @@ export const Video = styled.View`
   display: flex;
   align-items: center;
   margin-top: 3%;
+  background-color: green;
 `;
 
 export const CorpoCard = styled.View`

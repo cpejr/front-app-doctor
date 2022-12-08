@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { ScrollView, Button, Alert, useWindowDimensions, Image, View } from "react-native";
 import {
@@ -119,6 +119,8 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [altura, setAltura] = useState();
   const [largura, setLargura] = useState();
   const [home, setHome] = useState({});
+  const [homeVideo, setHomeVideo] = useState();
+  const [idVideo, setIdVideo] = useState();
   const [fotoAmie, setFotoAmie] = useState("");
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
@@ -139,10 +141,12 @@ onPress={() => navigation.navigate("ExameNormal")}
 
     const resposta = await managerService.GetHomeInfo();
     const res = await managerService.GetImagemCarrossel();
-
     const info = resposta[0];
-    console.log("teste ", resposta);
     setHome(info);
+    await sleep (1500);
+    
+    const youtubeID = home.video.split('v=')[1].substring(0, 11);
+    setIdVideo(youtubeID);
 
     const requests = res.map(({ imagem }) =>
       managerService.GetArquivoPorChave(imagem)
@@ -180,26 +184,23 @@ onPress={() => navigation.navigate("ExameNormal")}
 
   useEffect(() => {
     pegandoDados();
-  }, []);
+  }, [home.video]);
 
   useEffect(() => {
     setandoImagem();
   }, [width]);
 
-  const alturaVideo = height < 800 ? "50%" : "60%";
-  const larguraVideo = height < 800 ? "50%" : "70%";
+  const alturaVideo = height < 800 ? "50%" : "70%";
+  const larguraVideo = height < 800 ? "50%" : "80%";
   const alturaCard = height < 800 ? "350px" : "320px";
-  
+
+//  const idVideo = videoId.split('v=')[1].substring(0, 11);
+
 
   return (
+    <>
     <ScrollView>
       <Corpo>
-      <YoutubePlayer
-          height={300}
-          play={playing}
-          videoId={"Y_4jI0_-t_o"}
-          onChangeState={onStateChange}
-      />
         {carregando ? (
           <AnimacaoCarregando>
             <ActivityIndicator animating={true} color={Colors.blue900} />
@@ -209,8 +210,13 @@ onPress={() => navigation.navigate("ExameNormal")}
             <Card backgroundColor={Cores.branco} height={alturaCard}>
               <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
               <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
-              <Video height={alturaVideo} width={larguraVideo}>
-              </Video>
+                <YoutubePlayer
+                  height={alturaVideo}
+                  width={larguraVideo}
+                  play={playing}
+                  videoId={idVideo}
+                  onChangeState={onStateChange}
+                />
             </Card>
 
             <Card backgroundColor={Cores.branco} height="auto">
@@ -362,7 +368,7 @@ onPress={() => navigation.navigate("ExameNormal")}
           </>
         )}
       </Corpo>
-    </ScrollView>
+    </ScrollView></>
   );
 }
 
