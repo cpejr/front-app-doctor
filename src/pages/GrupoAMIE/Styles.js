@@ -33,6 +33,9 @@ export const ImagemMedicos = styled.Image`
   width: ${(props) => props.width};
   margin-top: 5%;
   border-radius: 8px;
+  border-style: solid;
+  border: ${Cores.azul};
+  border-width: 2px;
 `;
 
 export const CaixaSeta = styled.View`

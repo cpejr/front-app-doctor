@@ -33,12 +33,13 @@ function GrupoAMIE() {
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
 
   const [amies, setAmies] = useState([]);
-  const [fotoDePerfil, setFotoDePerfil] = useState("");
+  const [imagemAmie, setImagemAmie] = useState("");
+  const [imagemAmie2, setImagemAmie2] = useState("");
 
   async function getAmies(){
     const resposta = await managerService.GetDadosAmie();
     setAmies(resposta);
-    setandoFotoDePerfil(amies.imagem_um)
+    setandoImagemAmie(amies.imagem_um)
     console.log("teste: ", resposta);
   }
 
@@ -46,7 +47,7 @@ function GrupoAMIE() {
     getAmies();
   }, []);
 
-  async function setandoFotoDePerfil() {
+  async function setandoImagemAmie() {
     const chave = amies.imagem_um;
     if (chave === null || chave === "" || chave === undefined){
       await sleep(1500);
@@ -54,14 +55,29 @@ function GrupoAMIE() {
     }
 
     const arquivo = await managerService.GetArquivoPorChave(chave);
-    setFotoDePerfil(arquivo);
+    setImagemAmie(arquivo);
     await sleep(1500);
   }
 
   useEffect(() => {
-    setandoFotoDePerfil();
+    setandoImagemAmie();
   }, [amies.imagem_um]);
 
+  async function setandoImagemAmie2() {
+    const chave = amies.imagem_dois;
+    if (chave === null || chave === "" || chave === undefined){
+      await sleep(1500);
+      return false;
+    }
+
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setImagemAmie2(arquivo);
+    await sleep(1500);
+  }
+
+  useEffect(() => {
+    setandoImagemAmie2();
+  }, [amies.imagem_dois]);
 
   return (
     <Container>
@@ -85,13 +101,20 @@ function GrupoAMIE() {
 
         {amies?.map((value) => (
           <>
-            <CaixaDescricao>
-              <Descricao> {value.texto}</Descricao>
-            </CaixaDescricao>
             <ImagemMedicos 
               width={WidthImagemMedicos}
               height={HeightImagemMedicos}
-              source={fotoDePerfil}>
+              source={ { uri: imagemAmie }}>
+            </ImagemMedicos>
+
+            <CaixaDescricao>
+              <Descricao> {value.texto}</Descricao>
+            </CaixaDescricao>
+
+            <ImagemMedicos 
+              width={WidthImagemMedicos}
+              height={HeightImagemMedicos}
+              source={ { uri: imagemAmie2 }}>
             </ImagemMedicos>
           {/*
           <CaixaDescricao>
