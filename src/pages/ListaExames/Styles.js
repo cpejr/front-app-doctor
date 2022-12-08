@@ -113,6 +113,7 @@ export const Quadro = styled.View`
 `;
 
 export const TextoQuadro = styled.Text`
+  display: flex;
   text-align: center;
   line-height: 20px;
   font-size: 18px;

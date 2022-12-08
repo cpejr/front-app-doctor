@@ -79,6 +79,11 @@ export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
   
 export const requisicaoExamesMarcadosPorId = (id) => api.get(`/exame_marcados/${id}`);
 
+export const requisicaoTodosExames = () => api.get(`/exames/`);
+
+export const requisicaoExameEspecifico = (id) =>
+  api.get(`/exames/${id}`);
+
 
 export const updateFotoDePerfil = (id, base64) =>
   api.post(`/usuariosimagem/${id}`,{
