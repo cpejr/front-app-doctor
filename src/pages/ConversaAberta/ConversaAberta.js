@@ -1,72 +1,57 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useDebugValue,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
-  Text,
-  View,
+  Modal,
   ScrollView,
-  Image,
   TouchableOpacity,
   useWindowDimensions,
-  Modal,
+  View,
 } from "react-native";
 import {
-  Body,
-  HeaderConversaAberta,
-  FundoConversaAberta,
-  FooterConversaAberta,
+  ArquivoSelecionado,
   BarraEnviarMensagemConversaAberta,
-  TextoMensagem,
-  MensagemEnviada,
-  TextoMensagemEnviada,
-  MensagemRecebida,
-  HoraMensagem,
-  ImagemUsuario,
-  CaixaTexto,
-  PaginaCarregando,
+  Body,
+  BotaoRodaPe,
+  CaixaBotoesCancelarConfirmarModalExcluirFoto,
   CaixaExterna,
   CaixaFechar,
   CaixaModalUpdateFoto,
+  CaixaTexto,
   CaixaTituloModal,
-  TituloModal,
+  FooterConversaAberta,
+  FundoConversaAberta,
+  HeaderConversaAberta,
   ImagemModal,
-  CaixaBotoesCancelarConfirmarModalExcluirFoto,
-  ArquivoSelecionado,
-  BotaoRodaPe,
+  ImagemUsuario,
+  PaginaCarregando,
   ScrollMensagemTablet,
+  TextoMensagem,
+  TituloModal,
 } from "./Styles";
 //import { Tooltip } from 'react-native-elements';
-import { Cores } from "../../variaveis";
-import Mensagem from "../Mensagem/Mensagem";
-import IconeMaterial from "react-native-vector-icons/MaterialIcons";
-import IconeIon from "react-native-vector-icons/Ionicons";
-import IconeFoundation from "react-native-vector-icons/Foundation";
-import Icon from "react-native-vector-icons/Entypo";
-import Icone from "react-native-vector-icons/AntDesign";
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
+import * as ImagePicker from "expo-image-picker";
+import { Alert } from "react-native";
 import {
   ActivityIndicator,
   Colors,
-  Searchbar,
-  Provider,
-  Menu,
   Divider,
+  Menu,
+  Provider,
 } from "react-native-paper";
+import Icone from "react-native-vector-icons/AntDesign";
+import Icon from "react-native-vector-icons/Entypo";
+import IconeFoundation from "react-native-vector-icons/Foundation";
+import IconeMaterial from "react-native-vector-icons/MaterialIcons";
 import { ChatContext } from "../../contexts/ChatContext/ChatContext";
-import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import * as managerService from "../../services/ManagerService/managerService";
-import checarObjVazio from "../../utils/checarObjVazio";
-import moverArray from "../../utils/moverArray";
-import { sleep } from "../../utils/sleep";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
-import { Alert } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import * as DocumentPicker from "expo-document-picker";
-import * as FileSystem from "expo-file-system";
+import checarObjVazio from "../../utils/checarObjVazio";
+import moverArray from "../../utils/moverArray";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
+import { Cores } from "../../variaveis";
+import Mensagem from "../Mensagem/Mensagem";
 
 function ConversaAberta({ navigation, route, socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
@@ -232,7 +217,7 @@ function ConversaAberta({ navigation, route, socket }) {
 
   function startTemporizador() {
     frequencia = setInterval(function () {
-      getMensagens();
+      getMensagens(true);
     }, 5000);
   }
   useEffect(() => {
