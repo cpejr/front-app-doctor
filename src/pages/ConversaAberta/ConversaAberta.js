@@ -304,9 +304,7 @@ function ConversaAberta({ navigation, route, socket }) {
   };
 
   async function enviarMensagemComMidia(Mediatype) {
-    
-    if(arquivo === null && imagem64 === null )
-    {
+    if (arquivo === null && imagem64 === null) {
       Alert.alert("Erro", "Selecione um arquivo para enviar!");
       return;
     }
@@ -329,7 +327,7 @@ function ConversaAberta({ navigation, route, socket }) {
     fechandoModalDocumento();
 
     const horaAtual = new Date().getHours();
-    const horarioComercial = horaAtual >= 7 && horaAtual < 21? true : false;
+    const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
 
     const remetente =
       conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
