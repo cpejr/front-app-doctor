@@ -36,6 +36,8 @@ import {
   ImagemModal,
   CaixaBotoesCancelarConfirmarModalExcluirFoto,
   ArquivoSelecionado,
+  BotaoRodaPe,
+  ScrollMensagemTablet,
 } from "./Styles";
 //import { Tooltip } from 'react-native-elements';
 import { Cores } from "../../variaveis";
@@ -78,9 +80,11 @@ function ConversaAberta({ navigation, route, socket }) {
   const { width, height } = useWindowDimensions();
   const [heightModalUpdateFoto, setHeightModalUpdateFoto] = useState();
   const [marginTopModais, setMarginTopModais] = useState();
+  const [tablet, setTablet] = useState();
   const [imagem64, setImagem64] = useState(null);
   const [imagem, setImagem] = useState(null);
   const [arquivo, setArquivo] = useState(null);
+  const [tamanhoArquivo, setTamanhoArquivo] = useState();
   const tamanhoIcone = width > 480 ? 20 : 25;
   const tamanhoImagem = width > 2000 ? "400" : "180";
   const tamanhoImagemModal = width > 2000 ? "400px" : "180px";
@@ -99,9 +103,11 @@ function ConversaAberta({ navigation, route, socket }) {
     if (width > height) {
       setHeightModalUpdateFoto("85%");
       setMarginTopModais("0%");
+      setTablet(true);
     } else {
       setHeightModalUpdateFoto("60%");
       setMarginTopModais("0%");
+      setTablet(false);
     }
   }
 
@@ -124,9 +130,8 @@ function ConversaAberta({ navigation, route, socket }) {
       allowsEditing: true,
       aspect: [3, 3],
       quality: 1,
+      //ImagePickerAsset: {fileSize}
     });
-
-    
 
     if (!resultado.cancelled) {
       setImagem(resultado);
@@ -141,30 +146,27 @@ function ConversaAberta({ navigation, route, socket }) {
   const selecionaDocumento = async () => {
     let resultado = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: true,
-      type: 'application/pdf',  
+      type: "application/pdf",
     });
-
-    
 
     const file64 = await FileSystem.readAsStringAsync(resultado.uri, {
-      encoding: 'base64',
+      encoding: "base64",
     });
 
-    
+    // var tamanho;
+    // if (resultado.size < 1000000 ){
+    //   tamanho = resultado.size/1000;
+    //   tamanho = tamanho.toFixed(2);
+    //   setTamanhoArquivo(tamanho + "KB");
+    // } else {
+    //   tamanho = resultado.size/1000000;
+    //   tamanho = tamanho.toFixed(2);
+    //   setTamanhoArquivo(tamanho + "MB");
+    // }
+
     setArquivo(`data:application/pdf;base64,${file64}`);
 
     setNomeArquivo(resultado.name);
-
-    /* 
-    try {
-      const response = await FileSystem.uploadAsync(`http://localhost:3333/arquivofile`, resultado.uri, {
-        fieldName: 'file',
-        httpMethod: 'POST',
-      });
-      console.log(JSON.stringify(response, null, 4));
-    } catch (error) {
-      console.log(error);
-    } */
   };
 
   function fechandoModalEditarFoto() {
@@ -301,37 +303,30 @@ function ConversaAberta({ navigation, route, socket }) {
     });
   };
 
-
-  async function enviarMensagemComMidia( Mediatype ) {
+  async function enviarMensagemComMidia(Mediatype) {
     setCarregandoarquivo(true);
 
     let urlS3;
     let texto;
 
-    if(Mediatype === "Imagem"){
+    if (Mediatype === "Imagem") {
       urlS3 = await managerService.enviarImagemMensagem(imagem64);
       texto = "Imagem";
-    }
-    else if(Mediatype === "ArquivoPDF")
-    {
+    } else if (Mediatype === "ArquivoPDF") {
       urlS3 = await managerService.enviarArquivoMensagem(arquivo);
       texto = "Arquivo PDF";
-    }
-    else return;
+    } else return;
 
     closeMenu();
     fechandoModalEditarFoto();
     fechandoModalDocumento();
 
-
     const horaAtual = new Date().getHours();
-    const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
+    const horarioComercial = horaAtual >= 7 && horaAtual < 21? true : false;
 
     const remetente =
       conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
         .conversaCom;
-
-    
 
     if (!horarioComercial) {
       id_remetente = remetente.id;
@@ -372,7 +367,6 @@ function ConversaAberta({ navigation, route, socket }) {
 
     setCarregandoarquivo(false);
   }
-
 
   const enviarMensagem = async (e) => {
     e.preventDefault();
@@ -467,71 +461,142 @@ function ConversaAberta({ navigation, route, socket }) {
               <ActivityIndicator animating={true} color={Colors.black} />
             </PaginaCarregando>
           ) : (
-            <ScrollView
-              ref={(ref) => {
-                this.scrollView = ref;
-              }}
-              onContentSizeChange={() =>
-                this.scrollView.scrollToEnd({ animated: true })
-              }
-            >
-              {mensagens?.map((mensagem, idx) => (
-                <Mensagem
-                  key={idx}
-                  pertenceAoUsuarioAtual={mensagem.pertenceAoUsuarioAtual}
-                  conteudo={mensagem.conteudo}
-                  data_criacao={mensagem.data_criacao}
-                  media_url={mensagem.media_url}
-                />
-              ))}
-            </ScrollView>
+            <>
+              {tablet ? (
+                <ScrollMensagemTablet
+                  ref={(ref) => {
+                    this.scrollView = ref;
+                  }}
+                  onContentSizeChange={() =>
+                    this.scrollView.scrollToEnd({ animated: true })
+                  }
+                >
+                  {mensagens?.map((mensagem, idx) => (
+                    <Mensagem
+                      key={idx}
+                      pertenceAoUsuarioAtual={mensagem.pertenceAoUsuarioAtual}
+                      conteudo={mensagem.conteudo}
+                      data_criacao={mensagem.data_criacao}
+                      media_url={mensagem.media_url}
+                      //tamanho_arquivo={0}
+                    />
+                  ))}
+                </ScrollMensagemTablet>
+              ) : (
+                <ScrollView
+                  ref={(ref) => {
+                    this.scrollView = ref;
+                  }}
+                  onContentSizeChange={() =>
+                    this.scrollView.scrollToEnd({ animated: true })
+                  }
+                >
+                  {mensagens?.map((mensagem, idx) => (
+                    <Mensagem
+                      key={idx}
+                      pertenceAoUsuarioAtual={mensagem.pertenceAoUsuarioAtual}
+                      conteudo={mensagem.conteudo}
+                      data_criacao={mensagem.data_criacao}
+                      media_url={mensagem.media_url}
+                      tamanho_arquivo={0}
+                    />
+                  ))}
+                </ScrollView>
+              )}
+            </>
           )}
         </FundoConversaAberta>
 
         <FooterConversaAberta>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              elevation: 0,
-            }}
-          >
-            <Menu
+          {tablet == true ? (
+            <View
               style={{
-                top: 510,
-                left: 10,
-                position: "absolute",
-                zIndex: 100,
-                elevation: 100,
+                flexDirection: "row",
+                justifyContent: "center",
+                elevation: 0,
               }}
-              visible={visivel}
-              onDismiss={closeMenu}
-              anchorPosition="top"
-              anchor={
-                <TouchableOpacity onPress={openMenu}>
-                  <IconeFoundation
-                    name="paperclip"
-                    size={33}
-                    color={Cores.azulEscuro}
-                  />
-                </TouchableOpacity>
-              }
             >
-              <Menu.Item
-                onPress={() => {
-                  setModalAdicionarDocumento(true);
+              <Menu
+                style={{
+                  top: 155,
+                  left: 10,
+                  position: "absolute",
+                  zIndex: 100,
+                  elevation: 100,
                 }}
-                title="Enviar Documento"
-              />
-              <Divider />
-              <Menu.Item
-                onPress={() => {
-                  setModalAdicionarFoto(true);
+                visible={visivel}
+                onDismiss={closeMenu}
+                anchorPosition="top"
+                anchor={
+                  <BotaoRodaPe onPress={openMenu} paddingLeft="18px">
+                    <IconeFoundation
+                      name="paperclip"
+                      size={33}
+                      color={Cores.azulEscuro}
+                    />
+                  </BotaoRodaPe>
+                }
+              >
+                <Menu.Item
+                  onPress={() => {
+                    setModalAdicionarDocumento(true);
+                  }}
+                  title="Enviar Documento"
+                />
+                <Divider />
+                <Menu.Item
+                  onPress={() => {
+                    setModalAdicionarFoto(true);
+                  }}
+                  title="Enviar Imagem"
+                />
+              </Menu>
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                elevation: 0,
+              }}
+            >
+              <Menu
+                style={{
+                  top: 465,
+                  left: 10,
+                  position: "absolute",
+                  zIndex: 100,
+                  elevation: 100,
                 }}
-                title="Enviar Imagem"
-              />
-            </Menu>
-          </View>
+                visible={visivel}
+                onDismiss={closeMenu}
+                anchorPosition="top"
+                anchor={
+                  <BotaoRodaPe onPress={openMenu} paddingRight="12px">
+                    <IconeFoundation
+                      name="paperclip"
+                      size={33}
+                      color={Cores.azulEscuro}
+                    />
+                  </BotaoRodaPe>
+                }
+              >
+                <Menu.Item
+                  onPress={() => {
+                    setModalAdicionarDocumento(true);
+                  }}
+                  title="Enviar Documento"
+                />
+                <Divider />
+                <Menu.Item
+                  onPress={() => {
+                    setModalAdicionarFoto(true);
+                  }}
+                  title="Enviar Imagem"
+                />
+              </Menu>
+            </View>
+          )}
           <Modal
             animationType="slide"
             transparent={true}
@@ -662,9 +727,13 @@ function ConversaAberta({ navigation, route, socket }) {
                       boxShadow="none"
                       padding="8px;"
                       onPress={() => selecionaDocumento()}
-
                     >
-                      <Icone name="folderopen" size={25} color={Cores.azul} style={{marginRight:10}}  />
+                      <Icone
+                        name="folderopen"
+                        size={25}
+                        color={Cores.azul}
+                        style={{ marginRight: 10 }}
+                      />
                       <ConteudoBotao
                         width="auto"
                         fontSize="20px"
@@ -674,15 +743,21 @@ function ConversaAberta({ navigation, route, socket }) {
                       </ConteudoBotao>
                     </Botao>
                   ) : (
-                    <ArquivoSelecionado><Icone name="pdffile1" size={25} color={Cores.azul} style={{marginRight:5}} /> 
-                    <ConteudoBotao
-                    width="auto"
-                    fontSize="20px"
-                    color={Cores.azul}
-                  >
-                   {nomeArquivo}
-                  </ConteudoBotao>
-                </ArquivoSelecionado>
+                    <ArquivoSelecionado>
+                      <Icone
+                        name="pdffile1"
+                        size={25}
+                        color={Cores.azul}
+                        style={{ marginRight: 5 }}
+                      />
+                      <ConteudoBotao
+                        width="auto"
+                        fontSize="20px"
+                        color={Cores.azul}
+                      >
+                        {nomeArquivo}
+                      </ConteudoBotao>
+                    </ArquivoSelecionado>
                   )}
                   <CaixaBotoesCancelarConfirmarModalExcluirFoto>
                     <Botao
@@ -711,7 +786,7 @@ function ConversaAberta({ navigation, route, socket }) {
                       borderColor={Cores.azul}
                       borderWidth="3px"
                       boxShadow="none"
-                      onPress={() => enviarMensagemComMidia("ArquivoPDF")} 
+                      onPress={() => enviarMensagemComMidia("ArquivoPDF")}
                     >
                       {carregandoArquivo ? (
                         <ActivityIndicator

@@ -10,6 +10,10 @@ export const Body = styled.View`
   flex-direction: column;
 `;
 
+export const ScrollMensagemTablet = styled.ScrollView`
+  margin-bottom: 70px;
+`;
+
 export const HeaderConversaAberta = styled.View`
   display: flex;
   width: 100%;
@@ -52,6 +56,16 @@ export const BarraEnviarMensagemConversaAberta = styled.TextInput`
   border-radius: 5px;
   border-width: 2px;
   padding-left: 15px;
+`;
+
+export const BotaoRodaPe = styled.TouchableOpacity`
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding-left: ${(props) => props.paddingLeft?? 0};
+  padding-right: ${(props) => props.paddingRight?? 0};
 `;
 
 export const CaixaTexto = styled.View`
@@ -118,91 +132,89 @@ export const ImagemUsuario = styled.Image`
   margin-left: 12px;
 `;
 
-export const CaixaModalUpdateFoto = styled.View` 
-  height: ${(props) => props.height}; 
-  width: 80%; 
-  max-width: 600px; 
-  margin-top: ${(props) => props.marginTop}; 
-  margin-left: 10%; 
-  margin-right: 10%; 
-  padding-bottom: 5%; 
-  padding-top:0%; 
-  background-color: white; 
-  border-radius: 6px; 
-  border: 4px; 
-  border-color: #c4c4c4; 
-  display: flex; 
-  align-items: center; 
-  justify-content: flex-start; 
-`; 
- 
-export const CaixaExterna = styled.View` 
-  height: ${(props) => props.height}; 
-  width:  ${(props) => props.width}; 
-  background-color: rgba(0,0,0,0.6); 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-`; 
- 
-export const CaixaFechar = styled.View` 
-  width: 100%; 
-  height: 10%; 
-  height: auto; 
-  display: flex; 
-  align-items: flex-end; 
-  justify-content: flex-start; 
-  padding-right: 5%; 
-  padding-top: 5%; 
-`; 
- 
-export const CaixaTituloModal = styled.View` 
-  width: 80%; 
-  height: 90%; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: space-around; 
-  align-items: center; 
-`; 
- 
-export const CaixaBotoesAlterarEDeletarImagem = styled.View` 
- display: flex; 
- margin-top: 5%; 
- flex-direction: column; 
- justify-content: center; 
- align-items: center; 
- width: 100%; 
-  
-`; 
- 
-export const BotaoAlterarEDeletarImagem = styled.TouchableOpacity` 
-  margin-top: 3%; 
-  align-items:center; 
-`; 
- 
-export const TituloModal = styled.Text` 
-  font-size: 18px; 
-  font-weight:600; 
-  text-align: center; 
-`; 
- 
-export const CaixaBotoesCancelarConfirmarModalExcluirFoto = styled.View` 
-  width: 100%; 
-  display: flex; 
-  margin-top: 1%; 
-  flex-direction: row; 
-  justify-content: space-around; 
-`; 
- 
-export const ImagemModal = styled.Image` 
- width: ${(props) => props.width}; 
- height: ${(props) => props.height}; 
- margin-top: 25px; 
- 
+export const CaixaModalUpdateFoto = styled.View`
+  height: ${(props) => props.height};
+  width: 80%;
+  max-width: 600px;
+  margin-top: ${(props) => props.marginTop};
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 5%;
+  padding-top: 0%;
+  background-color: white;
+  border-radius: 6px;
+  border: 4px;
+  border-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const CaixaExterna = styled.View`
+  height: ${(props) => props.height};
+  width: ${(props) => props.width};
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const CaixaFechar = styled.View`
+  width: 100%;
+  height: 10%;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-right: 5%;
+  padding-top: 5%;
+`;
+
+export const CaixaTituloModal = styled.View`
+  width: 80%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+export const CaixaBotoesAlterarEDeletarImagem = styled.View`
+  display: flex;
+  margin-top: 5%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+export const BotaoAlterarEDeletarImagem = styled.TouchableOpacity`
+  margin-top: 3%;
+  align-items: center;
+`;
+
+export const TituloModal = styled.Text`
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+`;
+
+export const CaixaBotoesCancelarConfirmarModalExcluirFoto = styled.View`
+  width: 100%;
+  display: flex;
+  margin-top: 1%;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+export const ImagemModal = styled.Image`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  margin-top: 25px;
 `;
 
 export const ArquivoSelecionado = styled.View`
-   display: flex;
-   flex-direction: row;
-   align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;

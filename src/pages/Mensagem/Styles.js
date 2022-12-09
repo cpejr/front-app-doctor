@@ -29,6 +29,7 @@ export const BotaoImagem = styled.View`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
+  padding-top: 5px;
 `;
 
 export const DataHoraMensagem = styled.View`
@@ -46,4 +47,11 @@ justify-content: flex-end;
 export const HoraMensagem = styled.Text`
   font-size: 10px;
   color: ${Cores.preto};
+`;
+
+export const BotaoArquivo = styled.TouchableOpacity`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
 `;
