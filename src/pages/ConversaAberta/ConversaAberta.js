@@ -304,6 +304,13 @@ function ConversaAberta({ navigation, route, socket }) {
   };
 
   async function enviarMensagemComMidia(Mediatype) {
+    
+    if(arquivo === null && imagem64 === null )
+    {
+      Alert.alert("Erro", "Selecione um arquivo para enviar!");
+      return;
+    }
+
     setCarregandoarquivo(true);
 
     let urlS3;
