@@ -385,7 +385,7 @@ function ConversaAberta({ navigation, route, socket }) {
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
       id_usuario: id_remetente,
-      media_url: media_url,
+      media_url: "media_url",
       foi_visualizado: false,
       conteudo: texto,
     };
