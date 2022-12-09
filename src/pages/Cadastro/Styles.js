@@ -14,18 +14,16 @@ export const Body = styled.View`
 export const CaixaTitulo = styled.View`
   display: flex;
   flex-direction: row;
-  width: ${(props) => props.width};
   align-items: center;
   justify-content: space-around;
-  margin-top: ${(props) => props.marginTop};
   margin-bottom: 30px;
+  height: auto;
+  width: ${(props) => props.width};
+  margin-top: ${(props) => props.marginTop};
 `;
 
 export const Logo = styled.Image`
-  width: 120px;
-  height: 135px;
   border-radius: 10px;
-  margin-right: 20px;
 `;
 
 export const Titulo = styled.Text`
@@ -162,11 +160,9 @@ export const CaixaTituloInput = styled.View`
 `;
 
 export const TituloInput = styled.Text`
-   font-size: 12px;
-   color: ${Cores.azulEscuro};
-   text-align: left;
-   
-
+  font-size: 12px;
+  color: ${Cores.azulEscuro};
+  text-align: left;
 `;
 
 export const PossuiConvenio = styled.View`
@@ -176,7 +172,7 @@ export const PossuiConvenio = styled.View`
   width: 100%;
   padding: 2% 10% 0% 10%;
 
-  color:${Cores.azul} ;
+  color: ${Cores.azul};
   .ant-switch-checked {
     background-color: ${Cores.azul};
   }
@@ -187,8 +183,6 @@ export const Texto = styled.Text`
   color: ${Cores.azulEscuro};
 `;
 
-
 export const CaixaTextoConvenioCuidador = styled.View`
   margin-top: 5%;
-  
 `;
