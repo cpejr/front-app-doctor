@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 import { Alert } from "react-native";
 import { sleep } from "../../utils/sleep";
+import { ContainerFotoEAlterarImagem } from "../../pages/AlterarDados/Styles";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
   const dadosEmail = await requesterService.requisicaoDadosUsuario(
@@ -527,6 +528,73 @@ export const CriandoConversa = async (conversa) => {
       requisicaoErro(error);
     });
   return dadosConversaCriada;
+};
+
+export const pegandoDescricaoPagRecomendacoes = async () => {
+  let result = {};
+  await requesterService
+    .pegandoDescricaoPagRecomendacoes()
+    .then((res) => {
+      result = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return result;
+};
+
+export const pegandoIndicacoesEspecificas = async () => {
+  let result = {};
+  await requesterService
+    .pegandoIndicacoesEspecificas()
+    .then((res) => {
+      result = res.data;
+      
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return result;
+};
+
+export const medicosIndicadosPorId = async (id) => {
+  let resposta = {};
+  await requesterService
+    .medicosIndicadosPorId(id)
+    .then((res) => {
+      resposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return resposta;
+};
+export const pegarTodosExames = async () => {
+  let dadosExame = {};
+  await requesterService
+    .requisicaoTodosExames()
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
+};
+
+export const GetExameEspecifico = async (id) => {
+  let dadosExame = {};
+  await requesterService
+    .requisicaoExameEspecifico(id)
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
 };
 
 export const enviarArquivoMensagem = async (file) => {

@@ -15,7 +15,7 @@ import {
   ConteudoIcone,
   Icone,
   TituloInput,
-  AnimacaoCarregandoView,
+  AnimacaoCarregando,
   Rotulo,
 } from "./Styles";
 import { Cores } from "../../variaveis";
@@ -36,6 +36,7 @@ function Login({ navigation }) {
     senha: false,
   });
   const { width, height } = useWindowDimensions();
+  const [carregandoPagina, setCarregandoPagina] = useState(true);
   const [carregando, setCarregando] = useState();
   const [estado, setEstado] = useState({
     email: "",
@@ -135,6 +136,7 @@ function Login({ navigation }) {
     if (resposta === true && verificaTipo.dadosUsuario.tipo === "PACIENTE") {
       Alert.alert("Bem vindo!", "Login efetuado com sucesso");
       navigation.navigate("Tabs");
+      setCarregando(false);
     } else {
       if (resposta === true && verificaTipo.dadosUsuario.tipo !== "PACIENTE") {
         setEmail(null);
@@ -156,10 +158,11 @@ function Login({ navigation }) {
       navigation.push("Tabs");
     }
     await sleep(1500);
-    setCarregando(false);
+    setCarregandoPagina(false);
   }
+
   useEffect(() => {
-    setCarregando(true);
+    setCarregandoPagina(true);
     verificacaoLogado();
   }, []);
 
@@ -174,7 +177,7 @@ function Login({ navigation }) {
     <>
       <ScrollView>
         <Body>
-          {carregando ? (
+          {carregandoPagina ? (
             <>
               <PaginaCarregando>
                 <ActivityIndicator animating={true} color={Colors.black} />
@@ -231,17 +234,22 @@ function Login({ navigation }) {
                 boxShadow="none"
                 onPress={() => verificandoErros()}
               >
-                {carregando ? (
-                  <ActivityIndicator animating={true} color={Colors.white} />
-                ) : (
-                  <ConteudoBotao
-                    width={larguraConteudoBotaoEntrar}
-                    fontSize={tamanhoFonte}
-                    color={Cores.branco}
-                  >
-                    ENTRAR
-                  </ConteudoBotao>
-                )}
+                <ConteudoBotao
+                  width={larguraConteudoBotaoEntrar}
+                  fontSize={tamanhoFonte}
+                  color={Cores.branco}
+                >
+                  {carregando ? (
+                    <AnimacaoCarregando>
+                      <ActivityIndicator
+                        animating={true}
+                        color={Cores.branco}
+                      />
+                    </AnimacaoCarregando>
+                  ) : (
+                    <>ENTRAR</>
+                  )}
+                </ConteudoBotao>
               </Botao>
 
               <SenhaCadastro>

@@ -79,6 +79,11 @@ export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
   
 export const requisicaoExamesMarcadosPorId = (id) => api.get(`/exame_marcados/${id}`);
 
+export const requisicaoTodosExames = () => api.get(`/exames/`);
+
+export const requisicaoExameEspecifico = (id) =>
+  api.get(`/exames/${id}`);
+
 
 export const updateFotoDePerfil = (id, base64) =>
   api.post(`/usuariosimagem/${id}`,{
@@ -117,6 +122,11 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
     file: base64
   });
   
+  export const pegandoDescricaoPagRecomendacoes = () => api.get(`/indicacaos`);
+
+  export const pegandoIndicacoesEspecificas = () => api.get(`/indicacoes_especificas`);
+
+  export const medicosIndicadosPorId = (id) => api.get(`/medicos_indicados/${id}`);
   export const enviarImagemMensagem = (imagem) => 
   api.post(`/arquivoimage/`, {
    file: imagem 
