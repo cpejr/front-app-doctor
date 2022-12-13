@@ -73,6 +73,7 @@ function PreencherFormulario({ route, navigation }) {
       }
     }
     if (validado) {
+      formularioPaciente.notificacao_ativa = true;
       await managerService.UpdateRespostasFormulario(
         formularioPaciente.id,
         respostas
