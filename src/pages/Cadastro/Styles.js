@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { Picker } from "@react-native-picker/picker";
 import { Cores } from "../../variaveis";
-import DatePicker from "react-native-datepicker";
+import DatePicker from "@react-native-community/datetimepicker";
 
 export const Body = styled.View`
   display: flex;

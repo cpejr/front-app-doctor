@@ -449,6 +449,7 @@ function Cadastro({ navigation }) {
                 mode="date"
                 showIcon={false}
                 date={estado.data_nascimento}
+                value={new Date()}
                 onDateChange={(data) => {
                   preenchendoDados("data_nascimento", data);
                 }}
