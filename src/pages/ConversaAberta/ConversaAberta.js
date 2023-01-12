@@ -113,7 +113,6 @@ function ConversaAberta({ navigation, route, socket }) {
       base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [3, 3],
       quality: 1,
       //ImagePickerAsset: {fileSize}
     });
