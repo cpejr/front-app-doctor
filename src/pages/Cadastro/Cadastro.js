@@ -36,6 +36,7 @@ import {
   PossuiConvenio,
   Texto,
   CaixaTextoConvenioCuidador,
+  CaixaParaDatadeNascimento,
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
@@ -113,6 +114,21 @@ function Cadastro({ navigation }) {
 
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
+
+  const [datePicker, setDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
+
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
+  
+  function formatDate(date) {
+    return [
+      padTo2Digits(date.getDate()),
+      padTo2Digits(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('/');
+  }
 
   const [formularios, setFormularios] = useState([]);
   const [formularioEspecifico, setFormularioEspecifico] = useState();
@@ -436,25 +452,23 @@ function Cadastro({ navigation }) {
             </CaixaRotuloMesmaLinha>
             <CaixaRotuloMesmaLinha>
               <CaixaTituloInput>
-                <TituloInput>Data de nascimento: </TituloInput>
+                <TituloInput onPress={() => setDatePicker(true)}>Data de nascimento: </TituloInput>
               </CaixaTituloInput>
-              <Data
-                customStyles={{
-                  dateInput: { borderWidth: 0 },
-                  placeholderText: { color: "#90929B" },
-                }}
-                placeholder="Data de Nascimento:"
-                maxDate={new Date()}
-                format="DD/MM/YYYY"
+              <CaixaParaDatadeNascimento 
+              onPress={() => setDatePicker(true)}>
+              {estado.data_nascimento}
+              {datePicker && (<Data
+                maximumDate={new Date()}
                 mode="date"
-                showIcon={false}
-                date={estado.data_nascimento}
                 value={new Date()}
-                onDateChange={(data) => {
-                  preenchendoDados("data_nascimento", data);
+                onChange={(evt, value) => {
+                  preenchendoDados("data_nascimento", formatDate(value));
+                  setDate(value)
+                  setDatePicker(false)
                 }}
                 camposVazios={camposVazios.data_nascimento}
-              />
+              />)}
+              </CaixaParaDatadeNascimento>
             </CaixaRotuloMesmaLinha>
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
