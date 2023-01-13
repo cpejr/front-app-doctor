@@ -129,3 +129,21 @@ export const TextoSemReceita = styled.Text`
   color: ${Cores.azul};
   margin-bottom: 20px;
 `;
+export const BordaReceita = styled.View`
+  display: flex;
+  width: 90%;
+  height: auto;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  margin-top: 4%;
+  margin-bottom: 4%;
+  background-color: ${Cores.branco};
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: ${Cores.azul};
+  elevation: 8;
+`;
