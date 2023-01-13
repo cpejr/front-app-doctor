@@ -120,3 +120,12 @@ export const HeaderListaReceitas = styled.View`
   padding-left: 5px;
   width: 100%;
 `;
+
+export const TextoSemReceita = styled.Text`
+  text-align: center;
+  justify-content: center;
+  align-self: center;
+  font-size: 18px;
+  color: ${Cores.azul};
+  margin-bottom: 20px;
+`;
