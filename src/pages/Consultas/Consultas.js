@@ -197,6 +197,7 @@ function Consultas({ navigation }) {
   function aoAtualizar(){
     setAtualizando(true);
     setTimeout(()=>{setAtualizando(false)},3000);
+    requisicaoConsultasUsuario();
   }
 
   return (
