@@ -24,7 +24,9 @@ import {
   HeaderListaReceitas,
   Titulo,
   CaixaTextoCima,
-  TextoCima
+  TextoCima,
+  TextoSemReceita,
+  BordaReceita,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import Icon from "react-native-vector-icons/Entypo";
@@ -103,6 +105,13 @@ function ListaReceitas({ navigation }) {
         </PaginaCarregando>
       ) : (
         <ScrollView>
+          {receitas.length === 0 ? (
+            <BordaReceita>
+            <TextoSemReceita>
+              Você ainda não possui nenhuma receita!
+            </TextoSemReceita>
+            </BordaReceita>
+          ) : (
           <ContainerTodasReceitas>
             {receitasFiltradas?.sort(comparaData).map((value) => (
               <ContainerReceitas key={value.id}>
@@ -117,6 +126,7 @@ function ListaReceitas({ navigation }) {
               </ContainerReceitas>
             ))}
           </ContainerTodasReceitas>
+          )}
         </ScrollView>
       )}
     </ContainerBody>
