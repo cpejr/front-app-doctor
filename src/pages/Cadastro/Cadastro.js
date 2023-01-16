@@ -37,6 +37,7 @@ import {
   Texto,
   CaixaTextoConvenioCuidador,
   CaixaParaDatadeNascimento,
+  DataNascimentoTexto, 
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
@@ -108,7 +109,8 @@ function Cadastro({ navigation }) {
     senha: false,
     senhaConfirmada: false,
   });
-  const [data_nascimentoFront, setData_nascimentoFront] = useState();
+  const [data_nascimentoFront, setData_nascimentoFront] = useState("Data de nascimento:");
+  const [dataPlaceHolder, setdataPlaceHolder] = useState(0);
 
   const { width, height } = useWindowDimensions();
 
@@ -452,19 +454,23 @@ function Cadastro({ navigation }) {
             </CaixaRotuloMesmaLinha>
             <CaixaRotuloMesmaLinha>
               <CaixaTituloInput>
-                <TituloInput onPress={() => setDatePicker(true)}>Data de nascimento: </TituloInput>
+                <TituloInput>Data de nascimento: </TituloInput>
               </CaixaTituloInput>
               <CaixaParaDatadeNascimento 
-              onPress={() => setDatePicker(true)}>
-              {estado.data_nascimento}
+              onPress={() => setDatePicker(true)}
+              value={dataPlaceHolder}
+              width="100%"
+              >
+              {data_nascimentoFront}
               {datePicker && (<Data
                 maximumDate={new Date()}
                 mode="date"
-                value={new Date()}
-                onChange={(evt, value) => {
+                value={date}
+                onChange={(event, value) => {
+                  setDatePicker(false)
                   preenchendoDados("data_nascimento", formatDate(value));
                   setDate(value)
-                  setDatePicker(false)
+                  setdataPlaceHolder(1);
                 }}
                 camposVazios={camposVazios.data_nascimento}
               />)}

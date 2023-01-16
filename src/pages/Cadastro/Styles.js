@@ -2,6 +2,8 @@ import styled from "styled-components/native";
 import { Picker } from "@react-native-picker/picker";
 import { Cores } from "../../variaveis";
 import DatePicker from "@react-native-community/datetimepicker";
+import { useState } from "react";
+import { colors } from "react-native-elements";
 
 export const Body = styled.View`
   display: flex;
@@ -189,11 +191,13 @@ export const CaixaTextoConvenioCuidador = styled.View`
 
 export const CaixaParaDatadeNascimento = styled.Text`
   width: ${(props) => props.width ?? "100%"};
+  margin-left: ${(props) => props.marginLeft?? "0%"};
+  margin-right: ${(props) => props.marginRight?? "0%"};
   height: 50px;
   background-color: #e4e6f4;
   border-radius: 5px;
   padding-left: 10px;
-  margin-top: 6px;
+  margin-top: 5px;
   margin-bottom: 6px;
   border: ${(props) => {
     let cor;
@@ -208,7 +212,21 @@ export const CaixaParaDatadeNascimento = styled.Text`
     }
     return cor;
   }};
+  color: ${(props) => {
+    let cor;
+      if(props.value == 0){
+        cor = colors.grey3;
+        return cor;
+      }else{
+        cor = Cores.preto;
+      }
+      return cor;
+  }};
   border-width: 1.5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
   font-size: 15px;
+  
+  
+  
 `;
+
