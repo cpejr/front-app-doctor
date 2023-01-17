@@ -225,7 +225,7 @@ export const CaixaParaDatadeNascimento = styled.Text`
   border-width: 1.5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
   font-size: 15px;
-  
+  padding-top: 12px;
   
   
 `;
