@@ -246,7 +246,11 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao3"
-        options={{ tabBarIcon: ConsultasIcon, title: "Consultas" }}
+        options={{ 
+          tabBarIcon: ConsultasIcon, 
+          title: "Consultas",
+          unmountOnBlur: true
+        }}
         component={ConsultasStackScreen}
       />
       <Tab.Screen
