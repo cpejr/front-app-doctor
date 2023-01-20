@@ -99,7 +99,7 @@ function SolicitarExame({route, navigation}) {
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
             >
-              <TextoBotao>Agendar Exame{exameEspecifico.titulo}</TextoBotao>
+              <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
             </Botao>
           </CaixaBotao>
         </> 

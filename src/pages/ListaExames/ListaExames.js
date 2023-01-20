@@ -125,6 +125,7 @@ function ListaExames({ navigation }) {
               <ContainerBotao>
                 {todosExames?.map((value) => (
                   <Botao
+                    key={todosExames.id}
                     marginTop="0"
                     marginRight="0"
                     height="15%"
