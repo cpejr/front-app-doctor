@@ -460,6 +460,8 @@ function Cadastro({ navigation }) {
               onPress={() => setDatePicker(true)}
               value={dataPlaceHolder}
               width="100%"
+              erro={erro.data_nascimento}
+              camposVazios={camposVazios.data_nascimento}
               >
               {data_nascimentoFront}
               {datePicker && (<Data
@@ -472,7 +474,6 @@ function Cadastro({ navigation }) {
                   setDate(value)
                   setdataPlaceHolder(1);
                 }}
-                camposVazios={camposVazios.data_nascimento}
               />)}
               </CaixaParaDatadeNascimento>
             </CaixaRotuloMesmaLinha>
