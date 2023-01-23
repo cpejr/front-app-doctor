@@ -47,21 +47,17 @@ export const requisicaoLogin = async (email, senha) => {
   return resposta;
 };
 
-/*export const requisicaoToken = async (email, senha, id_usuario, token_dispositivo) => {
-  const token = await requesterService
-    .LoginUsuario(email, senha)
+export const requisicaoToken = async (id_usuario, token_dispositivo) => {
+    const token = await requesterService
+    .tokenDispositivo(id_usuario, token_dispositivo)
     .then((res) => {
-      await requesterService.tokenDispositivo(id_usuario, token_dispositivo).then((res) => {
-      AsyncStorage.setItem("@AirBnbApp:token", res.data.token);
-      AsyncStorage.setItem("@AirBnbApp:email", res.data.email);
-      return true;
-    }}))
+      return true; 
+    })
     .catch((error) => {
-      Alert.alert("Erro", "Digite email e senha válidos!");
+      Alert.alert("Erro", "Impossível armazenar token do dispositivo");
       return false;
     });
-  return token;
-}};*/
+  };
 
 export const GetDadosUsuario = async () => {
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
