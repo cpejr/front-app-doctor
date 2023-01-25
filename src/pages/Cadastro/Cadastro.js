@@ -120,14 +120,14 @@ function Cadastro({ navigation }) {
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
-  function TransformacaodeDataem2digitos(num) {
+  function transformaaodeDataem2digitos(num) {
     return num.toString().padStart(2, '0');
   }
   
-  function FormatacaodeData(date) {
+  function formatacaodeData(date) {
     return [
-      TransformacaodeDataem2digitos(date.getDate()),
-      TransformacaodeDataem2digitos(date.getMonth() + 1),
+      transformaaodeDataem2digitos(date.getDate()),
+      transformaaodeDataem2digitos(date.getMonth() + 1),
       date.getFullYear(),
     ].join('/');
   }
@@ -470,7 +470,7 @@ function Cadastro({ navigation }) {
                 value={date}
                 onChange={(event, value) => {
                   setDatePicker(false)
-                  preenchendoDados("data_nascimento", FormatacaodeData(value));
+                  preenchendoDados("data_nascimento", formatacaodeData(value));
                   setDate(value)
                   setdataPlaceHolder(1);
                 }}
