@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useWindowDimensions, ScrollView, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -26,7 +26,7 @@ import Input from "./../../styles/Input";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
-import * as Device from 'expo-device';
+//import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 
 function Login({ navigation }) {
@@ -50,7 +50,7 @@ function Login({ navigation }) {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  useEffect(() => {
+  /*useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -65,7 +65,7 @@ function Login({ navigation }) {
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
-  });
+  });*/
 
   const errors = {};
   const teste = {
@@ -73,9 +73,9 @@ function Login({ navigation }) {
     senha: false,
   };
 
-  async function registerForPushNotificationsAsync() {
+  /*async function registerForPushNotificationsAsync() {
     let token;
-  
+   
     if (Platform.OS === 'android') {
       await Notifications.setNotificationChannelAsync('default', {
         name: 'default',
@@ -103,7 +103,7 @@ function Login({ navigation }) {
     }
   
     return token;
-  }
+  }*/
 
 
   async function verificandoErros() {
@@ -194,6 +194,8 @@ function Login({ navigation }) {
       Alert.alert("Bem vindo!", "Login efetuado com sucesso");
       navigation.navigate("Tabs");
       setCarregando(false);
+      const tokenNotificacoes = await Notifications.getDevicePushTokenAsync();
+      await managerService.requisicaoToken(verificaTipo.dadosUsuario.id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
     } else {
       if (resposta === true && verificaTipo.dadosUsuario.tipo !== "PACIENTE") {
         setEmail(null);
