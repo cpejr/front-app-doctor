@@ -68,8 +68,8 @@ function ConsultasIcon() {
 }
  function ChatIcon() {
    return (
-    <View>
-       <Image source={require("./assets/chaticon.png")} />
+    <View width={35}>
+      <IonIcon name="chatbubbles-outline" size={35} color={Cores.branco}  />
      </View>
    );
  }
