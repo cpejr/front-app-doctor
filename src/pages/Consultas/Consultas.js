@@ -49,7 +49,7 @@ import { Cores } from "../../variaveis";
 import { Dimensions } from "react-native";
 import Botao from "../../styles/Botao";
 import * as managerService from "../../services/ManagerService/managerService";
-
+import { format } from "date-fns";
 function Consultas({ navigation }) {
   const height = useWindowDimensions().height;
   const width = useWindowDimensions().width;
@@ -101,14 +101,21 @@ function Consultas({ navigation }) {
     const dia = aux.getUTCDate();
     const mes = aux.getUTCMonth() + 1;
     const ano = aux.getFullYear();
-    if (mes < 10) {
-      var dataConsulta = dia + "/" + "0" + mes + "/" + ano;
-    } else if (mes >= 10) {
-      var dataConsulta = dia + "/" + mes + "/" + ano;
-    }
-
     const horas = aux.getHours();
     const minutos = aux.getMinutes();
+    if (horas > 21) {
+      var dias = dia - 1
+    }
+    else{
+      var dias = dia;
+    }
+    if (mes < 10) {
+      var dataConsulta = dias + "/" + "0" + mes + "/" + ano;
+    } else if (mes >= 10) {
+      var dataConsulta = dias + "/" + mes + "/" + ano;
+    }
+
+
     if (minutos < 10) {
       var horaConsulta = horas + ":" + "0" + minutos;
     } else if (minutos >= 10) {

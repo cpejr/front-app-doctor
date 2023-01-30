@@ -34,6 +34,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 import Icon from "react-native-vector-icons/Entypo";
 import { Cores } from "../../variaveis";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { format } from "date-fns";
 
 function ListaFormularios({ navigation }) {
   const { width } = useWindowDimensions();
@@ -129,8 +130,7 @@ function ListaFormularios({ navigation }) {
   }
 
   function formatandoData(dataCriacao) {
-    const data = new Date(dataCriacao).toLocaleDateString();
-    return data;
+    return format(new Date(dataCriacao), "dd/MM/yyyy");
   }
 
   function renderizarEstrelaPreenchida(numPreenchido) {
@@ -254,11 +254,7 @@ function ListaFormularios({ navigation }) {
                     <CaixaTipoData width={larguraCaixaTipoData}>
                       <TextoTipoData>Tipo: {valor.tipo}</TextoTipoData>
                       <TextoTipoData>
-                        {valor.data_criacao.slice(8, 10) +
-                          "/" +
-                          valor.data_criacao.slice(5, 7) +
-                          "/" +
-                          valor.data_criacao.slice(0, 4)}
+                        {formatandoData(valor.data_criacao)}
                       </TextoTipoData>
                     </CaixaTipoData>
                   </>
