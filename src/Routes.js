@@ -164,10 +164,7 @@ function ExamesStackScreen() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Exames"
     >
-      <ExamesStack.Screen name="Exames" component={Exames} />
-      <ExamesStack.Screen name="FormaPagamento" component={FormaPagamento} />
-      <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
-      <ExamesStack.Screen name="ExameNormal" component={ExameNormal} />
+      <ExamesStack.Screen name="Exames" component={ListaExames} />
     </ExamesStack.Navigator>
   );
 }
