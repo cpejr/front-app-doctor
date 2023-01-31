@@ -50,60 +50,12 @@ function Login({ navigation }) {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  /*useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
-
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  });*/
 
   const errors = {};
   const teste = {
     email: false,
     senha: false,
   };
-
-  /*async function registerForPushNotificationsAsync() {
-    let token;
-   
-    if (Platform.OS === 'android') {
-      await Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
-    }
-  
-    if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-    } else {
-      alert('Must use physical device for Push Notifications');
-    }
-  
-    return token;
-  }*/
 
 
   async function verificandoErros() {
@@ -183,6 +135,24 @@ function Login({ navigation }) {
     });
   }
 
+  async function registrandoNotificacoes(id){
+    if (!Constants.isDevice){
+      return null;
+    }
+    const {status} = await Notifications.requestPermissionsAsync();
+    if(status !== "granted"){
+      return null;
+    }
+    if (Platform.OS == "android"){
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+      });
+    }
+    const tokenNotificacoes = await Notifications.getDevicePushTokenAsync();
+    await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
+  }
+
   async function requisicaoLogin() {
     setCarregando(true);
     const email = estado.email;
@@ -194,8 +164,7 @@ function Login({ navigation }) {
       Alert.alert("Bem vindo!", "Login efetuado com sucesso");
       navigation.navigate("Tabs");
       setCarregando(false);
-      const tokenNotificacoes = await Notifications.getDevicePushTokenAsync();
-      await managerService.requisicaoToken(verificaTipo.dadosUsuario.id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
+      registrandoNotificacoes(verificaTipo.dadosUsuario.id);
     } else {
       if (resposta === true && verificaTipo.dadosUsuario.tipo !== "PACIENTE") {
         setEmail(null);
