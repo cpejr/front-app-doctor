@@ -98,7 +98,7 @@ export const CaixaBaixo = styled.View`
 export const Quadro = styled.View`
   display: flex;
   width: 90%;
-  height: 500px;
+  height: auto;
   justify-content: flex-start;
   align-items: center;
   padding-left: 30px;
@@ -115,17 +115,17 @@ export const Quadro = styled.View`
 export const TextoQuadro = styled.Text`
   display: flex;
   text-align: center;
-  line-height: 20px;
+  line-height: 18px;
   font-size: 18px;
   color: ${Cores.preto};
-  margin-bottom: 5px;
+  margin-bottom: 11px;
 `;
 
 export const ContainerBotao = styled.View`
   display: flex;
   flex: 1;
   width: 100%;
-  height: 90%;
+  height: 100%;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;

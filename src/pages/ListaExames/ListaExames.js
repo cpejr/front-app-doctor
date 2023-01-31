@@ -28,6 +28,7 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao/ConteudoBotao";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
+import { ScrollView } from "react-native-web";
 
 function ListaExames({ navigation }) {
   const heightTela = `${Dimensions.get("window").height}px`;
@@ -120,15 +121,20 @@ function ListaExames({ navigation }) {
         <Scroll>
           <CaixaBaixo>
             <Quadro>
+              <Scroll>
               <TextoQuadro>Se precisar de agendar algum dos exames abaixo, preencha os campos do formulatório específico. A mensagem será encaminhada para a secretaria da Clínica para confirmação e agendamento do exame.
               </TextoQuadro>
-              <ContainerBotao>
+              
+              <ContainerBotao
+              maxHeight="75%">
+                
                 {todosExames?.map((value) => (
                   <Botao
                     key={todosExames.id}
-                    marginTop="0"
+                    marginTop="8%"
                     marginRight="0"
-                    height="15%"
+                    marginBotton="10%"
+                    height="9%"
                     width="100%"
                     backgroundColor={Cores.cinza[7]}
                     borderRadius="3px"
@@ -145,9 +151,10 @@ function ListaExames({ navigation }) {
                   ))
                 }
                 <Botao
-                  marginTop="0"
+                  marginTop="8%"
                   marginRight="0"
-                  height="15%"
+                  marginBotton="10%"
+                  height="9%"
                   width="100%"
                   backgroundColor={Cores.cinza[7]}
                   borderRadius="3px"
@@ -159,20 +166,24 @@ function ListaExames({ navigation }) {
                   </ConteudoBotao>
                 </Botao>
                 <Botao
-                  marginTop="0"
+                  marginTop="8%"
                   marginRight="0"
-                  height="15%"
+                  marginBotton="10%"
+                  height="9%"
                   width="100%"
                   backgroundColor={Cores.cinza[7]}
                   borderRadius="3px"
                   borderColor={Cores.azul}
                   borderWidth="2px"
                 >
-                  <ConteudoBotao fontSize="12px" color="green" width="100%">
+                  <ConteudoBotao fontSize="13px" color="green" width="100%">
                     Sugestões e Indicações (exames & profissionais)
                   </ConteudoBotao>
                 </Botao>
+                
               </ContainerBotao>
+              
+              </Scroll>
             </Quadro>
           </CaixaBaixo>
         </Scroll>
