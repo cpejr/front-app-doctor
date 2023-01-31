@@ -137,16 +137,13 @@ function Login({ navigation }) {
 
   async function registrandoNotificacoes(id){
     if (!Device.isDevice){
-      console.log("teste1")
       return null;
     }
     const {status} = await Notifications.requestPermissionsAsync();
     if(status !== "granted"){
-      console.log("teste2")
       return null;
     }
     if (Platform.OS == "android"){
-      console.log("teste3")
       Notifications.setNotificationChannelAsync("default", {
         
         name: "default",
