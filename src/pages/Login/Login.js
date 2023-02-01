@@ -26,7 +26,7 @@ import Input from "./../../styles/Input";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
-//import * as Device from 'expo-device';
+import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 
 function Login({ navigation }) {
@@ -44,11 +44,6 @@ function Login({ navigation }) {
     email: "",
     senha: "",
   });
-
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
 
 
   const errors = {};
@@ -136,7 +131,7 @@ function Login({ navigation }) {
   }
 
   async function registrandoNotificacoes(id){
-    if (!Constants.isDevice){
+    if (!Device.isDevice){
       return null;
     }
     const {status} = await Notifications.requestPermissionsAsync();
@@ -145,6 +140,7 @@ function Login({ navigation }) {
     }
     if (Platform.OS == "android"){
       Notifications.setNotificationChannelAsync("default", {
+        
         name: "default",
         importance: Notifications.AndroidImportance.MAX,
       });
