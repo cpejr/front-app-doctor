@@ -45,11 +45,6 @@ function Login({ navigation }) {
     senha: "",
   });
 
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
-
 
   const errors = {};
   const teste = {
