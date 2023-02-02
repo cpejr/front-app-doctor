@@ -140,12 +140,11 @@ function Login({ navigation }) {
     }
     if (Platform.OS == "android"){
       Notifications.setNotificationChannelAsync("default", {
-        
         name: "default",
         importance: Notifications.AndroidImportance.MAX,
       });
     }
-    const tokenNotificacoes = await Notifications.getDevicePushTokenAsync();
+    const tokenNotificacoes = await Notifications.getExpoPushTokenAsync();
     await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
   }
 
