@@ -162,9 +162,12 @@ function ExamesStackScreen() {
   return (
     <ExamesStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Exames"
+      initialRouteName="ListaExames"
     >
-      <ExamesStack.Screen name="Exames" component={ListaExames} />
+      <ExamesStack.Screen name="ListaExames" component={ListaExames} />
+      <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
+      <ExamesStack.Screen name="Exames" component={Exames} />
+      
     </ExamesStack.Navigator>
   );
 }
