@@ -125,7 +125,7 @@ export const ContainerBotao = styled.View`
   display: flex;
   flex: 1;
   width: 100%;
-  height: 100%;
+  height: auto;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
