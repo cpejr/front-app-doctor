@@ -56,13 +56,13 @@ export const ContainerReceitas = styled.View`
   align-items: center;
 `;
 
-export const TituloReceitas = styled.Text`
-  width: 50%;
-  font-size: 16px;
-  font-weight: bold;
-  color: ${Cores.azulEscuro};
-  text-decoration: underline;
-`;
+// export const TituloReceitas = styled.Text`
+//   width: 50%;
+//   font-size: 16px;
+//   font-weight: bold;
+//   color: ${Cores.azulEscuro};
+//   text-decoration: underline;
+// `;
 
 export const TextoData = styled.Text`
   font-size: 16px;
@@ -119,4 +119,17 @@ export const HeaderListaReceitas = styled.View`
   padding-bottom: 15px;
   padding-left: 5px;
   width: 100%;
+`;
+
+export const BotaoReceita = styled.TouchableOpacity`
+  display: flex;
+  width: 50%;
+`;
+
+export const TituloReceitas = styled.Text`
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  color: ${Cores.azulEscuro};
+  text-decoration: underline;
 `;

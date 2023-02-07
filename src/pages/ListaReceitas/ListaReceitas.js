@@ -24,13 +24,18 @@ import {
   HeaderListaReceitas,
   Titulo,
   CaixaTextoCima,
-  TextoCima
+  TextoCima,
+  BotaoReceita,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import Icon from "react-native-vector-icons/Entypo";
 import Botao from "../../styles/Botao";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
+import * as FileSystem from "expo-file-system";
+import { StorageAccessFramework } from "expo-file-system";
+import { startActivityAsync, ActivityAction } from 'expo-intent-launcher';
+import * as IntentLauncher from 'expo-intent-launcher';
 
 function ListaReceitas({ navigation }) {
   const [receitas, setReceitas] = useState([]);
@@ -38,6 +43,7 @@ function ListaReceitas({ navigation }) {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const { width } = useWindowDimensions();
+  const [pastaAcessivel, setPastaAcessivel] = useState(false);
 
   const tamanhoIcone = width > 480 ? 20 : 25;
 
@@ -55,38 +61,78 @@ function ListaReceitas({ navigation }) {
     pegandoReceitas();
   }, []);
 
-  function comparaData(a, b){
+  function comparaData(a, b) {
     var data1 = new Date(a.data_criacao);
     var data2 = new Date(b.data_criacao);
-    if (data1 > data2){
-        return -1;
+    if (data1 > data2) {
+      return -1;
+    } else {
+      return 1;
     }
-    else {
-        return 1;
+  }
+
+  async function baixarPdf(receita) {
+    const chave = receita.pdf_url;
+    const tituloPdf = receita.titulo;
+    const resposta = await managerService.GetArquivoPorChave(chave);
+
+
+    const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
+    if (!permissions.granted) {
+        return;
     }
-}
+
+    try {
+        await StorageAccessFramework.createFileAsync(permissions.directoryUri, "Receita-GuilhermeMarques-" + tituloPdf, 'application/pdf')
+            .then(async(uri) => {
+                await FileSystem.writeAsStringAsync(uri, resposta, { encoding: FileSystem.EncodingType.Base64 });
+                Alert.alert('Arquivo Salvo', 'Sua receita foi baixada com sucesso!');
+
+                IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+                      data: uri,
+                      flags: 1,
+                      type: 'application/pdf'
+                   });
+            })
+            .catch((e) => {
+              Alert.alert('Erro', 'Parece que houve um erro ao tentar baixar sua receita :/')
+            });
+    } catch (e) {
+        throw new Error(e);
+    }
+  }
 
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "") return receitas;
-    else return((receita?.titulo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(lowerBusca)) ||
-    (receita?.titulo?.toLowerCase().includes(lowerBusca)));
+    else
+      return (
+        receita?.titulo
+          ?.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(lowerBusca) ||
+        receita?.titulo?.toLowerCase().includes(lowerBusca)
+      );
   });
 
   const heightPesquisar = width > 720 ? "20%" : "15%";
 
   return (
     <ContainerBody>
-      <HeaderListaReceitas backgroundColor={Cores.branco} borderColor={Cores.azul}>
-          <TouchableOpacity onPress={() => navigation.push("Arquivos")}>
-            <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
-          </TouchableOpacity>
-          <Titulo fontSize="20px" color={Cores.azul}>
-            Arquivos
-          </Titulo>
-        </HeaderListaReceitas>
-        <CaixaTextoCima>
-          <TextoCima> Receitas </TextoCima>
-        </CaixaTextoCima>
+      <HeaderListaReceitas
+        backgroundColor={Cores.branco}
+        borderColor={Cores.azul}
+      >
+        <TouchableOpacity onPress={() => navigation.push("Arquivos")}>
+          <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
+        </TouchableOpacity>
+        <Titulo fontSize="20px" color={Cores.azul}>
+          Arquivos
+        </Titulo>
+      </HeaderListaReceitas>
+      <CaixaTextoCima>
+        <TextoCima> Receitas </TextoCima>
+      </CaixaTextoCima>
       <ContainerCima height={heightPesquisar}>
         <BarraPesquisa>
           <InputPesquisa
@@ -106,7 +152,9 @@ function ListaReceitas({ navigation }) {
           <ContainerTodasReceitas>
             {receitasFiltradas?.sort(comparaData).map((value) => (
               <ContainerReceitas key={value.id}>
-                <TituloReceitas>{value.titulo}</TituloReceitas>
+                <BotaoReceita onPress={() => baixarPdf(value)}>
+                  <TituloReceitas>{value.titulo}</TituloReceitas>
+                </BotaoReceita>
                 <TextoData>
                   {value.data_criacao.slice(8, 10) +
                     "/" +
