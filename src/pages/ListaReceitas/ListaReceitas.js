@@ -9,6 +9,8 @@ import {
   useWindowDimensions,
   FlatList,
   TouchableOpacity,
+  Platform,
+  Linking,
 } from "react-native";
 import {
   ContainerBody,
@@ -36,6 +38,7 @@ import * as FileSystem from "expo-file-system";
 import { StorageAccessFramework } from "expo-file-system";
 import { startActivityAsync, ActivityAction } from 'expo-intent-launcher';
 import * as IntentLauncher from 'expo-intent-launcher';
+import { aqua } from "color-name";
 
 function ListaReceitas({ navigation }) {
   const [receitas, setReceitas] = useState([]);
@@ -81,7 +84,7 @@ function ListaReceitas({ navigation }) {
     if (!permissions.granted) {
         return;
     }
-
+    if(Platform.OS == "android"){
     try {
         await StorageAccessFramework.createFileAsync(permissions.directoryUri, "Receita-GuilhermeMarques-" + tituloPdf, 'application/pdf')
             .then(async(uri) => {
@@ -99,6 +102,10 @@ function ListaReceitas({ navigation }) {
             });
     } catch (e) {
         throw new Error(e);
+    }}
+    if(Platform.OS == "ios"){
+      const pdfUrl = await managerService.GetReceitaUrl(receita.id)
+      Linking.openURL(pdfUrl)
     }
   }
 

@@ -604,3 +604,16 @@ export const GetExameEspecifico = async (id) => {
     });
   return dadosExame;
 };
+
+export const GetReceitaUrl = async (id) => {
+  let url = {};
+  await requesterService
+    .getPdfurl(id)
+    .then((res) => {
+      url = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return url;
+};
