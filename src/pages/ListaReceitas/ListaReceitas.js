@@ -9,7 +9,6 @@ import {
   useWindowDimensions,
   FlatList,
   TouchableOpacity,
-  Platform,
   Linking,
 } from "react-native";
 import {
@@ -27,8 +26,7 @@ import {
   Titulo,
   CaixaTextoCima,
   TextoCima,
-  TextoSemReceita,
-  BordaReceita,
+  BotaoReceita,
 } from "./Styles";
 import searchIcon from "../../assets/searchIcon.png";
 import Icon from "react-native-vector-icons/Entypo";
@@ -39,7 +37,6 @@ import * as FileSystem from "expo-file-system";
 import { StorageAccessFramework } from "expo-file-system";
 import { startActivityAsync, ActivityAction } from 'expo-intent-launcher';
 import * as IntentLauncher from 'expo-intent-launcher';
-import { aqua } from "color-name";
 
 function ListaReceitas({ navigation }) {
   const [receitas, setReceitas] = useState([]);
@@ -157,13 +154,6 @@ function ListaReceitas({ navigation }) {
         </PaginaCarregando>
       ) : (
         <ScrollView>
-          {receitas.length === 0 ? (
-            <BordaReceita>
-            <TextoSemReceita>
-              Você ainda não possui nenhuma receita!
-            </TextoSemReceita>
-            </BordaReceita>
-          ) : (
           <ContainerTodasReceitas>
             {receitasFiltradas?.sort(comparaData).map((value) => (
               <ContainerReceitas key={value.id}>
@@ -180,7 +170,6 @@ function ListaReceitas({ navigation }) {
               </ContainerReceitas>
             ))}
           </ContainerTodasReceitas>
-          )}
         </ScrollView>
       )}
     </ContainerBody>
