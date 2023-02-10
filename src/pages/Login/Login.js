@@ -162,8 +162,8 @@ function Login({ navigation }) {
   }, []);
 
   const margemSuperior = height < 200 ? "5px" : "100px";
-  const alturaBotao = height < 400 ? "40px" : "55px";
-  const tamanhoFonte = width < 500 ? "17px" : "11px";
+  const alturaBotao = height > 400 ? "40px" : "55px";
+  const tamanhoFonte = width > 500 ? "17px" : "11px";
   const larguraConteudoBotaoEntrar = width > 480 ? "35%" : "40%";
 
   return (
