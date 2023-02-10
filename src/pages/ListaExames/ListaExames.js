@@ -126,7 +126,7 @@ function ListaExames({ navigation }) {
               </TextoQuadro>
               
               <ContainerBotao
-              maxHeight="75%">
+              maxHeight="78%">
                 
                 {todosExames?.map((value) => (
                   <Botao
