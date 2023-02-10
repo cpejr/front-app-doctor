@@ -78,11 +78,12 @@ function ListaReceitas({ navigation }) {
     const resposta = await managerService.GetArquivoPorChave(chave);
 
 
+    
+    if(Platform.OS == "android"){
     const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
     if (!permissions.granted) {
         return;
     }
-    if(Platform.OS == "android"){
     try {
         await StorageAccessFramework.createFileAsync(permissions.directoryUri, "Receita-GuilhermeMarques-" + tituloPdf, 'application/pdf')
             .then(async(uri) => {
