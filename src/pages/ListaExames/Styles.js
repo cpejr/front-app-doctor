@@ -98,34 +98,37 @@ export const CaixaBaixo = styled.View`
 export const Quadro = styled.View`
   display: flex;
   width: 90%;
-  height: 500px;
+  height: 94%;
   justify-content: flex-start;
   align-items: center;
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin-top: 4%;
-  margin-bottom: 4%;
+  margin-top: 1%;
+  margin-bottom: 1%;
   background-color: ${Cores.branco};
   border-radius: 5px;
   elevation: 8;
+  @media (max-width: 2400) {
+    height: 70%;
+  }
 `;
 
 export const TextoQuadro = styled.Text`
   display: flex;
   text-align: center;
-  line-height: 20px;
+  line-height: 18px;
   font-size: 18px;
   color: ${Cores.preto};
-  margin-bottom: 5px;
+  margin-bottom: 11px;
 `;
 
 export const ContainerBotao = styled.View`
   display: flex;
   flex: 1;
   width: 100%;
-  height: 90%;
+  height: 600px;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
