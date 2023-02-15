@@ -128,3 +128,5 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
     id_usuario,
     token_dispositivo,
   });
+  
+  export const getPdfurl = (id) => api.get(`/receitas/${id}`);
