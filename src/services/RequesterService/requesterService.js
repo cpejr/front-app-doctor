@@ -122,5 +122,11 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   export const pegandoIndicacoesEspecificas = () => api.get(`/indicacoes_especificas`);
 
   export const medicosIndicadosPorId = (id) => api.get(`/medicos_indicados/${id}`);
+
+  export const tokenDispositivo = (id_usuario, token_dispositivo) =>
+  api.post("/token_usuarios", {
+    id_usuario,
+    token_dispositivo,
+  });
   
   export const getPdfurl = (id) => api.get(`/receitas/${id}`);

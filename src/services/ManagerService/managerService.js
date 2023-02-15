@@ -47,6 +47,18 @@ export const requisicaoLogin = async (email, senha) => {
   return resposta;
 };
 
+export const requisicaoToken = async (id_usuario, token_dispositivo) => {
+    const token = await requesterService
+    .tokenDispositivo(id_usuario, token_dispositivo)
+    .then((res) => {
+      return true; 
+    })
+    .catch((error) => {
+      Alert.alert("Erro", "Impossível armazenar token do dispositivo");
+      return false;
+    });
+  };
+
 export const GetDadosUsuario = async () => {
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
   let dadosUsuario = {};
