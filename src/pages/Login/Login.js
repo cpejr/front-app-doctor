@@ -21,6 +21,8 @@ import Input from "./../../styles/Input";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -38,11 +40,13 @@ function Login({ navigation }) {
     senha: "",
   });
 
+
   const errors = {};
   const teste = {
     email: false,
     senha: false,
   };
+
 
   async function verificandoErros() {
     if (!estado.email) errors.email = true;
@@ -121,6 +125,25 @@ function Login({ navigation }) {
     });
   }
 
+  async function registrandoNotificacoes(id){
+    if (!Device.isDevice){
+      return null;
+    }
+    const {status} = await Notifications.requestPermissionsAsync();
+    if(status !== "granted"){
+      return null;
+    }
+    if (Platform.OS == "android"){
+      Notifications.setNotificationChannelAsync("default", {
+        
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+      });
+    }
+    const tokenNotificacoes = await Notifications.getExpoPushTokenAsync();
+    await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
+  }
+
   async function requisicaoLogin() {
     setCarregando(true);
     const email = estado.email;
@@ -132,6 +155,7 @@ function Login({ navigation }) {
       Alert.alert("Bem vindo!", "Login efetuado com sucesso");
       navigation.navigate("Tabs");
       setCarregando(false);
+      registrandoNotificacoes(verificaTipo.dadosUsuario.id);
     } else {
       if (resposta === true && verificaTipo.dadosUsuario.tipo !== "PACIENTE") {
         setEmail(null);
