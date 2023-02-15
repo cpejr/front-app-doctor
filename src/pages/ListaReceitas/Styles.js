@@ -56,14 +56,6 @@ export const ContainerReceitas = styled.View`
   align-items: center;
 `;
 
-// export const TituloReceitas = styled.Text`
-//   width: 50%;
-//   font-size: 16px;
-//   font-weight: bold;
-//   color: ${Cores.azulEscuro};
-//   text-decoration: underline;
-// `;
-
 export const TextoData = styled.Text`
   font-size: 16px;
   color: #434b97;
