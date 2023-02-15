@@ -5370,10 +5370,24 @@ expo-device@~5.0.0:
   dependencies:
     ua-parser-js "^0.7.19"
 
+expo-document-picker@^11.0.1:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/expo-document-picker/-/expo-document-picker-11.0.1.tgz#1655e1cfacc20fe70ba81e310365048804bcf803"
+  integrity sha512-mLpk5a6yP/wK8DfGMQj9YoPlxiK87Vhxo6S+NnQgKCove8z+cJdkjEcXCpSsH6LXe1HJBDFt5LkwjhSff7bhMg==
+  dependencies:
+    uuid "^3.3.2"
+
 expo-error-recovery@~4.0.1:
   version "4.0.1"
   resolved "https://registry.npmjs.org/expo-error-recovery/-/expo-error-recovery-4.0.1.tgz"
   integrity sha512-wceptnRX+N3qCSVTNbIchUFu3GmY30onRH5L66OF8HMLpAIQfrZMLxJfz7SAMJTcr3jxsJ11vSa2l2RaPKgHsQ==
+
+expo-file-system@^15.1.1, expo-file-system@~15.1.1:
+  version "15.1.1"
+  resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-15.1.1.tgz"
+  integrity sha512-MYYDKxjLo9VOkvGHqym5EOAUS+ero9O66X5zI+EXJzqNznKvnfScdXeeAaQzShmWtmLkdVDCoYFGOaTvTA1wTQ==
+  dependencies:
+    uuid "^3.4.0"
 
 expo-file-system@~14.1.0:
   version "14.1.0"
@@ -5381,13 +5395,6 @@ expo-file-system@~14.1.0:
   integrity sha512-lJcPGQ8yKXVknVkD5TmcJnR/TpQbEL0JP8hknLejfq3FIqPqI/LBFn31YiP37grxW8lITz1al8pq5T6CSUjAzQ==
   dependencies:
     "@expo/config-plugins" "~5.0.0"
-    uuid "^3.4.0"
-
-expo-file-system@~15.1.1:
-  version "15.1.1"
-  resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-15.1.1.tgz"
-  integrity sha512-MYYDKxjLo9VOkvGHqym5EOAUS+ero9O66X5zI+EXJzqNznKvnfScdXeeAaQzShmWtmLkdVDCoYFGOaTvTA1wTQ==
-  dependencies:
     uuid "^3.4.0"
 
 expo-font@~11.0.1:
