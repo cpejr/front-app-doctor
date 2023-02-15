@@ -28,7 +28,6 @@ import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao/ConteudoBotao";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
-import { ScrollView } from "react-native-web";
 
 function ListaExames({ navigation }) {
   const heightTela = `${Dimensions.get("window").height}px`;
@@ -91,7 +90,6 @@ function ListaExames({ navigation }) {
     }
   }
 
-
   return (
     <Body>
       <CaixaCima marginTop={telaPanorâmica}>
@@ -121,13 +119,10 @@ function ListaExames({ navigation }) {
         <Scroll>
           <CaixaBaixo>
             <Quadro>
-              <Scroll>
               <TextoQuadro>Se precisar de agendar algum dos exames abaixo, preencha os campos do formulatório específico. A mensagem será encaminhada para a secretaria da Clínica para confirmação e agendamento do exame.
               </TextoQuadro>
-              
               <ContainerBotao
               maxHeight="78%">
-                
                 {todosExames?.map((value) => (
                   <Botao
                     key={todosExames.id}
@@ -182,8 +177,6 @@ function ListaExames({ navigation }) {
                 </Botao>
                 
               </ContainerBotao>
-              
-              </Scroll>
             </Quadro>
           </CaixaBaixo>
         </Scroll>
