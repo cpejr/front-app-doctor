@@ -1,5 +1,6 @@
-import React from "react";
-import { ScrollView, useWindowDimensions, Image, View } from "react-native";
+import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import YoutubePlayer from "react-native-youtube-iframe";
+import { ScrollView, Button, Alert, useWindowDimensions, Image, View } from "react-native";
 import {
   Corpo,
   Card,
@@ -22,7 +23,6 @@ import { Cores } from "../../variaveis";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
-import { useState, useEffect } from "react";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 
@@ -119,18 +119,34 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [altura, setAltura] = useState();
   const [largura, setLargura] = useState();
   const [home, setHome] = useState({});
+  const [homeVideo, setHomeVideo] = useState();
+  const [idVideo, setIdVideo] = useState();
   const [fotoAmie, setFotoAmie] = useState("");
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
+  const [playing, setPlaying] = useState(false);
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
 
   async function pegandoDados() {
     setCarregando(true);
 
     const resposta = await managerService.GetHomeInfo();
     const res = await managerService.GetImagemCarrossel();
-
     const info = resposta[0];
     setHome(info);
+    await sleep(1500);
+
+    const youtubeID = home.video.split('v=')[1].substring(0, 11);
+    setIdVideo(youtubeID);
 
     const requests = res.map(({ imagem }) =>
       managerService.GetArquivoPorChave(imagem)
@@ -168,18 +184,19 @@ onPress={() => navigation.navigate("ExameNormal")}
 
   useEffect(() => {
     pegandoDados();
-  }, []);
+  }, [home.video]);
 
   useEffect(() => {
     setandoImagem();
   }, [width]);
 
-  const alturaVideo = height < 800 ? "50%" : "60%";
-  const larguraVideo = height < 800 ? "50%" : "70%";
+  const alturaVideo = height < 800 ? "50%" : "70%";
+  const larguraVideo = height < 800 ? "50%" : "80%";
   const alturaCard = height < 800 ? "350px" : "320px";
 
   return (
     <ScrollView>
+<<<<<<<<< Temporary merge branch 1
       <Corpo>
         {carregando ? (
           <AnimacaoCarregando>
@@ -193,84 +210,90 @@ onPress={() => navigation.navigate("ExameNormal")}
               <Video height={alturaVideo} width={larguraVideo}></Video>
             </Card>
 
-            <Card backgroundColor={Cores.branco} height="auto">
-              <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
-              <TextoCard>
-                Para ter acesso a chat com o doutor, marcar exames e muito mais
-              </TextoCard>
-              <Botao
-                height="40px"
-                width="50%"
-                backgroundColor={Cores.lilas[5]}
-                borderRadius="10px"
-                borderWidth="2px"
-                borderColor={Cores.azulEscuro}
-                onPress={() => navigation.navigate("Cadastro")}
-              >
-                <ConteudoBotao
-                  fontSize="15px"
-                  color={Cores.branco}
-                  width="100%"
+
+  return (
+    <>
+      <ScrollView>
+        <Corpo>
+          {carregando ? (
+            <AnimacaoCarregando>
+              <ActivityIndicator animating={true} color={Colors.blue900} />
+            </AnimacaoCarregando>
+          ) : (
+            <>
+              <Card backgroundColor={Cores.branco} height={alturaCard}>
+                <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
+                <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
+                <YoutubePlayer
+                  height={alturaVideo}
+                  width={larguraVideo}
+                  play={playing}
+                  videoId={idVideo}
+                  onChangeState={onStateChange}
+                />
+              </Card>
+
+              <Card backgroundColor={Cores.branco} height="auto">
+                <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
+                <TextoCard>
+                  Para ter acesso a chat com o doutor, marcar exames e muito mais
+                </TextoCard>
+                <Botao
+                  height="40px"
+                  width="50%"
+                  backgroundColor={Cores.lilas[5]}
+                  borderRadius="10px"
+                  borderWidth="2px"
+                  borderColor={Cores.azulEscuro}
+                  onPress={() => navigation.navigate("Cadastro")}
                 >
-                  INSCREVA-SE
-                </ConteudoBotao>
-              </Botao>
-              <TextoCard>Já possui conta?</TextoCard>
-              <Botao
-                height="40px"
-                width="30%"
-                backgroundColor={Cores.lilas[3]}
-                borderRadius="10px"
-                borderWidth="2px"
-                marginBottom="30px"
-                borderColor={Cores.azulEscuro}
-                onPress={() => navigation.navigate("Login")}
-              >
-                <ConteudoBotao fontSize="15px" color={Cores.preto} width="100%">
-                  ENTRAR
-                </ConteudoBotao>
-              </Botao>
-            </Card>
-
-            <Card backgroundColor={"#7757a0"} height="auto">
-              <CorpoCard>
-                <TituloInformacao color={Cores.branco}>
-                  {home.titulo_um}
-                </TituloInformacao>
-                <TextoInfomacao color={Cores.branco}>
-                  {home.texto_um}
-                </TextoInfomacao>
-
                 <BotaoSaibaMais onPress={() => navigation.navigate("SobreMim")}>
                   <ConteudoBotao
-                    fontSize="16px"
+                    fontSize="15px"
                     color={Cores.branco}
-                    width="30%"
+                    width="100%"
                   >
-                    SAIBA MAIS
+                    INSCREVA-SE
                   </ConteudoBotao>
-                  <AntIcon name="right" size={25} color={Cores.branco} />
-                </BotaoSaibaMais>
-              </CorpoCard>
-            </Card>
+                </Botao>
+                <TextoCard>Já possui conta?</TextoCard>
+                <Botao
+                  height="40px"
+                  width="30%"
+                  backgroundColor={Cores.lilas[3]}
+                  borderRadius="10px"
+                  borderWidth="2px"
+                  marginBottom="30px"
+                  borderColor={Cores.azulEscuro}
+                  onPress={() => navigation.navigate("Login")}
+                >
+                  <ConteudoBotao fontSize="15px" color={Cores.preto} width="100%">
+                    ENTRAR
+                  </ConteudoBotao>
+                </Botao>
+              </Card>
 
-            <Card backgroundColor={Cores.branco} height={"320px"}>
-              <Carousel
-                data={imagens}
-                sliderWidth={350}
-                itemWidth={350}
-                renderItem={renderizarCarrossel}
-              />
-            </Card>
+              <Card backgroundColor={"#7757a0"} height="auto">
+                <CorpoCard>
+                  <TituloInformacao color={Cores.branco}>
+                    {home.titulo_um}
+                  </TituloInformacao>
+                  <TextoInfomacao color={Cores.branco}>
+                    {home.texto_um}
+                  </TextoInfomacao>
 
-            <Card backgroundColor={"#FBCB4C"} height="auto">
-              <CorpoCard>
-                <TituloInformacao color={Cores.preto}>
-                  {home.titulo_dois}
-                </TituloInformacao>
-                <TextoInfomacao color={Cores.preto}>
-                  {home.texto_dois}
-                </TextoInfomacao>
+                  <BotaoSaibaMais>
+                    <ConteudoBotao
+                      fontSize="16px"
+                      color={Cores.branco}
+                      width="30%"
+                    >
+                      SAIBA MAIS
+                    </ConteudoBotao>
+                    <AntIcon name="right" size={25} color={Cores.branco} />
+                  </BotaoSaibaMais>
+                </CorpoCard>
+              </Card>
 
                 <BotaoSaibaMais
                   onPress={() => navigation.navigate("Recomendacoes")}
@@ -286,15 +309,23 @@ onPress={() => navigation.navigate("ExameNormal")}
                 </BotaoSaibaMais>
               </CorpoCard>
             </Card>
+              <Card backgroundColor={Cores.branco} height={"320px"}>
+                <Carousel
+                  data={imagens}
+                  sliderWidth={350}
+                  itemWidth={350}
+                  renderItem={renderizarCarrossel}
+                />
+              </Card>
 
-            <Card backgroundColor={"#434B97"} height="auto">
-              <CorpoCard>
-                <TituloInformacao color={Cores.branco}>
-                  {home.titulo_tres}
-                </TituloInformacao>
-                <TextoInfomacao color={Cores.branco}>
-                  {home.texto_tres}
-                </TextoInfomacao>
+              <Card backgroundColor={"#FBCB4C"} height="auto">
+                <CorpoCard>
+                  <TituloInformacao color={Cores.preto}>
+                    {home.titulo_dois}
+                  </TituloInformacao>
+                  <TextoInfomacao color={Cores.preto}>
+                    {home.texto_dois}
+                  </TextoInfomacao>
 
                 <BotaoSaibaMais
                   onPress={() => navigation.navigate("Comentarios")}
@@ -311,45 +342,69 @@ onPress={() => navigation.navigate("ExameNormal")}
               </CorpoCard>
             </Card>
 
-            <Card backgroundColor={Cores.branco} height="auto">
-              <CorpoCard>
-                <TituloInformacao color={Cores.preto}>
-                  {home.titulo_quatro}
-                </TituloInformacao>
-                <ConteudoAmie>
-                  <TextoAmie color={Cores.preto}>{home.texto_quatro}</TextoAmie>
-                  <View>
-                    <Image
-                      style={{
-                        width: largura,
-                        marginRight: "9%",
-                        marginLeft: "3%",
-                        //objectFit: "contain",
-                        height: altura,
-                      }}
-                      source={{ uri: fotoAmie }}
-                    />
-                  </View>
-                </ConteudoAmie>
-                <BotaoSaibaMais
-                  onPress={() => navigation.navigate("GrupoAMIE")}
-                >
-                  <ConteudoBotao
-                    fontSize="16px"
-                    color={Cores.preto}
-                    width="30%"
+              <Card backgroundColor={"#434B97"} height="auto">
+                <CorpoCard>
+                  <TituloInformacao color={Cores.branco}>
+                    {home.titulo_tres}
+                  </TituloInformacao>
+                  <TextoInfomacao color={Cores.branco}>
+                    {home.texto_tres}
+                  </TextoInfomacao>
+
+                  <BotaoSaibaMais>
+                    <ConteudoBotao
+                      fontSize="16px"
+                      color={Cores.branco}
+                      width="30%"
+                    >
+                      SAIBA MAIS
+                    </ConteudoBotao>
+                    <AntIcon name="right" size={25} color={Cores.branco} />
+                  </BotaoSaibaMais>
+                </CorpoCard>
+              </Card>
+
+              <Card backgroundColor={Cores.branco} height="auto">
+                <CorpoCard>
+                  <TituloInformacao color={Cores.preto}>
+                    {home.titulo_quatro}
+                  </TituloInformacao>
+                  <ConteudoAmie>
+                    <TextoAmie color={Cores.preto}>{home.texto_quatro}</TextoAmie>
+                    <View>
+                      <Image
+                        style={{
+                          width: largura,
+                          marginRight: "9%",
+                          marginLeft: "3%",
+                          //objectFit: "contain",
+                          height: altura,
+                        }}
+                        source={{ uri: fotoAmie }}
+                      />
+                    </View>
+                  </ConteudoAmie>
+                  <BotaoSaibaMais
+                    onPress={() => navigation.navigate("GrupoAMIE")}
                   >
-                    SAIBA MAIS
-                  </ConteudoBotao>
-                  <AntIcon name="right" size={25} color={Cores.preto} />
-                </BotaoSaibaMais>
-              </CorpoCard>
-            </Card>
-          </>
-        )}
-      </Corpo>
-    </ScrollView>
-  );
+                    <ConteudoBotao
+                      fontSize="16px"
+                      color={Cores.preto}
+                      width="30%"
+                    >
+                      SAIBA MAIS
+                    </ConteudoBotao>
+                    <AntIcon name="right" size={25} color={Cores.preto} />
+                  </BotaoSaibaMais>
+                </CorpoCard>
+              </Card>
+            </>
+          )}
+        </Corpo>
+      </ScrollView>
+    </>
+  )
+                  
 }
 
 export default Home;

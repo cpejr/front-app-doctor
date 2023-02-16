@@ -41,8 +41,6 @@ export const Video = styled.View`
   align-items: center;
   margin-top: 3%;
   background-color: green;
-  height: ${(props) => props.height};
-  width: ${(props) => props.width};
 `;
 
 export const CorpoCard = styled.View`

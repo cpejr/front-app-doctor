@@ -47,6 +47,18 @@ export const requisicaoLogin = async (email, senha) => {
   return resposta;
 };
 
+export const requisicaoToken = async (id_usuario, token_dispositivo) => {
+    const token = await requesterService
+    .tokenDispositivo(id_usuario, token_dispositivo)
+    .then((res) => {
+      return true; 
+    })
+    .catch((error) => {
+      Alert.alert("Erro", "Impossível armazenar token do dispositivo");
+      return false;
+    });
+  };
+
 export const GetDadosUsuario = async () => {
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
   let dadosUsuario = {};
@@ -530,31 +542,6 @@ export const CriandoConversa = async (conversa) => {
   return dadosConversaCriada;
 };
 
-export const GetHomeInfo = async () => {
-  let dadosHome = {};
-  await requesterService
-    .requisicaoHome()
-    .then((res) => {
-      dadosHome = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-    return dadosHome;
-};
-
-export const GetImagemCarrossel = async () => {
-  let imagens = {};
-  await requesterService
-    .requisicaoImagemCarrossel()
-    .then((res) => {
-      imagens = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-    return imagens;
-};
 export const pegandoDescricaoPagRecomendacoes = async () => {
   let result = {};
   await requesterService
@@ -620,4 +607,73 @@ export const GetExameEspecifico = async (id) => {
       requisicaoErro(error);
     });
   return dadosExame;
+};
+
+export const GetReceitaUrl = async (id) => {
+  let url = {};
+  await requesterService
+    .getPdfurl(id)
+    .then((res) => {
+      url = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return url;
+};
+
+export const enviarArquivoMensagem = async (file) => {
+  let id;
+  await requesterService
+    .enviarArquivoMensagem(file)
+    .then((res) => {
+      Alert.alert("", "Arquivo PDF enviado com sucesso");
+      id = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
+};
+
+export const enviarImagemMensagem = async (imagem) => {
+  let id;
+  await requesterService
+    .enviarImagemMensagem(imagem)
+    .then((res) => {
+      Alert.alert("", "Imagem enviada com sucesso");
+      id = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
+};
+
+export const GetHomeInfo = async () => {
+  let dadosHome = {};
+  await requesterService
+    .requisicaoHome()
+    .then((res) => {
+      dadosHome = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    return dadosHome;
+};
+
+export const GetImagemCarrossel = async () => {
+  let imagens = {};
+  await requesterService
+    .requisicaoImagemCarrossel()
+    .then((res) => {
+      imagens = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    return imagens;
 };

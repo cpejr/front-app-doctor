@@ -36,6 +36,8 @@ import {
   PossuiConvenio,
   Texto,
   CaixaTextoConvenioCuidador,
+  CaixaParaDatadeNascimento,
+  DataNascimentoTexto, 
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
@@ -107,12 +109,28 @@ function Cadastro({ navigation }) {
     senha: false,
     senhaConfirmada: false,
   });
-  const [data_nascimentoFront, setData_nascimentoFront] = useState();
+  const [data_nascimentoFront, setData_nascimentoFront] = useState("Data de nascimento:");
+  const [dataPlaceHolder, setdataPlaceHolder] = useState(0);
 
   const { width, height } = useWindowDimensions();
 
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
+
+  const [datePicker, setDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
+
+  function transformaaodeDataem2digitos(num) {
+    return num.toString().padStart(2, '0');
+  }
+  
+  function formatacaodeData(date) {
+    return [
+      transformaaodeDataem2digitos(date.getDate()),
+      transformaaodeDataem2digitos(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('/');
+  }
 
   const [formularios, setFormularios] = useState([]);
   const [formularioEspecifico, setFormularioEspecifico] = useState();
@@ -438,22 +456,26 @@ function Cadastro({ navigation }) {
               <CaixaTituloInput>
                 <TituloInput>Data de nascimento: </TituloInput>
               </CaixaTituloInput>
-              <Data
-                customStyles={{
-                  dateInput: { borderWidth: 0 },
-                  placeholderText: { color: "#90929B" },
-                }}
-                placeholder="Data de Nascimento:"
-                maxDate={new Date()}
-                format="DD/MM/YYYY"
+              <CaixaParaDatadeNascimento 
+              onPress={() => setDatePicker(true)}
+              value={dataPlaceHolder}
+              width="100%"
+              erro={erro.data_nascimento}
+              camposVazios={camposVazios.data_nascimento}
+              >
+              {data_nascimentoFront}
+              {datePicker && (<Data
+                maximumDate={new Date()}
                 mode="date"
-                showIcon={false}
-                date={estado.data_nascimento}
-                onDateChange={(data) => {
-                  preenchendoDados("data_nascimento", data);
+                value={date}
+                onChange={(event, value) => {
+                  setDatePicker(false)
+                  preenchendoDados("data_nascimento", formatacaodeData(value));
+                  setDate(value)
+                  setdataPlaceHolder(1);
                 }}
-                camposVazios={camposVazios.data_nascimento}
-              />
+              />)}
+              </CaixaParaDatadeNascimento>
             </CaixaRotuloMesmaLinha>
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
