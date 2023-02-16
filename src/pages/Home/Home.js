@@ -194,21 +194,7 @@ onPress={() => navigation.navigate("ExameNormal")}
   const larguraVideo = height < 800 ? "50%" : "80%";
   const alturaCard = height < 800 ? "350px" : "320px";
 
-  return (
-    <ScrollView>
-<<<<<<<<< Temporary merge branch 1
-      <Corpo>
-        {carregando ? (
-          <AnimacaoCarregando>
-            <ActivityIndicator animating={true} color={Colors.blue900} />
-          </AnimacaoCarregando>
-        ) : (
-          <>
-            <Card backgroundColor={Cores.branco} height={alturaCard}>
-              <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
-              <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
-              <Video height={alturaVideo} width={larguraVideo}></Video>
-            </Card>
+  //  const idVideo = videoId.split('v=')[1].substring(0, 11);
 
 
   return (
@@ -247,7 +233,6 @@ onPress={() => navigation.navigate("ExameNormal")}
                   borderColor={Cores.azulEscuro}
                   onPress={() => navigation.navigate("Cadastro")}
                 >
-                <BotaoSaibaMais onPress={() => navigation.navigate("SobreMim")}>
                   <ConteudoBotao
                     fontSize="15px"
                     color={Cores.branco}
@@ -282,7 +267,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_um}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais>
+                  <BotaoSaibaMais onPress={() => navigation.navigate("SobreMim")}>
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.branco}
@@ -295,20 +280,6 @@ onPress={() => navigation.navigate("ExameNormal")}
                 </CorpoCard>
               </Card>
 
-                <BotaoSaibaMais
-                  onPress={() => navigation.navigate("Recomendacoes")}
-                >
-                  <ConteudoBotao
-                    fontSize="16px"
-                    color={Cores.preto}
-                    width="30%"
-                  >
-                    SAIBA MAIS
-                  </ConteudoBotao>
-                  <AntIcon name="right" size={25} color={Cores.preto} />
-                </BotaoSaibaMais>
-              </CorpoCard>
-            </Card>
               <Card backgroundColor={Cores.branco} height={"320px"}>
                 <Carousel
                   data={imagens}
@@ -327,20 +298,18 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_dois}
                   </TextoInfomacao>
 
-                <BotaoSaibaMais
-                  onPress={() => navigation.navigate("Comentarios")}
-                >
-                  <ConteudoBotao
-                    fontSize="16px"
-                    color={Cores.branco}
-                    width="30%"
-                  >
-                    SAIBA MAIS
-                  </ConteudoBotao>
-                  <AntIcon name="right" size={25} color={Cores.branco} />
-                </BotaoSaibaMais>
-              </CorpoCard>
-            </Card>
+                  <BotaoSaibaMais onPress={() => navigation.navigate("Recomendacoes")}>
+                    <ConteudoBotao
+                      fontSize="16px"
+                      color={Cores.preto}
+                      width="30%"
+                    >
+                      SAIBA MAIS
+                    </ConteudoBotao>
+                    <AntIcon name="right" size={25} color={Cores.preto} />
+                  </BotaoSaibaMais>
+                </CorpoCard>
+              </Card>
 
               <Card backgroundColor={"#434B97"} height="auto">
                 <CorpoCard>
@@ -351,7 +320,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_tres}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais>
+                  <BotaoSaibaMais onPress={() => navigation.navigate("Comentarios")}>
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.branco}
@@ -386,6 +355,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                   </ConteudoAmie>
                   <BotaoSaibaMais
                     onPress={() => navigation.navigate("GrupoAMIE")}
+                    color={Cores.branco}
                   >
                     <ConteudoBotao
                       fontSize="16px"
@@ -404,7 +374,6 @@ onPress={() => navigation.navigate("ExameNormal")}
       </ScrollView>
     </>
   )
-                  
 }
 
 export default Home;

@@ -20,7 +20,7 @@ import {
   ImagemMedicos,
 } from "./Styles";
 
-function GrupoAMIE() {
+function GrupoAMIE( { navigation }) {
   const { width } = useWindowDimensions();
   const { height } = useWindowDimensions();
   const tamanhoIcone = width > 480 ? 55 : 55;
