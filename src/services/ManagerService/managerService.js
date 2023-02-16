@@ -651,3 +651,29 @@ export const enviarImagemMensagem = async (imagem) => {
     });
   return id;
 };
+
+export const GetHomeInfo = async () => {
+  let dadosHome = {};
+  await requesterService
+    .requisicaoHome()
+    .then((res) => {
+      dadosHome = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    return dadosHome;
+};
+
+export const GetImagemCarrossel = async () => {
+  let imagens = {};
+  await requesterService
+    .requisicaoImagemCarrossel()
+    .then((res) => {
+      imagens = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    return imagens;
+};

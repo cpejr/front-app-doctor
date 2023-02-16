@@ -121,6 +121,10 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.post(`/arquivofile/`,{
     file: base64
   });
+
+  export const requisicaoHome = () => api.get(`/homes/`);
+ 
+  export const requisicaoImagemCarrossel = () => api.get(`/imagem_carrossels/`);
   
   export const pegandoDescricaoPagRecomendacoes = () => api.get(`/indicacaos`);
 
