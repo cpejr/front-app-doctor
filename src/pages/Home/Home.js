@@ -368,7 +368,7 @@ onPress={() => navigation.navigate("ExameNormal")}
           </>
         )}
       </Corpo>
-    </ScrollView></>
+    </ScrollView>
   );
 }
 
