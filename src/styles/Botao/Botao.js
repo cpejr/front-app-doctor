@@ -5,7 +5,7 @@ export const Botao = styled.TouchableOpacity`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: ${(props) => props.flexDirection?? "row"}
   /*Medidas*/
   margin-top: ${(props) => props.marginTop?? "2%"};
   margin-bottom: ${(props) => props.marginBottom?? "0%"};

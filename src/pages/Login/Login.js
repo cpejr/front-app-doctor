@@ -278,6 +278,7 @@ function Login({ navigation }) {
                   borderRadius="3px"
                   borderWidth="3px"
                   boxShadow="none"
+                  flexDirection="column"
                   onPress={() => navigation.push("AlterarSenhaComEmail")}
                 >
                   <ConteudoBotao
