@@ -7,6 +7,7 @@ import {
   Text,
   Linking,
   View,
+  RefreshControl
 } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import {
@@ -76,6 +77,7 @@ function Consultas({ navigation }) {
   const [dataModal, setDataModal] = useState("");
   const [horaModal, setHoraModal] = useState("");
   const [enderecoModal, setEnderecoModal] = useState({});
+  const [atualizando, setAtualizando] = useState(false);
 
   const urlVideo = `https://www.google.com.br/`;
   const urlAvaliacaoConsulta = `https://www.google.com.br/`;
@@ -192,8 +194,21 @@ function Consultas({ navigation }) {
     setModalNaoOcorrida(true);
   }
 
+  function aoAtualizar(){
+    setAtualizando(true);
+    setTimeout(()=>{setAtualizando(false)},3000);
+    requisicaoConsultasUsuario();
+  }
+
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={atualizando}
+          onRefresh={aoAtualizar}
+        />
+      }
+    >
       <Body
         paddingLeft={paddingBody}
         paddingRight={paddingBody}

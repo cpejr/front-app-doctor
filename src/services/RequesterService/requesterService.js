@@ -79,6 +79,11 @@ export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
   
 export const requisicaoExamesMarcadosPorId = (id) => api.get(`/exame_marcados/${id}`);
 
+export const requisicaoTodosExames = () => api.get(`/exames/`);
+
+export const requisicaoExameEspecifico = (id) =>
+  api.get(`/exames/${id}`);
+
 
 export const updateFotoDePerfil = (id, base64) =>
   api.post(`/usuariosimagem/${id}`,{
@@ -112,7 +117,30 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   
   export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
 
+  export const enviarArquivoMensagem = (base64) =>
+  api.post(`/arquivofile/`,{
+    file: base64
+  });
+
   export const requisicaoHome = () => api.get(`/homes/`);
  
   export const requisicaoImagemCarrossel = () => api.get(`/imagem_carrossels/`);
+  
+  export const pegandoDescricaoPagRecomendacoes = () => api.get(`/indicacaos`);
+
+  export const pegandoIndicacoesEspecificas = () => api.get(`/indicacoes_especificas`);
+
+  export const medicosIndicadosPorId = (id) => api.get(`/medicos_indicados/${id}`);
+
+  export const tokenDispositivo = (id_usuario, token_dispositivo) =>
+  api.post("/token_usuarios", {
+    id_usuario,
+    token_dispositivo,
+  });
+  
+  export const getPdfurl = (id) => api.get(`/receitas/${id}`);
+  export const enviarImagemMensagem = (imagem) => 
+  api.post(`/arquivoimage/`, {
+   file: imagem 
+  })
   

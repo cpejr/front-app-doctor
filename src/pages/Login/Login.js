@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { useWindowDimensions, ScrollView, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, Colors } from "react-native-paper";
@@ -10,12 +9,8 @@ import {
   Logo,
   CaixaInputs,
   SenhaCadastro,
-  BarraEstetica,
-  BotoesAlternativos,
-  ConteudoIcone,
-  Icone,
   TituloInput,
-  AnimacaoCarregandoView,
+  AnimacaoCarregando,
   Rotulo,
 } from "./Styles";
 import { Cores } from "../../variaveis";
@@ -26,6 +21,8 @@ import Input from "./../../styles/Input";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -36,17 +33,20 @@ function Login({ navigation }) {
     senha: false,
   });
   const { width, height } = useWindowDimensions();
+  const [carregandoPagina, setCarregandoPagina] = useState(true);
   const [carregando, setCarregando] = useState();
   const [estado, setEstado] = useState({
     email: "",
     senha: "",
   });
 
+
   const errors = {};
   const teste = {
     email: false,
     senha: false,
   };
+
 
   async function verificandoErros() {
     if (!estado.email) errors.email = true;
@@ -125,6 +125,25 @@ function Login({ navigation }) {
     });
   }
 
+  async function registrandoNotificacoes(id){
+    if (!Device.isDevice){
+      return null;
+    }
+    const {status} = await Notifications.requestPermissionsAsync();
+    if(status !== "granted"){
+      return null;
+    }
+    if (Platform.OS == "android"){
+      Notifications.setNotificationChannelAsync("default", {
+        
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+      });
+    }
+    const tokenNotificacoes = await Notifications.getExpoPushTokenAsync();
+    await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
+  }
+
   async function requisicaoLogin() {
     setCarregando(true);
     const email = estado.email;
@@ -135,6 +154,8 @@ function Login({ navigation }) {
     if (resposta === true && verificaTipo.dadosUsuario.tipo === "PACIENTE") {
       Alert.alert("Bem vindo!", "Login efetuado com sucesso");
       navigation.navigate("Tabs");
+      setCarregando(false);
+      registrandoNotificacoes(verificaTipo.dadosUsuario.id);
     } else {
       if (resposta === true && verificaTipo.dadosUsuario.tipo !== "PACIENTE") {
         setEmail(null);
@@ -156,25 +177,24 @@ function Login({ navigation }) {
       navigation.push("Tabs");
     }
     await sleep(1500);
-    setCarregando(false);
+    setCarregandoPagina(false);
   }
+
   useEffect(() => {
-    setCarregando(true);
+    setCarregandoPagina(true);
     verificacaoLogado();
   }, []);
 
   const margemSuperior = height < 200 ? "5px" : "100px";
-  const alturaBotao = height < 400 ? "40px" : "55px";
+  const alturaBotao = height > 400 ? "40px" : "55px";
   const tamanhoFonte = width > 500 ? "17px" : "11px";
-  const tamanhoIcone = width > 480 ? 20 : 18;
   const larguraConteudoBotaoEntrar = width > 480 ? "35%" : "40%";
-  const larguraBotaoAlternativo = width > 480 ? "90%" : "100%";
 
   return (
     <>
       <ScrollView>
         <Body>
-          {carregando ? (
+          {carregandoPagina ? (
             <>
               <PaginaCarregando>
                 <ActivityIndicator animating={true} color={Colors.black} />
@@ -231,17 +251,22 @@ function Login({ navigation }) {
                 boxShadow="none"
                 onPress={() => verificandoErros()}
               >
-                {carregando ? (
-                  <ActivityIndicator animating={true} color={Colors.white} />
-                ) : (
-                  <ConteudoBotao
-                    width={larguraConteudoBotaoEntrar}
-                    fontSize={tamanhoFonte}
-                    color={Cores.branco}
-                  >
-                    ENTRAR
-                  </ConteudoBotao>
-                )}
+                <ConteudoBotao
+                  width={larguraConteudoBotaoEntrar}
+                  fontSize={tamanhoFonte}
+                  color={Cores.branco}
+                >
+                  {carregando ? (
+                    <AnimacaoCarregando>
+                      <ActivityIndicator
+                        animating={true}
+                        color={Cores.branco}
+                      />
+                    </AnimacaoCarregando>
+                  ) : (
+                    <>ENTRAR</>
+                  )}
+                </ConteudoBotao>
               </Botao>
 
               <SenhaCadastro>
@@ -253,6 +278,7 @@ function Login({ navigation }) {
                   borderRadius="3px"
                   borderWidth="3px"
                   boxShadow="none"
+                  flexDirection="column"
                   onPress={() => navigation.push("AlterarSenhaComEmail")}
                 >
                   <ConteudoBotao
@@ -292,54 +318,7 @@ function Login({ navigation }) {
                   </ConteudoBotao>
                 </Botao>
               </SenhaCadastro>
-              <BarraEstetica />
-
-              <BotoesAlternativos>
-                <Botao
-                  width={larguraBotaoAlternativo}
-                  height="40px"
-                  backgroundColor={Cores.branco}
-                  borderRadius="3px"
-                  borderColor={Cores.lilas[1]}
-                  borderWidth="3px"
-                  boxShadow="none"
-                >
-                  <ConteudoIcone>
-                    <Icone>
-                      <Icon name="google" size={tamanhoIcone} />
-                    </Icone>
-                    <ConteudoBotao
-                      width="80%"
-                      fontSize={tamanhoFonte}
-                      color={Cores.preto}
-                    >
-                      Continuar com o Google
-                    </ConteudoBotao>
-                  </ConteudoIcone>
-                </Botao>
-                <Botao
-                  width={larguraBotaoAlternativo}
-                  height="40px"
-                  backgroundColor={Cores.branco}
-                  borderRadius="3px"
-                  borderColor={Cores.lilas[1]}
-                  borderWidth="3px"
-                  boxShadow="none"
-                >
-                  <ConteudoIcone>
-                    <Icone>
-                      <Icon name="facebook-square" size={tamanhoIcone} />
-                    </Icone>
-                    <ConteudoBotao
-                      width="80%"
-                      fontSize={tamanhoFonte}
-                      color={Cores.preto}
-                    >
-                      Continuar com o Facebook
-                    </ConteudoBotao>
-                  </ConteudoIcone>
-                </Botao>
-              </BotoesAlternativos>
+          
             </>
           )}
         </Body>

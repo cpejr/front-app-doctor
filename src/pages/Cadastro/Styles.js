@@ -1,7 +1,9 @@
 import styled from "styled-components/native";
 import { Picker } from "@react-native-picker/picker";
 import { Cores } from "../../variaveis";
-import DatePicker from "react-native-datepicker";
+import DatePicker from "@react-native-community/datetimepicker";
+import { useState } from "react";
+import { colors } from "react-native-elements";
 
 export const Body = styled.View`
   display: flex;
@@ -14,18 +16,16 @@ export const Body = styled.View`
 export const CaixaTitulo = styled.View`
   display: flex;
   flex-direction: row;
-  width: ${(props) => props.width};
   align-items: center;
   justify-content: space-around;
-  margin-top: ${(props) => props.marginTop};
   margin-bottom: 30px;
+  height: auto;
+  width: ${(props) => props.width};
+  margin-top: ${(props) => props.marginTop};
 `;
 
 export const Logo = styled.Image`
-  width: 120px;
-  height: 135px;
   border-radius: 10px;
-  margin-right: 20px;
 `;
 
 export const Titulo = styled.Text`
@@ -162,11 +162,9 @@ export const CaixaTituloInput = styled.View`
 `;
 
 export const TituloInput = styled.Text`
-   font-size: 12px;
-   color: ${Cores.azulEscuro};
-   text-align: left;
-   
-
+  font-size: 12px;
+  color: ${Cores.azulEscuro};
+  text-align: left;
 `;
 
 export const PossuiConvenio = styled.View`
@@ -176,7 +174,7 @@ export const PossuiConvenio = styled.View`
   width: 100%;
   padding: 2% 10% 0% 10%;
 
-  color:${Cores.azul} ;
+  color: ${Cores.azul};
   .ant-switch-checked {
     background-color: ${Cores.azul};
   }
@@ -187,8 +185,48 @@ export const Texto = styled.Text`
   color: ${Cores.azulEscuro};
 `;
 
-
 export const CaixaTextoConvenioCuidador = styled.View`
   margin-top: 5%;
+`;
+
+export const CaixaParaDatadeNascimento = styled.Text`
+  width: ${(props) => props.width ?? "100%"};
+  margin-left: ${(props) => props.marginLeft?? "0%"};
+  margin-right: ${(props) => props.marginRight?? "0%"};
+  height: 50px;
+  background-color: #e4e6f4;
+  border-radius: 5px;
+  padding-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 6px;
+  border: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.erro || props.camposVazios){
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+  color: ${(props) => {
+    let cor;
+      if(props.value == 0){
+        cor = colors.grey3;
+        return cor;
+      }else{
+        cor = Cores.preto;
+      }
+      return cor;
+  }};
+  border-width: 1.5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+  font-size: 15px;
+  padding-top: 12px;
+  
   
 `;
+

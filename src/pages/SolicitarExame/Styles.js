@@ -43,7 +43,7 @@ export const CaixaTitulo = styled.View`
 export const Titulo = styled.Text`
   font-size: 25px;
   font-weight: 600;
-  color: green;
+  color: ${Cores.azulEscuro};
 `;
 
 export const CaixaScroll = styled.View`
@@ -71,7 +71,7 @@ export const CaixaDescricao = styled.View`
   align-items: center;
   justify-content: center;
   elevation: 5;
-  background-color: green;
+  background-color: ${Cores.cinza[7]};
   
 `;
 
@@ -92,12 +92,11 @@ export const CaixaBotao = styled.View`
   justify-content: center;
   background-color: ${Cores.branco};
   padding: 3%;
-
- 
+  margin-bottom: 1%;
 `;
 
 export const TextoBotao = styled.Text`
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   color: ${Cores.azulEscuro};
 `;

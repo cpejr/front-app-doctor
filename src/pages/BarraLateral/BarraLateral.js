@@ -8,6 +8,7 @@ import {
   Modal,
   useWindowDimensions,
   TouchableHighlight,
+  Linking
 } from "react-native";
 import {
   BarraPesquisa,
@@ -50,6 +51,7 @@ import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Alert } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
+import { sleep } from "../../utils/sleep";
 
 const camposVaziosReferencia = {
   id_usuario: false,
@@ -62,7 +64,7 @@ function BarraLateral({ navigation }) {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const onChangeBusca = (busca) => setBusca(busca);
-  const [carregando, setCarregando] = useState(false);
+  const [carregando, setCarregando] = useState(true);
   const componenteEstaMontadoRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [mensagemRecebida, setMensagemRecebida] = useState({});
@@ -92,51 +94,59 @@ function BarraLateral({ navigation }) {
   const isFocused = useIsFocused();
 
   const imagemPerfilPadrão = require("../../assets/logoGuilherme.png");
+  async function getConversas(componenteEstaMontadoRef) {
+    await managerService.deletarConversasInativas(usuarioId);
+    const resposta = await managerService.GetConversasUsuario(usuarioId);
 
+    if (componenteEstaMontadoRef) {
+      setConversas(resposta);
+
+      setCarregando(false);
+    }
+  }
+  var frequencia;
+
+  function startTemporizador() {
+    frequencia = setInterval(function () {
+      getConversas();
+    }, 5000);
+  }
+  useEffect(() => {
+    startTemporizador();
+  }, []);
   useEffect(() => {
     if (!usuarioId) return;
 
     componenteEstaMontadoRef.current = true;
 
-    async function getConversas() {
-      setCarregandoConversas(true);
-
-      await managerService.deletarConversasInativas(usuarioId);
-      const resposta = await managerService.GetConversasUsuario(usuarioId);
-
-      if (componenteEstaMontadoRef.current) {
-        setConversas(resposta);
-        setCarregandoConversas(false);
-      }
-    }
-
-    getConversas();
+    getConversas(componenteEstaMontadoRef.current);
 
     return () => (componenteEstaMontadoRef.current = false);
   }, [usuarioId]);
 
+  async function getConversas(componenteEstaMontadoRef) {
+    setCarregandoConversas(true);
+    const resposta = await managerService.GetConversasUsuario(usuarioId);
+
+    for (var i = 0; i < resposta.length; i++) {
+      if (resposta[i].conversaCom.avatar_url) {
+        const imagem = await managerService.GetArquivoPorChave(
+          resposta[i].conversaCom.avatar_url
+        );
+        resposta[i].conversaCom.imagem = imagem;
+      }
+    }
+    if (componenteEstaMontadoRef) {
+      setConversas(resposta);
+      setCarregandoConversas(false);
+    }
+    getConversas(componenteEstaMontadoRef);
+  }
   useEffect(() => {
     if (!usuarioId) return;
     componenteEstaMontadoRef.current = true;
 
-    async function getConversas() {
-      setCarregandoConversas(true);
-      const resposta = await managerService.GetConversasUsuario(usuarioId);
-
-      for (var i = 0; i < resposta.length; i++) {
-        if (resposta[i].conversaCom.avatar_url) {
-          const imagem = await managerService.GetArquivoPorChave(
-            resposta[i].conversaCom.avatar_url
-          );
-          resposta[i].conversaCom.imagem = imagem;
-        }
-      }
-      if (componenteEstaMontadoRef.current) {
-        setConversas(resposta);
-        setCarregandoConversas(false);
-      }
-    }
-    getConversas();
+    getConversas(componenteEstaMontadoRef.current);
     return () => (componenteEstaMontadoRef.current = false);
   }, [usuarioId]);
 
@@ -161,60 +171,68 @@ function BarraLateral({ navigation }) {
     };
   }, [usuarioId]);
 
+  async function atualizarBarraLateralNovaMensagem(
+    novaMensagem,
+    componenteEstaMontadoRef
+  ) {
+    const index = conversas?.findIndex(
+      ({ id }) => id === novaMensagem.id_conversa
+    );
+    const copiaConversas = objCopiaProfunda(conversas);
+    const conversaNaLista = copiaConversas[index];
+
+    novaMensagem.pertenceAoUsuarioAtual = false;
+    if (novaMensagem.id_conversa === conversaSelecionada.id) {
+      setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
+      await managerService.UpdateMensagemVisualizada(novaMensagem.id, {
+        foi_visualizado: true,
+      });
+    } else {
+      conversaNaLista.mensagensNaoVistas++;
+    }
+
+    conversaNaLista.ultima_mensagem = novaMensagem;
+    if (componenteEstaMontadoRef) {
+      setConversas(moverArray(copiaConversas, index, 0));
+    }
+    atualizarBarraLateralNovaMensagem(
+      mensagemRecebida,
+      componenteEstaMontadoRef
+    );
+  }
   useEffect(() => {
     if (checarObjVazio(mensagemRecebida) || !usuarioId) return;
 
     componenteEstaMontadoRef.current = true;
 
-    async function atualizarBarraLateralNovaMensagem(novaMensagem) {
-      const index = conversas?.findIndex(
-        ({ id }) => id === novaMensagem.id_conversa
-      );
-      const copiaConversas = objCopiaProfunda(conversas);
-      const conversaNaLista = copiaConversas[index];
-
-      novaMensagem.pertenceAoUsuarioAtual = false;
-      if (novaMensagem.id_conversa === conversaSelecionada.id) {
-        setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
-        await managerService.UpdateMensagemVisualizada(novaMensagem.id, {
-          foi_visualizado: true,
-        });
-      } else {
-        conversaNaLista.mensagensNaoVistas++;
-      }
-
-      conversaNaLista.ultima_mensagem = novaMensagem;
-      if (componenteEstaMontadoRef.current) {
-        setConversas(moverArray(copiaConversas, index, 0));
-      }
-    }
-
-    atualizarBarraLateralNovaMensagem(mensagemRecebida);
+    atualizarBarraLateralNovaMensagem(
+      mensagemRecebida,
+      componenteEstaMontadoRef.current
+    );
     setMensagemRecebida({});
 
     return () => (componenteEstaMontadoRef.current = false);
   }, [mensagemRecebida, usuarioId]);
 
+  function atualizarBarraLateralNovaConversa(novaConversa) {
+    const index = conversas?.findIndex(
+      (conversa) => conversa.id === novaConversa.id
+    );
+
+    if (index === -1) {
+      return setConversas((conversasLista) => [
+        novaConversa,
+        ...conversasLista,
+      ]);
+    }
+
+    const copiaConversas = objCopiaProfunda(conversas);
+    copiaConversas[index] = novaConversa;
+    atualizarBarraLateralNovaConversa(novaConversa);
+    setConversas(copiaConversas);
+  }
   useEffect(() => {
     if (checarObjVazio(conversaRecebida)) return;
-
-    function atualizarBarraLateralNovaConversa(novaConversa) {
-      const index = conversas?.findIndex(
-        (conversa) => conversa.id === novaConversa.id
-      );
-
-      if (index === -1) {
-        return setConversas((conversasLista) => [
-          novaConversa,
-          ...conversasLista,
-        ]);
-      }
-
-      const copiaConversas = objCopiaProfunda(conversas);
-      copiaConversas[index] = novaConversa;
-
-      setConversas(copiaConversas);
-    }
 
     atualizarBarraLateralNovaConversa(conversaRecebida);
     setConversaRecebida({});
@@ -280,27 +298,29 @@ function BarraLateral({ navigation }) {
       Alert.alert("Erro ao abrir a conversa.");
     }
   }
-  useEffect(() => {
-    async function pegandoUsuarios() {
-      if (!usuarioId) return;
 
-      componenteEstaMontadoRef.current = true;
+  async function pegandoUsuarios() {
+    if (!usuarioId) return;
 
-      const resposta = await managerService.GetTodosUsuarios();
-      const pegaSecretaria = resposta.filter(
-        (item) => item.tipo === "SECRETARIA(O)"
-      );
-      const conversasUsuariosIds = conversas.map(
-        ({ conversaCom }) => conversaCom.id
-      );
-      setUsuario(pegaSecretaria);
+    componenteEstaMontadoRef.current = true;
 
-      if (componenteEstaMontadoRef.current) {
-        setUsuarios(usuarios);
-        setCarregando(false);
-      }
+    const resposta = await managerService.GetTodosUsuarios();
+    const pegaSecretaria = resposta.filter(
+      (item) => item.tipo === "SECRETARIA(O)"
+    );
+    const conversasUsuariosIds = conversas.map(
+      ({ conversaCom }) => conversaCom.id
+    );
+    setUsuario(pegaSecretaria);
+
+    if (componenteEstaMontadoRef.current) {
+      setUsuarios(usuarios);
+      await sleep(1500);
+      setCarregando(false);
     }
-
+    pegandoUsuarios();
+  }
+  useEffect(() => {
     pegandoUsuarios();
 
     return () => (componenteEstaMontadoRef.current = false);

@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import requisicaoErro from "../../utils/HttpErros";
 import { Alert } from "react-native";
 import { sleep } from "../../utils/sleep";
+import { ContainerFotoEAlterarImagem } from "../../pages/AlterarDados/Styles";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
   const dadosEmail = await requesterService.requisicaoDadosUsuario(
@@ -45,6 +46,18 @@ export const requisicaoLogin = async (email, senha) => {
     });
   return resposta;
 };
+
+export const requisicaoToken = async (id_usuario, token_dispositivo) => {
+    const token = await requesterService
+    .tokenDispositivo(id_usuario, token_dispositivo)
+    .then((res) => {
+      return true; 
+    })
+    .catch((error) => {
+      Alert.alert("Erro", "Impossível armazenar token do dispositivo");
+      return false;
+    });
+  };
 
 export const GetDadosUsuario = async () => {
   const email = await AsyncStorage.getItem("@AirBnbApp:email");
@@ -527,6 +540,116 @@ export const CriandoConversa = async (conversa) => {
       requisicaoErro(error);
     });
   return dadosConversaCriada;
+};
+
+export const pegandoDescricaoPagRecomendacoes = async () => {
+  let result = {};
+  await requesterService
+    .pegandoDescricaoPagRecomendacoes()
+    .then((res) => {
+      result = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return result;
+};
+
+export const pegandoIndicacoesEspecificas = async () => {
+  let result = {};
+  await requesterService
+    .pegandoIndicacoesEspecificas()
+    .then((res) => {
+      result = res.data;
+      
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return result;
+};
+
+export const medicosIndicadosPorId = async (id) => {
+  let resposta = {};
+  await requesterService
+    .medicosIndicadosPorId(id)
+    .then((res) => {
+      resposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return resposta;
+};
+export const pegarTodosExames = async () => {
+  let dadosExame = {};
+  await requesterService
+    .requisicaoTodosExames()
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
+};
+
+export const GetExameEspecifico = async (id) => {
+  let dadosExame = {};
+  await requesterService
+    .requisicaoExameEspecifico(id)
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
+};
+
+export const GetReceitaUrl = async (id) => {
+  let url = {};
+  await requesterService
+    .getPdfurl(id)
+    .then((res) => {
+      url = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return url;
+};
+
+export const enviarArquivoMensagem = async (file) => {
+  let id;
+  await requesterService
+    .enviarArquivoMensagem(file)
+    .then((res) => {
+      Alert.alert("", "Arquivo PDF enviado com sucesso");
+      id = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
+};
+
+export const enviarImagemMensagem = async (imagem) => {
+  let id;
+  await requesterService
+    .enviarImagemMensagem(imagem)
+    .then((res) => {
+      Alert.alert("", "Imagem enviada com sucesso");
+      id = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
 };
 
 export const GetHomeInfo = async () => {
