@@ -267,7 +267,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_um}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais>
+                  <BotaoSaibaMais onPress={() => navigation.navigate("SobreMim")}>
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.branco}
@@ -298,7 +298,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_dois}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais>
+                  <BotaoSaibaMais onPress={() => navigation.navigate("Recomendacoes")}>
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.preto}
@@ -320,7 +320,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_tres}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais>
+                  <BotaoSaibaMais onPress={() => navigation.navigate("Comentarios")}>
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.branco}
@@ -353,7 +353,10 @@ onPress={() => navigation.navigate("ExameNormal")}
                       />
                     </View>
                   </ConteudoAmie>
-                  <BotaoSaibaMais>
+                  <BotaoSaibaMais
+                    onPress={() => navigation.navigate("GrupoAMIE")}
+                    color={Cores.branco}
+                  >
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.preto}
