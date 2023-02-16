@@ -5699,7 +5699,7 @@ fbjs-css-vars@^1.0.0:
   resolved "https://registry.npmjs.org/fbjs-css-vars/-/fbjs-css-vars-1.0.2.tgz"
   integrity sha512-b2XGFAFdWZWg0phtAWLHCk836A1Xann+I+Dgd3Gk64MHKZO44FfoD1KxyvbSh0qZsIoXQGGlVztIY+oitJPpRQ==
 
-fbjs@^0.8.9:
+fbjs@^0.8.4, fbjs@^0.8.9:
   version "0.8.18"
   resolved "https://registry.npmjs.org/fbjs/-/fbjs-0.8.18.tgz"
   integrity sha512-EQaWFK+fEPSoibjNy8IxUtaFOMXcWsY0JaVrQoZR9zC8N2Ygf9iDITPWjUTVIax95b6I742JFLqASHfsag/vKA==
