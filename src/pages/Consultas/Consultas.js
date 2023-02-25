@@ -7,7 +7,8 @@ import {
   Text,
   Linking,
   View,
-  RefreshControl
+  RefreshControl,
+  Scroll,
 } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import {
@@ -101,10 +102,15 @@ function Consultas({ navigation }) {
     const dia = aux.getUTCDate();
     const mes = aux.getUTCMonth() + 1;
     const ano = aux.getFullYear();
+    if (dia < 10){
+       var diaformatado = "0" + dia;
+    } else if (dia >= 10){
+       var diaformatado =  dia;
+    }
     if (mes < 10) {
-      var dataConsulta = dia + "/" + "0" + mes + "/" + ano;
+      var dataConsulta = diaformatado + "/" + "0" + mes + "/" + ano;
     } else if (mes >= 10) {
-      var dataConsulta = dia + "/" + mes + "/" + ano;
+      var dataConsulta = diaformatado + "/" + mes + "/" + ano;
     }
 
     const horas = aux.getHours();
@@ -200,15 +206,24 @@ function Consultas({ navigation }) {
     requisicaoConsultasUsuario();
   }
 
+  const ordernarDatas = (a,b) => {
+ 
+    var data1 = a.dataConsulta;
+    var data2 = b.dataConsulta;
+    var data3 = a.horaConsulta;
+    var data4 = b.horaConsulta;
+    if (data1 > data2) {
+      return -1;
+    } else if (data1 === data2 && data3 > data4){
+      return -1;
+    } else if (data1 < data2) {
+      return 1;
+    } else if (data1 === data2 && data3 < data4){
+      return 1;
+    }
+  }
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={atualizando}
-          onRefresh={aoAtualizar}
-        />
-      }
-    >
+    
       <Body
         paddingLeft={paddingBody}
         paddingRight={paddingBody}
@@ -259,17 +274,19 @@ function Consultas({ navigation }) {
             <ActivityIndicator animating={true} color={Colors.black} />
           </ViewPadrao>
         ) : (
+        
           <ViewPadrao
             paddingLeft="10px"
             paddingRight="10px"
             paddingTop="5%"
             paddingBottom="5%"
-            maxHeight="70%"
+            maxHeight="80%"
           >
+            <ScrollView>
             {consultas.length !== 0 ? (
               <ScrollView>
                 <>
-                  {ocoridas?.map((value) => (
+                  {ocoridas?.sort(ordernarDatas).map((value) => (
                     <TouchableOpacity
                       onPress={() => {
                         getDadosOcorridas(value);
@@ -389,6 +406,7 @@ function Consultas({ navigation }) {
                           </Modal>
                        
                       )}
+                      <ScrollView>
                       <CaixaConsulta>
                         <CaixaData>
                           <ConteudoCaixa fontSize={fontSizeConteudo}>
@@ -424,14 +442,17 @@ function Consultas({ navigation }) {
                           </ConteudoCaixa>
                         </CaixaHora>
                       </CaixaConsulta>
+                      </ScrollView>
                     </TouchableOpacity>
                   ))}
-                  {naoOcorridas?.map((value) => (
+                  
+                  {naoOcorridas?.sort(ordernarDatas).map((value) => (
                     <TouchableOpacity
                       onPress={() => {
                         getDadosNaoOcorridas(value);
                       }}
                       key={value.id}
+                      height="auto"
                     >
                       {width > height ? (
                         <ScrollView>
@@ -512,6 +533,7 @@ function Consultas({ navigation }) {
                           </Modal>
                         </ScrollView>
                       )}
+                      <ScrollView>
                       <CaixaConsulta>
                         <CaixaData>
                           <ConteudoCaixa fontSize={fontSizeConteudo}>
@@ -547,6 +569,7 @@ function Consultas({ navigation }) {
                           </ConteudoCaixa>
                         </CaixaHora>
                       </CaixaConsulta>
+                      </ScrollView>
                     </TouchableOpacity>
                   ))}
                 </>
@@ -556,10 +579,13 @@ function Consultas({ navigation }) {
                 Não há consultas marcadas no momento!
               </TextoSemConsulta>
             )}
+          </ScrollView>  
           </ViewPadrao>
+          
         )}
+        
       </Body>
-    </ScrollView>
+    
   );
 }
 
