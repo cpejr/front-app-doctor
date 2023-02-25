@@ -467,7 +467,7 @@ function ConversaAberta({ navigation, route, socket }) {
                       conteudo={mensagem.conteudo}
                       data_criacao={mensagem.data_criacao}
                       media_url={mensagem.media_url}
-                      //tamanho_arquivo={0}
+                    //tamanho_arquivo={0}
                     />
                   ))}
                 </ScrollMensagemTablet>
@@ -526,7 +526,20 @@ function ConversaAberta({ navigation, route, socket }) {
                   </BotaoRodaPe>
                 }
               >
-                <Menu.Item
+                {conversaSelecionada.tipo === "BIOLOGIX" || conversaSelecionada.tipo === "ACTIGRAFIA" ? (
+                  <View>
+                    <Menu.Item
+                      onPress={() => {
+                        setModalAdicionarDocumento(true);
+                      }}
+                      title="Finalizar Exame"
+                    />
+                    <Divider />
+                  </View>
+                ) : (
+                  <></>
+                )}
+                < Menu.Item
                   onPress={() => {
                     setModalAdicionarDocumento(true);
                   }}
@@ -570,6 +583,19 @@ function ConversaAberta({ navigation, route, socket }) {
                   </BotaoRodaPe>
                 }
               >
+                {conversaSelecionada.tipo === "BIOLOGIX" || conversaSelecionada.tipo === "ACTIGRAFIA" ? (
+                  <View>
+                    <Menu.Item
+                      onPress={() => {
+                        setModalAdicionarDocumento(true);
+                      }}
+                      title="Finalizar Exame"
+                    />
+                    <Divider />
+                  </View>
+                ) : (
+                  <></>
+                )}
                 <Menu.Item
                   onPress={() => {
                     setModalAdicionarDocumento(true);
