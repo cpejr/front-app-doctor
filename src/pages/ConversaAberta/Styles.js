@@ -199,6 +199,13 @@ export const TituloModal = styled.Text`
   text-align: center;
 `;
 
+export const SubtituloModal = styled.Text`
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 2%;
+`;
+
 export const CaixaBotoesCancelarConfirmarModalExcluirFoto = styled.View`
   width: 100%;
   display: flex;
