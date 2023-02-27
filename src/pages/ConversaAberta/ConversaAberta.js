@@ -186,9 +186,10 @@ function ConversaAberta({ navigation, route, socket }) {
       setInputMensagemConteudo("");
     }
 
-    const { data_cricao, data_atualizacao, media_url, ...dados } =
+    let { data_cricao, data_atualizacao, media_url, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
-
+    
+    if(dados.media_url == ""){dados.media_url = "nenhuma"}  
     const novaMensagem = {
       ...dados,
       pertenceAoUsuarioAtual: horarioComercial,
