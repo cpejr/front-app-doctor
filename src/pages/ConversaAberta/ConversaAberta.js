@@ -5,7 +5,7 @@ import React, {
   useRef,
   useDebugValue,
 } from "react";
-import { Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
+import { Text, View, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import {
   Body,
   HeaderConversaAberta,
@@ -236,13 +236,14 @@ function ConversaAberta({ navigation, route, socket }) {
           </TextoMensagem>
         </CaixaTexto>
       </HeaderConversaAberta>
-
+      <KeyboardAvoidingView style={{ flex: 1}} behavior="padding" enabled   keyboardVerticalOffset={-121}>
       <FundoConversaAberta>
          {carregandoConversa ? (
             <PaginaCarregando>
               <ActivityIndicator animating={true} color={Colors.black} />
             </PaginaCarregando>
           ) : (
+        
         <ScrollView
           ref={(ref) => {
             this.scrollView = ref;
@@ -260,6 +261,7 @@ function ConversaAberta({ navigation, route, socket }) {
               />
             ))}  
         </ScrollView>
+        
         )}
       </FundoConversaAberta>
 
@@ -277,7 +279,7 @@ function ConversaAberta({ navigation, route, socket }) {
           color={Cores.azulEscuro}
           onPress={enviarMensagem}
         />
-      </FooterConversaAberta>
+      </FooterConversaAberta></ KeyboardAvoidingView >
     </Body>
   );
 }

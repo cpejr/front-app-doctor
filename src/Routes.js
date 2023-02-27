@@ -36,7 +36,8 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import { Cores } from "./variaveis";
 
-import { View, Image } from "react-native";
+import { View, Image, Keyboard } from "react-native";
+import { useState,useEffect } from "react";
 
 function HomeIcon() {
   return (
@@ -211,6 +212,7 @@ function ChatStackScreen() {
 const Tab = createBottomTabNavigator();
 
 function TabScreen() {
+  
   return (
     <Tab.Navigator
       screenOptions={{
@@ -224,11 +226,12 @@ function TabScreen() {
           backgroundColor: "#151B57",
           height: 70,
           paddingBottom: 8,
-          paddingTop: 8,
+          paddingTop:  8,
           borderTopColor: "transparent",
         },
         tabBarActiveTintColor: "#646464",
         tabBarInactiveTintColor: "#F7F7F7",
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen
@@ -265,6 +268,7 @@ function TabScreen() {
 const Stack = createNativeStackNavigator();
 
 function Routes() {
+  
   return (
     <NavigationContainer>
       <Stack.Navigator
