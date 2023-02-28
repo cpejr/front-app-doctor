@@ -103,14 +103,14 @@ function Consultas({ navigation }) {
     const mes = aux.getUTCMonth() + 1;
     const ano = aux.getFullYear();
     if (dia < 10){
-       var diaformatado = "0" + dia;
+       var diaFormatado = "0" + dia;
     } else if (dia >= 10){
-       var diaformatado =  dia;
+       var diaFormatado =  dia;
     }
     if (mes < 10) {
-      var dataConsulta = diaformatado + "/" + "0" + mes + "/" + ano;
+      var dataConsulta = diaFormatado + "/" + "0" + mes + "/" + ano;
     } else if (mes >= 10) {
-      var dataConsulta = diaformatado + "/" + mes + "/" + ano;
+      var dataConsulta = diaFormatado + "/" + mes + "/" + ano;
     }
 
     const horas = aux.getHours();
