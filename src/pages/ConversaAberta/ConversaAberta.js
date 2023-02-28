@@ -2,6 +2,7 @@ import { Text, View, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, 
 import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Modal,
+  BackHandler
 } from "react-native";
 import {
   ArquivoSelecionado,
@@ -81,6 +82,20 @@ function ConversaAberta({ navigation, route, socket }) {
   const openMenu = () => setVisivel(true);
 
   const closeMenu = () => setVisivel(false);
+
+  useEffect(() => {
+    const backAction = () => {
+      startTemporizador(false, frequencia);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   function deixandoModaisResponsivos() {
     if (width > height) {
@@ -209,17 +224,17 @@ function ConversaAberta({ navigation, route, socket }) {
     }
   }
   
-  function startTemporizador(start) {
-    if(start == true){setfrequencia(setInterval(function () {
+  function startTemporizador(start, frequenciaLida) {
+    if(start == true){frequencia = (setInterval(function () {
       getMensagens(true);
     }, 5000))}
     if(start == false){
-      clearInterval(frequencia) 
+      clearInterval(frequenciaLida) 
       navigation.navigate("BarraLateral");
     }
   }
   useEffect(() => {
-    startTemporizador(true);
+    startTemporizador(true, 0);
   }, []);
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -423,7 +438,7 @@ function ConversaAberta({ navigation, route, socket }) {
           name="arrow-left"
           size={32}
           color={Cores.azul}
-          onPress={() => {startTemporizador(false);}}
+          onPress={() => {startTemporizador(false, frequencia);}}
         />
         {conversaSelecionada.conversaCom.imagem ? (
           <ImagemUsuario
