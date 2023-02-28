@@ -67,6 +67,13 @@ function ConsultasIcon() {
     </View>
   );
 }
+ function ExamesIcon() {
+  return (
+    <View width={35}>
+      <IonIcon name="clipboard-outline" size={35} color={Cores.branco}  />
+     </View>
+   );
+ }
  function ChatIcon() {
    return (
     <View width={35}>
@@ -156,12 +163,12 @@ function ExamesStackScreen() {
   return (
     <ExamesStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Exames"
+      initialRouteName="ListaExames"
     >
-      <ExamesStack.Screen name="Exames" component={Exames} />
-      <ExamesStack.Screen name="FormaPagamento" component={FormaPagamento} />
+      <ExamesStack.Screen name="ListaExames" component={ListaExames} />
       <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
-      <ExamesStack.Screen name="ExameNormal" component={ExameNormal} />
+      <ExamesStack.Screen name="Exames" component={Exames} />
+      
     </ExamesStack.Navigator>
   );
 }
@@ -258,6 +265,14 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao4"
+        options={{ 
+          tabBarIcon: ExamesIcon, 
+          title: "Exames",
+        }}
+        component={ExamesStackScreen}
+      />
+      <Tab.Screen
+        name="botao5"
         options={{ tabBarIcon: ChatIcon, title: "Chat" }}
         component={ChatStackScreen}
       />
