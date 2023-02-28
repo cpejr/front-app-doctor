@@ -77,7 +77,7 @@ function ConversaAberta({ navigation, route, socket }) {
     useState(null);
 
   const [nomeArquivo, setNomeArquivo] = useState("");
-
+  var [frequencia, setfrequencia] = useState();
   const openMenu = () => setVisivel(true);
 
   const closeMenu = () => setVisivel(false);
@@ -196,12 +196,10 @@ function ConversaAberta({ navigation, route, socket }) {
 
   async function getMensagens(componenteEstaMontadoRef) {
     if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
-
     const resposta = await managerService.GetMensagensPorConversaUsuario(
       usuarioId,
       conversaSelecionada.id
     );
-
     if (componenteEstaMontadoRef) {
       setMensagens(resposta);
       await managerService.UpdateMensagensVisualizadas(
@@ -210,15 +208,18 @@ function ConversaAberta({ navigation, route, socket }) {
       );
     }
   }
-  var frequencia;
-
-  function startTemporizador() {
-    frequencia = setInterval(function () {
+  
+  function startTemporizador(start) {
+    if(start == true){setfrequencia(setInterval(function () {
       getMensagens(true);
-    }, 5000);
+    }, 5000))}
+    if(start == false){
+      clearInterval(frequencia) 
+      navigation.navigate("BarraLateral");
+    }
   }
   useEffect(() => {
-    startTemporizador();
+    startTemporizador(true);
   }, []);
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -422,7 +423,7 @@ function ConversaAberta({ navigation, route, socket }) {
           name="arrow-left"
           size={32}
           color={Cores.azul}
-          onPress={() => navigation.navigate("BarraLateral")}
+          onPress={() => {startTemporizador(false);}}
         />
         {conversaSelecionada.conversaCom.imagem ? (
           <ImagemUsuario
