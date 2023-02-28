@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import {
   Modal,
   ScrollView,
   TouchableOpacity,
   useWindowDimensions,
   View,
+  Linking
 } from "react-native";
 import {
   ArquivoSelecionado,
@@ -66,6 +67,7 @@ function ConversaAberta({ navigation, route, socket }) {
   const [modalAdicionarDocumento, setModalAdicionarDocumento] = useState(false);
   const [modalFinalizarExame, setModalFinalizarExame] = useState(false);
   const [confirmarDados, setConfirmarDados] = useState(false);
+  const [confirmouTudo, setConfirmouTudo] = useState(false);
   const { width, height } = useWindowDimensions();
   const [heightModalUpdateFoto, setHeightModalUpdateFoto] = useState();
   const [marginTopModais, setMarginTopModais] = useState();
@@ -87,6 +89,14 @@ function ConversaAberta({ navigation, route, socket }) {
   const openMenu = () => setVisivel(true);
 
   const closeMenu = () => setVisivel(false);
+
+  const mensagemFinalizarExame = `Um paciente finalizou o exame e solicitou a retirada do aparelho. \n
+  Nome completo do paciente : ${usuarioAtual?.nome} \n
+  Telefone : ${usuarioAtual?.telefone} \n
+  Endereço : Endereço \n
+   `;
+  const telefoneContato = "5575997050330";
+  const urlWhatsApp = encodeURI(`https://api.whatsapp.com/send?phone=${telefoneContato}&text=${mensagemFinalizarExame}`);
 
   function deixandoModaisResponsivos() {
     if (width > height) {
@@ -141,17 +151,6 @@ function ConversaAberta({ navigation, route, socket }) {
       encoding: "base64",
     });
 
-    // var tamanho;
-    // if (resultado.size < 1000000 ){
-    //   tamanho = resultado.size/1000;
-    //   tamanho = tamanho.toFixed(2);
-    //   setTamanhoArquivo(tamanho + "KB");
-    // } else {
-    //   tamanho = resultado.size/1000000;
-    //   tamanho = tamanho.toFixed(2);
-    //   setTamanhoArquivo(tamanho + "MB");
-    // }
-
     setArquivo(`data:application/pdf;base64,${file64}`);
 
     setNomeArquivo(resultado.name);
@@ -170,7 +169,8 @@ function ConversaAberta({ navigation, route, socket }) {
 
   function fechandoModalFinalizarExame() {
     setModalFinalizarExame(false);
-    setConfirmarDados(false)
+    setConfirmarDados(false);
+    setConfirmouTudo(false);
   }
 
   const {
@@ -389,6 +389,13 @@ function ConversaAberta({ navigation, route, socket }) {
         "Se tiver um assunto urgente favor responder ao formulário de Emergência.";
     }
 
+    if (confirmouTudo) {
+      id_remetente = remetente.id;
+      texto =
+        "Finalizei meu exame e solicitei a retirada do aparelho";
+      setConfirmouTudo(false)
+    }
+
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
@@ -432,8 +439,22 @@ function ConversaAberta({ navigation, route, socket }) {
     setConfirmarDados(true);
   }
 
-  function enviandoConfirmacao() {
+  const renderizarUrl = useCallback(async () => {
+    const checarUrl = await Linking.canOpenURL(urlWhatsApp);
+    if (checarUrl) {
+      await Linking.openURL(urlWhatsApp);
+    } else {
+      Alert.alert(`Não foi possível abrir a URL: ${urlWhatsApp}`);
+    }
+  }, [urlWhatsApp]);
 
+  function enviandoConfirmacao() {
+    renderizarUrl();
+    setModalFinalizarExame(false);
+    setConfirmarDados(false)
+    setConfirmouTudo(true)
+    enviarMensagem();
+    console.log("chegou")
   }
 
   return (
