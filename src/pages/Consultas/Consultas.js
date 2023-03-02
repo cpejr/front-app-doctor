@@ -115,10 +115,15 @@ function Consultas({ navigation }) {
 
     const horas = aux.getHours();
     const minutos = aux.getMinutes();
+    if (horas < 10){
+      var horaFormatada = "0" + horas;
+   } else if (horas >= 10){
+      var horaFormatada =  horas;
+   }
     if (minutos < 10) {
-      var horaConsulta = horas + ":" + "0" + minutos;
+      var horaConsulta = horaFormatada + ":" + "0" + minutos;
     } else if (minutos >= 10) {
-      var horaConsulta = horas + ":" + minutos;
+      var horaConsulta = horaFormatada + ":" + minutos;
     }
 
     return { dataConsulta, horaConsulta };
@@ -213,13 +218,13 @@ function Consultas({ navigation }) {
     var data3 = a.horaConsulta;
     var data4 = b.horaConsulta;
     if (data1 > data2) {
-      return -1;
+      return 1;
     } else if (data1 === data2 && data3 > data4){
-      return -1;
+      return 1;
     } else if (data1 < data2) {
-      return 1;
+      return -1;
     } else if (data1 === data2 && data3 < data4){
-      return 1;
+      return -1;
     }
   }
   return (
