@@ -20,7 +20,7 @@ import {
   ImagemMedicos,
 } from "./Styles";
 
-function GrupoAMIE() {
+function GrupoAMIE( { navigation }) {
   const { width } = useWindowDimensions();
   const { height } = useWindowDimensions();
   const tamanhoIcone = width > 480 ? 55 : 55;
@@ -34,7 +34,7 @@ function GrupoAMIE() {
   return (
     <Container>
       <CaixaSeta>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push("Home")}>
           <Icon
             name="arrow-left"
             size={tamanhoIcone}
@@ -44,9 +44,11 @@ function GrupoAMIE() {
       </CaixaSeta>
       <ScrollView>
         <Body>
-          <ImagemLogo 
-           width={WidthImagemLogo}
-           height={HeightImagemLogo}source={logoAmie}></ImagemLogo>
+          <ImagemLogo
+            width={WidthImagemLogo}
+            height={HeightImagemLogo}
+            source={logoAmie}
+          ></ImagemLogo>
           <CaixaDescricao>
             <Descricao>
               O grupo de Avaliação e Manejo Integrado das Epilepsias (AMIE) foi
@@ -57,10 +59,11 @@ function GrupoAMIE() {
               Belo Horizonte e região metropolitana.
             </Descricao>
           </CaixaDescricao>
-          <ImagemMedicos 
-          width={WidthImagemMedicos}
-          height={HeightImagemMedicos}
-          source={medicosAmie}></ImagemMedicos>
+          <ImagemMedicos
+            width={WidthImagemMedicos}
+            height={HeightImagemMedicos}
+            source={medicosAmie}
+          ></ImagemMedicos>
         </Body>
       </ScrollView>
     </Container>
