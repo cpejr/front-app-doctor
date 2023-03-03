@@ -51,6 +51,7 @@ import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
 import {useWindowDimensions} from 'react-native';
+import { sleep } from "../../utils/sleep";
 
 function ConversaAberta({ navigation, route, socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
@@ -226,13 +227,18 @@ function ConversaAberta({ navigation, route, socket }) {
   
   function startTemporizador(start, frequenciaLida) {
     if(start == true){frequencia = (setInterval(function () {
-      getMensagens(true);
-    }, 5000))}
+      getMensagens(true)
+    }, 5000) )}
     if(start == false){
       clearInterval(frequenciaLida) 
-      navigation.navigate("BarraLateral");
+      SairdaPagina();
     }
   }
+
+  function SairdaPagina(){
+    navigation.navigate("BarraLateral");
+  }
+
   useEffect(() => {
     startTemporizador(true, 0);
   }, []);
@@ -241,7 +247,7 @@ function ConversaAberta({ navigation, route, socket }) {
 
     getMensagens(componenteEstaMontadoRef.current);
 
-    return () => (componenteEstaMontadoRef.current = false);
+    return () => (componenteEstaMontadoRef.current = false, clearInterval(frequencia));
   }, [conversaSelecionada, usuarioId]);
 
   useEffect(() => {
