@@ -258,6 +258,9 @@ function BarraLateral({ navigation }) {
       setConversaSelecionada(conversaNaLista);
       setConversas(copiaConversas);
 
+      let myString = JSON.stringify(conversa);
+      console.log(myString)
+
       navigation.navigate("ConversaAberta", {
         paramKey: conversa,
       });
@@ -499,10 +502,15 @@ function BarraLateral({ navigation }) {
                         ></ImagemUsuario>
                       )}
                     </CaixaImagem>
-                    <CaixaTexto>
+                    <CaixaTexto> 
+                    {(conversa.tipo === "ACTIGRAFIA" || conversa.tipo === "BIOLOGIX") ? 
+                    (<TextoCaixa fontSize="13px">
+                        Agendamento de Exame de {conversa.tipo}
+                      </TextoCaixa>) : (
                       <TextoCaixa fontSize="17px">
                         {conversa.conversaCom.nome}
-                      </TextoCaixa>
+                      </TextoCaixa>) }
+                      
                       <UltimaMensagem>
                         <TextoCaixa
                           fontSize="13px"

@@ -438,9 +438,14 @@ function ConversaAberta({ navigation, route, socket }) {
             ></ImagemUsuario>
           )}
           <CaixaTexto>
+          {(conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX") ? 
+            (<TextoMensagem color={Cores.azul} fontSize="14px" fontWeight="bold">
+              Agendamento de Exame de {conversaSelecionada.tipo}
+              
+              </TextoMensagem>) : (
             <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
               {conversaSelecionada.conversaCom.nome}
-            </TextoMensagem>
+              </TextoMensagem>) }
           </CaixaTexto>
         </HeaderConversaAberta>
 
