@@ -83,6 +83,9 @@ function SolicitarExame({route, navigation}) {
     }
     await managerService.CriandoMensagem(Mensagem);
 
+    /*navigation.navigate("ConversaAberta", {
+      paramKey: dadosConversa,
+    });*/
   }
 
 
