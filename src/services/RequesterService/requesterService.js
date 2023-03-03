@@ -116,6 +116,15 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
   
   export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
+
+  export const enviarArquivoMensagem = (base64) =>
+  api.post(`/arquivofile/`,{
+    file: base64
+  });
+
+  export const requisicaoHome = () => api.get(`/homes/`);
+ 
+  export const requisicaoImagemCarrossel = () => api.get(`/imagem_carrossels/`);
   
   export const pegandoDescricaoPagRecomendacoes = () => api.get(`/indicacaos`);
 
@@ -128,3 +137,10 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
     id_usuario,
     token_dispositivo,
   });
+  
+  export const getPdfurl = (id) => api.get(`/receitas/${id}`);
+  export const enviarImagemMensagem = (imagem) => 
+  api.post(`/arquivoimage/`, {
+   file: imagem 
+  })
+  

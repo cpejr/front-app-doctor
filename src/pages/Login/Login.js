@@ -1,5 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
-import Icon from "react-native-vector-icons/FontAwesome";
+import React, { useState, useEffect } from "react";
 import { useWindowDimensions, ScrollView, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, Colors } from "react-native-paper";
@@ -10,10 +9,6 @@ import {
   Logo,
   CaixaInputs,
   SenhaCadastro,
-  BarraEstetica,
-  BotoesAlternativos,
-  ConteudoIcone,
-  Icone,
   TituloInput,
   AnimacaoCarregando,
   Rotulo,
@@ -190,11 +185,9 @@ function Login({ navigation }) {
   }, []);
 
   const margemSuperior = height < 200 ? "5px" : "100px";
-  const alturaBotao = height < 400 ? "40px" : "55px";
+  const alturaBotao = height > 400 ? "40px" : "55px";
   const tamanhoFonte = width > 500 ? "17px" : "11px";
-  const tamanhoIcone = width > 480 ? 20 : 18;
   const larguraConteudoBotaoEntrar = width > 480 ? "35%" : "40%";
-  const larguraBotaoAlternativo = width > 480 ? "90%" : "100%";
 
   return (
     <>
@@ -284,6 +277,7 @@ function Login({ navigation }) {
                   borderRadius="3px"
                   borderWidth="3px"
                   boxShadow="none"
+                  flexDirection="column"
                   onPress={() => navigation.push("AlterarSenhaComEmail")}
                 >
                   <ConteudoBotao
@@ -323,54 +317,7 @@ function Login({ navigation }) {
                   </ConteudoBotao>
                 </Botao>
               </SenhaCadastro>
-              <BarraEstetica />
-
-              <BotoesAlternativos>
-                <Botao
-                  width={larguraBotaoAlternativo}
-                  height="40px"
-                  backgroundColor={Cores.branco}
-                  borderRadius="3px"
-                  borderColor={Cores.lilas[1]}
-                  borderWidth="3px"
-                  boxShadow="none"
-                >
-                  <ConteudoIcone>
-                    <Icone>
-                      <Icon name="google" size={tamanhoIcone} />
-                    </Icone>
-                    <ConteudoBotao
-                      width="80%"
-                      fontSize={tamanhoFonte}
-                      color={Cores.preto}
-                    >
-                      Continuar com o Google
-                    </ConteudoBotao>
-                  </ConteudoIcone>
-                </Botao>
-                <Botao
-                  width={larguraBotaoAlternativo}
-                  height="40px"
-                  backgroundColor={Cores.branco}
-                  borderRadius="3px"
-                  borderColor={Cores.lilas[1]}
-                  borderWidth="3px"
-                  boxShadow="none"
-                >
-                  <ConteudoIcone>
-                    <Icone>
-                      <Icon name="facebook-square" size={tamanhoIcone} />
-                    </Icone>
-                    <ConteudoBotao
-                      width="80%"
-                      fontSize={tamanhoFonte}
-                      color={Cores.preto}
-                    >
-                      Continuar com o Facebook
-                    </ConteudoBotao>
-                  </ConteudoIcone>
-                </Botao>
-              </BotoesAlternativos>
+          
             </>
           )}
         </Body>

@@ -323,7 +323,6 @@ export const GetFormularioEspecifico = async (id) => {
   return dadosFormulario;
 };
 
-
 export const GetFormularios = async () => {
   let dadosFormularios = {};
   await requesterService
@@ -377,7 +376,6 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
 
   return false;
 };
-
 
 export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
   let mensagensAtualizadas = {};
@@ -446,7 +444,6 @@ export const UpdateMensagemVisualizada = async (id, atualizacoes) => {
     });
 
   return mensagemAtualizada;
-  
 };
 
 export const deletarConversasInativas = async (id_usaurio) => {
@@ -474,7 +471,7 @@ export const UpdateConversaAtiva = async (id) => {
     });
   return dadosConversa;
 };
-export const GetArquivoPorChave= async (chave) => {
+export const GetArquivoPorChave = async (chave) => {
   let arquivo = "";
   await requesterService
     .requisicaoArquivo(chave)
@@ -485,7 +482,6 @@ export const GetArquivoPorChave= async (chave) => {
       requisicaoErro(error);
     });
   return arquivo;
-  
 };
 
 export const PegarExamesMarcadosUsuario = async () => {
@@ -520,8 +516,6 @@ export const UpdateFotoDePerfil = async (id, file) => {
   return;
 };
 
-
-
 export const deletarFotoDePerfil = async (id, file) => {
   await requesterService
     .deleteFotoDePerfil(id, file)
@@ -535,9 +529,7 @@ export const deletarFotoDePerfil = async (id, file) => {
   return;
 };
 
-export const CriandoConversa = async (
-  conversa
-) => {
+export const CriandoConversa = async (conversa) => {
   let dadosConversaCriada = {};
   await requesterService
     .criarConversa(conversa)
@@ -615,4 +607,73 @@ export const GetExameEspecifico = async (id) => {
       requisicaoErro(error);
     });
   return dadosExame;
+};
+
+export const GetReceitaUrl = async (id) => {
+  let url = {};
+  await requesterService
+    .getPdfurl(id)
+    .then((res) => {
+      url = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return url;
+};
+
+export const enviarArquivoMensagem = async (file) => {
+  let id;
+  await requesterService
+    .enviarArquivoMensagem(file)
+    .then((res) => {
+      Alert.alert("", "Arquivo PDF enviado com sucesso");
+      id = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
+};
+
+export const enviarImagemMensagem = async (imagem) => {
+  let id;
+  await requesterService
+    .enviarImagemMensagem(imagem)
+    .then((res) => {
+      Alert.alert("", "Imagem enviada com sucesso");
+      id = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
+};
+
+export const GetHomeInfo = async () => {
+  let dadosHome = {};
+  await requesterService
+    .requisicaoHome()
+    .then((res) => {
+      dadosHome = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    return dadosHome;
+};
+
+export const GetImagemCarrossel = async () => {
+  let imagens = {};
+  await requesterService
+    .requisicaoImagemCarrossel()
+    .then((res) => {
+      imagens = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    return imagens;
 };
