@@ -290,9 +290,13 @@ function Consultas({ navigation }) {
             paddingRight="10px"
             paddingTop="5%"
             paddingBottom="5%"
-            maxHeight="80%"
+            maxHeight="75%"
           >
-            <ScrollView>
+            <ScrollView
+            refreshControl={<RefreshControl
+              refreshing = {atualizando}
+              onRefresh = {aoAtualizar}
+             />}>
             {consultas.length !== 0 ? (
               <ScrollView>
                 <>
