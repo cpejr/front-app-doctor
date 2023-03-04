@@ -55,9 +55,11 @@ import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
 import { Titulo } from "../AlterarDados/Styles";
+import { cep } from "../../utils/masks";
 
 function ConversaAberta({ navigation, route, socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
+  const [endereco, setEndereco] = useState({});
   const [conversinha, setConversinha] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
   const [carregandoConversa, setCarregandoConversa] = useState(true);
@@ -192,6 +194,7 @@ function ConversaAberta({ navigation, route, socket }) {
 
     if (componenteEstaMontadoRef) {
       setUsuarioAtual(dadosUsuario);
+      setEndereco(dadosUsuario.dadosEndereco);
       setCarregandoConversa(false);
     }
 
@@ -683,7 +686,10 @@ function ConversaAberta({ navigation, route, socket }) {
                       <SubtituloModal>Nome Completo: {usuarioAtual.nome}</SubtituloModal>
                       <SubtituloModal>CPF: {usuarioAtual.cpf}</SubtituloModal>
                       <SubtituloModal>Telefone: {usuarioAtual.telefone}</SubtituloModal>
-                      <SubtituloModal>Endereço: </SubtituloModal>
+                      <SubtituloModal>Endereço: {endereco.rua}, {endereco.numero}, {endereco.complemento},
+                        {endereco.bairro}, {endereco.cidade}, {endereco.estado}, {endereco.pais},
+                        {cep(endereco.cep)}
+                      </SubtituloModal>
                     </View>
                   ) : (
                     <TituloModal>Ao clicar em continuar, uma mensagem automática será enviada para o motoboy que buscará o aparelho do exame
