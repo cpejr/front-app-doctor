@@ -212,19 +212,24 @@ function Consultas({ navigation }) {
   }
 
   const ordernarDatas = (a,b) => {
- 
-    var data1 = a.dataConsulta;
-    var data2 = b.dataConsulta;
+    
+    var data1str = a.dataConsulta;
+    var data2str = b.dataConsulta;
+    var parte1 = data1str.split('/');
+    var parte2= data2str.split('/');
+    var data1 = new Date(parte1[2], parte1[1] - 1, parte1[0]);
+    var data2 = new Date(parte2[2], parte2[1] - 1, parte2[0]);
     var data3 = a.horaConsulta;
     var data4 = b.horaConsulta;
+    
     if (data1 > data2) {
-      return 1;
+      return -1;
     } else if (data1 === data2 && data3 > data4){
-      return 1;
-    } else if (data1 < data2) {
       return -1;
     } else if (data1 === data2 && data3 < data4){
-      return -1;
+      return 1;
+    } else if (data1 < data2) {
+      return 1;
     }
   }
   return (
