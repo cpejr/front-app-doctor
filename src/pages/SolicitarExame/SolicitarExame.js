@@ -66,36 +66,37 @@ function SolicitarExame({ route, navigation }) {
   }, [urlWhatsApp]);
 
   async function CriandoChatparaExame() {
-    /*     const conversa = {
+         const conversa = {
           id_criador: usuario.id,
           id_receptor: "e7d239d1-26be-45ad-a53c-c42d4e3ce543",
           ativada: false,
           tipo: String(exameEspecifico.titulo).toUpperCase()
         }
-        const dadosConversa = await managerService.CriandoConversa(conversa);
+        const dadosConversaCriada = await managerService.CriandoConversa(conversa);
     
         const Mensagem = {
-          id_conversa: dadosConversa.id,
+          id_conversa: dadosConversaCriada.id,
           id_usuario: usuario.id,
           media_url: "media_url",
           foi_visualizado: false,
           conteudo: mensagemPadrao,
         }
         await managerService.CriandoMensagem(Mensagem);
-     */
+     console.log("teste " +  JSON.stringify(dadosConversaCriada))
     const dadosConversa = {
       ativada: false,
       conversaCom: {
         avatar_url: null,
-        id: "81bf0c11-331e-4a4b-b964-a6175d47b33f",
-        nome: "Thoshio Sec Teste",
+        id: dadosConversaCriada.id_receptor,
+        nome: "Agendamento de Exame de "  + String(exameEspecifico.titulo).toUpperCase(),
       },
-      data_criacao: "2023-03-06T12:18:19.255-03:00",
+      data_criacao: dadosConversaCriada.data_criacao,
       finalizada: false,
-      id: "aedcb345-8eae-476d-8d17-ec2f9c017cc3",
+      id: dadosConversaCriada.id,
       mensagensNaoVistas: 0,
-      tipo: null
+      tipo: String(exameEspecifico.titulo).toUpperCase()
     }
+    console.log("teste " +  JSON.stringify(dadosConversa))
     navigation.navigate("ConversaAberta", {
       paramKey: dadosConversa,
     });
