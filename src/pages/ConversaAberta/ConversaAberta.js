@@ -194,7 +194,6 @@ function ConversaAberta({ navigation, route, socket }) {
 
     if (componenteEstaMontadoRef) {
       setUsuarioAtual(dadosUsuario);
-      setEndereco(dadosUsuario.dadosEndereco);
       setCarregandoConversa(false);
     }
 
@@ -207,6 +206,17 @@ function ConversaAberta({ navigation, route, socket }) {
 
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
+
+  async function pegandoEndereco() {
+    setCarregando(true);
+    const resposta = await managerService.GetDadosUsuario();
+    setEndereco(resposta.dadosEndereco);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoEndereco();
+  }, [usuarioAtual]);
 
   async function getMensagens(componenteEstaMontadoRef) {
     if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
@@ -372,7 +382,7 @@ function ConversaAberta({ navigation, route, socket }) {
   const enviarMensagem = async (e) => {
     e.preventDefault();
 
-    if (!inputMensagemConteudo) return;
+    if (!inputMensagemConteudo || confirmouTudo === false) return;
 
     const horaAtual = new Date().getHours();
     const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
@@ -393,7 +403,7 @@ function ConversaAberta({ navigation, route, socket }) {
     }
 
     if (confirmouTudo) {
-      id_remetente = remetente.id;
+      id_remetente = usuarioAtual.id;
       texto =
         "Finalizei meu exame e solicitei a retirada do aparelho";
       setConfirmouTudo(false)
@@ -442,22 +452,16 @@ function ConversaAberta({ navigation, route, socket }) {
     setConfirmarDados(true);
   }
 
-  const renderizarUrl = useCallback(async () => {
-    const checarUrl = await Linking.canOpenURL(urlWhatsApp);
-    if (checarUrl) {
-      await Linking.openURL(urlWhatsApp);
-    } else {
-      Alert.alert(`Não foi possível abrir a URL: ${urlWhatsApp}`);
-    }
-  }, [urlWhatsApp]);
-
   function enviandoConfirmacao() {
-    renderizarUrl();
+    managerService.MandandoMensagemFinalizarExame(
+      usuarioId,
+      usuarioAtual.telefone,
+      usuarioAtual.cpf
+    );
     setModalFinalizarExame(false);
     setConfirmarDados(false)
     setConfirmouTudo(true)
     enviarMensagem();
-    console.log("chegou")
   }
 
   return (
