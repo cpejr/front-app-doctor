@@ -75,6 +75,7 @@ function ConversaAberta({ navigation, route, socket }) {
   const tamanhoImagemModal = width > 2000 ? "400px" : "180px";
   const [carregandoArquivo, setCarregandoarquivo] = useState(false);
   const [visivel, setVisivel] = React.useState(false);
+  const testee = route.params.paramKey;
   const [permissaoParaAbrirAGaleria, setPermissaoParaAbrirAGaleria] =
     useState(null);
 
@@ -101,12 +102,18 @@ function ConversaAberta({ navigation, route, socket }) {
   }, [width, height]);
 
   useEffect(() => {
+    console.log("teste: ")
+    console.log(testee);
+  }, [testee]);
+
+  useEffect(() => {
     (async () => {
       const StatusDaGaleria =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       setPermissaoParaAbrirAGaleria(StatusDaGaleria.status === "granted");
     })();
   }, []);
+
 
   const selecionaImagem = async () => {
     let resultado = await ImagePicker.launchImageLibraryAsync({

@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback, useState, useEffect, useContext,} from "react";
+import { useCallback, useState, useEffect, useContext, } from "react";
 import {
   Text,
   View,
@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   ScrollView,
   Linking,
-  
+
 } from "react-native";
 import {
   Body,
@@ -29,7 +29,7 @@ import { sleep } from "../../utils/sleep";
 import { ChatContext } from "../../contexts/ChatContext/ChatContext";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 
-function SolicitarExame({route, navigation}) {
+function SolicitarExame({ route, navigation }) {
 
   const exameEspecifico = route.params.paramKey;
 
@@ -66,26 +66,39 @@ function SolicitarExame({route, navigation}) {
   }, [urlWhatsApp]);
 
   async function CriandoChatparaExame() {
-    const conversa = {
-      id_criador: usuario.id,
-      id_receptor: "e7d239d1-26be-45ad-a53c-c42d4e3ce543",
+    /*     const conversa = {
+          id_criador: usuario.id,
+          id_receptor: "e7d239d1-26be-45ad-a53c-c42d4e3ce543",
+          ativada: false,
+          tipo: String(exameEspecifico.titulo).toUpperCase()
+        }
+        const dadosConversa = await managerService.CriandoConversa(conversa);
+    
+        const Mensagem = {
+          id_conversa: dadosConversa.id,
+          id_usuario: usuario.id,
+          media_url: "media_url",
+          foi_visualizado: false,
+          conteudo: mensagemPadrao,
+        }
+        await managerService.CriandoMensagem(Mensagem);
+     */
+    const dadosConversa = {
       ativada: false,
-      tipo: String(exameEspecifico.titulo).toUpperCase()
+      conversaCom: {
+        avatar_url: null,
+        id: "81bf0c11-331e-4a4b-b964-a6175d47b33f",
+        nome: "Thoshio Sec Teste",
+      },
+      data_criacao: "2023-03-06T12:18:19.255-03:00",
+      finalizada: false,
+      id: "aedcb345-8eae-476d-8d17-ec2f9c017cc3",
+      mensagensNaoVistas: 0,
+      tipo: null
     }
-    const dadosConversa = await managerService.CriandoConversa(conversa);
-
-    const Mensagem = {
-      id_conversa: dadosConversa.id,
-      id_usuario: usuario.id,
-      media_url: "media_url",
-      foi_visualizado: false,
-      conteudo: mensagemPadrao,
-    }
-    await managerService.CriandoMensagem(Mensagem);
-
-    /*navigation.navigate("ConversaAberta", {
+    navigation.navigate("ConversaAberta", {
       paramKey: dadosConversa,
-    });*/
+    });
   }
 
 
@@ -108,7 +121,7 @@ function SolicitarExame({route, navigation}) {
       <CaixaCentro>
         <CaixaScroll>
           <CaixaDescricao>
-            <ScrollView>          
+            <ScrollView>
               <Descricao>
                 {exameEspecifico.texto}
               </Descricao>
@@ -134,10 +147,10 @@ function SolicitarExame({route, navigation}) {
               <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
             </Botao>
           </CaixaBotao>
-        </> 
-        ) : (
-          <>
-            <CaixaBotao>
+        </>
+      ) : (
+        <>
+          <CaixaBotao>
             <Botao
               width={larguraBotoes}
               height="52px"
@@ -152,8 +165,8 @@ function SolicitarExame({route, navigation}) {
               <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
             </Botao>
           </CaixaBotao>
-          </>
-        )
+        </>
+      )
       }
     </Body>
   );

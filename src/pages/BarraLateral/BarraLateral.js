@@ -259,7 +259,6 @@ function BarraLateral({ navigation }) {
       setConversas(copiaConversas);
 
       let myString = JSON.stringify(conversa);
-      console.log(myString)
 
       navigation.navigate("ConversaAberta", {
         paramKey: conversa,
@@ -337,7 +336,7 @@ function BarraLateral({ navigation }) {
     setEstado({ id_usuario: value });
   }
 
-  async function criarNovarConversa() {
+  async function criarNovaConversa() {
     if (secretariaSelecionada === "" || secretariaSelecionada === undefined) {
       setCampoVazioModal(true);
       Alert.alert("Erro!", "Selecione um usuário.");
@@ -454,7 +453,7 @@ function BarraLateral({ navigation }) {
                     borderRadius="10px"
                     borderWidth="1px"
                     borderColor={Cores.azul}
-                    onPress={() => criarNovarConversa()}
+                    onPress={() => criarNovaConversa()}
                   >
                     {carregandoNovaConversa ? (
                       <ActivityIndicator
