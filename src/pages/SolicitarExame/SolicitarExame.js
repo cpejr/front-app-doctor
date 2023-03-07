@@ -94,8 +94,26 @@ function SolicitarExame({ route, navigation }) {
       finalizada: false,
       id: dadosConversaCriada.id,
       mensagensNaoVistas: 0,
-      tipo: String(exameEspecifico.titulo).toUpperCase()
+      tipo: String(exameEspecifico.titulo).toUpperCase(),
+      ultima_mensagem: {
+        conteudo: mensagemPadrao,
+        data_criacao: dadosConversaCriada.data_criacao,
+        foi_visualizado: false,
+        id_conversa: dadosConversaCriada.id,
+        id_usuario: usuario.id,
+        pertenceAoUsuarioAtual: true,
+    }}
+    const conversaselecionada = {
+      id: dadosConversaCriada.id,
+      ativada: true,
+      mensagensNaoVistas: 0,
+      conversaCom: {
+        id: "e7d239d1-26be-45ad-a53c-c42d4e3ce543",
+        nome: "Agendamento de Exame de "  + String(exameEspecifico.titulo).toUpperCase(),
+        avatar_url: null,
+      },
     }
+    setConversaSelecionada(conversaselecionada)
     console.log("teste " +  JSON.stringify(dadosConversa))
     navigation.navigate("ConversaAberta", {
       paramKey: dadosConversa,

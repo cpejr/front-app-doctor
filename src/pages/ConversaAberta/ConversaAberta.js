@@ -433,7 +433,7 @@ function ConversaAberta({ navigation, route, socket }) {
             color={Cores.azul}
             onPress={() => navigation.push("BarraLateral")}
           />
-          {conversaSelecionada.conversaCom.imagem ? (
+          {conversaSelecionada?.conversaCom?.imagem ? (
             <ImagemUsuario
               border-radius="3px"
               source={{ uri: conversaSelecionada.conversaCom.imagem }}
@@ -451,7 +451,7 @@ function ConversaAberta({ navigation, route, socket }) {
               
               </TextoMensagem>) : (
             <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-              {conversaSelecionada.conversaCom.nome}
+              {conversaSelecionada?.conversaCom?.nome}
               </TextoMensagem>) }
           </CaixaTexto>
         </HeaderConversaAberta>
