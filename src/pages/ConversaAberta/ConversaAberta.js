@@ -102,8 +102,6 @@ function ConversaAberta({ navigation, route, socket }) {
   }, [width, height]);
 
   useEffect(() => {
-    console.log("teste: ")
-    console.log(testee);
   }, [testee]);
 
   useEffect(() => {

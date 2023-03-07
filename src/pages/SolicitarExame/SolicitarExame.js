@@ -82,7 +82,6 @@ function SolicitarExame({ route, navigation }) {
           conteudo: mensagemPadrao,
         }
         await managerService.CriandoMensagem(Mensagem);
-     console.log("teste " +  JSON.stringify(dadosConversaCriada))
     const dadosConversa = {
       ativada: false,
       conversaCom: {
@@ -114,7 +113,6 @@ function SolicitarExame({ route, navigation }) {
       },
     }
     setConversaSelecionada(conversaselecionada)
-    console.log("teste " +  JSON.stringify(dadosConversa))
     navigation.navigate("ConversaAberta", {
       paramKey: dadosConversa,
     });
