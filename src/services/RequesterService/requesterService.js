@@ -145,4 +145,4 @@ export const enviarImagemMensagem = (imagem) =>
   })
 
 export const enviarMensagemFinalizarExame = (id_usuario) =>
-  api.post(`/conversas_whatsapp/${id_usuario}`, telefone, cpf);
+  api.post(`/conversas_whatsapp/${id_usuario}`);

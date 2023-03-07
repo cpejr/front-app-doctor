@@ -455,8 +455,6 @@ function ConversaAberta({ navigation, route, socket }) {
   function enviandoConfirmacao() {
     managerService.MandandoMensagemFinalizarExame(
       usuarioId,
-      usuarioAtual.telefone,
-      usuarioAtual.cpf
     );
     setModalFinalizarExame(false);
     setConfirmarDados(false)
