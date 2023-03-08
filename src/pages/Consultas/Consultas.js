@@ -436,7 +436,7 @@ function Consultas({ navigation }) {
                       {width > height ? (
                           <Modal
                             animationType="slide"
-                            transparent={false}
+                            transparent={true}
                             visible={modalOcorrida}
                           >
                             <CaixaExterna>
@@ -492,7 +492,7 @@ function Consultas({ navigation }) {
                       
                           <Modal
                             animationType="slide"
-                            transparent={false}
+                            transparent={true}
                             visible={modalOcorrida}
                           >
                             <CaixaExterna>
