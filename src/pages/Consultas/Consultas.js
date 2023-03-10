@@ -219,18 +219,18 @@ function Consultas({ navigation }) {
     var parte2= data2str.split('/');
     var data1 = new Date(parte1[2], parte1[1] - 1, parte1[0]);
     var data2 = new Date(parte2[2], parte2[1] - 1, parte2[0]);
-    var data3 = a.horaConsulta;
-    var data4 = b.horaConsulta;
+    var data3str = a.horaConsulta;
+    var data4str = b.horaConsulta;
+    var [hora3,minutos3] = data3str.split(':');
+    var [hora4,minutos4] = data4str.split(':');
     
-    if (data1 > data2) {
-      return -1;
-    } else if (data1 === data2 && data3 > data4){
-      return -1;
-    } else if (data1 === data2 && data3 < data4){
-      return 1;
-    } else if (data1 < data2) {
-      return 1;
-    }
+    data1.setHours(hora3);
+    data1.setMinutes(minutos3);
+    data2.setHours(hora4);
+    data2.setMinutes(minutos4);
+    return data2 - data1;
+    
+
   }
   return (
     
