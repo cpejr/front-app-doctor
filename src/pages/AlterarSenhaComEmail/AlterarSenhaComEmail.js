@@ -31,7 +31,7 @@ function AlterarSenhaComEmail({ navigation }) {
   const [email, setEmail] = useState();
 
   function PreenchendoEmail(text) {
-    setEmail(text);
+    setEmail(text.trim());
     if (text.length > 0) {
       setCamposVazios(false);
     }
