@@ -37,19 +37,19 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import { Cores } from "./variaveis";
 
 import { View, Image, Keyboard } from "react-native";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function HomeIcon() {
   return (
     <View width={35} >
-      <IonIcon name="home-outline" size={35} color={Cores.branco}  />
+      <IonIcon name="home-outline" size={35} color={Cores.branco} />
     </View>
   );
 }
 function ArquivosIcon() {
   return (
     <View width={35}>
-      <IonIcon name="file-tray-full-outline" size={35} color={Cores.branco}  />
+      <IonIcon name="file-tray-full-outline" size={35} color={Cores.branco} />
     </View>
   );
 }
@@ -63,24 +63,24 @@ function ArquivosIcon() {
 function ConsultasIcon() {
   return (
     <View width={35}>
-      <AntIcon name="calendar" size={35} color={Cores.branco}  />
+      <AntIcon name="calendar" size={35} color={Cores.branco} />
     </View>
   );
 }
- function ExamesIcon() {
+function ExamesIcon() {
   return (
     <View width={35}>
-      <IonIcon name="clipboard-outline" size={35} color={Cores.branco}  />
-     </View>
-   );
- }
- function ChatIcon() {
-   return (
+      <IonIcon name="clipboard-outline" size={35} color={Cores.branco} />
+    </View>
+  );
+}
+function ChatIcon() {
+  return (
     <View width={35}>
-      <IonIcon name="chatbubbles-outline" size={35} color={Cores.branco}  />
-     </View>
-   );
- }
+      <IonIcon name="chatbubbles-outline" size={35} color={Cores.branco} />
+    </View>
+  );
+}
 
 const HomeStack = createNativeStackNavigator();
 
@@ -168,7 +168,7 @@ function ExamesStackScreen() {
       <ExamesStack.Screen name="ListaExames" component={ListaExames} />
       <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
       <ExamesStack.Screen name="Exames" component={Exames} />
-      
+
     </ExamesStack.Navigator>
   );
 }
@@ -210,7 +210,7 @@ function ChatStackScreen() {
         name="ConversaAberta"
         component={ConversaAberta}
       />
-     
+
 
     </ChatStack.Navigator>
   );
@@ -219,7 +219,7 @@ function ChatStackScreen() {
 const Tab = createBottomTabNavigator();
 
 function TabScreen() {
-  
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -233,7 +233,7 @@ function TabScreen() {
           backgroundColor: "#151B57",
           height: 70,
           paddingBottom: 8,
-          paddingTop:  8,
+          paddingTop: 8,
           borderTopColor: "transparent",
         },
         tabBarActiveTintColor: "#646464",
@@ -256,8 +256,8 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao3"
-        options={{ 
-          tabBarIcon: ConsultasIcon, 
+        options={{
+          tabBarIcon: ConsultasIcon,
           title: "Consultas",
           unmountOnBlur: true
         }}
@@ -265,8 +265,8 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao4"
-        options={{ 
-          tabBarIcon: ExamesIcon, 
+        options={{
+          tabBarIcon: ExamesIcon,
           title: "Exames",
         }}
         component={ExamesStackScreen}
@@ -283,7 +283,7 @@ function TabScreen() {
 const Stack = createNativeStackNavigator();
 
 function Routes() {
-  
+
   return (
     <NavigationContainer>
       <Stack.Navigator
