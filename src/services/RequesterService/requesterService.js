@@ -144,5 +144,9 @@ export const enviarImagemMensagem = (imagem) =>
     file: imagem
   })
 
-export const enviarMensagemFinalizarExame = (id_usuario) =>
-  api.post(`/conversas_whatsapp/${id_usuario}`);
+export const enviarMensagemFinalizarExame = (id_usuario, telefone, endereco) =>
+  api.post(`/conversas_whatsapp`, {
+    id_usuario,
+    telefone, 
+    endereco
+  });

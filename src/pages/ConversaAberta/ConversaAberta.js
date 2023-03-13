@@ -55,7 +55,7 @@ import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
 import { Titulo } from "../AlterarDados/Styles";
-import { cep } from "../../utils/masks";
+import { cep, telefone } from "../../utils/masks";
 
 function ConversaAberta({ navigation, route, socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
@@ -91,14 +91,6 @@ function ConversaAberta({ navigation, route, socket }) {
   const openMenu = () => setVisivel(true);
 
   const closeMenu = () => setVisivel(false);
-
-  const mensagemFinalizarExame = `Um paciente finalizou o exame e solicitou a retirada do aparelho. \n
-  Nome completo do paciente : ${usuarioAtual?.nome} \n
-  Telefone : ${usuarioAtual?.telefone} \n
-  Endereço : Endereço \n
-   `;
-  const telefoneContato = "5575997050330";
-  const urlWhatsApp = encodeURI(`https://api.whatsapp.com/send?phone=${telefoneContato}&text=${mensagemFinalizarExame}`);
 
   function deixandoModaisResponsivos() {
     if (width > height) {
@@ -452,9 +444,13 @@ function ConversaAberta({ navigation, route, socket }) {
     setConfirmarDados(true);
   }
 
+  const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
+
   function enviandoConfirmacao() {
     managerService.MandandoMensagemFinalizarExame(
       usuarioId,
+      telefone(usuarioAtual.telefone),
+      enderecoCompleto
     );
     setModalFinalizarExame(false);
     setConfirmarDados(false)

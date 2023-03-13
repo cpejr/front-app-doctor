@@ -416,9 +416,9 @@ export const CriandoMensagem = async (mensagem) => {
   return dadosMensagemCriada;
 };
 
-export const MandandoMensagemFinalizarExame = async (id_usuario) => {
+export const MandandoMensagemFinalizarExame = async (id_usuario, telefone, endereco) => {
   await requesterService
-    .enviarMensagemFinalizarExame(id_usuario)
+    .enviarMensagemFinalizarExame(id_usuario, telefone, endereco)
     .then(() => {
       toast.success("Exame finalizado com sucesso!")
     })
