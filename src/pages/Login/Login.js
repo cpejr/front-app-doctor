@@ -23,6 +23,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
 
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -129,18 +130,17 @@ function Login({ navigation }) {
     if (!Device.isDevice){
       return null;
     }
-    const {status} = await Notifications.requestPermissionsAsync();
+    /*const {status} = await Notifications.requestPermissionsAsync();
     if(status !== "granted"){
       return null;
-    }
+    }*/
     if (Platform.OS == "android"){
       Notifications.setNotificationChannelAsync("default", {
-        
         name: "default",
         importance: Notifications.AndroidImportance.MAX,
       });
     }
-    const tokenNotificacoes = await Notifications.getExpoPushTokenAsync();
+    const tokenNotificacoes = await Notifications.getExpoPushTokenAsync(Constants.manifest.projectId); //Calling getExpoPushTokenAsync without specifying a projectId is deprecated and will no longer be supported in SDK 49+
     await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
   }
 
