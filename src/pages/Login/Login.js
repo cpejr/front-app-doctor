@@ -146,7 +146,7 @@ function Login({ navigation }) {
 
   async function requisicaoLogin() {
     setCarregando(true);
-    const email = estado.email;
+    const email = (estado.email).trim();
     const senha = estado.senha;
     const resposta = await managerService.requisicaoLogin(email, senha);
     const verificaTipo = await managerService.GetDadosUsuario(email);
