@@ -153,7 +153,7 @@ function SolicitarExame({ route, navigation }) {
               width={larguraBotoes}
               height="40px"
               marginTop="0%"
-              backgroundColor="CFD3F8"
+              backgroundColor={Cores.lilas[6]}
               //backgroundColor={Cores.cinza[11]}
               borderRadius="3px"
               borderColor={Cores.azul}
