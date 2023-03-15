@@ -40,7 +40,7 @@ function SolicitarExame({ route, navigation }) {
 
   const [usuario, setUsuario] = useState({});
 
-  const mensagemPadrao = `Ola, meu nome e: ${usuario?.nome} e gostaria de realizar um agendamento para o exame: ${exameEspecifico.titulo}`;
+  const mensagemPadrao = `Olá!, meu nome e: ${usuario?.nome} e gostaria de realizar um agendamento para o exame: ${exameEspecifico.titulo}`;
   const telefoneContato = "5579981375018";
   const urlWhatsApp = encodeURI(`https://api.whatsapp.com/send?phone=${telefoneContato}&text=${mensagemPadrao}`);
 
@@ -153,7 +153,7 @@ function SolicitarExame({ route, navigation }) {
               width={larguraBotoes}
               height="40px"
               marginTop="0%"
-              backgroundColor="green"
+              backgroundColor="CFD3F8"
               //backgroundColor={Cores.cinza[11]}
               borderRadius="3px"
               borderColor={Cores.azul}
