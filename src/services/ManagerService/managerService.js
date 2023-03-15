@@ -688,3 +688,16 @@ export const GetImagemCarrossel = async () => {
     });
     return imagens;
 };
+
+export const DeletarTokenDispositivo = async (token_dispositivo) => {
+  await requesterService
+    .LogouttokenDispositivo(token_dispositivo)
+    .then(() => {
+    })
+    .catch((error) => {
+      console.log(error)
+      return false;
+    });
+
+  return false;
+};

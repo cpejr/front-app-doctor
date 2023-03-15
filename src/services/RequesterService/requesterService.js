@@ -150,3 +150,13 @@ export const enviarMensagemFinalizarExame = (id_usuario, telefone, endereco) =>
     telefone, 
     endereco
   });
+
+
+  export const LogouttokenDispositivo = (token_dispositivo) =>
+  api.delete(`/token_usuarios`, {
+    data:{
+      'token_dispositivo': `${token_dispositivo}`
+    },
+  });
+  
+  
