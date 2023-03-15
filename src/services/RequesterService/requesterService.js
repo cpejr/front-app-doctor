@@ -143,4 +143,12 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.post(`/arquivoimage/`, {
    file: imagem 
   })
+
+  export const LogouttokenDispositivo = (token_dispositivo) =>
+  api.delete(`/token_usuarios`, {
+    data:{
+      'token_dispositivo': `${token_dispositivo}`
+    },
+  });
+  
   
