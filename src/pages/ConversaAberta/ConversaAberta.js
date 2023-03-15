@@ -371,10 +371,9 @@ function ConversaAberta({ navigation, route, socket }) {
     setCarregandoarquivo(false);
   }
 
-  const enviarMensagem = async (e) => {
-    e.preventDefault();
+  async function enviarMensagem(foiConfirmado) {
 
-    if (!inputMensagemConteudo || confirmouTudo === false) return;
+    if (inputMensagemConteudo === "" && foiConfirmado === false) return;
 
     const horaAtual = new Date().getHours();
     const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
@@ -392,13 +391,16 @@ function ConversaAberta({ navigation, route, socket }) {
         "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
         "Se tiver um assunto urgente favor responder ao formulário de Emergência.";
+        setInputMensagemConteudo("");
     }
-
-    if (confirmouTudo) {
+  
+    if (foiConfirmado) {
       id_remetente = usuarioAtual.id;
       texto =
         "Finalizei meu exame e solicitei a retirada do aparelho";
       setConfirmouTudo(false)
+      setInputMensagemConteudo("");
+      closeMenu()
     }
 
     setCarregandoEnvioMensagem(true);
@@ -447,15 +449,17 @@ function ConversaAberta({ navigation, route, socket }) {
   const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
 
   function enviandoConfirmacao() {
+    setModalFinalizarExame(false);
+    setConfirmarDados(false)
+    setConfirmouTudo(true)
+    enviarMensagem(true);
+
     managerService.MandandoMensagemFinalizarExame(
       usuarioId,
       telefone(usuarioAtual.telefone),
       enderecoCompleto
     );
-    setModalFinalizarExame(false);
-    setConfirmarDados(false)
-    setConfirmouTudo(true)
-    enviarMensagem();
+
   }
 
   return (
@@ -961,7 +965,7 @@ function ConversaAberta({ navigation, route, socket }) {
             name="send"
             size={30}
             color={Cores.azulEscuro}
-            onPress={enviarMensagem}
+            onPress={()=> enviarMensagem(false)}
           />
         </FooterConversaAberta>
       </Body>
