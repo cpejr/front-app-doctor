@@ -40,7 +40,7 @@ function SolicitarExame({ route, navigation }) {
 
   const [usuario, setUsuario] = useState({});
 
-  const mensagemPadrao = `Olá!, meu nome e: ${usuario?.nome} e gostaria de realizar um agendamento para o exame: ${exameEspecifico.titulo}`;
+  const mensagemPadrao = `Olá!, meu nome é ${usuario?.nome} e gostaria de realizar um agendamento para o exame ${exameEspecifico.titulo}`;
   const telefoneContato = "5579981375018";
   const urlWhatsApp = encodeURI(`https://api.whatsapp.com/send?phone=${telefoneContato}&text=${mensagemPadrao}`);
 
