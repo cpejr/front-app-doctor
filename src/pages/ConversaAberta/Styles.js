@@ -28,7 +28,7 @@ export const HeaderConversaAberta = styled.View`
 export const FundoConversaAberta = styled.View`
   display: flex;
   width: 100%;
-  height: 82%;
+  height: 89%;
   background-color: ${Cores.amarelo};
 `;
 

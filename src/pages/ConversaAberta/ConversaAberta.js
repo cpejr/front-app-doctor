@@ -1,10 +1,8 @@
+import { Text, View, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, ToastAndroid } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Modal,
-  ScrollView,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
+  BackHandler
 } from "react-native";
 import {
   ArquivoSelecionado,
@@ -52,6 +50,8 @@ import moverArray from "../../utils/moverArray";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
+import {useWindowDimensions} from 'react-native';
+import { sleep } from "../../utils/sleep";
 
 function ConversaAberta({ navigation, route, socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
@@ -65,7 +65,7 @@ function ConversaAberta({ navigation, route, socket }) {
   const { width, height } = useWindowDimensions();
   const [heightModalUpdateFoto, setHeightModalUpdateFoto] = useState();
   const [marginTopModais, setMarginTopModais] = useState();
-  const [tablet, setTablet] = useState();
+  const [tablet, setTablet] = useState(false);
   const [imagem64, setImagem64] = useState(null);
   const [imagem, setImagem] = useState(null);
   const [arquivo, setArquivo] = useState(null);
@@ -79,10 +79,24 @@ function ConversaAberta({ navigation, route, socket }) {
     useState(null);
 
   const [nomeArquivo, setNomeArquivo] = useState("");
-
+  var [frequencia, setfrequencia] = useState();
   const openMenu = () => setVisivel(true);
 
   const closeMenu = () => setVisivel(false);
+
+  useEffect(() => {
+    const backAction = () => {
+      startTemporizador(false, frequencia);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   function deixandoModaisResponsivos() {
     if (width > height) {
@@ -198,12 +212,10 @@ function ConversaAberta({ navigation, route, socket }) {
 
   async function getMensagens(componenteEstaMontadoRef) {
     if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
-
     const resposta = await managerService.GetMensagensPorConversaUsuario(
       usuarioId,
       conversaSelecionada.id
     );
-
     if (componenteEstaMontadoRef) {
       setMensagens(resposta);
       await managerService.UpdateMensagensVisualizadas(
@@ -212,22 +224,30 @@ function ConversaAberta({ navigation, route, socket }) {
       );
     }
   }
-  var frequencia;
-
-  function startTemporizador() {
-    frequencia = setInterval(function () {
-      getMensagens(true);
-    }, 5000);
+  
+  function startTemporizador(start, frequenciaLida) {
+    if(start == true){frequencia = (setInterval(function () {
+      getMensagens(true)
+    }, 5000) )}
+    if(start == false){
+      clearInterval(frequenciaLida) 
+      SairdaPagina();
+    }
   }
+
+  function SairdaPagina(){
+    navigation.navigate("BarraLateral");
+  }
+
   useEffect(() => {
-    startTemporizador();
+    startTemporizador(true, 0);
   }, []);
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
 
     getMensagens(componenteEstaMontadoRef.current);
 
-    return () => (componenteEstaMontadoRef.current = false);
+    return () => (componenteEstaMontadoRef.current = false, clearInterval(frequencia));
   }, [conversaSelecionada, usuarioId]);
 
   useEffect(() => {
@@ -393,9 +413,9 @@ function ConversaAberta({ navigation, route, socket }) {
       setInputMensagemConteudo("");
     }
 
-    const { data_cricao, data_atualizacao, media_url, ...dados } =
+    let { data_cricao, data_atualizacao, media_url, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
-
+    
     const novaMensagem = {
       ...dados,
       pertenceAoUsuarioAtual: horarioComercial,
@@ -417,35 +437,35 @@ function ConversaAberta({ navigation, route, socket }) {
     setCarregandoEnvioMensagem(false);
   };
   return (
-    <Provider>
-      <Body>
-        <HeaderConversaAberta>
-          <Icon
-            name="arrow-left"
-            size={32}
-            color={Cores.azul}
-            onPress={() => navigation.push("BarraLateral")}
-          />
-          {conversaSelecionada.conversaCom.imagem ? (
-            <ImagemUsuario
-              border-radius="3px"
-              source={{ uri: conversaSelecionada.conversaCom.imagem }}
-            ></ImagemUsuario>
-          ) : (
-            <ImagemUsuario
-              border-radius="3px"
-              source={imagemPerfilPadrão}
-            ></ImagemUsuario>
-          )}
-          <CaixaTexto>
-            <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-              {conversaSelecionada.conversaCom.nome}
-            </TextoMensagem>
-          </CaixaTexto>
-        </HeaderConversaAberta>
-
-        <FundoConversaAberta>
-          {carregandoConversa ? (
+  <Provider>
+    <Body>
+      <HeaderConversaAberta>
+        <Icon
+          name="arrow-left"
+          size={32}
+          color={Cores.azul}
+          onPress={() => {startTemporizador(false, frequencia);}}
+        />
+        {conversaSelecionada.conversaCom.imagem ? (
+          <ImagemUsuario
+            border-radius="3px"
+            source={{ uri: conversaSelecionada.conversaCom.imagem }}
+          ></ImagemUsuario>
+        ) : (
+          <ImagemUsuario
+            border-radius="3px"
+            source={imagemPerfilPadrão}
+          ></ImagemUsuario>
+        )}
+        <CaixaTexto>
+          <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
+            {conversaSelecionada.conversaCom.nome}
+          </TextoMensagem>
+        </CaixaTexto>
+      </HeaderConversaAberta>
+      <KeyboardAvoidingView style={{ flex: 1}} behavior="padding" enabled   keyboardVerticalOffset={-121}>
+      <FundoConversaAberta>
+         {carregandoConversa ? (
             <PaginaCarregando>
               <ActivityIndicator animating={true} color={Colors.black} />
             </PaginaCarregando>
@@ -809,7 +829,7 @@ function ConversaAberta({ navigation, route, socket }) {
             color={Cores.azulEscuro}
             onPress={enviarMensagem}
           />
-        </FooterConversaAberta>
+        </FooterConversaAberta></ KeyboardAvoidingView>
       </Body>
     </Provider>
   );
