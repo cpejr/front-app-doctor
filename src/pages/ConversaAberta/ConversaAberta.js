@@ -2,11 +2,7 @@ import { Text, View, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, 
 import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Modal,
-  ScrollView,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-  Linking
+  Linking,
   BackHandler
 } from "react-native";
 import {
@@ -1001,7 +997,7 @@ function ConversaAberta({ navigation, route, socket }) {
             color={Cores.azulEscuro}
             onPress={()=> enviarMensagem(false)}
           />
-        </FooterConversaAberta></ KeyboardAvoidingView>
+        </FooterConversaAberta>
       </Body>
     </Provider >
   );
