@@ -416,6 +416,17 @@ export const CriandoMensagem = async (mensagem) => {
   return dadosMensagemCriada;
 };
 
+export const MandandoMensagemFinalizarExame = async (id_usuario, telefone, endereco) => {
+  await requesterService
+    .enviarMensagemFinalizarExame(id_usuario, telefone, endereco)
+    .then(() => {
+      toast.success("Exame finalizado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+}
+
 export const GetMensagensPorConversaUsuario = async (
   id_usuario,
   id_conversa
