@@ -32,6 +32,7 @@ import {
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import  {sleep} from "../../utils/sleep";
+import * as Notifications from 'expo-notifications';
 
 function Perfil({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -67,6 +68,8 @@ function Perfil({ navigation }) {
 
   async function handleLogout() {
     try {
+      const token = await Notifications.getExpoPushTokenAsync()
+      await managerService.DeletarTokenDispositivo(token.type + "/" + token.data)
       AsyncStorage.removeItem("@AirBnbApp:token");
       AsyncStorage.removeItem("@AirBnbApp:email");
       new Alert.alert("", "Usuário deslogado com sucesso!");

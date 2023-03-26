@@ -170,6 +170,7 @@ function ListaExames({ navigation }) {
                   borderRadius="3px"
                   borderColor={Cores.azul}
                   borderWidth="2px"
+                  onPress={() => navigation.navigate("Recomendacoes")}
                 >
                   <ConteudoBotao fontSize="13px" color="green" width="100%">
                     Sugestões e Indicações (exames & profissionais)
