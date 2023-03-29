@@ -289,6 +289,8 @@ function Routes() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Tabs" component={TabScreen} />
+        <Stack.Screen name="HomeLogado" component={HomeStackScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
