@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useContext, } from "react";
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
   ScrollView,
   Linking,
+
 } from "react-native";
 import {
   Body,
@@ -25,8 +26,10 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import Botao from "../../styles/Botao";
 import { sleep } from "../../utils/sleep";
+import { ChatContext } from "../../contexts/ChatContext/ChatContext";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
 
-function SolicitarExame({route, navigation}) {
+function SolicitarExame({ route, navigation }) {
 
   const exameEspecifico = route.params.paramKey;
 
@@ -37,9 +40,12 @@ function SolicitarExame({route, navigation}) {
 
   const [usuario, setUsuario] = useState({});
 
-  const mensagemPadrao = `Ola, meu nome e: ${usuario?.nome} e gostaria de realizar um agendamento para o exame: ${exameEspecifico.titulo}`;
+  const mensagemPadrao = `Olá!, meu nome é ${usuario?.nome} e gostaria de realizar um agendamento para o exame ${exameEspecifico.titulo}`;
   const telefoneContato = "5579981375018";
   const urlWhatsApp = encodeURI(`https://api.whatsapp.com/send?phone=${telefoneContato}&text=${mensagemPadrao}`);
+
+  const { usuarioId, conversas, setConversas, setConversaSelecionada } =
+    useContext(ChatContext);
 
   async function pegandoDadosUsuarioLogado() {
     const resposta = await managerService.GetDadosUsuario();
@@ -59,6 +65,61 @@ function SolicitarExame({route, navigation}) {
     }
   }, [urlWhatsApp]);
 
+  async function CriandoChatparaExame() {
+         const conversa = {
+          id_criador: usuario.id,
+          id_receptor: "e7d239d1-26be-45ad-a53c-c42d4e3ce543",
+          ativada: false,
+          tipo: String(exameEspecifico.titulo).toUpperCase()
+        }
+        const dadosConversaCriada = await managerService.CriandoConversa(conversa);
+    
+        const Mensagem = {
+          id_conversa: dadosConversaCriada.id,
+          id_usuario: usuario.id,
+          media_url: "media_url",
+          foi_visualizado: false,
+          conteudo: mensagemPadrao,
+        }
+        await managerService.CriandoMensagem(Mensagem);
+    const dadosConversa = {
+      ativada: false,
+      conversaCom: {
+        avatar_url: null,
+        id: dadosConversaCriada.id_receptor,
+        nome: "Agendamento de Exame de "  + String(exameEspecifico.titulo).toUpperCase(),
+      },
+      data_criacao: dadosConversaCriada.data_criacao,
+      finalizada: false,
+      id: dadosConversaCriada.id,
+      mensagensNaoVistas: 0,
+      tipo: String(exameEspecifico.titulo).toUpperCase(),
+      ultima_mensagem: {
+        conteudo: mensagemPadrao,
+        data_criacao: dadosConversaCriada.data_criacao,
+        foi_visualizado: false,
+        id_conversa: dadosConversaCriada.id,
+        id_usuario: usuario.id,
+        pertenceAoUsuarioAtual: true,
+    }}
+    const conversaselecionada = {
+      id: dadosConversaCriada.id,
+      ativada: true,
+      mensagensNaoVistas: 0,
+      conversaCom: {
+        id: "e7d239d1-26be-45ad-a53c-c42d4e3ce543",
+        nome: "Agendamento de Exame de "  + String(exameEspecifico.titulo).toUpperCase(),
+        avatar_url: null,
+      },
+    }
+    setConversaSelecionada(conversaselecionada)
+    navigation.navigate("ConversaAberta", {
+      paramKey: dadosConversa,
+    });
+  }
+
+
+
   return (
     <Body>
       <CaixaSeta>
@@ -77,7 +138,7 @@ function SolicitarExame({route, navigation}) {
       <CaixaCentro>
         <CaixaScroll>
           <CaixaDescricao>
-            <ScrollView>          
+            <ScrollView>
               <Descricao>
                 {exameEspecifico.texto}
               </Descricao>
@@ -92,20 +153,21 @@ function SolicitarExame({route, navigation}) {
               width={larguraBotoes}
               height="40px"
               marginTop="0%"
-              backgroundColor="green"
+              backgroundColor={Cores.lilas[6]}
               //backgroundColor={Cores.cinza[11]}
               borderRadius="3px"
               borderColor={Cores.azul}
               borderWidth="2px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.2)"
+              onPress={() => CriandoChatparaExame()}
             >
               <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
             </Botao>
           </CaixaBotao>
-        </> 
-        ) : (
-          <>
-            <CaixaBotao>
+        </>
+      ) : (
+        <>
+          <CaixaBotao>
             <Botao
               width={larguraBotoes}
               height="52px"
@@ -120,8 +182,8 @@ function SolicitarExame({route, navigation}) {
               <TextoBotao>Agendar Exame {exameEspecifico.titulo}</TextoBotao>
             </Botao>
           </CaixaBotao>
-          </>
-        )
+        </>
+      )
       }
     </Body>
   );
