@@ -284,16 +284,11 @@ function Routes() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Login"
+        initialRouteName="Home"
       >
-        <Stack.Screen name="Tabs" component={TabScreen} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen
-          name="AlterarSenhaComEmail"
-          component={AlterarSenhaComEmail}
-        />
-        <Stack.Screen name="LGPD" component={LGPD} />
+        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
+        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );
