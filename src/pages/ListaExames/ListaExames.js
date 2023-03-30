@@ -155,8 +155,9 @@ function ListaExames({ navigation }) {
                   borderRadius="3px"
                   borderColor={Cores.azul}
                   borderWidth="2px"
+                  onPress={() => navigation.navigate("ExameNormal")}
                 >
-                  <ConteudoBotao fontSize="16px" color="green" width="100%">
+                  <ConteudoBotao fontSize="16px" color={Cores.azulEscuro}  width="100%">
                     Outros Exames
                   </ConteudoBotao>
                 </Botao>
@@ -172,7 +173,7 @@ function ListaExames({ navigation }) {
                   borderWidth="2px"
                   onPress={() => navigation.navigate("Recomendacoes")}
                 >
-                  <ConteudoBotao fontSize="13px" color="green" width="100%">
+                  <ConteudoBotao fontSize="13px" color={Cores.azulEscuro} width="100%">
                     Sugestões e Indicações (exames & profissionais)
                   </ConteudoBotao>
                 </Botao>
