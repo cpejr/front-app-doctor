@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
-import { Modal, Text, View, ScrollView, Image, TouchableOpacity, useWindowDimensions, KeyboardAvoidingView, ToastAndroid, Linking } from "react-native";
+import { Modal, Text, View, ScrollView, Image, TouchableOpacity, useWindowDimensions, KeyboardAvoidingView, ToastAndroid, Linking, BackHandler } from "react-native";
 import {
   ArquivoSelecionado,
   BarraEnviarMensagemConversaAberta,

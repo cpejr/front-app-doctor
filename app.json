@@ -1,33 +1,40 @@
 {
   "expo": {
-    "name": "front-app-doctor",
+    "name": "Doctor APP",
     "slug": "front-app-doctor",
     "version": "1.0.0",
-    "entryPoint":"./src/App.js",
+    "entryPoint": "./App.js",
     "orientation": "default",
     "icon": "./src/assets/icon.png",
     "splash": {
-      "image": "./src/assets/splash.png",
+      "image": "./src/assets/logoGuilherme.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pagepro.testpublishapp",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.pagepro.testpublishapp",
+      "versionCode": 1
     },
     "web": {
-      "favicon": "./src/assets/favicon.png"
+      "favicon": "./src/assets/logoGuilherme.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "77d78009-467b-4c4a-87d7-64e4b0edaebc"
+      }
     }
   }
 }

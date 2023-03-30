@@ -1,6 +1,6 @@
 import {registerRootComponent} from "expo";
-import Routes from "./Routes";
-import { ChatProvider } from './contexts/ChatContext/ChatContext';
+import Routes from "./src/Routes";
+import { ChatProvider } from './src/contexts/ChatContext/ChatContext';
 
 
 export default function App() {
