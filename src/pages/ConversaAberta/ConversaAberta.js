@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import {
   Modal,
   ScrollView,
   TouchableOpacity,
   useWindowDimensions,
   View,
+  Linking
 } from "react-native";
 import {
   ArquivoSelecionado,
@@ -24,6 +25,7 @@ import {
   ImagemUsuario,
   PaginaCarregando,
   ScrollMensagemTablet,
+  SubtituloModal,
   TextoMensagem,
   TituloModal,
 } from "./Styles";
@@ -52,9 +54,12 @@ import moverArray from "../../utils/moverArray";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
+import { Titulo } from "../AlterarDados/Styles";
+import { cep, telefone } from "../../utils/masks";
 
 function ConversaAberta({ navigation, route, socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
+  const [endereco, setEndereco] = useState({});
   const [conversinha, setConversinha] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
   const [carregandoConversa, setCarregandoConversa] = useState(true);
@@ -62,6 +67,9 @@ function ConversaAberta({ navigation, route, socket }) {
   const [carregando, setCarregando] = useState(false);
   const [modalAdicionarFoto, setModalAdicionarFoto] = useState(false);
   const [modalAdicionarDocumento, setModalAdicionarDocumento] = useState(false);
+  const [modalFinalizarExame, setModalFinalizarExame] = useState(false);
+  const [confirmarDados, setConfirmarDados] = useState(false);
+  const [confirmouTudo, setConfirmouTudo] = useState(false);
   const { width, height } = useWindowDimensions();
   const [heightModalUpdateFoto, setHeightModalUpdateFoto] = useState();
   const [marginTopModais, setMarginTopModais] = useState();
@@ -142,17 +150,6 @@ function ConversaAberta({ navigation, route, socket }) {
       encoding: "base64",
     });
 
-    // var tamanho;
-    // if (resultado.size < 1000000 ){
-    //   tamanho = resultado.size/1000;
-    //   tamanho = tamanho.toFixed(2);
-    //   setTamanhoArquivo(tamanho + "KB");
-    // } else {
-    //   tamanho = resultado.size/1000000;
-    //   tamanho = tamanho.toFixed(2);
-    //   setTamanhoArquivo(tamanho + "MB");
-    // }
-
     setArquivo(`data:application/pdf;base64,${file64}`);
 
     setNomeArquivo(resultado.name);
@@ -167,6 +164,12 @@ function ConversaAberta({ navigation, route, socket }) {
   function fechandoModalDocumento() {
     setModalAdicionarDocumento(false);
     setArquivo(null);
+  }
+
+  function fechandoModalFinalizarExame() {
+    setModalFinalizarExame(false);
+    setConfirmarDados(false);
+    setConfirmouTudo(false);
   }
 
   const {
@@ -200,6 +203,17 @@ function ConversaAberta({ navigation, route, socket }) {
 
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
+
+  async function pegandoEndereco() {
+    setCarregando(true);
+    const resposta = await managerService.GetDadosUsuario();
+    setEndereco(resposta.dadosEndereco);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoEndereco();
+  }, [usuarioAtual]);
 
   async function getMensagens(componenteEstaMontadoRef) {
     if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
@@ -362,10 +376,9 @@ function ConversaAberta({ navigation, route, socket }) {
     setCarregandoarquivo(false);
   }
 
-  const enviarMensagem = async (e) => {
-    e.preventDefault();
+  async function enviarMensagem(foiConfirmado) {
 
-    if (!inputMensagemConteudo) return;
+    if (inputMensagemConteudo === "" && foiConfirmado === false) return;
 
     const horaAtual = new Date().getHours();
     const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
@@ -383,6 +396,16 @@ function ConversaAberta({ navigation, route, socket }) {
         "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
         "Se tiver um assunto urgente favor responder ao formulário de Emergência.";
+        setInputMensagemConteudo("");
+    }
+  
+    if (foiConfirmado) {
+      id_remetente = usuarioAtual.id;
+      texto =
+        "Finalizei meu exame e solicitei a retirada do aparelho";
+      setConfirmouTudo(false)
+      setInputMensagemConteudo("");
+      closeMenu()
     }
 
     setCarregandoEnvioMensagem(true);
@@ -421,6 +444,29 @@ function ConversaAberta({ navigation, route, socket }) {
 
     setCarregandoEnvioMensagem(false);
   };
+
+  function confirmandoDados() {
+    setModalFinalizarExame(false);
+    setModalFinalizarExame(true);
+    setConfirmarDados(true);
+  }
+
+  const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
+
+  function enviandoConfirmacao() {
+    setModalFinalizarExame(false);
+    setConfirmarDados(false)
+    setConfirmouTudo(true)
+    enviarMensagem(true);
+
+    managerService.MandandoMensagemFinalizarExame(
+      usuarioId,
+      telefone(usuarioAtual.telefone),
+      enderecoCompleto
+    );
+
+  }
+
   return (
     <Provider>
       <Body>
@@ -477,7 +523,7 @@ function ConversaAberta({ navigation, route, socket }) {
                       conteudo={mensagem.conteudo}
                       data_criacao={mensagem.data_criacao}
                       media_url={mensagem.media_url}
-                      //tamanho_arquivo={0}
+                    //tamanho_arquivo={0}
                     />
                   ))}
                 </ScrollMensagemTablet>
@@ -536,7 +582,20 @@ function ConversaAberta({ navigation, route, socket }) {
                   </BotaoRodaPe>
                 }
               >
-                <Menu.Item
+                {conversaSelecionada.tipo === "BIOLOGIX" || conversaSelecionada.tipo === "ACTIGRAFIA" ? (
+                  <View>
+                    <Menu.Item
+                      onPress={() => {
+                        setModalFinalizarExame(true);
+                      }}
+                      title="Finalizar Exame"
+                    />
+                    <Divider />
+                  </View>
+                ) : (
+                  <></>
+                )}
+                < Menu.Item
                   onPress={() => {
                     setModalAdicionarDocumento(true);
                   }}
@@ -580,6 +639,19 @@ function ConversaAberta({ navigation, route, socket }) {
                   </BotaoRodaPe>
                 }
               >
+                {conversaSelecionada.tipo === "BIOLOGIX" || conversaSelecionada.tipo === "ACTIGRAFIA" ? (
+                  <View>
+                    <Menu.Item
+                      onPress={() => {
+                        setModalFinalizarExame(true);
+                      }}
+                      title="Finalizar Exame"
+                    />
+                    <Divider />
+                  </View>
+                ) : (
+                  <></>
+                )}
                 <Menu.Item
                   onPress={() => {
                     setModalAdicionarDocumento(true);
@@ -596,6 +668,99 @@ function ConversaAberta({ navigation, route, socket }) {
               </Menu>
             </View>
           )}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalFinalizarExame}
+          >
+            <CaixaExterna height={height} width={width}>
+              <CaixaModalUpdateFoto
+                height={heightModalUpdateFoto}
+                marginTop={marginTopModais}
+              >
+                <CaixaFechar>
+                  <TouchableOpacity
+                    onPress={() => {
+                      fechandoModalFinalizarExame();
+                    }}
+                  >
+                    <Icone name="close" size={tamanhoIcone}></Icone>
+                  </TouchableOpacity>
+                </CaixaFechar>
+                <CaixaTituloModal>
+                  {confirmarDados === true ? (
+                    <View>
+                      <TituloModal>
+                        Confirme seus dados de contato e endereço para busca do aparelho. Caso algum dado esteja incorreto, clique
+                        em cancelar, edite seus dados no seu perfil, e solicite a finalização do exame novamente. Se estiver tudo correto,
+                        clique em confirmar
+                      </TituloModal>
+                      <SubtituloModal>Nome Completo: {usuarioAtual.nome}</SubtituloModal>
+                      <SubtituloModal>CPF: {usuarioAtual.cpf}</SubtituloModal>
+                      <SubtituloModal>Telefone: {usuarioAtual.telefone}</SubtituloModal>
+                      <SubtituloModal>Endereço: {endereco.rua}, {endereco.numero}, {endereco.complemento},
+                        {endereco.bairro}, {endereco.cidade}, {endereco.estado}, {endereco.pais},
+                        {cep(endereco.cep)}
+                      </SubtituloModal>
+                    </View>
+                  ) : (
+                    <TituloModal>Ao clicar em continuar, uma mensagem automática será enviada para o motoboy que buscará o aparelho do exame
+                      em sua residência, só clique caso realmente tenha terminado o exame</TituloModal>
+                  )}
+                  <CaixaBotoesCancelarConfirmarModalExcluirFoto>
+                    <Botao
+                      width="40%"
+                      height="35px"
+                      backgroundColor={Cores.branco}
+                      borderRadius="3px"
+                      borderColor="rgba(255, 0, 0, 0.25)"
+                      borderWidth="3px"
+                      boxShadow="none"
+                      onPress={() => fechandoModalFinalizarExame()}
+                    >
+                      <ConteudoBotao
+                        width="100%"
+                        fontSize="12px"
+                        color={Cores.preto}
+                      >
+                        CANCELAR
+                      </ConteudoBotao>
+                    </Botao>
+                    <Botao
+                      width="40%"
+                      height="35px"
+                      backgroundColor={Cores.lilas[1]}
+                      borderRadius="4px"
+                      borderColor={Cores.azul}
+                      borderWidth="3px"
+                      boxShadow="none"
+                    >
+                      {confirmarDados === true ? (
+                        <ConteudoBotao
+                          width="100%"
+                          fontSize="12px"
+                          color={Cores.branco}
+                          onPress={() => enviandoConfirmacao()}
+                        >
+                          CONFIRMAR
+                        </ConteudoBotao>
+                      ) : (
+
+                        <ConteudoBotao
+                          width="100%"
+                          fontSize="12px"
+                          color={Cores.branco}
+                          onPress={() => confirmandoDados()}
+                        >
+                          CONFIRMAR
+                        </ConteudoBotao>
+                      )}
+                    </Botao>
+                  </CaixaBotoesCancelarConfirmarModalExcluirFoto>
+                </CaixaTituloModal>
+              </CaixaModalUpdateFoto>
+            </CaixaExterna>
+          </Modal>
           <Modal
             animationType="slide"
             transparent={true}
@@ -672,20 +837,13 @@ function ConversaAberta({ navigation, route, socket }) {
                       boxShadow="none"
                       onPress={() => enviarMensagemComMidia("Imagem")}
                     >
-                      {carregandoArquivo ? (
-                        <ActivityIndicator
-                          animating={true}
-                          color={Cores.branco}
-                        />
-                      ) : (
-                        <ConteudoBotao
-                          width="100%"
-                          fontSize="12px"
-                          color={Cores.branco}
-                        >
-                          CONFIRMAR
-                        </ConteudoBotao>
-                      )}
+                      <ConteudoBotao
+                        width="100%"
+                        fontSize="12px"
+                        color={Cores.branco}
+                      >
+                        CONFIRMAR
+                      </ConteudoBotao>
                     </Botao>
                   </CaixaBotoesCancelarConfirmarModalExcluirFoto>
                 </CaixaTituloModal>
@@ -817,11 +975,11 @@ function ConversaAberta({ navigation, route, socket }) {
             name="send"
             size={30}
             color={Cores.azulEscuro}
-            onPress={enviarMensagem}
+            onPress={()=> enviarMensagem(false)}
           />
         </FooterConversaAberta>
       </Body>
-    </Provider>
+    </Provider >
   );
 }
 

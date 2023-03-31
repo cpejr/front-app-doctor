@@ -76,7 +76,7 @@ export const requisicaoFormularioEspecifico = (id) =>
 export const requisicaoFormularios = () => api.get(`/formularios/`);
 
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
-  
+
 export const requisicaoExamesMarcadosPorId = (id) => api.get(`/exame_marcados/${id}`);
 
 export const requisicaoTodosExames = () => api.get(`/exames/`);
@@ -86,63 +86,71 @@ export const requisicaoExameEspecifico = (id) =>
 
 
 export const updateFotoDePerfil = (id, base64) =>
-  api.post(`/usuariosimagem/${id}`,{
+  api.post(`/usuariosimagem/${id}`, {
     file: base64
   });
 
 export const deleteFotoDePerfil = (id, base64) =>
-  api.put(`/usuariosdeletarimagem/${id}`,{
+  api.put(`/usuariosdeletarimagem/${id}`, {
     file: base64
   });
 export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
 
-  export const requisicaoConversasPorUsuario = (id_usuario) =>
+export const requisicaoConversasPorUsuario = (id_usuario) =>
   api.get(`/conversas/${id_usuario}/usuario`);
 
-  export const requisicaoMensagensPorConversaUsuario = (
-    id_usuario,
-    id_conversa
-  ) => api.get(`/mensagems/${id_conversa}/conversa/${id_usuario}`);
+export const requisicaoMensagensPorConversaUsuario = (
+  id_usuario,
+  id_conversa
+) => api.get(`/mensagems/${id_conversa}/conversa/${id_usuario}`);
 
-  export const updateMensagemVisualizada = (id, atualizacoes) =>
+export const updateMensagemVisualizada = (id, atualizacoes) =>
   api.put(`/mensagems/${id}`, atualizacoes);
 
-  export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
+export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
 
-  export const updateConversaAtiva = (id) => api.put(`/conversas/ativacao/${id}`);
+export const updateConversaAtiva = (id) => api.put(`/conversas/ativacao/${id}`);
 
-  export const deletarConversasInativas = (id_usuario) =>
+export const deletarConversasInativas = (id_usuario) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
-  
-  export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
 
-  export const enviarArquivoMensagem = (base64) =>
-  api.post(`/arquivofile/`,{
+export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
+
+export const enviarArquivoMensagem = (base64) =>
+  api.post(`/arquivofile/`, {
     file: base64
   });
 
-  export const requisicaoHome = () => api.get(`/homes/`);
- 
-  export const requisicaoImagemCarrossel = () => api.get(`/imagem_carrossels/`);
-  
-  export const pegandoDescricaoPagRecomendacoes = () => api.get(`/indicacaos`);
+export const requisicaoHome = () => api.get(`/homes/`);
 
-  export const pegandoIndicacoesEspecificas = () => api.get(`/indicacoes_especificas`);
+export const requisicaoImagemCarrossel = () => api.get(`/imagem_carrossels/`);
 
-  export const medicosIndicadosPorId = (id) => api.get(`/medicos_indicados/${id}`);
+export const pegandoDescricaoPagRecomendacoes = () => api.get(`/indicacaos`);
 
-  export const tokenDispositivo = (id_usuario, token_dispositivo) =>
+export const pegandoIndicacoesEspecificas = () => api.get(`/indicacoes_especificas`);
+
+export const medicosIndicadosPorId = (id) => api.get(`/medicos_indicados/${id}`);
+
+export const tokenDispositivo = (id_usuario, token_dispositivo) =>
   api.post("/token_usuarios", {
     id_usuario,
     token_dispositivo,
   });
-  
-  export const getPdfurl = (id) => api.get(`/receitas/${id}`);
-  export const enviarImagemMensagem = (imagem) => 
+
+export const getPdfurl = (id) => api.get(`/receitas/${id}`);
+export const enviarImagemMensagem = (imagem) =>
   api.post(`/arquivoimage/`, {
-   file: imagem 
+    file: imagem
   })
+
+export const enviarMensagemFinalizarExame = (id_usuario, telefone, endereco) =>
+  api.post(`/conversas_whatsapp/finalizar_exame`, {
+    id_usuario,
+    telefone, 
+    endereco
+  });
+
 
   export const LogouttokenDispositivo = (token_dispositivo) =>
   api.delete(`/token_usuarios`, {
