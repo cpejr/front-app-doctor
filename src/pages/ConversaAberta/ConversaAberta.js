@@ -75,6 +75,7 @@ function ConversaAberta({ navigation, route, socket }) {
   const tamanhoImagemModal = width > 2000 ? "400px" : "180px";
   const [carregandoArquivo, setCarregandoarquivo] = useState(false);
   const [visivel, setVisivel] = React.useState(false);
+  const dadosConversa = route.params.paramKey;
   const [permissaoParaAbrirAGaleria, setPermissaoParaAbrirAGaleria] =
     useState(null);
 
@@ -101,12 +102,16 @@ function ConversaAberta({ navigation, route, socket }) {
   }, [width, height]);
 
   useEffect(() => {
+  }, [dadosConversa]);
+
+  useEffect(() => {
     (async () => {
       const StatusDaGaleria =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       setPermissaoParaAbrirAGaleria(StatusDaGaleria.status === "granted");
     })();
   }, []);
+
 
   const selecionaImagem = async () => {
     let resultado = await ImagePicker.launchImageLibraryAsync({
@@ -426,7 +431,7 @@ function ConversaAberta({ navigation, route, socket }) {
             color={Cores.azul}
             onPress={() => navigation.push("BarraLateral")}
           />
-          {conversaSelecionada.conversaCom.imagem ? (
+          {conversaSelecionada?.conversaCom?.imagem ? (
             <ImagemUsuario
               border-radius="3px"
               source={{ uri: conversaSelecionada.conversaCom.imagem }}
@@ -438,9 +443,14 @@ function ConversaAberta({ navigation, route, socket }) {
             ></ImagemUsuario>
           )}
           <CaixaTexto>
+          {(conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX") ? 
+            (<TextoMensagem color={Cores.azul} fontSize="14px" fontWeight="bold">
+              Agendamento de Exame de {conversaSelecionada.tipo}
+              
+              </TextoMensagem>) : (
             <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-              {conversaSelecionada.conversaCom.nome}
-            </TextoMensagem>
+              {conversaSelecionada?.conversaCom?.nome}
+              </TextoMensagem>) }
           </CaixaTexto>
         </HeaderConversaAberta>
 
