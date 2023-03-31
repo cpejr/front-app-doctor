@@ -72,7 +72,7 @@ export const BotaoSaibaMais = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: green;
+  background-color: ${(props) => props.color};
 `;
 
 export const ConteudoAmie = styled.View`

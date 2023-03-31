@@ -23,6 +23,7 @@ import { Cores } from "../../variaveis";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 
@@ -125,7 +126,7 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [playing, setPlaying] = useState(false);
-
+  const emaillogado =  AsyncStorage.getItem("@AirBnbApp:email");
   const onStateChange = useCallback((state) => {
     if (state === "ended") {
       setPlaying(false);
@@ -195,8 +196,40 @@ onPress={() => navigation.navigate("ExameNormal")}
   const alturaCard = height < 800 ? "350px" : "320px";
 
   //  const idVideo = videoId.split('v=')[1].substring(0, 11);
-
-
+  
+  async function paginaSobreMim() {
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    if (email !== undefined && email !== null) {
+      navigation.navigate("SobreMim");
+    }else{
+      navigation.navigate("Login");
+    }
+  }
+  async function paginaRecomendacoes() {
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    if (email !== undefined && email !== null) {
+      navigation.navigate("Recomendacoes");
+    }else{
+      navigation.navigate("Login");
+    }
+  }
+  async function paginaComentarios() {
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    if (email !== undefined && email !== null) {
+      navigation.navigate("Comentarios");
+    }else{
+      navigation.navigate("Login");
+    }
+  }
+  async function paginaGrupoAMIE() {
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    if (email !== undefined && email !== null) {
+      navigation.navigate("GrupoAMIE");
+    }else{
+      navigation.navigate("Login");
+    }
+  }
+ 
   return (
     <>
       <ScrollView>
@@ -267,7 +300,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_um}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais onPress={() => navigation.navigate("SobreMim")}>
+                  <BotaoSaibaMais backgroundColor={"#7757a0"} onPress={paginaSobreMim}>
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.branco}
@@ -298,7 +331,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_dois}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais onPress={() => navigation.navigate("Recomendacoes")}>
+                  <BotaoSaibaMais backgroundColor={"#FBCB4C"} onPress={paginaRecomendacoes}>
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.preto}
@@ -320,7 +353,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_tres}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais onPress={() => navigation.navigate("Comentarios")}>
+                  <BotaoSaibaMais backgroundColor={"#434B97"} onPress={paginaComentarios}>
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.branco}
@@ -354,7 +387,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                     </View>
                   </ConteudoAmie>
                   <BotaoSaibaMais
-                    onPress={() => navigation.navigate("GrupoAMIE")}
+                    onPress={paginaGrupoAMIE}
                     color={Cores.branco}
                   >
                     <ConteudoBotao
