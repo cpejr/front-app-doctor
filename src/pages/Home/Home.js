@@ -126,7 +126,7 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [playing, setPlaying] = useState(false);
-  const emaillogado =  AsyncStorage.getItem("@AirBnbApp:email");
+  const [estaLogado, setEstaLogado] = useState("");
   const onStateChange = useCallback((state) => {
     if (state === "ended") {
       setPlaying(false);
@@ -136,6 +136,11 @@ onPress={() => navigation.navigate("ExameNormal")}
   const togglePlaying = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
+
+  async function verificaLogado() {
+    const emailLogado = await AsyncStorage.getItem("@AirBnbApp:email");
+    setEstaLogado(emailLogado)
+  }
 
   async function pegandoDados() {
     setCarregando(true);
@@ -191,17 +196,21 @@ onPress={() => navigation.navigate("ExameNormal")}
     setandoImagem();
   }, [width]);
 
+  useEffect(() => {
+    verificaLogado();
+  }, []);
+
   const alturaVideo = height < 800 ? "50%" : "70%";
   const larguraVideo = height < 800 ? "50%" : "80%";
   const alturaCard = height < 800 ? "350px" : "320px";
 
   //  const idVideo = videoId.split('v=')[1].substring(0, 11);
-  
+
   async function paginaSobreMim() {
     const email = await AsyncStorage.getItem("@AirBnbApp:email");
     if (email !== undefined && email !== null) {
       navigation.navigate("SobreMim");
-    }else{
+    } else {
       navigation.navigate("Login");
     }
   }
@@ -209,7 +218,7 @@ onPress={() => navigation.navigate("ExameNormal")}
     const email = await AsyncStorage.getItem("@AirBnbApp:email");
     if (email !== undefined && email !== null) {
       navigation.navigate("Recomendacoes");
-    }else{
+    } else {
       navigation.navigate("Login");
     }
   }
@@ -217,7 +226,7 @@ onPress={() => navigation.navigate("ExameNormal")}
     const email = await AsyncStorage.getItem("@AirBnbApp:email");
     if (email !== undefined && email !== null) {
       navigation.navigate("Comentarios");
-    }else{
+    } else {
       navigation.navigate("Login");
     }
   }
@@ -225,11 +234,11 @@ onPress={() => navigation.navigate("ExameNormal")}
     const email = await AsyncStorage.getItem("@AirBnbApp:email");
     if (email !== undefined && email !== null) {
       navigation.navigate("GrupoAMIE");
-    }else{
+    } else {
       navigation.navigate("Login");
     }
   }
- 
+
   return (
     <>
       <ScrollView>
@@ -252,44 +261,49 @@ onPress={() => navigation.navigate("ExameNormal")}
                 />
               </Card>
 
-              <Card backgroundColor={Cores.branco} height="auto">
-                <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
-                <TextoCard>
-                  Para ter acesso a chat com o doutor, marcar exames e muito mais
-                </TextoCard>
-                <Botao
-                  height="40px"
-                  width="50%"
-                  backgroundColor={Cores.lilas[5]}
-                  borderRadius="10px"
-                  borderWidth="2px"
-                  borderColor={Cores.azulEscuro}
-                  onPress={() => navigation.navigate("Cadastro")}
-                >
-                  <ConteudoBotao
-                    fontSize="15px"
-                    color={Cores.branco}
-                    width="100%"
+              {estaLogado === undefined || estaLogado === null ? (
+                <Card backgroundColor={Cores.branco} height="auto">
+                  <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
+                  <TextoCard>
+                    Para ter acesso a chat com o doutor, marcar exames e muito mais
+                  </TextoCard>
+                  <Botao
+                    height="40px"
+                    width="50%"
+                    backgroundColor={Cores.lilas[5]}
+                    borderRadius="10px"
+                    borderWidth="2px"
+                    borderColor={Cores.azulEscuro}
+                    onPress={() => navigation.navigate("Cadastro")}
                   >
-                    INSCREVA-SE
-                  </ConteudoBotao>
-                </Botao>
-                <TextoCard>Já possui conta?</TextoCard>
-                <Botao
-                  height="40px"
-                  width="30%"
-                  backgroundColor={Cores.lilas[3]}
-                  borderRadius="10px"
-                  borderWidth="2px"
-                  marginBottom="30px"
-                  borderColor={Cores.azulEscuro}
-                  onPress={() => navigation.navigate("Login")}
-                >
-                  <ConteudoBotao fontSize="15px" color={Cores.preto} width="100%">
-                    ENTRAR
-                  </ConteudoBotao>
-                </Botao>
-              </Card>
+                    <ConteudoBotao
+                      fontSize="15px"
+                      color={Cores.branco}
+                      width="100%"
+                    >
+                      INSCREVA-SE
+                    </ConteudoBotao>
+                  </Botao>
+                  <TextoCard>Já possui conta?</TextoCard>
+                  <Botao
+                    height="40px"
+                    width="30%"
+                    backgroundColor={Cores.lilas[3]}
+                    borderRadius="10px"
+                    borderWidth="2px"
+                    marginBottom="30px"
+                    borderColor={Cores.azulEscuro}
+                    onPress={() => navigation.navigate("Login")}
+                  >
+                    <ConteudoBotao fontSize="15px" color={Cores.preto} width="100%">
+                      ENTRAR
+                    </ConteudoBotao>
+                  </Botao>
+                </Card>
+              ) : (
+                <></>
+              )}
+
 
               <Card backgroundColor={"#7757a0"} height="auto">
                 <CorpoCard>
