@@ -258,6 +258,8 @@ function BarraLateral({ navigation }) {
       setConversaSelecionada(conversaNaLista);
       setConversas(copiaConversas);
 
+      let myString = JSON.stringify(conversa);
+
       navigation.navigate("ConversaAberta", {
         paramKey: conversa,
       });
@@ -334,7 +336,7 @@ function BarraLateral({ navigation }) {
     setEstado({ id_usuario: value });
   }
 
-  async function criarNovarConversa() {
+  async function criarNovaConversa() {
     if (secretariaSelecionada === "" || secretariaSelecionada === undefined) {
       setCampoVazioModal(true);
       Alert.alert("Erro!", "Selecione um usuário.");
@@ -451,7 +453,7 @@ function BarraLateral({ navigation }) {
                     borderRadius="10px"
                     borderWidth="1px"
                     borderColor={Cores.azul}
-                    onPress={() => criarNovarConversa()}
+                    onPress={() => criarNovaConversa()}
                   >
                     {carregandoNovaConversa ? (
                       <ActivityIndicator
@@ -499,10 +501,15 @@ function BarraLateral({ navigation }) {
                         ></ImagemUsuario>
                       )}
                     </CaixaImagem>
-                    <CaixaTexto>
+                    <CaixaTexto> 
+                    {(conversa.tipo === "ACTIGRAFIA" || conversa.tipo === "BIOLOGIX") ? 
+                    (<TextoCaixa fontSize="13px">
+                        Agendamento de Exame de {conversa.tipo}
+                      </TextoCaixa>) : (
                       <TextoCaixa fontSize="17px">
                         {conversa.conversaCom.nome}
-                      </TextoCaixa>
+                      </TextoCaixa>) }
+                      
                       <UltimaMensagem>
                         <TextoCaixa
                           fontSize="13px"

@@ -803,7 +803,7 @@ function Cadastro({ navigation }) {
             borderColor="rgba(255, 0, 0, 0.25)"
             borderWidth="1px"
             onPress={() => {
-              navigation.navigate("Login");
+              navigation.navigate("Home");
             }}
           >
             <ConteudoBotao fontSize="15px" color="#000000" width="100%">

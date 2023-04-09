@@ -2,6 +2,7 @@ import React from "react";
 import { NavigationContainer, useWindowDimensions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import AlterarDados from "./pages/AlterarDados";
 import AlterarSenha from "./pages/AlterarSenha";
 import AlterarSenhaComEmail from "./pages/AlterarSenhaComEmail";
@@ -37,7 +38,7 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import { Cores } from "./variaveis";
 
 import { View, Image } from "react-native";
-
+ const emailLogado = AsyncStorage.getItem("@AirBnbApp:email");
 function HomeIcon() {
   return (
     <View width={35} >
@@ -283,18 +284,18 @@ function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName="Login"
-      >
-        <Stack.Screen name="Tabs" component={TabScreen} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen
-          name="AlterarSenhaComEmail"
-          component={AlterarSenhaComEmail}
-        />
-        <Stack.Screen name="LGPD" component={LGPD} />
-        <Stack.Screen name="Cadastro" component={Cadastro} />
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Cadastro" component={Cadastro} />
+      <Stack.Screen name="LGPD" component={LGPD} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="AlterarSenhaComEmail" component={AlterarSenhaComEmail} />
+      <Stack.Screen name="Tabs" component={TabScreen} />
+      <Stack.Screen name="HomeLogado" component={HomeStackScreen} />
       </Stack.Navigator>
+      
     </NavigationContainer>
   );
 }

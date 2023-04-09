@@ -55,7 +55,7 @@ import { estados } from "./estados";
 import { cep } from "../../utils/masks";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
-import _, { update } from "lodash";
+import _, { result, update } from "lodash";
 import { isEqual } from "lodash";
 import { sleep } from "../../utils/sleep";
 import { CaixaRotulo } from "../Cadastro/Styles";
@@ -198,12 +198,12 @@ function AlterarDados({ navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [3, 3],
-      quality: 1,
+      quality: 0
     });
-
-    if (!resultado.cancelled) {
-      setImagem(resultado);
-      setImagem64(`data:image/png;base64,${resultado.base64}`);
+    
+    if (!resultado.canceled) {
+      setImagem(resultado.assets[0].uri);
+      setImagem64(`data:image/png;base64,${resultado.assets[0].base64}`);
     }
 
     if (permissaoParaAbrirAGaleria === false) {
