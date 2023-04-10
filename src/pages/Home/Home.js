@@ -140,6 +140,7 @@ onPress={() => navigation.navigate("ExameNormal")}
   async function verificaLogado() {
     const emailLogado = await AsyncStorage.getItem("@AirBnbApp:email");
     setEstaLogado(emailLogado)
+    console.log(estaLogado)
   }
 
   async function pegandoDados() {
@@ -207,35 +208,32 @@ onPress={() => navigation.navigate("ExameNormal")}
   //  const idVideo = videoId.split('v=')[1].substring(0, 11);
 
   async function paginaSobreMim() {
-    const email = await AsyncStorage.getItem("@AirBnbApp:email");
-    if (email !== undefined && email !== null) {
-      navigation.navigate("SobreMim");
-    } else {
+    if (estaLogado === undefined || estaLogado === null) {
       navigation.navigate("Login");
+    } else {
+      navigation.navigate("SobreMim");
     }
+    console.log(estaLogado)
   }
   async function paginaRecomendacoes() {
-    const email = await AsyncStorage.getItem("@AirBnbApp:email");
-    if (email !== undefined && email !== null) {
-      navigation.navigate("Recomendacoes");
-    } else {
+    if (estaLogado === undefined || estaLogado === null) {
       navigation.navigate("Login");
+    } else {
+      navigation.navigate("Recomendacoes");
     }
   }
   async function paginaComentarios() {
-    const email = await AsyncStorage.getItem("@AirBnbApp:email");
-    if (email !== undefined && email !== null) {
-      navigation.navigate("Comentarios");
-    } else {
+    if (estaLogado === undefined || estaLogado === null) {
       navigation.navigate("Login");
+    } else {
+      navigation.navigate("Comentarios");
     }
   }
   async function paginaGrupoAMIE() {
-    const email = await AsyncStorage.getItem("@AirBnbApp:email");
-    if (email !== undefined && email !== null) {
-      navigation.navigate("GrupoAMIE");
-    } else {
+    if (estaLogado === undefined || estaLogado === null) {
       navigation.navigate("Login");
+    } else {
+      navigation.navigate("GrupoAMIE");
     }
   }
 
@@ -303,7 +301,6 @@ onPress={() => navigation.navigate("ExameNormal")}
               ) : (
                 <></>
               )}
-
 
               <Card backgroundColor={"#7757a0"} height="auto">
                 <CorpoCard>
