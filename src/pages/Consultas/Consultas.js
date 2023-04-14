@@ -418,8 +418,7 @@ function Consultas({ navigation }) {
                         </CaixaNome>
                         <CaixaHora>
                           <ConteudoCaixa fontSize={fontSizeConteudo}>
-                            {value.horaConsulta} - {value.duracao_em_minutos}{" "}
-                            min
+                            {value.horaConsulta}
                           </ConteudoCaixa>
                         </CaixaHora>
                       </CaixaConsulta>
@@ -576,8 +575,7 @@ function Consultas({ navigation }) {
                         </CaixaNome>
                         <CaixaHora>
                           <ConteudoCaixa fontSize={fontSizeConteudo}>
-                            {value.horaConsulta} - {value.duracao_em_minutos}{" "}
-                            min
+                            {value.horaConsulta}
                           </ConteudoCaixa>
                         </CaixaHora>
                       </CaixaConsulta>
