@@ -1,5 +1,9 @@
 {
   "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
     "preview": {
       "android": {
         "buildType": "apk"
@@ -13,6 +17,10 @@
     "preview3": {
       "developmentClient": true
     },
-    "production": {}
+    "production": {
+      "env": {
+        "API_URL": "https://doctor--app.herokuapp.com/"
+      }
+    }
   }
 }

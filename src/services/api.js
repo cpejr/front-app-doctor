@@ -1,5 +1,5 @@
 import axios from "axios";
-import Constants from 'expo-constants'
+import Constants from "expo-constants";
 
 /* Endereços para cada emulador/simulador:
  ** Genymotion:              http://10.0.3.2:3333/
@@ -7,21 +7,8 @@ import Constants from 'expo-constants'
  ** Simulador IOS:           http://localhost:3333/
  */
 
-const productionHost = "urldeproducao";
-const productionPort = "0000";
-let uri = `https://${productionHost}:${productionPort}`;
-
-
-if(__DEV__) {
-  const developmentHost = Constants.manifest.hostUri.split(":")[0]
-  const developmentPort = 3333;
-  
-  uri = `http://${developmentHost}:${developmentPort}`;
-}
-
 const api = axios.create({
-  baseURL: uri,
+  baseURL: "https://doctor--app.herokuapp.com/",
 });
-
 
 export default api;
