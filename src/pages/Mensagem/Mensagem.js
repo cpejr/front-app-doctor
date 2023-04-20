@@ -24,6 +24,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 import Icon from "react-native-vector-icons/AntDesign";
 import { Cores } from "../../variaveis";
+import { atob } from 'base-64';
 
 export default function Mensagem({
   //scrollViewRef,
@@ -34,6 +35,21 @@ export default function Mensagem({
   //tamanho_arquivo,
 }) {
   const scrollViewRef = useRef();
+
+  const [base64, setBase64] = useState("");
+
+  async function pegandoArquivo() {
+    const resposta = await managerService.GetArquivoPorChave(media_url);
+    setBase64(resposta);
+  }
+
+  useEffect(() => {
+    pegandoArquivo()
+  }, []);
+
+  const pdfData = atob(base64);
+  const pdfBlob = new Blob([pdfData], { type: 'application/pdf' })
+  const pdfUrl = URL.createObjectURL(pdfBlob)
 
   return (
     <MensagemEnviada
@@ -63,7 +79,7 @@ export default function Mensagem({
       {conteudo === "Arquivo PDF" && (
         <BotaoArquivo
           onPress={() => {
-            Linking.openURL(media_url);
+            Linking.openURL(pdfUrl);
           }}
         >
           <BotaoImagem>

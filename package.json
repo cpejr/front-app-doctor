@@ -17,6 +17,7 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "axios": "^0.26.1",
+    "base-64": "^1.0.0",
     "date-fns": "^2.28.0",
     "deprecated-react-native-prop-types": "^4.0.0",
     "expo": "^47.0.0",
