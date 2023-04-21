@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import YoutubePlayer from "react-native-youtube-iframe";
-import { ScrollView, Button, Alert, useWindowDimensions, Image, View } from "react-native";
+import { ScrollView, Button, Alert, useWindowDimensions, Image, View, Platform } from "react-native";
 import {
   Corpo,
   Card,
@@ -126,6 +126,7 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [playing, setPlaying] = useState(false);
+  //const [alturaCard, setAlturaCard] = useState(false);
   const emaillogado =  AsyncStorage.getItem("@AirBnbApp:email");
   const onStateChange = useCallback((state) => {
     if (state === "ended") {
@@ -191,9 +192,25 @@ onPress={() => navigation.navigate("ExameNormal")}
     setandoImagem();
   }, [width]);
 
+  // useEffect(() => {
+  //   verificaDispositivo();
+  // }, []);
+
+  // function verificaDispositivo(){
+  //   if (Platform === 'ios') {
+  //     altura = height < 800 ? "350px" : "320px"
+  //     setAlturaCard(altura)
+  //   } else {
+  //     altura = height < 800 ? "350px" : "320px"
+  //     setAlturaCard(altura)
+  //   }
+  // }
+
   const alturaVideo = height < 800 ? "50%" : "70%";
   const larguraVideo = height < 800 ? "50%" : "80%";
-  const alturaCard = height < 800 ? "350px" : "320px";
+  const alturaCard = /iPhone\sSE/i.test(navigator.userAgent) ? '50px' : /iPad\sPro/i.test(navigator.userAgent) ? '600px' : '300px';  
+  const alturaVideoIOS = '100%'
+  const larguraVideoIOS = '100%'
 
   //  const idVideo = videoId.split('v=')[1].substring(0, 11);
   
@@ -243,13 +260,23 @@ onPress={() => navigation.navigate("ExameNormal")}
               <Card backgroundColor={Cores.branco} height={alturaCard}>
                 <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
                 <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
-                <YoutubePlayer
+                {Platform === 'ios' ? (
+                  <YoutubePlayer
+                  height={alturaVideoIOS}
+                  width={larguraVideoIOS}
+                  play={playing}
+                  videoId={idVideo}
+                  onChangeState={onStateChange}
+                />
+                ):(
+                  <YoutubePlayer
                   height={alturaVideo}
                   width={larguraVideo}
                   play={playing}
                   videoId={idVideo}
                   onChangeState={onStateChange}
                 />
+                )}
               </Card>
 
               <Card backgroundColor={Cores.branco} height="auto">
