@@ -51,6 +51,9 @@ export const deletarEnderecoEUsuario = (id_endereco) =>
 export const requisicaoFormularioPacienteEspecifico = (id) =>
   api.get(`/formularios_pacientes/${id}`);
 
+export const deletarFormularioPacienteEspecifico = (id) =>
+  api.delete(`/formularios_pacientes/${id}`);
+
 export const updateRespostasFormularioPaciente = (id, respostas) =>
   api.put(`/formularios_pacientes/${id}`, {
     respostas: respostas,
@@ -69,6 +72,9 @@ export const enviarFormularioPaciente = (
     id_formulario,
     id_usuario,
   });
+
+  export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
+  
 
 export const requisicaoFormularioEspecifico = (id) =>
   api.get(`/formularios/${id}`);
