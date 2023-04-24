@@ -208,9 +208,7 @@ onPress={() => navigation.navigate("ExameNormal")}
 
   const alturaVideo = height < 800 ? "90%" : "70%";
   const larguraVideo = height < 800 ? "80%" : "80%";
-  const alturaCard = height < 1000 ? "270px" : "650px";
-  const alturaVideoIOS = '100%'
-  const larguraVideoIOS = '100%'
+  const alturaCard = height < 1000 ? "280px" : height < 1200 ? "550px" : "650px";
 
   //  const idVideo = videoId.split('v=')[1].substring(0, 11);
   
@@ -260,15 +258,6 @@ onPress={() => navigation.navigate("ExameNormal")}
               <Card backgroundColor={Cores.branco} height={alturaCard}>
                 <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
                 <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
-                {Platform === 'ios' ? (
-                  <YoutubePlayer
-                  height={alturaVideoIOS}
-                  width={larguraVideoIOS}
-                  play={playing}
-                  videoId={idVideo}
-                  onChangeState={onStateChange}
-                />
-                ):(
                   <YoutubePlayer
                   height={alturaVideo}
                   width={larguraVideo}
@@ -276,7 +265,6 @@ onPress={() => navigation.navigate("ExameNormal")}
                   videoId={idVideo}
                   onChangeState={onStateChange}
                 />
-                )}
               </Card>
 
               <Card backgroundColor={Cores.branco} height="auto">
