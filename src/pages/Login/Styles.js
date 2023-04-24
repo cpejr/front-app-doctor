@@ -112,6 +112,8 @@ export const Rotulo = styled.Text`
 `;
 
 export const AnimacaoCarregando = styled.View`
-  position: relative;
-  margin-top: 5px;
+flex: 1;
+justify-content: center;
+align-items: center;
+padding: 100%;
 `;
