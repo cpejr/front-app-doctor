@@ -423,7 +423,6 @@ function Cadastro({ navigation }) {
             camposVazios={camposVazios.nome}
           />
           <CaixaInputsMesmaLinha>
-            <CaixaRotuloMesmaLinha>
               <CaixaTituloInput>
                 <TituloInput>Telefone: </TituloInput>
               </CaixaTituloInput>
@@ -451,32 +450,37 @@ function Cadastro({ navigation }) {
               {erro.telefone && (
                 <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
               )}
-            </CaixaRotuloMesmaLinha>
-            <CaixaRotuloMesmaLinha>
               <CaixaTituloInput>
                 <TituloInput>Data de nascimento: </TituloInput>
               </CaixaTituloInput>
+
               <CaixaParaDatadeNascimento 
-              onPress={() => setDatePicker(true)}
               value={dataPlaceHolder}
               width="100%"
               erro={erro.data_nascimento}
               camposVazios={camposVazios.data_nascimento}
               >
-              {data_nascimentoFront}
-              {datePicker && (<Data
+              <Data
+              customStyles={{
+                dateInput: {
+                  borderWidth: 0,
+                  alignItems: "center",
+                  width: "100%",
+                  paddingLeft: 10,
+                },
+                placeholderText: { color: "#90929B" },
+              }}
+                placeholder={dataPlaceHolder}
                 maximumDate={new Date()}
                 mode="date"
                 value={date}
                 onChange={(event, value) => {
-                  setDatePicker(false)
                   preenchendoDados("data_nascimento", formatacaodeData(value));
                   setDate(value)
-                  setdataPlaceHolder(1);
                 }}
-              />)}
+              />
               </CaixaParaDatadeNascimento>
-            </CaixaRotuloMesmaLinha>
+              
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
             <CaixaTituloInput>

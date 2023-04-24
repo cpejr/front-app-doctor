@@ -64,10 +64,8 @@ export const Rotulo = styled.Text`
 export const Data = styled(DatePicker)`
   width: 100%;
   height: 50px;
-  margin-top: 6px;
-  margin-bottom: 6px;
   background-color: #e4e6f4;
-  border-width: 1.5px;
+  border-width: 0;
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
@@ -111,9 +109,11 @@ export const PickerView = styled.View`
 
 export const PickerEstado = styled(Picker)`
   display: flex;
+  justify-content: center;
   background-color: #e4e6f4;
   width: 100%;
   margin-top: 0;
+  height: 50px;
 `;
 
 export const MensagemErro = styled.Text`
@@ -125,7 +125,7 @@ export const MensagemErro = styled.Text`
 
 export const CaixaInputsMesmaLinha = styled.View`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
 `;
@@ -190,6 +190,7 @@ export const CaixaTextoConvenioCuidador = styled.View`
 `;
 
 export const CaixaParaDatadeNascimento = styled.Text`
+  display: flex;
   width: ${(props) => props.width ?? "100%"};
   margin-left: ${(props) => props.marginLeft?? "0%"};
   margin-right: ${(props) => props.marginRight?? "0%"};
@@ -225,8 +226,5 @@ export const CaixaParaDatadeNascimento = styled.Text`
   border-width: 1.5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
   font-size: 15px;
-  padding-top: 12px;
-  
-  
 `;
 
