@@ -11,9 +11,6 @@ import {
   TextoInfomacao,
   CorpoCard,
   BotaoSaibaMais,
-  ConteudoAmie,
-  ImagemAmie,
-  TextoAmie,
   ImagemCarrossel,
   AnimacaoCarregando,
 } from "./Styles";
@@ -28,93 +25,6 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 
 function Home({ navigation }) {
-  {
-    /* <ScrollView>
-<Button
-title="Go to Cadastro"
-onPress={() => navigation.navigate("Cadastro")}
-/>
-<Button
-title="Go to Login"
-onPress={() => navigation.navigate("Login")}
-/>
-<Button
-title="Go to Comentarios"
-onPress={() => navigation.navigate("Comentarios")}
-/>
-<Button
-  title="Go to Emergencia"
-  onPress={() => navigation.navigate("Emergencia")}
-  />
-  <Button
-  title="Go to GrupoAMIE"
-  onPress={() => navigation.navigate("GrupoAMIE")}
-  />
-  <Button
-  title="Go to Perfil"
-  onPress={() => navigation.navigate("Perfil")}
-  />
-  <Button
-  title="Go to Recomendacoes"
-  onPress={() => navigation.navigate("Recomendacoes")}
-  />
-  <Button
-  title="Go to SobreMim"
-  onPress={() => navigation.navigate("SobreMim")}
-  />
-  <Button
-  title="Go to AlterarDados"
-  onPress={() => navigation.navigate("AlterarDados")}
-  />
-  <Button
-  title="Go to AlterarSenha"
-  onPress={() => navigation.navigate("AlterarSenha")}
-  />
-  <Button title="Go to LGPD" onPress={() => navigation.navigate("LGPD")} />
-  <Button
-  title="Go to ListaReceitas"
-  onPress={() => navigation.navigate("ListaReceitas")}
-  />
-  <Button
-  title="Go to ListaFormularios"
-  onPress={() => navigation.navigate("ListaFormularios")}
-  />
-  <Button
-  title="Go to Arquivos"
-  onPress={() => navigation.navigate("Arquivos")}
-/>
-<Button
-  title="Go to Formulário de Emergência"
-  onPress={() => navigation.push("FormularioEmergencia")}
-/>
-<Button
-title="Go to Barra Lateral"
-onPress={() => navigation.navigate("BarraLateral")}
-/>
-<Button
-title="Go to Conversa Aberta"
-onPress={() => navigation.navigate("ConversaAberta")}
-/>
-<Button
-title="Go to ListaExames"
-onPress={() => navigation.navigate("ListaExames")}
-/>
-<Button
-title="Go to Solicitar Exame"
-onPress={() => navigation.navigate("SolicitarExame")}
-/>
-
-<Button
-title="Go to Exames"
-onPress={() => navigation.navigate("Exames")}
-/>
-
-<Button
-title="Go to ExameNormal"
-onPress={() => navigation.navigate("ExameNormal")}
-/>
-</ScrollView> */
-  }
 
   const { height, width } = useWindowDimensions();
   const [altura, setAltura] = useState();
@@ -122,7 +32,6 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [home, setHome] = useState({});
   const [homeVideo, setHomeVideo] = useState();
   const [idVideo, setIdVideo] = useState();
-  const [fotoAmie, setFotoAmie] = useState("");
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -158,13 +67,7 @@ onPress={() => navigation.navigate("ExameNormal")}
     setCarregando(false);
   }
 
-  async function setandoFotoAmie() {
-    const chave = home.imagem_quatro;
-
-    const arquivo = await managerService.GetArquivoPorChave(chave);
-    setFotoAmie(arquivo);
-    await sleep(1500);
-  }
+ 
 
   function renderizarCarrossel({ item }) {
     return (
@@ -179,9 +82,7 @@ onPress={() => navigation.navigate("ExameNormal")}
     setLargura(0.3 * width);
   }
 
-  useEffect(() => {
-    setandoFotoAmie();
-  }, [home.imagem_quatro]);
+ 
 
   useEffect(() => {
     pegandoDados();
@@ -221,14 +122,7 @@ onPress={() => navigation.navigate("ExameNormal")}
       navigation.navigate("Login");
     }
   }
-  async function paginaGrupoAMIE() {
-    const email = await AsyncStorage.getItem("@AirBnbApp:email");
-    if (email !== undefined && email !== null) {
-      navigation.navigate("GrupoAMIE");
-    }else{
-      navigation.navigate("Login");
-    }
-  }
+
  
   return (
     <>
@@ -366,41 +260,7 @@ onPress={() => navigation.navigate("ExameNormal")}
                 </CorpoCard>
               </Card>
 
-              <Card backgroundColor={Cores.branco} height="auto">
-                <CorpoCard>
-                  <TituloInformacao color={Cores.preto}>
-                    {home.titulo_quatro}
-                  </TituloInformacao>
-                  <ConteudoAmie>
-                    <TextoAmie color={Cores.preto}>{home.texto_quatro}</TextoAmie>
-                    <View>
-                      <Image
-                        style={{
-                          width: largura,
-                          marginRight: "9%",
-                          marginLeft: "3%",
-                          //objectFit: "contain",
-                          height: altura,
-                        }}
-                        source={{ uri: fotoAmie }}
-                      />
-                    </View>
-                  </ConteudoAmie>
-                  <BotaoSaibaMais
-                    onPress={paginaGrupoAMIE}
-                    color={Cores.branco}
-                  >
-                    <ConteudoBotao
-                      fontSize="16px"
-                      color={Cores.preto}
-                      width="30%"
-                    >
-                      SAIBA MAIS
-                    </ConteudoBotao>
-                    <AntIcon name="right" size={25} color={Cores.preto} />
-                  </BotaoSaibaMais>
-                </CorpoCard>
-              </Card>
+              
             </>
           )}
         </Corpo>
