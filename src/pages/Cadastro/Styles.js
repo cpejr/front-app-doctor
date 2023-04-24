@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { Picker } from "@react-native-picker/picker";
 import { Cores } from "../../variaveis";
-import DatePicker from "@react-native-community/datetimepicker";
+import DatePicker  from "react-native-datepicker";
 import { useState } from "react";
 import { colors } from "react-native-elements";
 
@@ -64,8 +64,9 @@ export const Rotulo = styled.Text`
 export const Data = styled(DatePicker)`
   width: 100%;
   height: 50px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   background-color: #e4e6f4;
-  border-width: 0;
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
@@ -80,7 +81,9 @@ export const Data = styled(DatePicker)`
     return cor;
   }};
   border-radius: 5px;
+  display: flex;
   justify-content: center;
+  align-items: flex-start;
 `;
 
 export const PickerView = styled.View`

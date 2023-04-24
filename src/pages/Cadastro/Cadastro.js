@@ -464,16 +464,19 @@ function Cadastro({ navigation }) {
               customStyles={{
                 dateInput: {
                   borderWidth: 0,
-                  alignItems: "center",
-                  width: "100%",
+                  alignItems: "flex-start",
                   paddingLeft: 10,
                 },
                 placeholderText: { color: "#90929B" },
               }}
                 placeholder={dataPlaceHolder}
+                format="DD/MM/YYYY"
                 maximumDate={new Date()}
+                showIcon={false}
                 mode="date"
                 value={date}
+                confirmBtnText="Confirmar" 
+                cancelBtnText="Cancelar"
                 onChange={(event, value) => {
                   preenchendoDados("data_nascimento", formatacaodeData(value));
                   setDate(value)
