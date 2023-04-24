@@ -206,9 +206,9 @@ onPress={() => navigation.navigate("ExameNormal")}
   //   }
   // }
 
-  const alturaVideo = height < 800 ? "50%" : "70%";
-  const larguraVideo = height < 800 ? "50%" : "80%";
-  const alturaCard = /iPhone\sSE/i.test(navigator.userAgent) ? '50px' : /iPad\sPro/i.test(navigator.userAgent) ? '600px' : '300px';  
+  const alturaVideo = height < 800 ? "90%" : "70%";
+  const larguraVideo = height < 800 ? "80%" : "80%";
+  const alturaCard = height < 1000 ? "270px" : "650px";
   const alturaVideoIOS = '100%'
   const larguraVideoIOS = '100%'
 
