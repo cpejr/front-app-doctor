@@ -55,6 +55,22 @@ export const TituloInformacao = styled.Text`
   margin-left: 9%;
   color: ${(props) => props.color};
 `;
+export const TituloPagina = styled.Text`
+  font-size: 20px;
+  margin-top: 0%;
+  margin-left: 5%;
+  margin-right: 5%;
+  color: ${(props) => props.color};
+`;
+export const TextoPagina = styled.Text`
+  font-size: 16px;
+  text-align: justify;
+  margin-top: 2%;
+  margin-left: 6%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  color: ${(props) => props.color};
+`;
 
 export const TextoInfomacao = styled.Text`
   text-align: justify;
@@ -111,4 +127,16 @@ export const ImagemCarrossel = styled.Image`
 export const AnimacaoCarregando = styled.View`
   position: relative;
   margin-top: 70%;
+`;
+
+export const CaixaSeta = styled.View`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 10px;
+  padding-top:4px;
+  margin-top: 5%;
+  margin-left: 3%;
 `;

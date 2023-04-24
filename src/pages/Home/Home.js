@@ -11,9 +11,9 @@ import {
   TextoInfomacao,
   CorpoCard,
   BotaoSaibaMais,
-  ConteudoAmie,
-  ImagemAmie,
-  TextoAmie,
+  ConteudoAprendendo,
+  ImagemAprendendo,
+  TextoAprendendo,
   ImagemCarrossel,
   AnimacaoCarregando,
 } from "./Styles";
@@ -46,10 +46,7 @@ onPress={() => navigation.navigate("Comentarios")}
   title="Go to Emergencia"
   onPress={() => navigation.navigate("Emergencia")}
   />
-  <Button
-  title="Go to GrupoAMIE"
-  onPress={() => navigation.navigate("GrupoAMIE")}
-  />
+ 
   <Button
   title="Go to Perfil"
   onPress={() => navigation.navigate("Perfil")}
@@ -122,7 +119,6 @@ onPress={() => navigation.navigate("ExameNormal")}
   const [home, setHome] = useState({});
   const [homeVideo, setHomeVideo] = useState();
   const [idVideo, setIdVideo] = useState();
-  const [fotoAmie, setFotoAmie] = useState("");
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -158,14 +154,6 @@ onPress={() => navigation.navigate("ExameNormal")}
     setCarregando(false);
   }
 
-  async function setandoFotoAmie() {
-    const chave = home.imagem_quatro;
-
-    const arquivo = await managerService.GetArquivoPorChave(chave);
-    setFotoAmie(arquivo);
-    await sleep(1500);
-  }
-
   function renderizarCarrossel({ item }) {
     return (
       <CorpoCard>
@@ -179,9 +167,6 @@ onPress={() => navigation.navigate("ExameNormal")}
     setLargura(0.3 * width);
   }
 
-  useEffect(() => {
-    setandoFotoAmie();
-  }, [home.imagem_quatro]);
 
   useEffect(() => {
     pegandoDados();
@@ -221,10 +206,10 @@ onPress={() => navigation.navigate("ExameNormal")}
       navigation.navigate("Login");
     }
   }
-  async function paginaGrupoAMIE() {
+  async function paginaAprendendoSobre() {
     const email = await AsyncStorage.getItem("@AirBnbApp:email");
     if (email !== undefined && email !== null) {
-      navigation.navigate("GrupoAMIE");
+      navigation.navigate("AprendendoSobre");
     }else{
       navigation.navigate("Login");
     }
@@ -369,25 +354,14 @@ onPress={() => navigation.navigate("ExameNormal")}
               <Card backgroundColor={Cores.branco} height="auto">
                 <CorpoCard>
                   <TituloInformacao color={Cores.preto}>
-                    {home.titulo_quatro}
+                    Aprendendo Sobre
                   </TituloInformacao>
-                  <ConteudoAmie>
-                    <TextoAmie color={Cores.preto}>{home.texto_quatro}</TextoAmie>
-                    <View>
-                      <Image
-                        style={{
-                          width: largura,
-                          marginRight: "9%",
-                          marginLeft: "3%",
-                          //objectFit: "contain",
-                          height: altura,
-                        }}
-                        source={{ uri: fotoAmie }}
-                      />
-                    </View>
-                  </ConteudoAmie>
+                  <ConteudoAprendendo>
+                    <TextoAprendendo color={Cores.preto}>Aprenda sobre as principais doenças e condições neurológicas
+                    </TextoAprendendo>
+                  </ConteudoAprendendo>
                   <BotaoSaibaMais
-                    onPress={paginaGrupoAMIE}
+                    onPress={paginaAprendendoSobre}
                     color={Cores.branco}
                   >
                     <ConteudoBotao
