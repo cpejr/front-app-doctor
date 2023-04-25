@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Switch,
   View,
+  Linking,
+  Text
 } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao";
@@ -38,6 +40,7 @@ import {
   CaixaTextoConvenioCuidador,
   CaixaParaDatadeNascimento,
   DataNascimentoTexto, 
+  LgpdLink
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
@@ -45,7 +48,7 @@ import api from "../../services/api";
 import { estados } from "./estados";
 import { useFonts } from "expo-font";
 import * as managerService from "../../services/ManagerService/managerService";
-import _ from "lodash";
+import _, { words } from "lodash";
 import { isEqual } from "lodash";
 import { sleep } from "../../utils/sleep";
 
@@ -93,6 +96,7 @@ function Cadastro({ navigation }) {
 
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
+  const Termos = "Confirmo que li e aceito os Termos e Condições descritos AQUI";
   const [camposVazios, setCamposVazios] = useState({
     nome: false,
     telefone: false,
@@ -783,15 +787,15 @@ function Cadastro({ navigation }) {
               setChecked(!checked);
             }}
           />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("LGPD");
-            }}
-          >
-            <Lgpd fontFamily="BarlowMedium">
-              Li e concordo com os Termos de Uso
-            </Lgpd>
-          </TouchableOpacity>
+          <Lgpd fontFamily="BarlowMedium">
+            {Termos.split(" ").map((palavra,index) =>{
+              if(palavra === "AQUI"){
+                return <LgpdLink fontFamily="BarlowMedium" onPress={() => Linking.openURL('https://www.drguilhermemarques.com/termos-e-condicoes')}>{palavra}</LgpdLink>
+              }else{
+                return <Lgpd fontFamily="BarlowMedium">{palavra} </Lgpd>
+              }
+            })}
+          </Lgpd>
         </CheckboxTexto>
 
         <CaixaBotoes>

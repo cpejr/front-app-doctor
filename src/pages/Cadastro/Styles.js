@@ -147,12 +147,19 @@ export const CheckboxTexto = styled.View`
   align-items: center;
 `;
 
+export const LgpdLink = styled.Text`
+  font-family: ${(props) => props.fontFamily};
+  font-size: 16px;
+  text-align: center;
+  color: #151b57;
+  text-decoration: underline;
+`;
+
 export const Lgpd = styled.Text`
   font-family: ${(props) => props.fontFamily};
   font-size: 16px;
-  text-align: right;
+  text-align: center;
   color: #151b57;
-  text-decoration: underline;
 `;
 
 export const CaixaTituloInput = styled.View`
