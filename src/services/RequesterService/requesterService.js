@@ -165,4 +165,7 @@ export const enviarMensagemFinalizarExame = (id_usuario, telefone, endereco) =>
     },
   });
   
-  
+  export const enviarMensagemFormularioDeUrgencia = (id_usuario) =>
+  api.post(`/conversas_whatsapp/finalizar_exame`, {
+    id_usuario
+  });
