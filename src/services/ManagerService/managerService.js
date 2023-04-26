@@ -742,3 +742,14 @@ export const DeletarTokenDispositivo = async (token_dispositivo) => {
 
   return false;
 };
+
+export const MandandoMensagemFormularioEmergencia = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemFormularioDeUrgencia(id_usuario)
+    .then(() => {
+      toast.success("Exame finalizado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+}
