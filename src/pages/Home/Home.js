@@ -1,6 +1,19 @@
-import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from "react";
 import YoutubePlayer from "react-native-youtube-iframe";
-import { ScrollView, Button, Alert, useWindowDimensions, Image, View } from "react-native";
+import {
+  ScrollView,
+  Button,
+  Alert,
+  useWindowDimensions,
+  Image,
+  View,
+} from "react-native";
 import {
   Corpo,
   Card,
@@ -139,8 +152,7 @@ onPress={() => navigation.navigate("ExameNormal")}
 
   async function verificaLogado() {
     const emailLogado = await AsyncStorage.getItem("@AirBnbApp:email");
-    setEstaLogado(emailLogado)
-    console.log(estaLogado)
+    setEstaLogado(emailLogado);
   }
 
   async function pegandoDados() {
@@ -152,7 +164,7 @@ onPress={() => navigation.navigate("ExameNormal")}
     setHome(info);
     await sleep(1500);
 
-    const youtubeID = home.video.split('v=')[1].substring(0, 11);
+    const youtubeID = home.video.split("v=")[1].substring(0, 11);
     setIdVideo(youtubeID);
 
     const requests = res.map(({ imagem }) =>
@@ -213,7 +225,7 @@ onPress={() => navigation.navigate("ExameNormal")}
     } else {
       navigation.navigate("SobreMim");
     }
-    console.log(estaLogado)
+    console.log(estaLogado);
   }
   async function paginaRecomendacoes() {
     if (estaLogado === undefined || estaLogado === null) {
@@ -263,7 +275,8 @@ onPress={() => navigation.navigate("ExameNormal")}
                 <Card backgroundColor={Cores.branco} height="auto">
                   <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
                   <TextoCard>
-                    Para ter acesso a chat com o doutor, marcar exames e muito mais
+                    Para ter acesso a chat com o doutor, marcar exames e muito
+                    mais
                   </TextoCard>
                   <Botao
                     height="40px"
@@ -293,7 +306,11 @@ onPress={() => navigation.navigate("ExameNormal")}
                     borderColor={Cores.azulEscuro}
                     onPress={() => navigation.navigate("Login")}
                   >
-                    <ConteudoBotao fontSize="15px" color={Cores.preto} width="100%">
+                    <ConteudoBotao
+                      fontSize="15px"
+                      color={Cores.preto}
+                      width="100%"
+                    >
                       ENTRAR
                     </ConteudoBotao>
                   </Botao>
@@ -311,7 +328,10 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_um}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais backgroundColor={"#7757a0"} onPress={paginaSobreMim}>
+                  <BotaoSaibaMais
+                    backgroundColor={"#7757a0"}
+                    onPress={paginaSobreMim}
+                  >
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.branco}
@@ -342,7 +362,10 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_dois}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais backgroundColor={"#FBCB4C"} onPress={paginaRecomendacoes}>
+                  <BotaoSaibaMais
+                    backgroundColor={"#FBCB4C"}
+                    onPress={paginaRecomendacoes}
+                  >
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.preto}
@@ -364,7 +387,10 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.texto_tres}
                   </TextoInfomacao>
 
-                  <BotaoSaibaMais backgroundColor={"#434B97"} onPress={paginaComentarios}>
+                  <BotaoSaibaMais
+                    backgroundColor={"#434B97"}
+                    onPress={paginaComentarios}
+                  >
                     <ConteudoBotao
                       fontSize="16px"
                       color={Cores.branco}
@@ -383,7 +409,9 @@ onPress={() => navigation.navigate("ExameNormal")}
                     {home.titulo_quatro}
                   </TituloInformacao>
                   <ConteudoAmie>
-                    <TextoAmie color={Cores.preto}>{home.texto_quatro}</TextoAmie>
+                    <TextoAmie color={Cores.preto}>
+                      {home.texto_quatro}
+                    </TextoAmie>
                     <View>
                       <Image
                         style={{
@@ -417,7 +445,7 @@ onPress={() => navigation.navigate("ExameNormal")}
         </Corpo>
       </ScrollView>
     </>
-  )
+  );
 }
 
 export default Home;

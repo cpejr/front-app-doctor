@@ -1,5 +1,14 @@
-import React from "react";
-import { NavigationContainer, useWindowDimensions } from "@react-navigation/native";
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from "react";
+import {
+  NavigationContainer,
+  useWindowDimensions,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -38,18 +47,18 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import { Cores } from "./variaveis";
 
 import { View, Image } from "react-native";
- const emailLogado = AsyncStorage.getItem("@AirBnbApp:email");
+
 function HomeIcon() {
   return (
-    <View width={35} >
-      <IonIcon name="home-outline" size={35} color={Cores.branco}  />
+    <View width={35}>
+      <IonIcon name="home-outline" size={35} color={Cores.branco} />
     </View>
   );
 }
 function ArquivosIcon() {
   return (
     <View width={35}>
-      <IonIcon name="file-tray-full-outline" size={35} color={Cores.branco}  />
+      <IonIcon name="file-tray-full-outline" size={35} color={Cores.branco} />
     </View>
   );
 }
@@ -63,24 +72,24 @@ function ArquivosIcon() {
 function ConsultasIcon() {
   return (
     <View width={35}>
-      <AntIcon name="calendar" size={35} color={Cores.branco}  />
+      <AntIcon name="calendar" size={35} color={Cores.branco} />
     </View>
   );
 }
- function ExamesIcon() {
+function ExamesIcon() {
   return (
     <View width={35}>
-      <IonIcon name="clipboard-outline" size={35} color={Cores.branco}  />
-     </View>
-   );
- }
- function ChatIcon() {
-   return (
+      <IonIcon name="clipboard-outline" size={35} color={Cores.branco} />
+    </View>
+  );
+}
+function ChatIcon() {
+  return (
     <View width={35}>
-      <IonIcon name="chatbubbles-outline" size={35} color={Cores.branco}  />
-     </View>
-   );
- }
+      <IonIcon name="chatbubbles-outline" size={35} color={Cores.branco} />
+    </View>
+  );
+}
 
 const HomeStack = createNativeStackNavigator();
 
@@ -105,7 +114,10 @@ function HomeStackScreen() {
       <HomeStack.Screen name="SolicitarExame" component={SolicitarExame} />
       <HomeStack.Screen name="Arquivos" component={Arquivos} />
       <HomeStack.Screen name="LGPD" component={LGPD} />
-      <HomeStack.Screen name="FormularioEmergencia" component={FormularioEmergencia} />
+      <HomeStack.Screen
+        name="FormularioEmergencia"
+        component={FormularioEmergencia}
+      />
 
       <HomeStack.Screen name="BarraLateral" component={BarraLateral} />
       <HomeStack.Screen name="ConversaAberta" component={ConversaAberta} />
@@ -168,7 +180,6 @@ function ExamesStackScreen() {
       <ExamesStack.Screen name="ListaExames" component={ListaExames} />
       <ExamesStack.Screen name="SolicitarExame" component={SolicitarExame} />
       <ExamesStack.Screen name="Exames" component={Exames} />
-      
     </ExamesStack.Navigator>
   );
 }
@@ -202,16 +213,8 @@ function ChatStackScreen() {
       screenOptions={{ headerShown: false }}
       initialRouteName="BarraLateral"
     >
-      <ChatStack.Screen
-        name="BarraLateral"
-        component={BarraLateral}
-      />
-      <ChatStack.Screen
-        name="ConversaAberta"
-        component={ConversaAberta}
-      />
-     
-
+      <ChatStack.Screen name="BarraLateral" component={BarraLateral} />
+      <ChatStack.Screen name="ConversaAberta" component={ConversaAberta} />
     </ChatStack.Navigator>
   );
 }
@@ -254,17 +257,17 @@ function TabScreen() {
       />
       <Tab.Screen
         name="botao3"
-        options={{ 
-          tabBarIcon: ConsultasIcon, 
+        options={{
+          tabBarIcon: ConsultasIcon,
           title: "Consultas",
-          unmountOnBlur: true
+          unmountOnBlur: true,
         }}
         component={ConsultasStackScreen}
       />
       <Tab.Screen
         name="botao4"
-        options={{ 
-          tabBarIcon: ExamesIcon, 
+        options={{
+          tabBarIcon: ExamesIcon,
           title: "Exames",
         }}
         component={ExamesStackScreen}
@@ -280,24 +283,50 @@ function TabScreen() {
 
 const Stack = createNativeStackNavigator();
 
-function Routes() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="Home"
-    >
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Cadastro" component={Cadastro} />
-      <Stack.Screen name="LGPD" component={LGPD} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="AlterarSenhaComEmail" component={AlterarSenhaComEmail} />
-      <Stack.Screen name="Tabs" component={TabScreen} />
-      <Stack.Screen name="HomeLogado" component={HomeStackScreen} />
-      </Stack.Navigator>
-      
-    </NavigationContainer>
-  );
+function Routes(props) {
+  const emailLogado = props.emailLogado;
+  console.log("🚀 ~ file: Routes.js:288 ~ Routes ~ emailLogado:", emailLogado);
+  if (emailLogado) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{ headerShown: false }}
+          initialRouteName="Tabs"
+        >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Cadastro" component={Cadastro} />
+          <Stack.Screen name="LGPD" component={LGPD} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen
+            name="AlterarSenhaComEmail"
+            component={AlterarSenhaComEmail}
+          />
+          <Stack.Screen name="Tabs" component={TabScreen} />
+          <Stack.Screen name="HomeLogado" component={HomeStackScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{ headerShown: false }}
+          initialRouteName="Home"
+        >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Cadastro" component={Cadastro} />
+          <Stack.Screen name="LGPD" component={LGPD} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen
+            name="AlterarSenhaComEmail"
+            component={AlterarSenhaComEmail}
+          />
+          <Stack.Screen name="Tabs" component={TabScreen} />
+          <Stack.Screen name="HomeLogado" component={HomeStackScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 
 export default Routes;
