@@ -225,7 +225,6 @@ onPress={() => navigation.navigate("ExameNormal")}
     } else {
       navigation.navigate("SobreMim");
     }
-    console.log(estaLogado);
   }
   async function paginaRecomendacoes() {
     if (estaLogado === undefined || estaLogado === null) {

@@ -285,7 +285,6 @@ const Stack = createNativeStackNavigator();
 
 function Routes(props) {
   const emailLogado = props.emailLogado;
-  console.log("🚀 ~ file: Routes.js:288 ~ Routes ~ emailLogado:", emailLogado);
   if (emailLogado) {
     return (
       <NavigationContainer>
