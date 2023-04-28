@@ -13,7 +13,6 @@ import Emergencia from "./pages/Emergencia";
 import Exames from "./pages/Exames";
 import ExameNormal from "./pages/ExameNormal";
 import FormaPagamento from "./pages/FormaPagamento";
-import GrupoAMIE from "./pages/GrupoAMIE";
 import Home from "./pages/Home";
 import ListaFormularios from "./pages/ListaFormularios";
 import ListaReceitas from "./pages/ListaReceitas";
@@ -93,7 +92,6 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Comentarios" component={Comentarios} />
       <HomeStack.Screen name="Emergencia" component={Emergencia} />
-      <HomeStack.Screen name="GrupoAMIE" component={GrupoAMIE} />
       <HomeStack.Screen name="Perfil" component={Perfil} />
       <HomeStack.Screen name="Recomendacoes" component={Recomendacoes} />
       <HomeStack.Screen name="SobreMim" component={SobreMim} />
