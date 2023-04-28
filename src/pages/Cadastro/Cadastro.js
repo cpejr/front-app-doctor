@@ -14,6 +14,8 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import requisicaoErro from "../../utils/HttpErros";
 import { Picker } from "@react-native-picker/picker";
 import { ActivityIndicator, Colors, Checkbox, Button } from "react-native-paper";
+import { CheckBox } from 'react-native-elements'
+import { Platform } from 'react-native';
 import {
   Body,
   CaixaTitulo,
@@ -37,7 +39,7 @@ import {
   Texto,
   CaixaTextoConvenioCuidador,
   CaixaParaDatadeNascimento,
-  DataNascimentoTexto, 
+  DataNascimentoTexto,
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
@@ -89,6 +91,8 @@ function Cadastro({ navigation }) {
     senhaConfirmada: false,
   };
 
+  const isIOS = Platform.OS === 'ios';
+
   const [erro, setErro] = useState(false);
 
   const [estadoSelecionado, setEstadoSelecionado] = useState();
@@ -123,7 +127,7 @@ function Cadastro({ navigation }) {
   function transformaaodeDataem2digitos(num) {
     return num.toString().padStart(2, '0');
   }
-  
+
   function formatacaodeData(date) {
     return [
       transformaaodeDataem2digitos(date.getDate()),
@@ -403,7 +407,7 @@ function Cadastro({ navigation }) {
     <ScrollView>
       <Body>
         <CaixaTitulo marginTop={margemSuperior} width={larguraCaixaTitulo}>
-          <Logo source={logoGuilherme} width={110} height={110}/>
+          <Logo source={logoGuilherme} width={110} height={110} />
           <Titulo width={larguraTitulo}>Faça seu Cadastro</Titulo>
         </CaixaTitulo>
 
@@ -423,67 +427,67 @@ function Cadastro({ navigation }) {
             camposVazios={camposVazios.nome}
           />
           <CaixaInputsMesmaLinha>
-              <CaixaTituloInput>
-                <TituloInput>Telefone: </TituloInput>
-              </CaixaTituloInput>
-              <InputMask
-                placeholder="Telefone:"
-                keyboardType="numeric"
-                width="100%"
-                type={"cel-phone"}
-                options={{
-                  maskType: "BRL",
-                  withDDD: true,
-                  dddMask: "(99) ",
-                }}
-                textContentType="telephoneNumber"
-                dataDetectorTypes="phoneNumber"
-                label="Telefone"
-                includeRawValueInChangeText={true}
-                onChangeText={(maskedText, rawText) => {
-                  preenchendoDados("telefone", rawText);
-                }}
-                value={estado.telefone}
-                erro={erro.telefone}
-                camposVazios={camposVazios.telefone}
-              />
-              {erro.telefone && (
-                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-              )}
-              <CaixaTituloInput>
-                <TituloInput>Data de nascimento: </TituloInput>
-              </CaixaTituloInput>
+            <CaixaTituloInput>
+              <TituloInput>Telefone: </TituloInput>
+            </CaixaTituloInput>
+            <InputMask
+              placeholder="Telefone:"
+              keyboardType="numeric"
+              width="100%"
+              type={"cel-phone"}
+              options={{
+                maskType: "BRL",
+                withDDD: true,
+                dddMask: "(99) ",
+              }}
+              textContentType="telephoneNumber"
+              dataDetectorTypes="phoneNumber"
+              label="Telefone"
+              includeRawValueInChangeText={true}
+              onChangeText={(maskedText, rawText) => {
+                preenchendoDados("telefone", rawText);
+              }}
+              value={estado.telefone}
+              erro={erro.telefone}
+              camposVazios={camposVazios.telefone}
+            />
+            {erro.telefone && (
+              <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+            )}
+            <CaixaTituloInput>
+              <TituloInput>Data de nascimento: </TituloInput>
+            </CaixaTituloInput>
 
-              <CaixaParaDatadeNascimento 
+            <CaixaParaDatadeNascimento
               value={dataPlaceHolder}
               width="100%"
               erro={erro.data_nascimento}
               camposVazios={camposVazios.data_nascimento}
-              >
+            >
               <Data
-              customStyles={{
-                dateInput: {
-                  borderWidth: 0,
-                  alignItems: "flex-start",
-                  paddingLeft: 10,
-                },
-                placeholderText: { color: "#90929B" },
-              }}
+                customStyles={{
+                  dateInput: {
+                    borderWidth: 0,
+                    alignItems: "flex-start",
+                    paddingLeft: 10,
+                  },
+                  placeholderText: { color: "#90929B" },
+                }}
                 placeholder={dataPlaceHolder}
                 format="DD/MM/YYYY"
                 maximumDate={new Date()}
                 showIcon={false}
                 mode="date"
                 value={date}
-                confirmBtnText="Confirmar" 
+                confirmBtnText="Confirmar"
                 cancelBtnText="Cancelar"
                 onChange={(event, value) => {
                   preenchendoDados("data_nascimento", formatacaodeData(value));
                   setDate(value)
                 }}
               />
-              </CaixaParaDatadeNascimento>
-              
+            </CaixaParaDatadeNascimento>
+
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
             <CaixaTituloInput>
@@ -784,12 +788,20 @@ function Cadastro({ navigation }) {
         </CaixaInputs>
 
         <CheckboxTexto>
-          <Checkbox
-            status={checked ? "checked" : "unchecked"}
-            onPress={() => {
-              setChecked(!checked);
-            }}
-          />
+          {isIOS ? (
+            <CheckBox
+              checked={checked}
+              onPress={() => setChecked(!checked)}
+            />
+
+          ) : (
+            <Checkbox
+              status={checked ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked(!checked);
+              }}
+            />
+          )}
           <TouchableOpacity
             onPress={() => {
               navigation.push("LGPD");
