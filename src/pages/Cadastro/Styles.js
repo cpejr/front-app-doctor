@@ -145,6 +145,7 @@ export const CheckboxTexto = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 85%;
 `;
 
 export const LgpdLink = styled.Text`
