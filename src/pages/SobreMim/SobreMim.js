@@ -87,10 +87,7 @@ function SobreMim({ navigation }) {
           <TituloTexto fontFamily="BarlowSemibold">Quem sou</TituloTexto>
           <Texto fontFamily="BarlowLight" textAlign="justify">
             {"\n"}
-            {"\t"}
-            {"\t"}
-            {"\t"}
-            {"\t"}Com formação em Neurologia e Neurofisiologia Clínica, atuo na
+            Com formação em Neurologia e Neurofisiologia Clínica, atuo na
             investigação, diagnóstico e tratamento de variadas doenças e
             transtornos neurológicos. Após especialização no Hospital das
             Clínicas da Universidade de São Paulo - USP - Ribeirão Preto,
@@ -100,19 +97,13 @@ function SobreMim({ navigation }) {
             país.
             {"\n"}
             {"\n"}
-            {"\t"}
-            {"\t"}
-            {"\t"}
-            {"\t"}O atendimento no pronto-socorro é focado no diagnóstico e
+            O atendimento no pronto-socorro é focado no diagnóstico e
             tratamento rápido de situações associadas a grande sofrimento ou
             risco de lesões, sequelas ou morte. No cenário de urgência, faço
             parte das equipes dos Hospitais Mater Dei de BH e de Betim/Contagem.
             {"\n"}
             {"\n"}
-            {"\t"}
-            {"\t"}
-            {"\t"}
-            {"\t"}Já as condições neurológicas crônicas, de longa duração, ou
+            Já as condições neurológicas crônicas, de longa duração, ou
             que se repetem com frequência e trazem sofrimento e desconforto ao
             paciente, merecem ter acompanhamento regular no consultório, em
             nível ambulatorial. É nesse ambiente, com o tempo reservado e
@@ -122,10 +113,7 @@ function SobreMim({ navigation }) {
             possível.
             {"\n"}
             {"\n"}
-            {"\t"}
-            {"\t"}
-            {"\t"}
-            {"\t"}Nem sempre podemos curar, mas podemos aliviar quase sempre e,
+            Nem sempre podemos curar, mas podemos aliviar quase sempre e,
             com certeza, podemos confortar todas vezes. A minha filosofia de
             atendimento envolve a realização de uma consulta mais prolongada,
             pois somente assim é possível dar a atenção que é necessária ao
