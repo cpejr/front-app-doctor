@@ -270,7 +270,7 @@ function Home({ navigation }) {
               <Card backgroundColor={Cores.branco} height="auto">
                 <CorpoCard>
                   <TituloInformacao color={Cores.preto}>
-                    Aprendendo Sobre
+                    Aprendendo Sobre...
                   </TituloInformacao>
                   <ConteudoAprendendo>
                     <TextoAprendendo color={Cores.preto}>Aprenda sobre as principais doenças e condições neurológicas
