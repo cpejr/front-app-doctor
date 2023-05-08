@@ -66,23 +66,6 @@ function SobreMim({ navigation }) {
             />
           </BotaoVoltar>
         </CaixaBotao>
-
-        <CaixaImagem>
-          <Image
-            style={{
-              width: larguraImagem,
-              height: alturaImagem,
-              borderRadius: 3,
-              resizeMode: "contain",
-            }}
-            source={GuilhermeMarquesTemplateArteSobreMim}
-            alt={
-              "Aqui existe uma imagem da logomarca do doutor Guilherme Marques" +
-              30
-            }
-          ></Image>
-        </CaixaImagem>
-
         <CaixaTexto>
           <TituloTexto fontFamily="BarlowSemibold">Quem sou</TituloTexto>
           <Texto fontFamily="BarlowLight" textAlign="justify">
