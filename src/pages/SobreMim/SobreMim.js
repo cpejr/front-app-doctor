@@ -20,6 +20,7 @@ import GuilhermeMarquesFotoSobreMim from "./Imagens/GuilhermeMarquesFotoSobreMim
 import GuilhermeMarquesTemplateArteSobreMim from "./Imagens/GuilhermeMarquesTemplateArteSobreMim.webp";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native-paper";
+import Icon from "react-native-vector-icons/Entypo";
 
 function SobreMim({ navigation }) {
   const [carregando, setCarregando] = useState(true);
@@ -59,8 +60,8 @@ function SobreMim({ navigation }) {
       <View style={{ alignItems: "center" }}>
         <CaixaBotao>
           <BotaoVoltar onPress={() => navigation.navigate("Home")}>
-            <IconeVoltar
-              name="arrow-left-circle"
+            <Icon
+              name="arrow-left"
               size={40}
               color={Cores.lilas[1]}
             />
