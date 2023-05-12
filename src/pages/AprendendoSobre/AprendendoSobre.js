@@ -23,6 +23,18 @@ import {
   TextoPagina,
   TituloPagina,
   CaixaSeta,
+  TituloMemoria,
+  TextoMemoria,
+  BotaoSaibaMaisMem,
+  TituloDisturbio,
+  TextoDisturbio,
+  BotaoSaibaMaisDis,
+  TituloAVC,
+  TextoAVC,
+  BotaoSaibaMaisAVC,
+  TituloOutros,
+  TextoOutros,
+  BotaoSaibaMaisOutros,
 } from "./Styles";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
@@ -288,14 +300,14 @@ function AprendendoSobre( { navigation }) {
               </Card>
               <Card backgroundColor={Cores.azul} height="auto">
                 <CorpoCard>
-                  <TituloInformacao color={Cores.branco}>
+                  <TituloMemoria color={Cores.branco}>
                   Memória, Cognição e Demências
-                  </TituloInformacao>
+                  </TituloMemoria>
                   <ConteudoAprendendo>
-                    <TextoAprendendo color={Cores.branco}>Informações sobre as síndromes demenciais mais comuns.
-                    </TextoAprendendo>
+                    <TextoMemoria color={Cores.branco}>Informações sobre as síndromes demenciais mais comuns.
+                    </TextoMemoria>
                   </ConteudoAprendendo>
-                  <BotaoSaibaMais
+                  <BotaoSaibaMaisMem
                     onPress={renderizarUrl4}
                     color={Cores.azul}
                   >
@@ -307,19 +319,19 @@ function AprendendoSobre( { navigation }) {
                       SAIBA MAIS
                     </ConteudoBotao>
                     <AntIcon name="right" size={25} color={Cores.branco} />
-                  </BotaoSaibaMais>
+                  </BotaoSaibaMaisMem>
                 </CorpoCard>
               </Card>
               <Card backgroundColor={Cores.branco} height="auto">
                 <CorpoCard>
-                  <TituloInformacao color={Cores.preto}>
+                  <TituloDisturbio color={Cores.preto}>
                   Distúrbios do Movimento
-                  </TituloInformacao>
+                  </TituloDisturbio>
                   <ConteudoAprendendo>
-                    <TextoAprendendo color={Cores.preto}>Informações sobre os Distúrbios do Movimento, seus tipos, causas, implicações, modo de diagnóstico e tratamentos.
-                    </TextoAprendendo>
+                    <TextoDisturbio color={Cores.preto}>Informações sobre os Distúrbios do Movimento, seus tipos, causas, implicações, modo de diagnóstico e tratamentos.
+                    </TextoDisturbio>
                   </ConteudoAprendendo>
-                  <BotaoSaibaMais
+                  <BotaoSaibaMaisDis
                     onPress={renderizarUrl5}
                     color={Cores.branco}
                   >
@@ -331,7 +343,7 @@ function AprendendoSobre( { navigation }) {
                       SAIBA MAIS
                     </ConteudoBotao>
                     <AntIcon name="right" size={25} color={Cores.preto} />
-                  </BotaoSaibaMais>
+                  </BotaoSaibaMaisDis>
                 </CorpoCard>
               </Card>
               <Card backgroundColor={Cores.azul} height="auto">
@@ -360,14 +372,14 @@ function AprendendoSobre( { navigation }) {
               </Card>
               <Card backgroundColor={Cores.branco} height="auto">
                 <CorpoCard>
-                  <TituloInformacao color={Cores.preto}>
+                  <TituloAVC color={Cores.preto}>
                   AVC - Acidente Vascular Cerebral
-                  </TituloInformacao>
+                  </TituloAVC>
                   <ConteudoAprendendo>
-                    <TextoAprendendo color={Cores.preto}>Informações sobre os acidentes vasculares cerebrais: significado, tipos, diagnóstico e tratamento.
-                    </TextoAprendendo>
+                    <TextoAVC color={Cores.preto}>Informações sobre os acidentes vasculares cerebrais: significado, tipos, diagnóstico e tratamento.
+                    </TextoAVC>
                   </ConteudoAprendendo>
-                  <BotaoSaibaMais
+                  <BotaoSaibaMaisAVC
                     onPress={renderizarUrl7}
                     color={Cores.branco}
                   >
@@ -379,19 +391,19 @@ function AprendendoSobre( { navigation }) {
                       SAIBA MAIS
                     </ConteudoBotao>
                     <AntIcon name="right" size={25} color={Cores.preto} />
-                  </BotaoSaibaMais>
+                  </BotaoSaibaMaisAVC>
                 </CorpoCard>
               </Card>
               <Card backgroundColor={Cores.azul} height="auto">
                 <CorpoCard>
-                  <TituloInformacao color={Cores.branco}>
+                  <TituloOutros color={Cores.branco}>
                   Outros tópicos em Neurologia Geral
-                  </TituloInformacao>
+                  </TituloOutros>
                   <ConteudoAprendendo>
-                    <TextoAprendendo color={Cores.branco}>Informações sobre outros tópicos em Neurologia Geral.
-                    </TextoAprendendo>
+                    <TextoOutros color={Cores.branco}>Informações sobre outros tópicos em Neurologia Geral.
+                    </TextoOutros>
                   </ConteudoAprendendo>
-                  <BotaoSaibaMais
+                  <BotaoSaibaMaisOutros
                     onPress={renderizarUrl8}
                     color={Cores.azul}
                   >
@@ -403,7 +415,7 @@ function AprendendoSobre( { navigation }) {
                       SAIBA MAIS
                     </ConteudoBotao>
                     <AntIcon name="right" size={25} color={Cores.branco} />
-                  </BotaoSaibaMais>
+                  </BotaoSaibaMaisOutros>
                 </CorpoCard>
               </Card>
           </>

@@ -140,3 +140,95 @@ export const CaixaSeta = styled.View`
   margin-top: 5%;
   margin-left: 3%;
 `;
+export const TituloMemoria = styled.Text`
+font-size: 20px;
+margin-top: 6%;
+margin-left: 28%;
+margin-right: 21%;
+color: ${(props) => props.color};
+`;
+export const TextoMemoria = styled.Text`
+text-align: justify;
+font-size: 12px;
+margin-left: 28%;
+width: 50%;
+color: ${(props) => props.color};
+`;
+export const BotaoSaibaMaisMem = styled.TouchableOpacity`
+  margin-top: 5%;
+  margin-left: 25%;
+  margin-bottom: 3%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: ${(props) => props.color};
+`;
+export const TituloDisturbio = styled.Text`
+font-size: 20px;
+margin-top: 6%;
+margin-left: 19%;
+margin-right: 21%;
+color: ${(props) => props.color};
+`;
+export const TextoDisturbio = styled.Text`
+text-align: justify;
+font-size: 12px;
+margin-left: 18%;
+width: 50%;
+color: ${(props) => props.color};
+`;
+export const BotaoSaibaMaisDis = styled.TouchableOpacity`
+  margin-top: 5%;
+  margin-left: 15%;
+  margin-bottom: 3%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: ${(props) => props.color};
+`;
+export const TituloAVC = styled.Text`
+font-size: 20px;
+margin-top: 6%;
+margin-left: 21%;
+margin-right: 21%;
+color: ${(props) => props.color};
+`;
+export const TextoAVC = styled.Text`
+text-align: justify;
+font-size: 12px;
+margin-left: 21%;
+width: 50%;
+color: ${(props) => props.color};
+`;
+export const BotaoSaibaMaisAVC= styled.TouchableOpacity`
+  margin-top: 5%;
+  margin-left: 18%;
+  margin-bottom: 3%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: ${(props) => props.color};
+`;
+export const TituloOutros = styled.Text`
+font-size: 20px;
+margin-top: 6%;
+margin-left: 21%;
+margin-right: 21%;
+color: ${(props) => props.color};
+`;
+export const TextoOutros = styled.Text`
+text-align: justify;
+font-size: 12px;
+margin-left: 21%;
+width: 50%;
+color: ${(props) => props.color};
+`;
+export const BotaoSaibaMaisOutros= styled.TouchableOpacity`
+  margin-top: 5%;
+  margin-left: 18%;
+  margin-bottom: 3%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: ${(props) => props.color};
+`;
