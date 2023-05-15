@@ -504,10 +504,8 @@ function Cadastro({ navigation }) {
                 maximumDate={new Date()}
                 showIcon={false}
                 mode="date"
-                date={date}
-                confirmBtnText="Confirmar"
-                cancelBtnText="Cancelar"
-                onDateChange={(event, value) => {
+                value={date}
+                onChange={(event, value) => {
                   preenchendoDados("data_nascimento", formatacaodeData(value));
                   setDate(value);
                 }}

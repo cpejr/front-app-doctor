@@ -110,9 +110,7 @@ export const DataAndroid = styled(DatePickerAndroid)`
     return cor;
   }};
   border-radius: 5px;
-  display: flex;
   justify-content: center;
-  align-items: flex-start;
 `;
 
 export const PickerView = styled.View`
