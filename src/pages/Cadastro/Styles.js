@@ -1,9 +1,13 @@
 import styled from "styled-components/native";
 import { Picker } from "@react-native-picker/picker";
 import { Cores } from "../../variaveis";
-import DatePicker  from "react-native-datepicker";
+import { DatePicker as DatePickerIOS } from 'react-native-datepicker';
+import { DatePicker as DatePickerAndroid } from '@react-native-community/datetimepicker';
 import { useState } from "react";
 import { colors } from "react-native-elements";
+import { Platform } from "react-native";
+
+
 
 export const Body = styled.View`
   display: flex;
@@ -61,7 +65,32 @@ export const Rotulo = styled.Text`
   margin-bottom: 1%;
 `;
 
-export const Data = styled(DatePicker)`
+export const DataIOS = styled(DatePickerIOS)`
+  width: 100%;
+  height: 50px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  background-color: #e4e6f4;
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if (props.camposVazios) {
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
+export const DataAndroid = styled(DatePickerAndroid)`
   width: 100%;
   height: 50px;
   margin-top: 6px;
