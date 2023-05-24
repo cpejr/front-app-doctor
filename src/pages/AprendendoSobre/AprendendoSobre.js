@@ -106,7 +106,7 @@ function AprendendoSobre( { navigation }) {
     }
   }, [urlCefaleias]);
   const [urlMemoria, seturlMemoria] = useState(
-    ` https://www.drguilhermemarques.com/memoria-cognicao-demencias`
+    `https://www.drguilhermemarques.com/memoria-cognicao-demencias`
   );
 
   useEffect(() => {
@@ -170,7 +170,7 @@ function AprendendoSobre( { navigation }) {
     }
   }, [urlAVC]);
   const [urlOutros , seturlOutros] = useState(
-    ` https://www.drguilhermemarques.com/topicos-gerais-neurologia`
+    `https://www.drguilhermemarques.com/topicos-gerais-neurologia`
   );
 
   useEffect(() => {
