@@ -159,4 +159,4 @@ export const enviarMensagemFinalizarExame = (id_usuario, telefone, endereco) =>
     },
   });
   
-  
+  export const getSobremim = () => api.get(`/sobremims`);

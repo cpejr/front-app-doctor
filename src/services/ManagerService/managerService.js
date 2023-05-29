@@ -4,6 +4,7 @@ import requisicaoErro from "../../utils/HttpErros";
 import { Alert } from "react-native";
 import { sleep } from "../../utils/sleep";
 import { ContainerFotoEAlterarImagem } from "../../pages/AlterarDados/Styles";
+import SobreMim from "../../pages/SobreMim/SobreMim";
 
 export const requisicaoCriarUsuario = async (estado, endereco) => {
   const dadosEmail = await requesterService.requisicaoDadosUsuario(
@@ -700,4 +701,16 @@ export const DeletarTokenDispositivo = async (token_dispositivo) => {
     });
 
   return false;
+};
+
+export const GetSobremim = async () => {
+  await requesterService
+    .getSobremim()
+    .then((res) => {
+      Sobre_mim = res.data
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+  return Sobre_mim[0];
 };
