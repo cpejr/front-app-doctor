@@ -94,7 +94,7 @@ function SobreMim({ navigation }) {
         </CaixaImagem>
 
         <CaixaTexto>
-          <TituloTexto fontFamily="BarlowSemibold">Quem sou</TituloTexto>
+          <TituloTexto fontFamily="BarlowSemibold">{sobreMim?.titulo_um}</TituloTexto>
           <Texto fontFamily="BarlowLight" textAlign="justify">
             {sobreMim?.texto_um}
           </Texto>
@@ -137,7 +137,7 @@ function SobreMim({ navigation }) {
 
         <CaixaTexto>
           <TituloTexto fontFamily="BarlowSemibold">
-            Minha Experiência
+          {sobreMim?.titulo_dois}
           </TituloTexto>
           <Texto fontFamily="BarlowLight" textAlign="justify">
           {sobreMim?.texto_dois}
