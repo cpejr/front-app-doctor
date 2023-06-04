@@ -222,6 +222,15 @@ export const TextoSemConsulta = styled.Text`
   margin-bottom: 2%;
   color: ${Cores.azul};
 `;
+
+export const TextoZap = styled.Text`
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 1%;
+  margin-top: -5%;
+  color: ${Cores.azul};
+`;
+
 export const CaixaAvaliacaoModal = styled.View`
   width: 80%;
   height: 10%;

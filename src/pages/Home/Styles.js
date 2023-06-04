@@ -75,7 +75,7 @@ export const BotaoSaibaMais = styled.TouchableOpacity`
   background-color: ${(props) => props.color};
 `;
 
-export const ConteudoAmie = styled.View`
+export const ConteudoAprendendo = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -85,7 +85,7 @@ export const ConteudoAmie = styled.View`
   margin-top: 5%;
 `;
 
-export const ImagemAmie = styled.Image`
+export const ImagemAprendendo = styled.Image`
   width: 35%;
   margin-right: 9%;
   margin-left: 3%;
@@ -93,7 +93,7 @@ export const ImagemAmie = styled.Image`
   height: ${(props) => props.height};
 `;
 
-export const TextoAmie = styled.Text`
+export const TextoAprendendo = styled.Text`
   text-align: justify;
   font-size: 12px;
   margin-left: 9%;

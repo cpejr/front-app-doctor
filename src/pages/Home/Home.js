@@ -11,6 +11,9 @@ import {
   TextoInfomacao,
   CorpoCard,
   BotaoSaibaMais,
+  ConteudoAprendendo,
+  ImagemAprendendo,
+  TextoAprendendo,
   ImagemCarrossel,
   AnimacaoCarregando,
 } from "./Styles";
@@ -67,8 +70,6 @@ function Home({ navigation }) {
     setCarregando(false);
   }
 
- 
-
   function renderizarCarrossel({ item }) {
     return (
       <CorpoCard>
@@ -82,7 +83,6 @@ function Home({ navigation }) {
     setLargura(0.3 * width);
   }
 
- 
 
   useEffect(() => {
     pegandoDados();
@@ -122,7 +122,14 @@ function Home({ navigation }) {
       navigation.navigate("Login");
     }
   }
-
+  async function paginaAprendendoSobre() {
+    const email = await AsyncStorage.getItem("@AirBnbApp:email");
+    if (email !== undefined && email !== null) {
+      navigation.navigate("AprendendoSobre");
+    }else{
+      navigation.navigate("Login");
+    }
+  }
  
   return (
     <>
@@ -260,7 +267,30 @@ function Home({ navigation }) {
                 </CorpoCard>
               </Card>
 
-              
+              <Card backgroundColor={Cores.branco} height="auto">
+                <CorpoCard>
+                  <TituloInformacao color={Cores.preto}>
+                    Aprendendo Sobre...
+                  </TituloInformacao>
+                  <ConteudoAprendendo>
+                    <TextoAprendendo color={Cores.preto}>Aprenda sobre as principais doenças e condições neurológicas
+                    </TextoAprendendo>
+                  </ConteudoAprendendo>
+                  <BotaoSaibaMais
+                    onPress={paginaAprendendoSobre}
+                    color={Cores.branco}
+                  >
+                    <ConteudoBotao
+                      fontSize="16px"
+                      color={Cores.preto}
+                      width="30%"
+                    >
+                      SAIBA MAIS
+                    </ConteudoBotao>
+                    <AntIcon name="right" size={25} color={Cores.preto} />
+                  </BotaoSaibaMais>
+                </CorpoCard>
+              </Card>
             </>
           )}
         </Corpo>
