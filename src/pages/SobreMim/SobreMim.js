@@ -20,6 +20,7 @@ import GuilhermeMarquesFotoSobreMim from "./Imagens/GuilhermeMarquesFotoSobreMim
 import GuilhermeMarquesTemplateArteSobreMim from "./Imagens/GuilhermeMarquesTemplateArteSobreMim.webp";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native-paper";
+import Icon from "react-native-vector-icons/Entypo";
 
 function SobreMim({ navigation }) {
   const [carregando, setCarregando] = useState(true);
@@ -59,38 +60,18 @@ function SobreMim({ navigation }) {
       <View style={{ alignItems: "center" }}>
         <CaixaBotao>
           <BotaoVoltar onPress={() => navigation.navigate("Home")}>
-            <IconeVoltar
-              name="arrow-left-circle"
+            <Icon
+              name="arrow-left"
               size={40}
               color={Cores.lilas[1]}
             />
           </BotaoVoltar>
         </CaixaBotao>
-
-        <CaixaImagem>
-          <Image
-            style={{
-              width: larguraImagem,
-              height: alturaImagem,
-              borderRadius: 3,
-              resizeMode: "contain",
-            }}
-            source={GuilhermeMarquesTemplateArteSobreMim}
-            alt={
-              "Aqui existe uma imagem da logomarca do doutor Guilherme Marques" +
-              30
-            }
-          ></Image>
-        </CaixaImagem>
-
         <CaixaTexto>
           <TituloTexto fontFamily="BarlowSemibold">Quem sou</TituloTexto>
           <Texto fontFamily="BarlowLight" textAlign="justify">
             {"\n"}
-            {"\t"}
-            {"\t"}
-            {"\t"}
-            {"\t"}Com formação em Neurologia e Neurofisiologia Clínica, atuo na
+            Com formação em Neurologia e Neurofisiologia Clínica, atuo na
             investigação, diagnóstico e tratamento de variadas doenças e
             transtornos neurológicos. Após especialização no Hospital das
             Clínicas da Universidade de São Paulo - USP - Ribeirão Preto,
@@ -100,19 +81,13 @@ function SobreMim({ navigation }) {
             país.
             {"\n"}
             {"\n"}
-            {"\t"}
-            {"\t"}
-            {"\t"}
-            {"\t"}O atendimento no pronto-socorro é focado no diagnóstico e
+            O atendimento no pronto-socorro é focado no diagnóstico e
             tratamento rápido de situações associadas a grande sofrimento ou
             risco de lesões, sequelas ou morte. No cenário de urgência, faço
             parte das equipes dos Hospitais Mater Dei de BH e de Betim/Contagem.
             {"\n"}
             {"\n"}
-            {"\t"}
-            {"\t"}
-            {"\t"}
-            {"\t"}Já as condições neurológicas crônicas, de longa duração, ou
+            Já as condições neurológicas crônicas, de longa duração, ou
             que se repetem com frequência e trazem sofrimento e desconforto ao
             paciente, merecem ter acompanhamento regular no consultório, em
             nível ambulatorial. É nesse ambiente, com o tempo reservado e
@@ -122,10 +97,7 @@ function SobreMim({ navigation }) {
             possível.
             {"\n"}
             {"\n"}
-            {"\t"}
-            {"\t"}
-            {"\t"}
-            {"\t"}Nem sempre podemos curar, mas podemos aliviar quase sempre e,
+            Nem sempre podemos curar, mas podemos aliviar quase sempre e,
             com certeza, podemos confortar todas vezes. A minha filosofia de
             atendimento envolve a realização de uma consulta mais prolongada,
             pois somente assim é possível dar a atenção que é necessária ao

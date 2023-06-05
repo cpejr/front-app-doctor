@@ -40,6 +40,7 @@ import {
   CaixaDadosModal,
   CaixaAvaliacaoModal,
   CaixaExterna,
+  TextoZap,
 } from "./Styles";
 import ViewPadrao from "../../styles/ViewPadrao";
 import ConteudoBotao from "./../../styles/ConteudoBotao";
@@ -261,7 +262,7 @@ function Consultas({ navigation }) {
           <CaixaBotao
             width={larguraBotao}
             height={heightCaixaBotao}
-            onPress={renderizarUrlVideo}
+            onPress={() => Linking.openURL('http://drguilhermemarques.com/pós-questionário')}
           >
             <ConteudoBotao
               fontSize={fontSizeConteudo}
@@ -272,6 +273,9 @@ function Consultas({ navigation }) {
             </ConteudoBotao>
           </CaixaBotao>
         </ViewBotoes>
+        <TextoZap>
+        Caso sua consulta não esteja listada, consulte uma de nossas secretárias via WhatsApp
+        </TextoZap>
 
         {carregando ? (
           <ViewPadrao

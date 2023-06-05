@@ -68,7 +68,7 @@ function SolicitarExame({ route, navigation }) {
   async function CriandoChatparaExame() {
          const conversa = {
           id_criador: usuario.id,
-          id_receptor: "e7d239d1-26be-45ad-a53c-c42d4e3ce543",
+          id_receptor: "8411330c-541c-40d7-b968-61d759c3ab61",
           ativada: false,
           tipo: String(exameEspecifico.titulo).toUpperCase()
         }

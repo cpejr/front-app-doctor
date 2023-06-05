@@ -53,7 +53,6 @@ export const CaixaTexto = styled.View`
     padding-left: 30px;
     padding-right: 30px;
     padding-bottom: 35px;
-    margin-top: 5%;
     margin-bottom: 5%;
 `;
 

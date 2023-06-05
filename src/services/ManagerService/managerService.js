@@ -136,6 +136,33 @@ export const GetFormulariosPaciente = async () => {
   return formulariosPaciente;
 };
 
+export const CriarFormularioEmergencia = async () => {
+  const email = await AsyncStorage.getItem("@AirBnbApp:email");
+  const id_emergencia = "046975f7-d7d0-4635-a9d9-25efbe65d7b7"
+  const id_usuario = await GetDadosUsuario(email)
+    .then((res) => {
+      return res.dadosUsuario.id;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    const resposta = await EnviandoFormularioPaciente(
+      false,
+      false,
+      id_emergencia,
+      id_usuario
+    ).then(() => {
+      console.log(JSON.stringify(res.data))
+      return res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+    
+  return resposta;
+};
+
 // export const GetFormulariosPaciente = async () => {
 //   let formulariosPaciente;
 //   let id_usuario;
@@ -513,6 +540,20 @@ export const PegarExamesMarcadosUsuario = async () => {
   );
   return resposta;
 };
+export const deletarFormularioPacienteEspecifico = async (id) => {
+  await requesterService
+    .deletarFormularioPacienteEspecifico(id)
+    .then(() => {
+    })
+    .catch((error) => {
+      requisicaoErro();
+      console.log(error)
+
+      return false;
+    });
+
+  return false;
+};
 
 export const UpdateFotoDePerfil = async (id, file) => {
   await requesterService
@@ -701,3 +742,14 @@ export const DeletarTokenDispositivo = async (token_dispositivo) => {
 
   return false;
 };
+
+export const MandandoMensagemFormularioEmergencia = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemFormularioDeUrgencia(id_usuario)
+    .then(() => {
+      toast.success("Exame finalizado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+}

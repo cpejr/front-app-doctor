@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Switch,
   View,
+  Linking,
+  Text
 } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao";
@@ -47,7 +49,7 @@ import api from "../../services/api";
 import { estados } from "./estados";
 import { useFonts } from "expo-font";
 import * as managerService from "../../services/ManagerService/managerService";
-import _ from "lodash";
+import _, { words } from "lodash";
 import { isEqual } from "lodash";
 import { sleep } from "../../utils/sleep";
 
@@ -97,6 +99,7 @@ function Cadastro({ navigation }) {
 
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
+  const Termos = "Confirmo que li e aceito os Termos e Condições descritos AQUI";
   const [camposVazios, setCamposVazios] = useState({
     nome: false,
     telefone: false,
