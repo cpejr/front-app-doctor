@@ -7,7 +7,7 @@ import {
   Switch,
   View,
   Linking,
-  Text
+  Text,
 } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao";
@@ -15,9 +15,14 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import requisicaoErro from "../../utils/HttpErros";
 import { Picker } from "@react-native-picker/picker";
-import { ActivityIndicator, Colors, Checkbox, Button } from "react-native-paper";
-import { CheckBox } from 'react-native-elements'
-import { Platform } from 'react-native';
+import {
+  ActivityIndicator,
+  Colors,
+  Checkbox,
+  Button,
+} from "react-native-paper";
+import { CheckBox } from "react-native-elements";
+import { Platform } from "react-native";
 import {
   Body,
   CaixaTitulo,
@@ -93,13 +98,14 @@ function Cadastro({ navigation }) {
     senhaConfirmada: false,
   };
 
-  const isIOS = Platform.OS === 'ios';
+  const isIOS = Platform.OS === "ios";
 
   const [erro, setErro] = useState(false);
 
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
-  const Termos = "Confirmo que li e aceito os Termos e Condições descritos AQUI";
+  const Termos =
+    "Confirmo que li e aceito os Termos e Condições descritos AQUI";
   const [camposVazios, setCamposVazios] = useState({
     nome: false,
     telefone: false,
@@ -116,7 +122,9 @@ function Cadastro({ navigation }) {
     senha: false,
     senhaConfirmada: false,
   });
-  const [data_nascimentoFront, setData_nascimentoFront] = useState("Data de nascimento:");
+  const [data_nascimentoFront, setData_nascimentoFront] = useState(
+    "Data de nascimento:"
+  );
   const [dataPlaceHolder, setdataPlaceHolder] = useState(0);
 
   const { width, height } = useWindowDimensions();
@@ -128,7 +136,7 @@ function Cadastro({ navigation }) {
   const [date, setDate] = useState(new Date());
 
   function transformaaodeDataem2digitos(num) {
-    return num.toString().padStart(2, '0');
+    return num.toString().padStart(2, "0");
   }
 
   function formatacaodeData(date) {
@@ -136,7 +144,7 @@ function Cadastro({ navigation }) {
       transformaaodeDataem2digitos(date.getDate()),
       transformaaodeDataem2digitos(date.getMonth() + 1),
       date.getFullYear(),
-    ].join('/');
+    ].join("/");
   }
 
   const [formularios, setFormularios] = useState([]);
@@ -462,50 +470,54 @@ function Cadastro({ navigation }) {
             </CaixaTituloInput>
 
             <CaixaParaDatadeNascimento
-  value={dataPlaceHolder}
-  width="100%"
-  erro={erro.data_nascimento}
-  camposVazios={camposVazios.data_nascimento}
-  onPress={() => setDatePicker(true)}
->
-  {Platform.OS === 'android' ? (
-    <>
-      {data_nascimentoFront}
-      {datePicker && (
-        <Data
-          minimumDate={new Date()}
-          showIcon={false}
-          mode="date"
-          value={date}
-          confirmBtnText="Confirmar"
-          cancelBtnText="Cancelar"
-          onChange={(event, value) => {
-            setDatePicker(false)
-            preenchendoDados("data_nascimento", formatacaodeData(value));
-            setDate(value);
-            setdataPlaceHolder(1);
-          }}
-        />
-      )}
-    </>
-  ) : (
-    <Data
-      format="DD/MM/YYYY"
-      minimumDate={new Date()}
-      showIcon={false}
-      mode="date"
-      value={date}
-      confirmBtnText="Confirmar"
-      cancelBtnText="Cancelar"
-      onChange={(event, value) => {
-        preenchendoDados("data_nascimento", formatacaodeData(value));
-        setDate(value);
-      }}
-    />
-  )}
-</CaixaParaDatadeNascimento>
-
-
+              value={dataPlaceHolder}
+              width="100%"
+              erro={erro.data_nascimento}
+              camposVazios={camposVazios.data_nascimento}
+              onPress={() => setDatePicker(true)}
+            >
+              {Platform.OS === "android" ? (
+                <>
+                  {data_nascimentoFront}
+                  {datePicker && (
+                    <Data
+                      minimumDate={new Date()}
+                      showIcon={false}
+                      mode="date"
+                      value={date}
+                      confirmBtnText="Confirmar"
+                      cancelBtnText="Cancelar"
+                      onChange={(event, value) => {
+                        setDatePicker(false);
+                        preenchendoDados(
+                          "data_nascimento",
+                          formatacaodeData(value)
+                        );
+                        setDate(value);
+                        setdataPlaceHolder(1);
+                      }}
+                    />
+                  )}
+                </>
+              ) : (
+                <Data
+                  format="DD/MM/YYYY"
+                  minimumDate={new Date()}
+                  showIcon={false}
+                  mode="date"
+                  value={date}
+                  confirmBtnText="Confirmar"
+                  cancelBtnText="Cancelar"
+                  onChange={(event, value) => {
+                    preenchendoDados(
+                      "data_nascimento",
+                      formatacaodeData(value)
+                    );
+                    setDate(value);
+                  }}
+                />
+              )}
+            </CaixaParaDatadeNascimento>
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
             <CaixaTituloInput>
@@ -807,11 +819,7 @@ function Cadastro({ navigation }) {
 
         <CheckboxTexto>
           {isIOS ? (
-            <CheckBox
-              checked={checked}
-              onPress={() => setChecked(!checked)}
-            />
-
+            <CheckBox checked={checked} onPress={() => setChecked(!checked)} />
           ) : (
             <Checkbox
               status={checked ? "checked" : "unchecked"}
