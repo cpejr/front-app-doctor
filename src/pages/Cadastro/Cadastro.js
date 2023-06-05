@@ -459,34 +459,49 @@ function Cadastro({ navigation }) {
             </CaixaTituloInput>
 
             <CaixaParaDatadeNascimento
-              value={dataPlaceHolder}
-              width="100%"
-              erro={erro.data_nascimento}
-              camposVazios={camposVazios.data_nascimento}
-            >
-              <Data
-                customStyles={{
-                  dateInput: {
-                    borderWidth: 0,
-                    alignItems: "flex-start",
-                    paddingLeft: 10,
-                  },
-                  placeholderText: { color: "#90929B" },
-                }}
-                placeholder={dataPlaceHolder}
-                format="DD/MM/YYYY"
-                maximumDate={new Date()}
-                showIcon={false}
-                mode="date"
-                date={date}
-                confirmBtnText="Confirmar"
-                cancelBtnText="Cancelar"
-                onDateChange={(event, value) => {
-                  preenchendoDados("data_nascimento", formatacaodeData(value));
-                  setDate(value)
-                }}
-              />
-            </CaixaParaDatadeNascimento>
+  value={dataPlaceHolder}
+  width="100%"
+  erro={erro.data_nascimento}
+  camposVazios={camposVazios.data_nascimento}
+  onPress={() => setDatePicker(true)}
+>
+  {Platform.OS === 'android' ? (
+    <>
+      {data_nascimentoFront}
+      {datePicker && (
+        <Data
+          minimumDate={new Date()}
+          showIcon={false}
+          mode="date"
+          value={date}
+          confirmBtnText="Confirmar"
+          cancelBtnText="Cancelar"
+          onChange={(event, value) => {
+            setDatePicker(false)
+            preenchendoDados("data_nascimento", formatacaodeData(value));
+            setDate(value);
+            setdataPlaceHolder(1);
+          }}
+        />
+      )}
+    </>
+  ) : (
+    <Data
+      format="DD/MM/YYYY"
+      minimumDate={new Date()}
+      showIcon={false}
+      mode="date"
+      value={date}
+      confirmBtnText="Confirmar"
+      cancelBtnText="Cancelar"
+      onChange={(event, value) => {
+        preenchendoDados("data_nascimento", formatacaodeData(value));
+        setDate(value);
+      }}
+    />
+  )}
+</CaixaParaDatadeNascimento>
+
 
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
