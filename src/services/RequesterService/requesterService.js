@@ -165,6 +165,8 @@ export const enviarMensagemFinalizarExame = (id_usuario, telefone, endereco) =>
     },
   });
   
+  export const getSobremim = () => api.get(`/sobremims`);
+  
   export const enviarMensagemFormularioDeUrgencia = (id_usuario) =>
   api.post(`/conversas_whatsapp/finalizar_exame`, {
     id_usuario
