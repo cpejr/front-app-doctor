@@ -262,7 +262,7 @@ function Consultas({ navigation }) {
           <CaixaBotao
             width={larguraBotao}
             height={heightCaixaBotao}
-            onPress={renderizarUrlVideo}
+            onPress={() => Linking.openURL('http://drguilhermemarques.com/pós-questionário')}
           >
             <ConteudoBotao
               fontSize={fontSizeConteudo}
