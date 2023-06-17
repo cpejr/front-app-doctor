@@ -151,6 +151,11 @@ export const enviarMensagemFinalizarExame = (id_usuario, telefone, endereco) =>
     endereco
   });
 
+  export const enviarMensagemComunicadoUrgencia = (id_usuario, telefone, endereco) =>
+  api.post(`/conversas_whatsapp/comunicado_urgencia`, {
+    id_usuario
+  });
+
 
   export const LogouttokenDispositivo = (token_dispositivo) =>
   api.delete(`/token_usuarios`, {
