@@ -194,8 +194,7 @@ function Perfil({ navigation }) {
           <Botao
             width={larguraBotoes}
             height="30px"
-            //backgroundColor={Cores.lilas[3]} -- Estatico
-            backgroundColor="green"
+            backgroundColor={Cores.lilas[3]}
             borderRadius="3px"
             borderColor={Cores.lilas[2]}
             borderWidth="2px"
