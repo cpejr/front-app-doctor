@@ -455,6 +455,18 @@ export const MandandoMensagemFinalizarExame = async (id_usuario, telefone, ender
     })
 }
 
+
+export const EnviandoMensagemComunicadoUrgencia = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemComunicadoUrgencia(id_usuario)
+    .then(() => {
+      toast.success("Mensagem comunicado de urgência enviada com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+}
+
 export const GetMensagensPorConversaUsuario = async (
   id_usuario,
   id_conversa

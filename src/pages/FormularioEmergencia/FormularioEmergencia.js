@@ -106,6 +106,9 @@ function FormularioEmergencia({ navigation }) {
         usuario.id,
         formularioPacienteDeEmergencia.id_formulario
       );
+      await managerService.EnviandoMensagemComunicadoUrgencia(
+        usuario.id,
+      );
       navigation.push("Home");
     } else {
       Alert.alert("Erro", "Preencha todos os campos!");
