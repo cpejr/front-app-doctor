@@ -133,7 +133,7 @@ function Cadastro({ navigation }) {
   const [cuidador, setCuidador] = useState(false);
 
   const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(2000, 0, 1));
 
   function transformaaodeDataem2digitos(num) {
     return num.toString().padStart(2, "0");
