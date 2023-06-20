@@ -481,8 +481,8 @@ function Cadastro({ navigation }) {
                   {data_nascimentoFront}
                   {datePicker && (
                     <Data
-                      minimumDate={new Date()}
-                      showIcon={false}
+                    maximumDate={new Date()}
+                    showIcon={false}
                       mode="date"
                       value={date}
                       confirmBtnText="Confirmar"
@@ -502,7 +502,7 @@ function Cadastro({ navigation }) {
               ) : (
                 <Data
                   format="DD/MM/YYYY"
-                  minimumDate={new Date()}
+                  maximumDate={new Date()}
                   showIcon={false}
                   mode="date"
                   value={date}
