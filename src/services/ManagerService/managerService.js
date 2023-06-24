@@ -675,10 +675,10 @@ export const GetReceitaUrl = async (id) => {
   return url;
 };
 
-export const enviarArquivoMensagem = async (file) => {
+export const enviarArquivoMensagem = async (chave) => {
   let id;
   await requesterService
-    .enviarArquivoMensagem(file)
+    .enviarArquivoMensagem(chave)
     .then((res) => {
       Alert.alert("", "Arquivo PDF enviado com sucesso");
       id = res.data;
