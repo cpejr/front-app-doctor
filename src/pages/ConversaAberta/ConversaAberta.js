@@ -142,7 +142,9 @@ function ConversaAberta({ navigation, route, socket }) {
 
       await RNS3.put(file, options)
 
-      await managerService.enviarArquivoMensagem(chave)
+     const url = await managerService.enviarArquivoMensagem(chave);
+
+     return url;
     }
 
 

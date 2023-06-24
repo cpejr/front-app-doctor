@@ -153,7 +153,6 @@ export const CriarFormularioEmergencia = async () => {
       id_emergencia,
       id_usuario
     ).then(() => {
-      console.log(JSON.stringify(res.data))
       return res.data;
     })
     .catch((error) => {
