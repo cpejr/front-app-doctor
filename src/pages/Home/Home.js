@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import YoutubePlayer from "react-native-youtube-iframe";
-import { ScrollView, Button, Alert, useWindowDimensions, Image, View } from "react-native";
+import { ScrollView, Button, Alert, useWindowDimensions, Image, View, Platform } from "react-native";
 import {
   Corpo,
   Card,
@@ -38,6 +38,7 @@ function Home({ navigation }) {
   const [imagens, setImagens] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [playing, setPlaying] = useState(false);
+  //const [alturaCard, setAlturaCard] = useState(false);
   const emaillogado =  AsyncStorage.getItem("@AirBnbApp:email");
   const onStateChange = useCallback((state) => {
     if (state === "ended") {
@@ -92,9 +93,23 @@ function Home({ navigation }) {
     setandoImagem();
   }, [width]);
 
-  const alturaVideo = height < 800 ? "50%" : "70%";
-  const larguraVideo = height < 800 ? "50%" : "80%";
-  const alturaCard = height < 800 ? "350px" : "320px";
+  // useEffect(() => {
+  //   verificaDispositivo();
+  // }, []);
+
+  // function verificaDispositivo(){
+  //   if (Platform === 'ios') {
+  //     altura = height < 800 ? "350px" : "320px"
+  //     setAlturaCard(altura)
+  //   } else {
+  //     altura = height < 800 ? "350px" : "320px"
+  //     setAlturaCard(altura)
+  //   }
+  // }
+
+  const alturaVideo = height < 800 ? "90%" : "70%";
+  const larguraVideo = height < 800 ? "80%" : "80%";
+  const alturaCard = height < 1000 ? "280px" : height < 1200 ? "550px" : "650px";
 
   //  const idVideo = videoId.split('v=')[1].substring(0, 11);
   
@@ -144,7 +159,7 @@ function Home({ navigation }) {
               <Card backgroundColor={Cores.branco} height={alturaCard}>
                 <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
                 <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
-                <YoutubePlayer
+                  <YoutubePlayer
                   height={alturaVideo}
                   width={larguraVideo}
                   play={playing}
