@@ -123,9 +123,9 @@ export const deletarConversasInativas = (id_usuario) =>
 
 export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
 
-export const enviarArquivoMensagem = (base64) =>
-  api.post(`/arquivofile/`, {
-    file: base64
+export const enviarArquivoMensagem = (chave) =>
+  api.post(`/arquivofileapp/`, {
+    chave: chave
   });
 
 export const requisicaoHome = () => api.get(`/homes/`);
