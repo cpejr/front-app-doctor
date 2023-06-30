@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   Dimensions,
 } from "react-native";
-import Form from "react-native-jsonschema-form";
+import Form from "../../../node_modules/react-native-jsonschema-form/src";
 import * as managerService from "../../services/ManagerService/managerService";
 import Icon from "react-native-vector-icons/Entypo";
 import { Cores } from "../../variaveis";

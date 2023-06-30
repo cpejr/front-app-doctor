@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native/index.js b/node_modules/react-native/index.js
-index d59ba34..1bc8c9d 100644
+index d59ba34..b3adb74 100644
 --- a/node_modules/react-native/index.js
 +++ b/node_modules/react-native/index.js
 @@ -435,32 +435,16 @@ module.exports = {
@@ -39,3 +39,17 @@ index d59ba34..1bc8c9d 100644
    },
  };
  
+@@ -713,12 +697,7 @@ if (__DEV__) {
+   Object.defineProperty(module.exports, 'Picker', {
+     configurable: true,
+     get() {
+-      invariant(
+-        false,
+-        'Picker has been removed from React Native. ' +
+-          "It can now be installed and imported from '@react-native-picker/picker' instead of 'react-native'. " +
+-          'See https://github.com/react-native-picker/picker',
+-      );
++      return require('@react-native-picker/picker') 
+     },
+   });
+   /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
