@@ -7,7 +7,7 @@ import {
   Switch,
   View,
   Linking,
-  Text
+  Text,
 } from "react-native";
 import Input from "../../styles/Input";
 import Botao from "../../styles/Botao";
@@ -15,7 +15,14 @@ import ConteudoBotao from "../../styles/ConteudoBotao";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import requisicaoErro from "../../utils/HttpErros";
 import { Picker } from "@react-native-picker/picker";
-import { ActivityIndicator, Colors, Checkbox, Button } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Colors,
+  Checkbox,
+  Button,
+} from "react-native-paper";
+import { CheckBox } from "react-native-elements";
+import { Platform } from "react-native";
 import {
   Body,
   CaixaTitulo,
@@ -39,8 +46,7 @@ import {
   Texto,
   CaixaTextoConvenioCuidador,
   CaixaParaDatadeNascimento,
-  DataNascimentoTexto, 
-  LgpdLink
+  DataNascimentoTexto,
 } from "./Styles";
 import InputMask from "../../styles/InputMask/InputMask";
 import { brParaPadrao } from "../../utils/date";
@@ -92,11 +98,14 @@ function Cadastro({ navigation }) {
     senhaConfirmada: false,
   };
 
+  const isIOS = Platform.OS === "ios";
+
   const [erro, setErro] = useState(false);
 
   const [estadoSelecionado, setEstadoSelecionado] = useState();
   const [carregando, setCarregando] = useState(false);
-  const Termos = "Confirmo que li e aceito os Termos e Condições descritos AQUI";
+  const Termos =
+    "Confirmo que li e aceito os Termos e Condições descritos AQUI";
   const [camposVazios, setCamposVazios] = useState({
     nome: false,
     telefone: false,
@@ -113,7 +122,9 @@ function Cadastro({ navigation }) {
     senha: false,
     senhaConfirmada: false,
   });
-  const [data_nascimentoFront, setData_nascimentoFront] = useState("Data de nascimento:");
+  const [data_nascimentoFront, setData_nascimentoFront] = useState(
+    "Data de nascimento:"
+  );
   const [dataPlaceHolder, setdataPlaceHolder] = useState(0);
 
   const { width, height } = useWindowDimensions();
@@ -122,18 +133,18 @@ function Cadastro({ navigation }) {
   const [cuidador, setCuidador] = useState(false);
 
   const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(2000, 0, 1));
 
   function transformaaodeDataem2digitos(num) {
-    return num.toString().padStart(2, '0');
+    return num.toString().padStart(2, "0");
   }
-  
+
   function formatacaodeData(date) {
     return [
       transformaaodeDataem2digitos(date.getDate()),
       transformaaodeDataem2digitos(date.getMonth() + 1),
       date.getFullYear(),
-    ].join('/');
+    ].join("/");
   }
 
   const [formularios, setFormularios] = useState([]);
@@ -407,7 +418,7 @@ function Cadastro({ navigation }) {
     <ScrollView>
       <Body>
         <CaixaTitulo marginTop={margemSuperior} width={larguraCaixaTitulo}>
-          <Logo source={logoGuilherme} width={110} height={110}/>
+          <Logo source={logoGuilherme} width={110} height={110} />
           <Titulo width={larguraTitulo}>Faça seu Cadastro</Titulo>
         </CaixaTitulo>
 
@@ -427,60 +438,86 @@ function Cadastro({ navigation }) {
             camposVazios={camposVazios.nome}
           />
           <CaixaInputsMesmaLinha>
-            <CaixaRotuloMesmaLinha>
-              <CaixaTituloInput>
-                <TituloInput>Telefone: </TituloInput>
-              </CaixaTituloInput>
-              <InputMask
-                placeholder="Telefone:"
-                keyboardType="numeric"
-                width="100%"
-                type={"cel-phone"}
-                options={{
-                  maskType: "BRL",
-                  withDDD: true,
-                  dddMask: "(99) ",
-                }}
-                textContentType="telephoneNumber"
-                dataDetectorTypes="phoneNumber"
-                label="Telefone"
-                includeRawValueInChangeText={true}
-                onChangeText={(maskedText, rawText) => {
-                  preenchendoDados("telefone", rawText);
-                }}
-                value={estado.telefone}
-                erro={erro.telefone}
-                camposVazios={camposVazios.telefone}
-              />
-              {erro.telefone && (
-                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-              )}
-            </CaixaRotuloMesmaLinha>
-            <CaixaRotuloMesmaLinha>
-              <CaixaTituloInput>
-                <TituloInput>Data de nascimento: </TituloInput>
-              </CaixaTituloInput>
-              <CaixaParaDatadeNascimento 
-              onPress={() => setDatePicker(true)}
+            <CaixaTituloInput>
+              <TituloInput>Telefone: </TituloInput>
+            </CaixaTituloInput>
+            <InputMask
+              placeholder="Telefone:"
+              keyboardType="numeric"
+              width="100%"
+              type={"cel-phone"}
+              options={{
+                maskType: "BRL",
+                withDDD: true,
+                dddMask: "(99) ",
+              }}
+              textContentType="telephoneNumber"
+              dataDetectorTypes="phoneNumber"
+              label="Telefone"
+              includeRawValueInChangeText={true}
+              onChangeText={(maskedText, rawText) => {
+                preenchendoDados("telefone", rawText);
+              }}
+              value={estado.telefone}
+              erro={erro.telefone}
+              camposVazios={camposVazios.telefone}
+            />
+            {erro.telefone && (
+              <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+            )}
+            <CaixaTituloInput>
+              <TituloInput>Data de nascimento: </TituloInput>
+            </CaixaTituloInput>
+
+            <CaixaParaDatadeNascimento
               value={dataPlaceHolder}
               width="100%"
               erro={erro.data_nascimento}
               camposVazios={camposVazios.data_nascimento}
-              >
-              {data_nascimentoFront}
-              {datePicker && (<Data
-                maximumDate={new Date()}
-                mode="date"
-                value={date}
-                onChange={(event, value) => {
-                  setDatePicker(false)
-                  preenchendoDados("data_nascimento", formatacaodeData(value));
-                  setDate(value)
-                  setdataPlaceHolder(1);
-                }}
-              />)}
-              </CaixaParaDatadeNascimento>
-            </CaixaRotuloMesmaLinha>
+              onPress={() => setDatePicker(true)}
+            >
+              {Platform.OS === "android" ? (
+                <>
+                  {data_nascimentoFront}
+                  {datePicker && (
+                    <Data
+                    maximumDate={new Date()}
+                    showIcon={false}
+                      mode="date"
+                      value={date}
+                      confirmBtnText="Confirmar"
+                      cancelBtnText="Cancelar"
+                      onChange={(event, value) => {
+                        setDatePicker(false);
+                        preenchendoDados(
+                          "data_nascimento",
+                          formatacaodeData(value)
+                        );
+                        setDate(value);
+                        setdataPlaceHolder(1);
+                      }}
+                    />
+                  )}
+                </>
+              ) : (
+                <Data
+                  format="DD/MM/YYYY"
+                  maximumDate={new Date()}
+                  showIcon={false}
+                  mode="date"
+                  value={date}
+                  confirmBtnText="Confirmar"
+                  cancelBtnText="Cancelar"
+                  onChange={(event, value) => {
+                    preenchendoDados(
+                      "data_nascimento",
+                      formatacaodeData(value)
+                    );
+                    setDate(value);
+                  }}
+                />
+              )}
+            </CaixaParaDatadeNascimento>
           </CaixaInputsMesmaLinha>
           <CaixaRotulo>
             <CaixaTituloInput>
@@ -781,21 +818,25 @@ function Cadastro({ navigation }) {
         </CaixaInputs>
 
         <CheckboxTexto>
-          <Checkbox
-            status={checked ? "checked" : "unchecked"}
+          {isIOS ? (
+            <CheckBox checked={checked} onPress={() => setChecked(!checked)} />
+          ) : (
+            <Checkbox
+              status={checked ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked(!checked);
+              }}
+            />
+          )}
+          <TouchableOpacity
             onPress={() => {
-              setChecked(!checked);
+              navigation.push("LGPD");
             }}
-          />
-          <Lgpd fontFamily="BarlowMedium">
-            {Termos.split(" ").map((palavra,index) =>{
-              if(palavra === "AQUI"){
-                return <LgpdLink fontFamily="BarlowMedium" onPress={() => Linking.openURL('https://www.drguilhermemarques.com/termos-e-condicoes')}>{palavra}</LgpdLink>
-              }else{
-                return <Lgpd fontFamily="BarlowMedium">{palavra} </Lgpd>
-              }
-            })}
-          </Lgpd>
+          >
+            <Lgpd fontFamily="BarlowMedium">
+              Li e concordo com os Termos de Uso
+            </Lgpd>
+          </TouchableOpacity>
         </CheckboxTexto>
 
         <CaixaBotoes>

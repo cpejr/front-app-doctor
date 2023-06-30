@@ -153,7 +153,6 @@ export const CriarFormularioEmergencia = async () => {
       id_emergencia,
       id_usuario
     ).then(() => {
-      console.log(JSON.stringify(res.data))
       return res.data;
     })
     .catch((error) => {
@@ -675,10 +674,10 @@ export const GetReceitaUrl = async (id) => {
   return url;
 };
 
-export const enviarArquivoMensagem = async (file) => {
+export const enviarArquivoMensagem = async (chave) => {
   let id;
   await requesterService
-    .enviarArquivoMensagem(file)
+    .enviarArquivoMensagem(chave)
     .then((res) => {
       Alert.alert("", "Arquivo PDF enviado com sucesso");
       id = res.data;

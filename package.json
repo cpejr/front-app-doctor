@@ -38,6 +38,7 @@
     "react-native": "0.70.8",
     "react-native-calendars": "^1.1299.0",
     "react-native-check-box": "^2.1.7",
+    "react-native-aws3": "^0.0.9",
     "react-native-date-picker": "^4.2.6",
     "react-native-datepicker": "^1.7.2",
     "react-native-elements": "^3.4.2",

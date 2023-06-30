@@ -9,7 +9,7 @@ export const Corpo = styled.View`
   padding-bottom: 50px;
 `;
 
-export const Card = styled.View`
+export const Card = styled.View`ß
   display: flex;
   align-items: center;
   width: 90%;
@@ -19,6 +19,7 @@ export const Card = styled.View`
   padding-bottom: 2%;
   background-color: ${(props) => props.backgroundColor};
   height: ${(props) => props.height};
+
 `;
 
 export const TituloCard = styled.Text`
@@ -33,7 +34,7 @@ export const TextoCard = styled.Text`
   font-size: 14px;
   margin-top: 4%;
   max-width: 80%;
-  margin-bottom: 1%;
+  margin-bottom: 4%;
 `;
 
 export const Video = styled.View`

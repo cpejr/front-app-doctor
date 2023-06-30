@@ -729,6 +729,9 @@ function AlterarDados({ navigation }) {
                 mode="date"
                 showIcon={false}
                 date={estado.data_nascimento}
+                locale="pt"
+                confirmBtnText="Confirmar"
+                cancelBtnText="Cancelar"
                 onDateChange={(data) => {
                   preenchendoDados("data_nascimento", data);
                   setCamposNulos({

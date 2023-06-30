@@ -183,6 +183,7 @@ export const PickerView = styled.View`
   }};
   border-width: 1.5px;
   overflow: hidden;
+  height: 45%;
 `;
 
 export const PickerSecretaria = styled(Picker)`
