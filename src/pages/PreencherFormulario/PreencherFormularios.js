@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Text, View, ScrollView, Alert } from "react-native";
-import Form from "react-native-jsonschema-form";
+import Form from "../../../node_modules/react-native-jsonschema-form/src";
 import {
   Corpo,
   HeaderFormularios,

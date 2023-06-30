@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+  C:\Program Files\nodejs\node.exe C:\Users\arthu\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
 
 PATH: 
-  C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Wolfram Research\WolframScript\;C:\MinGW\bin;C;C:\Program Files (x86)\dotnet\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\lucas\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\lucas\AppData\Local\Programs\Python\Python39\;C:\Users\lucas\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\lucas\AppData\Local\Programs\Python\Python37-32\;C:\Users\lucas\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm Community Edition 2021.2.2\bin;C:\Users\lucas\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;C:\Users\lucas\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\lucas\AppData\Roaming\npm;C:\Users\lucas\AppData\Local\Yarn\bin;C:\Users\lucas\AppData\Local\gitkraken\bin
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;%SYSTEMROOT%\System32\OpenSSH\;C:\Users\arthu\AppData\Local\Microsoft\WindowsApps;C:\Users\arthu\AppData\Local\GitHubDesktop\bin;C:\Users\arthu\AppData\Local\gitkraken\bin;C:\Users\arthu\AppData\Roaming\npm;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
 
 Yarn version: 
   1.22.19
@@ -14,16 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@expo/cli/-/cli-0.4.11.tgz: ESOCKETTIMEDOUT
-      at ClientRequest.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141517:19)
-      at Object.onceWrapper (node:events:627:28)
-      at ClientRequest.emit (node:events:513:28)
-      at TLSSocket.emitRequestTimeout (node:_http_client:839:9)
-      at Object.onceWrapper (node:events:627:28)
-      at TLSSocket.emit (node:events:525:35)
-      at TLSSocket.Socket._onTimeout (node:net:550:8)
-      at listOnTimeout (node:internal/timers:559:17)
-      at processTimers (node:internal/timers:502:7)
+  Error: EBUSY: resource busy or locked, rmdir 'F:\NEW DATA\ORION\DoctorApp\front-app-doctor\node_modules\react-native-web-ui-components\node_modules'
 
 npm manifest: 
   {
@@ -35,11 +26,12 @@ npm manifest:
       "android": "expo start --android",
       "ios": "expo start --ios",
       "web": "expo start --web",
-      "eject": "expo eject"
+      "eject": "expo eject",
+      "postinstall": "patch-package"
     },
     "dependencies": {
       "@react-native-async-storage/async-storage": "~1.17.3",
-      "@react-native-community/datetimepicker": "^6.7.1",
+      "@react-native-community/datetimepicker": "6.5.2",
       "@react-native-picker/picker": "2.4.8",
       "@react-navigation/bottom-tabs": "^6.5.3",
       "@react-navigation/native": "^6.0.8",
@@ -49,6 +41,7 @@ npm manifest:
       "deprecated-react-native-prop-types": "^4.0.0",
       "expo": "^47.0.0",
       "expo-cli": "^6.0.6",
+      "expo-constants": "~14.0.2",
       "expo-device": "~5.0.0",
       "expo-document-picker": "^11.0.1",
       "expo-file-system": "^15.1.1",
@@ -59,10 +52,10 @@ npm manifest:
       "global": "^4.4.0",
       "lodash": "^4.17.21",
       "lottie-react-native": "5.1.4",
-      "patch-package": "^6.5.0",
+      "patch-package": "^7.0.0",
       "react": "18.1.0",
       "react-dom": "18.1.0",
-      "react-native": "0.70.5",
+      "react-native": "0.70.8",
       "react-native-date-picker": "^4.2.6",
       "react-native-datepicker": "^1.7.2",
       "react-native-elements": "^3.4.2",
@@ -1831,19 +1824,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@ide/backoff/-/backoff-1.0.0.tgz#466842c25bd4a4833e0642fab41ccff064010176"
     integrity sha512-F0YfUDjvT+Mtt/R4xdl2X0EYCHMMiJqNLdxHD++jDT5ydEFIyqbCHh51Qx2E211dgZprPKhV7sHmnXKpLuvc5g==
   
-  "@jest/create-cache-key-function@^29.0.3":
-    version "29.4.3"
-    resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-29.4.3.tgz#ea37769f69523019d81ee089a25a62550f209eb7"
-    integrity sha512-AJVFQTTy6jnZAQiAZrdOaTAPzJUrvAE/4IMe+Foav6WPhypFszqg7a4lOTyuzYQEEiT5RSrGYg9IY+/ivxiyXw==
+  "@jest/create-cache-key-function@^27.0.1":
+    version "27.5.1"
+    resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.5.1.tgz#7448fae15602ea95c828f5eceed35c202a820b31"
+    integrity sha512-dmH1yW+makpTSURTy8VzdUwFnfQh1G8R+DxO2Ho2FFmBbKFEVm+3jWdvFhE2VqB/LATCTokkP0dotjyQyw5/AQ==
     dependencies:
-      "@jest/types" "^29.4.3"
-  
-  "@jest/schemas@^29.4.3":
-    version "29.4.3"
-    resolved "https://registry.yarnpkg.com/@jest/schemas/-/schemas-29.4.3.tgz#39cf1b8469afc40b6f5a2baaa146e332c4151788"
-    integrity sha512-VLYKXQmtmuEz6IxJsrZwzG9NvtkQsWNnWMsKxqWNu3+CnfzJQhp0WDDKWLVV9hLKr0l3SLLFRqcYHjhtyuDVxg==
-    dependencies:
-      "@sinclair/typebox" "^0.25.16"
+      "@jest/types" "^27.5.1"
   
   "@jest/types@^26.6.2":
     version "26.6.2"
@@ -1865,18 +1851,6 @@ Lockfile:
       "@types/istanbul-reports" "^3.0.0"
       "@types/node" "*"
       "@types/yargs" "^16.0.0"
-      chalk "^4.0.0"
-  
-  "@jest/types@^29.4.3":
-    version "29.4.3"
-    resolved "https://registry.yarnpkg.com/@jest/types/-/types-29.4.3.tgz#9069145f4ef09adf10cec1b2901b2d390031431f"
-    integrity sha512-bPYfw8V65v17m2Od1cv44FH+SiKW7w2Xu7trhcdTLUmSv85rfKsP+qXSjO4KGJr4dtPSzl/gvslZBXctf1qGEA==
-    dependencies:
-      "@jest/schemas" "^29.4.3"
-      "@types/istanbul-lib-coverage" "^2.0.0"
-      "@types/istanbul-reports" "^3.0.0"
-      "@types/node" "*"
-      "@types/yargs" "^17.0.8"
       chalk "^4.0.0"
   
   "@jridgewell/gen-mapping@^0.1.0":
@@ -2004,7 +1978,7 @@ Lockfile:
     dependencies:
       serve-static "^1.13.1"
   
-  "@react-native-community/cli-doctor@^9.2.1":
+  "@react-native-community/cli-doctor@^9.3.0":
     version "9.3.0"
     resolved "https://registry.yarnpkg.com/@react-native-community/cli-doctor/-/cli-doctor-9.3.0.tgz#8817a3fd564453467def5b5bc8aecdc4205eff50"
     integrity sha512-/fiuG2eDGC2/OrXMOWI5ifq4X1gdYTQhvW2m0TT5Lk1LuFiZsbTCp1lR+XILKekuTvmYNjEGdVpeDpdIWlXdEA==
@@ -2026,7 +2000,7 @@ Lockfile:
       sudo-prompt "^9.0.0"
       wcwidth "^1.0.1"
   
-  "@react-native-community/cli-hermes@^9.2.1":
+  "@react-native-community/cli-hermes@^9.3.1":
     version "9.3.1"
     resolved "https://registry.yarnpkg.com/@react-native-community/cli-hermes/-/cli-hermes-9.3.1.tgz#569d27c1effd684ba451ad4614e29a99228cec49"
     integrity sha512-Mq4PK8m5YqIdaVq5IdRfp4qK09aVO+aiCtd6vjzjNUgk1+1X5cgUqV6L65h4N+TFJYJHcp2AnB+ik1FAYXvYPQ==
@@ -2037,20 +2011,7 @@ Lockfile:
       hermes-profile-transformer "^0.0.6"
       ip "^1.1.5"
   
-  "@react-native-community/cli-platform-android@9.2.1":
-    version "9.2.1"
-    resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-9.2.1.tgz#cd73cb6bbaeb478cafbed10bd12dfc01b484d488"
-    integrity sha512-VamCZ8nido3Q3Orhj6pBIx48itORNPLJ7iTfy3nucD1qISEDih3DOzCaQCtmqdEBgUkNkNl0O+cKgq5A3th3Zg==
-    dependencies:
-      "@react-native-community/cli-tools" "^9.2.1"
-      chalk "^4.1.2"
-      execa "^1.0.0"
-      fs-extra "^8.1.0"
-      glob "^7.1.3"
-      logkitty "^0.7.1"
-      slash "^3.0.0"
-  
-  "@react-native-community/cli-platform-android@^9.3.1":
+  "@react-native-community/cli-platform-android@9.3.1", "@react-native-community/cli-platform-android@^9.3.1":
     version "9.3.1"
     resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-9.3.1.tgz#378cd72249653cc74672094400657139f21bafb8"
     integrity sha512-m0bQ6Twewl7OEZoVf79I2GZmsDqh+Gh0bxfxWgwxobsKDxLx8/RNItAo1lVtTCgzuCR75cX4EEO8idIF9jYhew==
@@ -2063,18 +2024,7 @@ Lockfile:
       logkitty "^0.7.1"
       slash "^3.0.0"
   
-  "@react-native-community/cli-platform-ios@9.2.1":
-    version "9.2.1"
-    resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-9.2.1.tgz#d90740472216ffae5527dfc5f49063ede18a621f"
-    integrity sha512-dEgvkI6CFgPk3vs8IOR0toKVUjIFwe4AsXFvWWJL5qhrIzW9E5Owi0zPkSvzXsMlfYMbVX0COfVIK539ZxguSg==
-    dependencies:
-      "@react-native-community/cli-tools" "^9.2.1"
-      chalk "^4.1.2"
-      execa "^1.0.0"
-      glob "^7.1.3"
-      ora "^5.4.1"
-  
-  "@react-native-community/cli-platform-ios@^9.3.0":
+  "@react-native-community/cli-platform-ios@9.3.0", "@react-native-community/cli-platform-ios@^9.3.0":
     version "9.3.0"
     resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-9.3.0.tgz#45abde2a395fddd7cf71e8b746c1dc1ee2260f9a"
     integrity sha512-nihTX53BhF2Q8p4B67oG3RGe1XwggoGBrMb6vXdcu2aN0WeXJOXdBLgR900DAA1O8g7oy1Sudu6we+JsVTKnjw==
@@ -2138,16 +2088,16 @@ Lockfile:
     dependencies:
       joi "^17.2.1"
   
-  "@react-native-community/cli@9.2.1":
-    version "9.2.1"
-    resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-9.2.1.tgz#15cc32531fc323d4232d57b1f2d7c571816305ac"
-    integrity sha512-feMYS5WXXKF4TSWnCXozHxtWq36smyhGaENXlkiRESfYZ1mnCUlPfOanNCAvNvBqdyh9d4o0HxhYKX1g9l6DCQ==
+  "@react-native-community/cli@9.3.2":
+    version "9.3.2"
+    resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-9.3.2.tgz#81761880af00c1894d85380d8c9a358659865204"
+    integrity sha512-IAW4X0vmX/xozNpp/JVZaX7MrC85KV0OP2DF4o7lNGOfpUhzJAEWqTfkxFYS+VsRjZHDve4wSTiGIuXwE7FG1w==
     dependencies:
       "@react-native-community/cli-clean" "^9.2.1"
       "@react-native-community/cli-config" "^9.2.1"
       "@react-native-community/cli-debugger-ui" "^9.0.0"
-      "@react-native-community/cli-doctor" "^9.2.1"
-      "@react-native-community/cli-hermes" "^9.2.1"
+      "@react-native-community/cli-doctor" "^9.3.0"
+      "@react-native-community/cli-hermes" "^9.3.1"
       "@react-native-community/cli-plugin-metro" "^9.2.1"
       "@react-native-community/cli-server-api" "^9.2.1"
       "@react-native-community/cli-tools" "^9.2.1"
@@ -2161,10 +2111,10 @@ Lockfile:
       prompts "^2.4.0"
       semver "^6.3.0"
   
-  "@react-native-community/datetimepicker@^6.7.1":
-    version "6.7.5"
-    resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.7.5.tgz#214796f2d131b6af9cb9d4dea69d4a1981fa2236"
-    integrity sha512-E2Zh6mwvZ6CFEMKP++rdxxjJiB45fYPpdZhJwdZ2vUVwqovqu1cQRDLZmz4XrcHSyuacgR4WUnkYFf0F2nnNIg==
+  "@react-native-community/datetimepicker@6.5.2":
+    version "6.5.2"
+    resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.5.2.tgz#d2c0df9f2c6acce39f7e957743dd811547656098"
+    integrity sha512-9K3zhIH1zmpIGSG3GJTWLIoAx+sR4kJ1wqpGKMwWJ5IYXBsFxMdvGw023t0pz2CQStlnNbbNhnZY/HMYFBCsCg==
     dependencies:
       invariant "^2.2.4"
   
@@ -2215,7 +2165,7 @@ Lockfile:
       "@react-navigation/routers" "^6.1.6"
       escape-string-regexp "^4.0.0"
       nanoid "^3.1.23"
-      query-string "^7.0.0"
+      query-string "^7.1.3"
       react-is "^16.13.0"
       use-latest-callback "^0.1.5"
   
@@ -2273,11 +2223,6 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
     integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
-  
-  "@sinclair/typebox@^0.25.16":
-    version "0.25.23"
-    resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.25.23.tgz#1c15b0d2b872d89cc0f47c7243eacb447df8b8bd"
-    integrity sha512-VEB8ygeP42CFLWyAJhN5OklpxUliqdNEUcXb4xZ/CINqtYGTjL5ukluKdKzQ0iWdUxyQ7B0539PAUhHKrCNWSQ==
   
   "@sindresorhus/is@^0.14.0":
     version "0.14.0"
@@ -2580,13 +2525,6 @@ Lockfile:
     version "16.0.5"
     resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-16.0.5.tgz#12cc86393985735a283e387936398c2f9e5f88e3"
     integrity sha512-AxO/ADJOBFJScHbWhq2xAhlWP24rY4aCEG/NFaMvbT3X2MgRsLjhjQwsn0Zi5zn0LG9jUhCCZMeX9Dkuw6k+vQ==
-    dependencies:
-      "@types/yargs-parser" "*"
-  
-  "@types/yargs@^17.0.8":
-    version "17.0.22"
-    resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-17.0.22.tgz#7dd37697691b5f17d020f3c63e7a45971ff71e9a"
-    integrity sha512-pet5WJ9U8yPVRhkwuEIp5ktAeAqRZOq4UdAyWLWzxbtpyXnzbtLdKiXAjJzi/KLmPGS9wk86lUFWZFN6sISo4g==
     dependencies:
       "@types/yargs-parser" "*"
   
@@ -3651,7 +3589,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
     integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
   
-  ci-info@^3.2.0, ci-info@^3.3.0:
+  ci-info@^3.2.0, ci-info@^3.3.0, ci-info@^3.7.0:
     version "3.8.0"
     resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.8.0.tgz#81408265a5380c929f0bc665d62256628ce9ef91"
     integrity sha512-eXTggHWSooYhq49F2opQhuHWgzucfF2YgODK4e1566GQs5BIfP30B0oenwBJHfWxAs2fyPB1s7Mg949zLf61Yw==
@@ -4287,11 +4225,6 @@ Lockfile:
     integrity sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==
   
   decode-uri-component@^0.2.0, decode-uri-component@^0.2.2:
-    version "0.2.2"
-    resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
-    integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
-  
-  decode-uri-component@^0.2.2:
     version "0.2.2"
     resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
     integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
@@ -6122,13 +6055,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.2.7.tgz#3bc2a85ea742d9e36205dcacdd72ca1fdc51b055"
     integrity sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==
   
-  is-ci@^2.0.0:
-    version "2.0.0"
-    resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-2.0.0.tgz#6bc6334181810e04b5c22b3d589fdca55026404c"
-    integrity sha512-YfJT7rkpQB0updsdHLGWrvhBJfcfzNNawYDNIyQXJz0IViGf75O8EBPKSdvw2rF+LGCsX4FZ8tcr3b19LcZq4w==
-    dependencies:
-      ci-info "^2.0.0"
-  
   is-core-module@^2.9.0:
     version "2.11.0"
     resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.11.0.tgz#ad4cb3e3863e814523c96f3f58d26cc570ff0144"
@@ -7385,9 +7311,9 @@ Lockfile:
       yallist "^4.0.0"
   
   minipass@^4.0.0:
-    version "4.0.3"
-    resolved "https://registry.yarnpkg.com/minipass/-/minipass-4.0.3.tgz#00bfbaf1e16e35e804f4aa31a7c1f6b8d9f0ee72"
-    integrity sha512-OW2r4sQ0sI+z5ckEt5c1Tri4xTgZwYDxpE54eqWlQloQRoWtXjqt9udJ5Z4dSv7wK+nfFI7FRXyCpBSft+gpFw==
+    version "4.2.5"
+    resolved "https://registry.yarnpkg.com/minipass/-/minipass-4.2.5.tgz#9e0e5256f1e3513f8c34691dd68549e85b2c8ceb"
+    integrity sha512-+yQl7SX3bIT83Lhb4BVorMAHVuqsskxRdlmO9kTpyukp8vsm2Sn/fUOV9xlnG8/a5JsypJzap21lz/y3FBMJ8Q==
   
   minizlib@^2.1.1:
     version "2.1.2"
@@ -8020,17 +7946,17 @@ Lockfile:
       ansi-escapes "^3.1.0"
       cross-spawn "^6.0.5"
   
-  patch-package@^6.5.0:
-    version "6.5.1"
-    resolved "https://registry.yarnpkg.com/patch-package/-/patch-package-6.5.1.tgz#3e5d00c16997e6160291fee06a521c42ac99b621"
-    integrity sha512-I/4Zsalfhc6bphmJTlrLoOcAF87jcxko4q0qsv4bGcurbr8IskEOtdnt9iCmsQVGL1B+iUhSQqweyTLJfCF9rA==
+  patch-package@^7.0.0:
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/patch-package/-/patch-package-7.0.0.tgz#5c646b6b4b4bf37e5184a6950777b21dea6bb66e"
+    integrity sha512-eYunHbnnB2ghjTNc5iL1Uo7TsGMuXk0vibX3RFcE/CdVdXzmdbMsG/4K4IgoSuIkLTI5oHrMQk4+NkFqSed0BQ==
     dependencies:
       "@yarnpkg/lockfile" "^1.1.0"
       chalk "^4.1.2"
-      cross-spawn "^6.0.5"
+      ci-info "^3.7.0"
+      cross-spawn "^7.0.3"
       find-yarn-workspace-root "^2.0.0"
       fs-extra "^9.0.0"
-      is-ci "^2.0.0"
       klaw-sync "^6.0.0"
       minimist "^1.2.6"
       open "^7.4.2"
@@ -8038,7 +7964,7 @@ Lockfile:
       semver "^5.6.0"
       slash "^2.0.0"
       tmp "^0.0.33"
-      yaml "^1.10.2"
+      yaml "^2.2.2"
   
   path-browserify@^1.0.0:
     version "1.0.1"
@@ -8491,7 +8417,7 @@ Lockfile:
     dependencies:
       asap "~2.0.3"
   
-  promise@^8.0.3:
+  promise@^8.3.0:
     version "8.3.0"
     resolved "https://registry.yarnpkg.com/promise/-/promise-8.3.0.tgz#8cb333d1edeb61ef23869fbb8a4ea0279ab60e0a"
     integrity sha512-rZPNPKTOYVNEEKFaq1HqTgOwZD+4/YHS5ukLzQCypkj+OkYx7iv0mA91lJlpPPZ8vMau3IIGj5Qlwrx+8iiSmg==
@@ -8899,15 +8825,15 @@ Lockfile:
     dependencies:
       events "^3.2.0"
   
-  react-native@0.70.5:
-    version "0.70.5"
-    resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.70.5.tgz#f60540b21d338891086e0a834e331c124dd1f55c"
-    integrity sha512-5NZM80LC3L+TIgQX/09yiyy48S73wMgpIgN5cCv3XTMR394+KpDI3rBZGH4aIgWWuwijz31YYVF5504+9n2Zfw==
+  react-native@0.70.8:
+    version "0.70.8"
+    resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.70.8.tgz#aa9aae8e6291589908db74fe69e0ec1d9a9c5490"
+    integrity sha512-O3ONJed9W/VEEVWsbZcwyMDhnEvw7v9l9enqWqgbSGLzHfh6HeIGMCNmjz+kRsHnC7AiF47fupWfgYX7hNnhoQ==
     dependencies:
-      "@jest/create-cache-key-function" "^29.0.3"
-      "@react-native-community/cli" "9.2.1"
-      "@react-native-community/cli-platform-android" "9.2.1"
-      "@react-native-community/cli-platform-ios" "9.2.1"
+      "@jest/create-cache-key-function" "^27.0.1"
+      "@react-native-community/cli" "9.3.2"
+      "@react-native-community/cli-platform-android" "9.3.1"
+      "@react-native-community/cli-platform-ios" "9.3.0"
       "@react-native/assets" "1.0.0"
       "@react-native/normalize-color" "2.0.0"
       "@react-native/polyfills" "2.0.0"
@@ -8924,7 +8850,7 @@ Lockfile:
       mkdirp "^0.5.1"
       nullthrows "^1.1.1"
       pretty-format "^26.5.2"
-      promise "^8.0.3"
+      promise "^8.3.0"
       react-devtools-core "4.24.0"
       react-native-codegen "^0.70.6"
       react-native-gradle-plugin "^0.70.3"
@@ -10045,7 +9971,7 @@ Lockfile:
     dependencies:
       chownr "^2.0.0"
       fs-minipass "^2.0.0"
-      minipass "^3.0.0"
+      minipass "^4.0.0"
       minizlib "^2.1.1"
       mkdirp "^1.0.3"
       yallist "^4.0.0"
@@ -10956,6 +10882,11 @@ Lockfile:
     version "1.10.2"
     resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
     integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
+  
+  yaml@^2.2.2:
+    version "2.3.1"
+    resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.3.1.tgz#02fe0975d23cd441242aa7204e09fc28ac2ac33b"
+    integrity sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==
   
   yargs-parser@^18.1.2:
     version "18.1.3"
