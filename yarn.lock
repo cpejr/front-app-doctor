@@ -4821,22 +4821,17 @@ expo-device@~5.0.0:
   dependencies:
     ua-parser-js "^0.7.19"
 
-expo-document-picker@^11.0.1:
-  version "11.2.2"
-  resolved "https://registry.yarnpkg.com/expo-document-picker/-/expo-document-picker-11.2.2.tgz#707ff994a1c0b38505e12b2c9fe6b67715e6f41c"
-  integrity sha512-EeonRKxkK9E20LEAh93IvlwFjNkUCJKnhBEama9PmIDYWW7RyANZ8eP9C2PupThTDbivzRDNp7Ec7dIeyDAWjw==
+expo-document-picker@~11.0.1:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/expo-document-picker/-/expo-document-picker-11.0.1.tgz#1655e1cfacc20fe70ba81e310365048804bcf803"
+  integrity sha512-mLpk5a6yP/wK8DfGMQj9YoPlxiK87Vhxo6S+NnQgKCove8z+cJdkjEcXCpSsH6LXe1HJBDFt5LkwjhSff7bhMg==
+  dependencies:
+    uuid "^3.3.2"
 
 expo-error-recovery@~4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-4.0.1.tgz#3e3333e134c992c234539d3773fe78915c883755"
   integrity sha512-wceptnRX+N3qCSVTNbIchUFu3GmY30onRH5L66OF8HMLpAIQfrZMLxJfz7SAMJTcr3jxsJ11vSa2l2RaPKgHsQ==
-
-expo-file-system@^15.1.1:
-  version "15.2.2"
-  resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-15.2.2.tgz#a1ddf8aabf794f93888a146c4f5187e2004683a3"
-  integrity sha512-LFkOLcWwlmnjkURxZ3/0ukS35OswX8iuQknLHRHeyk8mUA8fpRPPelD/a1lS+yclqfqavMJmTXVKM1Nsq5XVMA==
-  dependencies:
-    uuid "^3.4.0"
 
 expo-file-system@~15.1.0, expo-file-system@~15.1.1:
   version "15.1.1"
@@ -8745,10 +8740,10 @@ react-native-aws3@^0.0.9:
     buffer "^4.5.1"
     crypto-js "^3.1.6"
 
-react-native-calendars@^1.21.0:
-  version "1.1293.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1293.0.tgz#3b06a7cbc050a074ec876a5accc90e49e9db84a1"
-  integrity sha512-/wWBlNOooHAVTCDhZptdeZEa1+DTUW1E3cI9auEPblJ56t1TXqe0gVK1UTchPDsA5d2eIXxdhTThpFD846yq7g==
+react-native-calendars@^1.1299.0:
+  version "1.1299.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1299.0.tgz#aef65562046c5dc44bedcae9bd4577dba5d74249"
+  integrity sha512-b59svUAIDMPy5mYpwdyBFkyv3Fne897O7TB99AjALKs5s3ciR3cuH5GGMbD6e+M79r4cY78xiauZH3eCS2u1uw==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     lodash "^4.17.15"
