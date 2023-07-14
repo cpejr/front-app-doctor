@@ -69,7 +69,7 @@ function SobreMim({ navigation }) {
       <View style={{ alignItems: "center" }}>
         <CaixaBotao>
           <BotaoVoltar onPress={() => navigation.navigate("Home")}>
-            <Icon
+            <IconeVoltar
               name="arrow-left"
               size={40}
               color={Cores.lilas[1]}
