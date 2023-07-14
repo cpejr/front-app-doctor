@@ -68,7 +68,7 @@ function ExameNormal({ navigation }) {
                     name="arrow-back-circle-outline" 
                     size={tamanhoIconeSeta} 
                     color="green"
-                    onPress={() => navigation.navigate("Exames")}/>
+                    onPress={() => navigation.navigate("ListaExames")}/>
               <Titulo>Marcar Exame</Titulo>
             </CaixaTextoCima>
 
