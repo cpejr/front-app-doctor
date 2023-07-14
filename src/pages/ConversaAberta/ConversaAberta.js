@@ -54,6 +54,7 @@ import moverArray from "../../utils/moverArray";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
+import { sleep } from "../../utils/sleep";
 import { Titulo } from "../AlterarDados/Styles";
 import { cep, telefone } from "../../utils/masks";
 import { RNS3 } from "react-native-aws3"
@@ -89,21 +90,61 @@ function ConversaAberta({ navigation, route, socket }) {
       useState(null);
 
     const [nomeArquivo, setNomeArquivo] = useState("");
-
+    var [frequencia, setfrequencia] = useState();
     const openMenu = () => setVisivel(true);
 
     const closeMenu = () => setVisivel(false);
 
-    function deixandoModaisResponsivos() {
-      if (width > height) {
-        setHeightModalUpdateFoto("85%");
-        setMarginTopModais("0%");
-        setTablet(true);
-      } else {
-        setHeightModalUpdateFoto("60%");
-        setMarginTopModais("0%");
-        setTablet(false);
-      }
+  useEffect(() => {
+    const backAction = () => {
+      startTemporizador(false, frequencia);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  function deixandoModaisResponsivos() {
+    if (width > height) {
+      setHeightModalUpdateFoto("85%");
+      setMarginTopModais("0%");
+      setTablet(true);
+    } else {
+      setHeightModalUpdateFoto("60%");
+      setMarginTopModais("0%");
+      setTablet(false);
+    }
+  }
+
+  useEffect(() => {
+    deixandoModaisResponsivos();
+  }, [width, height]);
+
+  useEffect(() => {
+    (async () => {
+      const StatusDaGaleria =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setPermissaoParaAbrirAGaleria(StatusDaGaleria.status === "granted");
+    })();
+  }, []);
+
+  const selecionaImagem = async () => {
+    let resultado = await ImagePicker.launchImageLibraryAsync({
+      base64: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+      //ImagePickerAsset: {fileSize}
+    });
+
+    if (!resultado.cancelled) {
+      setImagem(resultado);
+      setImagem64(`data:image/png;base64,${resultado.base64}`);
     }
 
     useEffect(() => {
@@ -258,23 +299,32 @@ function ConversaAberta({ navigation, route, socket }) {
         );
       }
     }
-    var frequencia;
-
-    function startTemporizador() {
-      frequencia = setInterval(function () {
-        getMensagens(true);
-      }, 5000);
+  }
+  
+  function startTemporizador(start, frequenciaLida) {
+    if(start == true){frequencia = (setInterval(function () {
+      getMensagens(true)
+    }, 5000) )}
+    if(start == false){
+      clearInterval(frequenciaLida) 
+      SairdaPagina();
     }
-    useEffect(() => {
-      startTemporizador();
-    }, []);
-    useEffect(() => {
-      componenteEstaMontadoRef.current = true;
+  }
+
+  function SairdaPagina(){
+    navigation.navigate("BarraLateral");
+  }
+
+  useEffect(() => {
+    startTemporizador(true, 0);
+  }, []);
+  useEffect(() => {
+    componenteEstaMontadoRef.current = true;
 
       getMensagens(componenteEstaMontadoRef.current);
 
-      return () => (componenteEstaMontadoRef.current = false);
-    }, [conversaSelecionada, usuarioId]);
+    return () => (componenteEstaMontadoRef.current = false, clearInterval(frequencia));
+  }, [conversaSelecionada, usuarioId]);
 
     useEffect(() => {
       inputMensagemConteudoRef?.current?.focus();
@@ -502,7 +552,7 @@ function ConversaAberta({ navigation, route, socket }) {
               name="arrow-left"
               size={32}
               color={Cores.azul}
-              onPress={() => navigation.push("BarraLateral")}
+              onPress={() => startTemporizador(false, frequencia)}
             />
             {conversaSelecionada?.conversaCom?.imagem ? (
               <ImagemUsuario
