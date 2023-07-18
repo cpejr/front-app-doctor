@@ -572,7 +572,7 @@ function ConversaAberta({ navigation, route, socket }) {
 
                 </TextoMensagem>) : (
                   <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-                    {conversaSelecionada?.conversaCom?.nome}
+                    {conversaSelecionada.conversaCom.nome}
                   </TextoMensagem>)}
             </CaixaTexto>
           </HeaderConversaAberta>
