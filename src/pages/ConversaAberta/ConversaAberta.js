@@ -554,7 +554,7 @@ function ConversaAberta({ navigation, route, socket }) {
               color={Cores.azul}
               onPress={() => startTemporizador(false, frequencia)}
             />
-            {conversaSelecionada?.conversaCom?.imagem ? (
+            {conversaSelecionada.conversaCom.imagem ? (
               <ImagemUsuario
                 border-radius="3px"
                 source={{ uri: conversaSelecionada.conversaCom.imagem }}
