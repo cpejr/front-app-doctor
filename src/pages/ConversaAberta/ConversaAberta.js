@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   View,
-  Linking
+  Linking,
+  BackHandler
 } from "react-native";
 import {
   ArquivoSelecionado,
@@ -94,7 +95,19 @@ function ConversaAberta({ navigation, route, socket }) {
     const openMenu = () => setVisivel(true);
 
     const closeMenu = () => setVisivel(false);
-
+    const {
+      usuarioId,
+      conversaSelecionada,
+      setConversaSelecionada,
+      imagemPerfilPadrão,
+      conversas,
+      setConversas,
+      mensagens,
+      setMensagens,
+    } = useContext(ChatContext);
+    const inputMensagemConteudoRef = useRef(null);
+    const componenteEstaMontadoRef = useRef(null);
+    const scrollRef = useRef(null);
   useEffect(() => {
     const backAction = () => {
       startTemporizador(false, frequencia);
@@ -132,20 +145,6 @@ function ConversaAberta({ navigation, route, socket }) {
       setPermissaoParaAbrirAGaleria(StatusDaGaleria.status === "granted");
     })();
   }, []);
-
-  const selecionaImagem = async () => {
-    let resultado = await ImagePicker.launchImageLibraryAsync({
-      base64: true,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 1,
-      //ImagePickerAsset: {fileSize}
-    });
-
-    if (!resultado.cancelled) {
-      setImagem(resultado);
-      setImagem64(`data:image/png;base64,${resultado.base64}`);
-    }
 
     useEffect(() => {
       deixandoModaisResponsivos();
@@ -240,19 +239,9 @@ function ConversaAberta({ navigation, route, socket }) {
       setConfirmouTudo(false);
     }
 
-    const {
-      usuarioId,
-      conversaSelecionada,
-      setConversaSelecionada,
-      imagemPerfilPadrão,
-      conversas,
-      setConversas,
-      mensagens,
-      setMensagens,
-    } = useContext(ChatContext);
-    const componenteEstaMontadoRef = useRef(null);
-    const scrollRef = useRef(null);
-    const inputMensagemConteudoRef = useRef(null);
+    
+    
+    
 
     async function getDadosUsuarioAtual(componenteEstaMontadoRef) {
       const { dadosUsuario } = await managerService.GetDadosUsuario();
@@ -299,7 +288,6 @@ function ConversaAberta({ navigation, route, socket }) {
         );
       }
     }
-  }
   
   function startTemporizador(start, frequenciaLida) {
     if(start == true){frequencia = (setInterval(function () {
@@ -988,6 +976,7 @@ function ConversaAberta({ navigation, route, socket }) {
                           width="auto"
                           fontSize="20px"
                           color={Cores.azul}
+                          onPress={() => selecionaDocumento()}
                         >
                           {nomeArquivo}
                         </ConteudoBotao>
