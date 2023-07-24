@@ -404,7 +404,7 @@ function BarraLateral({ navigation }) {
               setNomeSecretariaSelecionada("");
             }}
           >
-            <CaixaExterna width={width} height={height}>
+            <CaixaExterna width={width+`px`} height={height+`px`}>
               <CaixaModalGrande height={alturaModal}>
                 <CaixaFechar>
                   <TouchableOpacity
