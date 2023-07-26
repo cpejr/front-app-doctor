@@ -40,6 +40,7 @@
     "react-native-aws3": "^0.0.9",
     "react-native-calendars": "^1.1299.0",
     "react-native-check-box": "^2.1.7",
+    "react-native-dropdown-select-list": "^2.0.4",
     "react-native-elements": "^3.4.2",
     "react-native-jsonschema-form": "https://github.com/ArthurPiazz/react-native-jsonschema-form",
     "react-native-masked-text": "^1.13.0",

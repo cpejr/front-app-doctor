@@ -52,6 +52,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { Alert } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { sleep } from "../../utils/sleep";
+import {SelectList} from "react-native-dropdown-select-list"
 
 const camposVaziosReferencia = {
   id_usuario: false,
@@ -62,6 +63,7 @@ const estadoIncial = {
 const BACK_END_URL = "http://127.0.0.1:3333";
 function BarraLateral({ navigation }) {
   const [busca, setBusca] = useState("");
+  const [selected, setSelected] = useState("");
   const lowerBusca = busca.toLowerCase();
   const onChangeBusca = (busca) => setBusca(busca);
   const [carregando, setCarregando] = useState(true);
@@ -84,7 +86,7 @@ function BarraLateral({ navigation }) {
   const [pickerValue, setPickerValue] = useState(null);
   const { usuarioId, conversas, setConversas, setConversaSelecionada } =
     useContext(ChatContext);
-
+  
   const socket = useRef(null);
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
@@ -419,32 +421,22 @@ function BarraLateral({ navigation }) {
                   <CaixaTituloModal>
                     <TituloModal>Iniciar uma nova Conversa</TituloModal>
                   </CaixaTituloModal>
-                  <PickerView camposVazios={campoVazioModal}>
-                    <PickerSecretaria
-                      selectedValue={nomeSecretariaSelecionada}
-                      onValueChange={(itemValue, itemPosition) => {
-                        setNomeSecretariaSelecionada(itemValue);
+                    <SelectList
+                      boxStyles={{position:`relative`,borderRadius:0}}
+                      dropdownStyles={{flexGrow:0,height:height*0.09}}
+                      placeholder="Selecione um(a) Secretário(a)"
+                      searchPlaceholder="Nome"
+                      data={usuario.map((secretaria,index) => {
+                        return {key: index,value: secretaria.nome}
+                      })}
+                      setSelected={(itemValue) => {
+                        setNomeSecretariaSelecionada(usuario[itemValue].nome);
                         setCampoVazioModal(false);
-                        setSecretariaSelecionada(usuario[itemPosition - 1]);
+                        setSecretariaSelecionada(usuario[itemValue]);
                       }}
+                      save="key"
                     >
-                      <Picker.Item
-                        style={{ fontSize: 15, color: "grey" }}
-                        value=" "
-                        label={"Selecione um(a) Secretário(a)"}
-                        enabled={false}
-                      />
-
-                      {usuario.map((value, index) => (
-                        <Picker.Item
-                          key={index}
-                          style={{ fontSize: 15, color: "black" }}
-                          value={value.nome}
-                          label={value.nome}
-                        />
-                      ))}
-                    </PickerSecretaria>
-                  </PickerView>
+                    </SelectList>
                   <Botao
                     height="40px"
                     width="50%"
