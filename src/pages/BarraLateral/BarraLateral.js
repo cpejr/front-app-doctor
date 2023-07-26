@@ -337,7 +337,7 @@ function BarraLateral({ navigation }) {
   }
 
   async function criarNovaConversa() {
-    if (secretariaSelecionada === "" || secretariaSelecionada === undefined) {
+    if (secretariaSelecionada === " " || secretariaSelecionada === undefined) {
       setCampoVazioModal(true);
       Alert.alert("Erro!", "Selecione um usuário.");
     } else {
@@ -430,7 +430,7 @@ function BarraLateral({ navigation }) {
                     >
                       <Picker.Item
                         style={{ fontSize: 15, color: "grey" }}
-                        value=""
+                        value=" "
                         label={"Selecione um(a) Secretário(a)"}
                         enabled={false}
                       />

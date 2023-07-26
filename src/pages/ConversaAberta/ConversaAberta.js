@@ -6,7 +6,8 @@ import {
   useWindowDimensions,
   View,
   Linking,
-  BackHandler
+  BackHandler,
+  KeyboardAvoidingView
 } from "react-native";
 import {
   ArquivoSelecionado,
@@ -564,7 +565,7 @@ function ConversaAberta({ navigation, route, socket }) {
                   </TextoMensagem>)}
             </CaixaTexto>
           </HeaderConversaAberta>
-
+        <KeyboardAvoidingView style={{ flex: 1}} behavior="padding" enabled   keyboardVerticalOffset={-121}>
           <FundoConversaAberta>
             {carregandoConversa ? (
               <PaginaCarregando>
@@ -1044,6 +1045,7 @@ function ConversaAberta({ navigation, route, socket }) {
               onPress={() => enviarMensagem(false)}
             />
           </FooterConversaAberta>
+          </ KeyboardAvoidingView>
         </Body>
       </Provider >
     );
