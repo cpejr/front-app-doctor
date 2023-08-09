@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   View,
-  Linking
+  Linking,
+  BackHandler,
+  KeyboardAvoidingView
 } from "react-native";
 import {
   ArquivoSelecionado,
@@ -54,6 +56,7 @@ import moverArray from "../../utils/moverArray";
 import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
+import { sleep } from "../../utils/sleep";
 import { Titulo } from "../AlterarDados/Styles";
 import { cep, telefone } from "../../utils/masks";
 import { RNS3 } from "react-native-aws3"
@@ -89,22 +92,60 @@ function ConversaAberta({ navigation, route, socket }) {
       useState(null);
 
     const [nomeArquivo, setNomeArquivo] = useState("");
-
+    var [frequencia, setfrequencia] = useState();
     const openMenu = () => setVisivel(true);
 
     const closeMenu = () => setVisivel(false);
+    const {
+      usuarioId,
+      conversaSelecionada,
+      setConversaSelecionada,
+      imagemPerfilPadrão,
+      conversas,
+      setConversas,
+      mensagens,
+      setMensagens,
+    } = useContext(ChatContext);
+    const inputMensagemConteudoRef = useRef(null);
+    const componenteEstaMontadoRef = useRef(null);
+    const scrollRef = useRef(null);
+  useEffect(() => {
+    const backAction = () => {
+      startTemporizador(false, frequencia);
+      return true;
+    };
 
-    function deixandoModaisResponsivos() {
-      if (width > height) {
-        setHeightModalUpdateFoto("85%");
-        setMarginTopModais("0%");
-        setTablet(true);
-      } else {
-        setHeightModalUpdateFoto("60%");
-        setMarginTopModais("0%");
-        setTablet(false);
-      }
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  function deixandoModaisResponsivos() {
+    if (width > height) {
+      setHeightModalUpdateFoto("85%");
+      setMarginTopModais("0%");
+      setTablet(true);
+    } else {
+      setHeightModalUpdateFoto("60%");
+      setMarginTopModais("0%");
+      setTablet(false);
     }
+  }
+
+  useEffect(() => {
+    deixandoModaisResponsivos();
+  }, [width, height]);
+
+  useEffect(() => {
+    (async () => {
+      const StatusDaGaleria =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setPermissaoParaAbrirAGaleria(StatusDaGaleria.status === "granted");
+    })();
+  }, []);
 
     useEffect(() => {
       deixandoModaisResponsivos();
@@ -199,19 +240,9 @@ function ConversaAberta({ navigation, route, socket }) {
       setConfirmouTudo(false);
     }
 
-    const {
-      usuarioId,
-      conversaSelecionada,
-      setConversaSelecionada,
-      imagemPerfilPadrão,
-      conversas,
-      setConversas,
-      mensagens,
-      setMensagens,
-    } = useContext(ChatContext);
-    const componenteEstaMontadoRef = useRef(null);
-    const scrollRef = useRef(null);
-    const inputMensagemConteudoRef = useRef(null);
+    
+    
+    
 
     async function getDadosUsuarioAtual(componenteEstaMontadoRef) {
       const { dadosUsuario } = await managerService.GetDadosUsuario();
@@ -258,23 +289,31 @@ function ConversaAberta({ navigation, route, socket }) {
         );
       }
     }
-    var frequencia;
-
-    function startTemporizador() {
-      frequencia = setInterval(function () {
-        getMensagens(true);
-      }, 5000);
+  
+  function startTemporizador(start, frequenciaLida) {
+    if(start == true){frequencia = (setInterval(function () {
+      getMensagens(true)
+    }, 5000) )}
+    if(start == false){
+      clearInterval(frequenciaLida) 
+      SairdaPagina();
     }
-    useEffect(() => {
-      startTemporizador();
-    }, []);
-    useEffect(() => {
-      componenteEstaMontadoRef.current = true;
+  }
+
+  function SairdaPagina(){
+    navigation.navigate("BarraLateral");
+  }
+
+  useEffect(() => {
+    startTemporizador(true, 0);
+  }, []);
+  useEffect(() => {
+    componenteEstaMontadoRef.current = true;
 
       getMensagens(componenteEstaMontadoRef.current);
 
-      return () => (componenteEstaMontadoRef.current = false);
-    }, [conversaSelecionada, usuarioId]);
+    return () => (componenteEstaMontadoRef.current = false, clearInterval(frequencia));
+  }, [conversaSelecionada, usuarioId]);
 
     useEffect(() => {
       inputMensagemConteudoRef?.current?.focus();
@@ -502,9 +541,9 @@ function ConversaAberta({ navigation, route, socket }) {
               name="arrow-left"
               size={32}
               color={Cores.azul}
-              onPress={() => navigation.push("BarraLateral")}
+              onPress={() => startTemporizador(false, frequencia)}
             />
-            {conversaSelecionada?.conversaCom?.imagem ? (
+            {conversaSelecionada.conversaCom.imagem ? (
               <ImagemUsuario
                 border-radius="3px"
                 source={{ uri: conversaSelecionada.conversaCom.imagem }}
@@ -522,11 +561,11 @@ function ConversaAberta({ navigation, route, socket }) {
 
                 </TextoMensagem>) : (
                   <TextoMensagem color={Cores.azul} fontSize="20px" fontWeight="bold">
-                    {conversaSelecionada?.conversaCom?.nome}
+                    {conversaSelecionada.conversaCom.nome}
                   </TextoMensagem>)}
             </CaixaTexto>
           </HeaderConversaAberta>
-
+        <KeyboardAvoidingView style={{ flex: 1}} behavior="padding" enabled   keyboardVerticalOffset={-121}>
           <FundoConversaAberta>
             {carregandoConversa ? (
               <PaginaCarregando>
@@ -938,6 +977,7 @@ function ConversaAberta({ navigation, route, socket }) {
                           width="auto"
                           fontSize="20px"
                           color={Cores.azul}
+                          onPress={() => selecionaDocumento()}
                         >
                           {nomeArquivo}
                         </ConteudoBotao>
@@ -1005,6 +1045,7 @@ function ConversaAberta({ navigation, route, socket }) {
               onPress={() => enviarMensagem(false)}
             />
           </FooterConversaAberta>
+          </ KeyboardAvoidingView>
         </Body>
       </Provider >
     );

@@ -5,6 +5,7 @@ import { TextInput } from "react-native";
 import { ActivityIndicator, Colors, Searchbar } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 
+
 export const Body = styled.View`
   display: flex;
   align-items: center;
@@ -126,7 +127,7 @@ export const ImagemUsuario = styled.Image`
 `;
 
 export const CaixaModalGrande = styled.View`
-  height: ${(props) => props.height};
+  min-height: ${(props) => props.height};
   width: 80%;
   max-width: 600px;
   margin-left: 10%;
