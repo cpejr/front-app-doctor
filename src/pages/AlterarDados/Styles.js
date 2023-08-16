@@ -314,3 +314,42 @@ export const CaixaBotoesCancelarConfirmarModalExcluirFoto = styled.View`
   flex-direction: row;
   justify-content: space-around;
 `;
+
+export const CaixaParaDatadeNascimento = styled.Text`
+  display: flex;
+  width: ${(props) => props.width ?? "100%"};
+  margin-left: ${(props) => props.marginLeft?? "0%"};
+  margin-right: ${(props) => props.marginRight?? "0%"};
+  height: 50px;
+  background-color: #e4e6f4;
+  border-radius: 5px;
+  padding-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 6px;
+  border: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.erro || props.camposVazios){
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+  color: ${(props) => {
+    let cor;
+      if(props.value == 0){
+        cor = colors.grey3;
+        return cor;
+      }else{
+        cor = Cores.preto;
+      }
+      return cor;
+  }};
+  border-width: 1.5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+  font-size: 15px;
+`;
