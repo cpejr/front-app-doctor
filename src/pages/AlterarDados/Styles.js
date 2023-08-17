@@ -342,7 +342,7 @@ export const CaixaParaDatadeNascimento = styled.Text`
   color: ${(props) => {
     let cor;
       if(props.value == 0){
-        cor = colors.grey3;
+        cor = Cores.cinza;
         return cor;
       }else{
         cor = Cores.preto;

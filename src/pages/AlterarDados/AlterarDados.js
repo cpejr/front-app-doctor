@@ -63,7 +63,7 @@ import { CaixaRotulo } from "../Cadastro/Styles";
 import { apenasLetras, apenasNumeros } from "../../utils/masks";
 import { Button } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import SelectList from "react-native-dropdown-select-list"
+import { SelectList } from 'react-native-dropdown-select-list'
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -101,6 +101,38 @@ function AlterarDados({ navigation }) {
   const [marginTopModais, setMarginTopModais] = useState();
   const [datePicker, setDatePicker] = useState(false);
   const [dataPlaceHolder, setdataPlaceHolder] = useState(0);
+
+  const ListaEstado = [
+    {value:"Acre", key:"AC"},
+    {value:"Alagoas", key:"AL"},
+    {value:"Amapá", key:"AP"},
+    {value:"Amazonas", key:"AM"},
+    {value:"Bahia", key:"BA"},
+    {value:"Ceará", key:"CE"},
+    {value:"Distrito Federal", key:"DF"},
+    {value:"Espírito Santo", key:"ES"},
+    {value:"Goiás", key:"GO"},
+    {value:"Maranhão", key:"MA"},
+    {value:"Mato Grosso", key:"MT"},
+    {value:"Mato Grosso do Sul", key:"MS"},
+    {value:"Minas Gerais", key:"MG"},
+    {value:"Pará", key:"PA"},
+    {value:"Paraíba", key:"PB"},
+    {value:"Paraná", key:"PR"},
+    {value:"Pernambuco", key:"PE"},
+    {value:"Piauí", key:"PI"},
+    {value:"Rio de Janeiro", key:"RJ"},
+    {value:"Rio Grande do Norte", key:"RN"},
+    {value:"Rio Grande do Sul", key:"RS"},
+    {value:"Rondônia", key:"RO"},
+    {value:"Roraima", key:"RR"},
+    {value:"Santa Catarina", key:"SC"},
+    {value:"São Paulo", key:"SP"},
+    {value:"Sergipe", key:"SE"},
+    {value:"Tocantins", key:"TO"},
+    {value:"Estrangeiro", key:"EX"}
+  ]
+  
 
   function deixandoModaisResponsivos() {
     if (width > height){
@@ -242,7 +274,7 @@ function AlterarDados({ navigation }) {
   }, [usuario.avatar_url]);
 
   function formatacaoData() {
-    let dataNascimento = estado.data_nascimento;
+    let dataNascimento = data_nascimentoFront;
     const response = brParaPadrao(dataNascimento);
     return response;
   }
@@ -280,7 +312,7 @@ function AlterarDados({ navigation }) {
     setCpf(resposta.dadosUsuario.cpf);
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
-    setEstadoAtual(estadosSelectlist.find(function(estado){
+    setEstadoAtual(ListaEstado.find(function(estado){
       return estado.key === resposta.dadosEndereco.estado
     }))
     setComplemento(resposta.dadosEndereco.complemento);
@@ -348,9 +380,7 @@ function AlterarDados({ navigation }) {
 
   async function atualizarDados() {
     setCarregando(true);
-    if (camposNulos.data_nascimento === false) {
-      estado.data_nascimento = formatacaoData(estado.data_nascimento);
-    }
+      estado.data_nascimento = formatacaoData();
 
     if (!_.isEqual(camposNulos, referenciaCamposNulos)) {
       if (_.isEqual(erro, referenciaFormatacao)) {
@@ -984,32 +1014,17 @@ function AlterarDados({ navigation }) {
               </CaixaTitulosRotulos>
 
               <PickerView>
-                <PickerEstado
-                  selectedValue={estadoSelecionado}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setEstadoSelecionado(itemValue);
-                    preenchendoEndereco("estado", itemValue);
-                  }}
-                >
-                  <Picker.Item
-                    style={{ fontSize: 15, color: "grey" }}
-                    value=""
-                    label={endereco.estado}
-                  />
-                  {estados.map((estado) => (
-                    <Picker.Item
-                      key={estado.sigla}
-                      style={{ fontSize: 15, color: "black" }}
-                      value={estado.sigla}
-                      label={estado.nome}
-                    />
-                  ))}
-                </PickerEstado>
-                <SelectList>
-                  data={estadosSelectlist}
+                <SelectList
+                  data={ListaEstado}
                   save={"key"}
-                  defaultOption={{ estadoAtual }}
-                </SelectList>
+                  defaultOption={ estadoAtual }
+                  setSelected={(val) => {
+                  setEstadoSelecionado(val);
+                  preenchendoEndereco("estado", val);}}
+                  label={estadoAtual.value}
+                  boxStyles={borderWidth="0"}
+                  searchPlaceholder={ estadoAtual.value }
+                  />
               </PickerView>
 
               <CaixaTitulosRotulos>
