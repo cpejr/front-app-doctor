@@ -101,6 +101,7 @@ function AlterarDados({ navigation }) {
   const [marginTopModais, setMarginTopModais] = useState();
   const [datePicker, setDatePicker] = useState(false);
   const [dataPlaceHolder, setdataPlaceHolder] = useState(0);
+  const [dateAlterada, setDataAlterada] = useState(false);
 
   const ListaEstado = [
     {value:"Acre", key:"AC"},
@@ -380,7 +381,8 @@ function AlterarDados({ navigation }) {
 
   async function atualizarDados() {
     setCarregando(true);
-      estado.data_nascimento = formatacaoData();
+    if(dateAlterada == true){
+      estado.data_nascimento = formatacaoData();}
 
     if (!_.isEqual(camposNulos, referenciaCamposNulos)) {
       if (_.isEqual(erro, referenciaFormatacao)) {
@@ -794,6 +796,7 @@ function AlterarDados({ navigation }) {
                           "data_nascimento",
                           formatacaodeData(value)
                         );
+                        setDataAlterada(true)
                         setDate(value);
                         setdataPlaceHolder(1);
                       }}
@@ -814,6 +817,7 @@ function AlterarDados({ navigation }) {
                       "data_nascimento",
                       formatacaodeData(value)
                     );
+                    setDataAlterada(true)
                     setDate(value);
                   }}
                 />
