@@ -148,7 +148,7 @@ function Home({ navigation }) {
  
   return (
     <>
-      <ScrollView>
+      <ScrollView overScrollMode ="never">
         <Corpo>
           {carregando ? (
             <AnimacaoCarregando>

@@ -9,7 +9,7 @@ export const Corpo = styled.View`
   padding-bottom: 50px;
 `;
 
-export const Card = styled.View`ß
+export const Card = styled.View`
   display: flex;
   align-items: center;
   width: 90%;
