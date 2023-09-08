@@ -42,7 +42,7 @@ function SolicitarConsulta({ navigation }) {
 
   const renderizarUrl = useCallback(async () => {
     const checarUrl = await Linking.canOpenURL(urlWhatsApp);
-    if (checarUrl) {
+    if (true) {
       await Linking.openURL(urlWhatsApp);
     } else {
       Alert.alert(`Não foi possível abrir a URL: ${urlWhatsApp}`);
