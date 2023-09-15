@@ -15,7 +15,7 @@ export const Card = styled.View`
   width: 90%;
   border-radius: 10px;
   margin-top: 5%;
-  //elevation: 20;
+  elevation: 20;
   padding-bottom: 2%;
   background-color: ${(props) => props.backgroundColor};
   height: ${(props) => props.height};

@@ -1,34 +1,3 @@
-export const estadosSelectlist = [
-  {value:"Acre", key:"AC"},
-  {value:"Alagoas", key:"AL"},
-  {value:"Amapá", key:"AP"},
-  {value:"Amazonas", key:"AM"},
-  {value:"Bahia", key:"BA"},
-  {value:"Ceará", key:"CE"},
-  {value:"Distrito Federal", key:"DF"},
-  {value:"Espírito Santo", key:"ES"},
-  {value:"Goiás", key:"GO"},
-  {value:"Maranhão", key:"MA"},
-  {value:"Mato Grosso", key:"MT"},
-  {value:"Mato Grosso do Sul", key:"MS"},
-  {value:"Minas Gerais", key:"MG"},
-  {value:"Pará", key:"PA"},
-  {value:"Paraíba", key:"PB"},
-  {value:"Paraná", key:"PR"},
-  {value:"Pernambuco", key:"PE"},
-  {value:"Piauí", key:"PI"},
-  {value:"Rio de Janeiro", key:"RJ"},
-  {value:"Rio Grande do Norte", key:"RN"},
-  {value:"Rio Grande do Sul", key:"RS"},
-  {value:"Rondônia", key:"RO"},
-  {value:"Roraima", key:"RR"},
-  {value:"Santa Catarina", key:"SC"},
-  {value:"São Paulo", key:"SP"},
-  {value:"Sergipe", key:"SE"},
-  {value:"Tocantins", key:"TO"},
-  {value:"Estrangeiro", key:"EX"}
-]
-
 export const estados = [
   {nome:"Acre", sigla:"AC"},
   {nome:"Alagoas", sigla:"AL"},
@@ -59,5 +28,3 @@ export const estados = [
   {nome:"Tocantins", sigla:"TO"},
   {nome:"Estrangeiro", sigla:"EX"}
 ]
-
-

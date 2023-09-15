@@ -21,7 +21,6 @@ import GuilhermeMarquesTemplateArteSobreMim from "./Imagens/GuilhermeMarquesTemp
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native-paper";
 import * as managerService from "../../services/ManagerService/managerService";
-import Icon from "react-native-vector-icons/Entypo";
 
 function SobreMim({ navigation }) {
   const [carregando, setCarregando] = useState(true);
@@ -70,10 +69,10 @@ function SobreMim({ navigation }) {
       <View style={{ alignItems: "center" }}>
         <CaixaBotao>
           <BotaoVoltar onPress={() => navigation.navigate("Home")}>
-          <Icon
+            <Icon
               name="arrow-left"
               size={40}
-              color={Cores.azul}
+              color={Cores.lilas[1]}
             />
           </BotaoVoltar>
         </CaixaBotao>

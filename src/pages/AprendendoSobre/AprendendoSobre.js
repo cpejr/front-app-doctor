@@ -202,10 +202,10 @@ function AprendendoSobre( { navigation }) {
       Alert.alert(`Não foi possível abrir a URL: ${urlAprendendo}`);
     }
   }, [urlAprendendo]);
-
+  
 
   return (
-    <ScrollView overScrollMode ="never">
+    <ScrollView>
         <Corpo>
            
             <>
