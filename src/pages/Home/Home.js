@@ -26,6 +26,7 @@ import Carousel from "react-native-snap-carousel";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
+import { useIsFocused } from '@react-navigation/native';
 
 function Home({ navigation }) {
 
@@ -145,18 +146,21 @@ function Home({ navigation }) {
       navigation.navigate("Login");
     }
   }
+  const isFocused = useIsFocused();
  
   return (
     <>
-      <ScrollView>
+      <ScrollView overScrollMode ="never">
         <Corpo>
           {carregando ? (
             <AnimacaoCarregando>
               <ActivityIndicator animating={true} color={Colors.blue900} />
             </AnimacaoCarregando>
           ) : (
-            <>
-              <Card backgroundColor={Cores.branco} height={alturaCard}>
+            <> 
+            
+              {isFocused ? (
+             <Card backgroundColor={Cores.branco} height={alturaCard}>
                 <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
                 <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
                   <YoutubePlayer
@@ -166,7 +170,9 @@ function Home({ navigation }) {
                   videoId={idVideo}
                   onChangeState={onStateChange}
                 />
-              </Card>
+              </Card>) : (
+                <></>
+              )}
 
               <Card backgroundColor={Cores.branco} height="auto">
                 <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>

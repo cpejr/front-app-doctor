@@ -48,10 +48,11 @@ import {
   PaginaCarregando,
   CaixaModalDeleteFoto,
   CaixaModalUpdateFoto,
-  CaixaExterna
+  CaixaExterna,
+  CaixaParaDatadeNascimento
 } from "./Styles";
 import { brParaPadrao } from "../../utils/date";
-import { estados } from "./estados";
+import { estados, estadosSelectlist} from "./estados";
 import { cep } from "../../utils/masks";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -62,6 +63,7 @@ import { CaixaRotulo } from "../Cadastro/Styles";
 import { apenasLetras, apenasNumeros } from "../../utils/masks";
 import { Button } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { SelectList } from 'react-native-dropdown-select-list'
 
 function AlterarDados({ navigation }) {
   const [usuario, setUsuario] = useState({});
@@ -92,10 +94,46 @@ function AlterarDados({ navigation }) {
   const [imagem, setImagem] = useState(null);
   const [CarregandoImagemModal, setCarregandoImagemModal] = useState(false);
   const tamanhoIcone = width > 480 ? 20 : 25;
+  const [date, setDate] = useState(new Date(2000, 0, 1));
 
   const [heightModalDeletarFoto, setHeightModalDeletarFoto] = useState();
   const [heightModalUpdateFoto, setHeightModalUpdateFoto] = useState();
   const [marginTopModais, setMarginTopModais] = useState();
+  const [datePicker, setDatePicker] = useState(false);
+  const [dataPlaceHolder, setdataPlaceHolder] = useState(0);
+  const [dateAlterada, setDataAlterada] = useState(false);
+
+  const ListaEstado = [
+    {value:"Acre", key:"AC"},
+    {value:"Alagoas", key:"AL"},
+    {value:"Amapá", key:"AP"},
+    {value:"Amazonas", key:"AM"},
+    {value:"Bahia", key:"BA"},
+    {value:"Ceará", key:"CE"},
+    {value:"Distrito Federal", key:"DF"},
+    {value:"Espírito Santo", key:"ES"},
+    {value:"Goiás", key:"GO"},
+    {value:"Maranhão", key:"MA"},
+    {value:"Mato Grosso", key:"MT"},
+    {value:"Mato Grosso do Sul", key:"MS"},
+    {value:"Minas Gerais", key:"MG"},
+    {value:"Pará", key:"PA"},
+    {value:"Paraíba", key:"PB"},
+    {value:"Paraná", key:"PR"},
+    {value:"Pernambuco", key:"PE"},
+    {value:"Piauí", key:"PI"},
+    {value:"Rio de Janeiro", key:"RJ"},
+    {value:"Rio Grande do Norte", key:"RN"},
+    {value:"Rio Grande do Sul", key:"RS"},
+    {value:"Rondônia", key:"RO"},
+    {value:"Roraima", key:"RR"},
+    {value:"Santa Catarina", key:"SC"},
+    {value:"São Paulo", key:"SP"},
+    {value:"Sergipe", key:"SE"},
+    {value:"Tocantins", key:"TO"},
+    {value:"Estrangeiro", key:"EX"}
+  ]
+  
 
   function deixandoModaisResponsivos() {
     if (width > height){
@@ -149,8 +187,13 @@ function AlterarDados({ navigation }) {
     nome_cuidador: true,
     telefone_cuidador: true,
   };
+  const [data_nascimentoFront, setData_nascimentoFront] = useState(
+    "Data de nascimento:"
+  );
+  const [selectListEstados, setSelectListEstados] = useState();
 
   const errors = {};
+  const [estadoAtual, setEstadoAtual] = useState({value:"Acre", key:"AC"})
 
   useEffect(() => {
     if (!estado.nome) errors.nome = true;
@@ -232,9 +275,17 @@ function AlterarDados({ navigation }) {
   }, [usuario.avatar_url]);
 
   function formatacaoData() {
-    let dataNascimento = estado.data_nascimento;
+    let dataNascimento = data_nascimentoFront;
     const response = brParaPadrao(dataNascimento);
     return response;
+  }
+
+  function formatacaodeData(date) {
+    return [
+      transformaaodeDataem2digitos(date.getDate()),
+      transformaaodeDataem2digitos(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join("/");
   }
 
   async function updateFoto() {
@@ -262,6 +313,9 @@ function AlterarDados({ navigation }) {
     setCpf(resposta.dadosUsuario.cpf);
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
+    setEstadoAtual(ListaEstado.find(function(estado){
+      return estado.key === resposta.dadosEndereco.estado
+    }))
     setComplemento(resposta.dadosEndereco.complemento);
     setNumero(resposta.dadosEndereco.numero + " ");
     if (resposta.dadosUsuario.telefone_cuidador !== null) {
@@ -321,11 +375,14 @@ function AlterarDados({ navigation }) {
     }
   }, [dataNascimento]);
 
+  function transformaaodeDataem2digitos(num) {
+    return num.toString().padStart(2, "0");
+  }
+
   async function atualizarDados() {
     setCarregando(true);
-    if (camposNulos.data_nascimento === false) {
-      estado.data_nascimento = formatacaoData(estado.data_nascimento);
-    }
+    if(dateAlterada == true){
+      estado.data_nascimento = formatacaoData();}
 
     if (!_.isEqual(camposNulos, referenciaCamposNulos)) {
       if (_.isEqual(erro, referenciaFormatacao)) {
@@ -348,6 +405,9 @@ function AlterarDados({ navigation }) {
   function preenchendoDados(identificador, valor) {
     if (identificador === "nome" || identificador === "nome_cuidador") {
       valor = apenasLetras(valor);
+    }
+    if (identificador === "data_nascimento") {
+      setData_nascimentoFront(valor);
     }
 
     setEstado({ ...estado, [identificador]: valor });
@@ -714,32 +774,55 @@ function AlterarDados({ navigation }) {
                 <TituloRotulos>Data de nascimento:</TituloRotulos>
               </CaixaTitulosRotulos>
 
-              <Data
-                customStyles={{
-                  dateInput: {
-                    borderWidth: 0,
-                    alignItems: "flex-start",
-                    paddingLeft: 10,
-                  },
-                  placeholderText: { color: "#90929B" },
-                }}
-                placeholder={dataMasked}
-                maxDate={new Date()}
-                format="DD/MM/YYYY"
-                mode="date"
-                showIcon={false}
-                date={estado.data_nascimento}
-                locale="pt"
-                confirmBtnText="Confirmar"
-                cancelBtnText="Cancelar"
-                onDateChange={(data) => {
-                  preenchendoDados("data_nascimento", data);
-                  setCamposNulos({
-                    ...camposNulos,
-                    data_nascimento: false,
-                  });
-                }}
-              />
+              <CaixaParaDatadeNascimento
+              value={dataPlaceHolder}
+              width="100%"
+              onPress={() => setDatePicker(true)}
+            >
+              {Platform.OS === "android" ? (
+                <>
+                  {data_nascimentoFront}
+                  {datePicker && (
+                    <Data
+                    maximumDate={new Date()}
+                    showIcon={false}
+                      mode="date"
+                      value={date}
+                      confirmBtnText="Confirmar"
+                      cancelBtnText="Cancelar"
+                      onChange={(event, value) => {
+                        setDatePicker(false);
+                        preenchendoDados(
+                          "data_nascimento",
+                          formatacaodeData(value)
+                        );
+                        setDataAlterada(true)
+                        setDate(value);
+                        setdataPlaceHolder(1);
+                      }}
+                    />
+                  )}
+                </>
+              ) : (
+                <Data
+                  format="DD/MM/YYYY"
+                  maximumDate={new Date()}
+                  showIcon={false}
+                  mode="date"
+                  value={date}
+                  confirmBtnText="Confirmar"
+                  cancelBtnText="Cancelar"
+                  onChange={(event, value) => {
+                    preenchendoDados(
+                      "data_nascimento",
+                      formatacaodeData(value)
+                    );
+                    setDataAlterada(true)
+                    setDate(value);
+                  }}
+                />
+              )}
+            </CaixaParaDatadeNascimento>
               <CaixaTitulosRotulos>
                 <TituloRotulos>CPF:</TituloRotulos>
               </CaixaTitulosRotulos>
@@ -935,27 +1018,17 @@ function AlterarDados({ navigation }) {
               </CaixaTitulosRotulos>
 
               <PickerView>
-                <PickerEstado
-                  selectedValue={estadoSelecionado}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setEstadoSelecionado(itemValue);
-                    preenchendoEndereco("estado", itemValue);
-                  }}
-                >
-                  <Picker.Item
-                    style={{ fontSize: 15, color: "grey" }}
-                    value=""
-                    label={endereco.estado}
+                <SelectList
+                  data={ListaEstado}
+                  save={"key"}
+                  defaultOption={ estadoAtual }
+                  setSelected={(val) => {
+                  setEstadoSelecionado(val);
+                  preenchendoEndereco("estado", val);}}
+                  label={estadoAtual.value}
+                  boxStyles={borderWidth="0"}
+                  searchPlaceholder={ estadoAtual.value }
                   />
-                  {estados.map((estado) => (
-                    <Picker.Item
-                      key={estado.sigla}
-                      style={{ fontSize: 15, color: "black" }}
-                      value={estado.sigla}
-                      label={estado.nome}
-                    />
-                  ))}
-                </PickerEstado>
               </PickerView>
 
               <CaixaTitulosRotulos>
