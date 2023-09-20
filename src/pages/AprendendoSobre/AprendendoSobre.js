@@ -9,7 +9,7 @@ import {
   Linking,
 } from "react-native";
 import Icone from "react-native-vector-icons/Entypo";
-import Icon from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Entypo";
 import logoAmie from "./../../assets/logoAmie.jpg";
 import medicosAmie from "./../../assets/medicosAmie.webp";
 import {
@@ -211,11 +211,7 @@ function AprendendoSobre( { navigation }) {
             <>
             <CaixaSeta>
             <TouchableOpacity onPress={() => navigation.push("Home")}>
-            <Icon 
-                    name="arrow-back-circle-outline" 
-                    size={tamanhoIconeSeta} 
-                    color="blue"
-                    onPress={() => navigation.navigate("Home")}/>
+          <Icon name="arrow-left" size={tamanhoIcone} color={Cores.azul} />
         </TouchableOpacity>
         </CaixaSeta>
             <TituloPagina onPress={renderizarUrl0} color={Cores.azul}>

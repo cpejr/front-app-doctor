@@ -293,10 +293,8 @@ function Home({ navigation }) {
                   <TituloInformacao color={Cores.preto}>
                     Aprendendo Sobre...
                   </TituloInformacao>
-                  <ConteudoAprendendo>
-                    <TextoAprendendo color={Cores.preto}>Aprenda sobre as principais doenças e condições neurológicas
-                    </TextoAprendendo>
-                  </ConteudoAprendendo>
+                    <TextoInfomacao color={Cores.preto}>Aprenda sobre as principais doenças e condições neurológicas
+                    </TextoInfomacao>
                   <BotaoSaibaMais
                     onPress={paginaAprendendoSobre}
                     color={Cores.branco}
