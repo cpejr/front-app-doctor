@@ -16,6 +16,7 @@ import {
   TextoAprendendo,
   ImagemCarrossel,
   AnimacaoCarregando,
+  CardAlternativo
 } from "./Styles";
 import Botao from "../../styles/Botao";
 import ConteudoBotao from "../../styles/ConteudoBotao";
@@ -160,7 +161,7 @@ function Home({ navigation }) {
             <> 
             
               {isFocused ? (
-             <Card backgroundColor={Cores.branco} height={alturaCard}>
+             <CardAlternativo backgroundColor={Cores.branco} height={alturaCard}>
                 <TituloCard>BEM-VINDO AO DOCTOR APP</TituloCard>
                 <TextoCard>Conheça melhor o Doutor Guilherme Marques</TextoCard>
                   <YoutubePlayer
@@ -170,11 +171,11 @@ function Home({ navigation }) {
                   videoId={idVideo}
                   onChangeState={onStateChange}
                 />
-              </Card>) : (
+              </CardAlternativo>) : (
                 <></>
               )}
 
-              <Card backgroundColor={Cores.branco} height="auto">
+              <CardAlternativo backgroundColor={Cores.branco} height="auto">
                 <TituloCard>VENHA FAZER PARTE DO TIME</TituloCard>
                 <TextoCard>
                   Para ter acesso a chat com o doutor, marcar exames e muito mais
@@ -211,7 +212,7 @@ function Home({ navigation }) {
                     ENTRAR
                   </ConteudoBotao>
                 </Botao>
-              </Card>
+              </CardAlternativo>
 
               <Card backgroundColor={"#7757a0"} height="auto">
                 <CorpoCard>
@@ -238,8 +239,8 @@ function Home({ navigation }) {
               <Card backgroundColor={Cores.branco} height={"320px"}>
                 <Carousel
                   data={imagens}
-                  sliderWidth={350}
-                  itemWidth={350}
+                  sliderWidth={width*0.9}
+                  itemWidth={width*0.85}
                   renderItem={renderizarCarrossel}
                 />
               </Card>

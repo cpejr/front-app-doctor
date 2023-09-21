@@ -11,6 +11,19 @@ export const Corpo = styled.View`
 
 export const Card = styled.View`
   display: flex;
+  align-items: flex-start;
+  width: 90%;
+  border-radius: 10px;
+  margin-top: 5%;
+  elevation: 20;
+  padding-bottom: 2%;
+  background-color: ${(props) => props.backgroundColor};
+  height: ${(props) => props.height};
+
+`;
+
+export const CardAlternativo = styled.View`
+  display: flex;
   align-items: center;
   width: 90%;
   border-radius: 10px;

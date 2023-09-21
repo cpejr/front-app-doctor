@@ -46,7 +46,7 @@ function ListaReceitas({ navigation }) {
   const { width } = useWindowDimensions();
   const [pastaAcessivel, setPastaAcessivel] = useState(false);
 
-  const tamanhoIcone = width > 480 ? 20 : 25;
+  const tamanhoIcone = width > 480 ? 40: 40;
 
   const onChangeBusca = (busca) => setBusca(busca);
 

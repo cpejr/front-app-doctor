@@ -49,7 +49,7 @@ import { sleep } from "../../utils/sleep";
 function AprendendoSobre( { navigation }) {
   const { width } = useWindowDimensions();
   const { height } = useWindowDimensions();
-  const tamanhoIcone = width > 480 ? 55 : 55;
+  const tamanhoIcone = width > 480 ? 40 : 40;
   const tamanhoIconeSeta = width > 480 ? 36 : 33;
   const WidthImagemMedicos = width > height ? 450 : 280;
   const HeightImagemMedicos = width > height ? 350 : 180;

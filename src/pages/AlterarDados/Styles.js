@@ -111,7 +111,7 @@ export const CaixaCima = styled.View`
 `;
 
 export const Titulo = styled.Text`
-  font-size: 30px;
+  font-size: ${(props) => props.fontsize};
   width: ${(props) => props.width};
 `;
 

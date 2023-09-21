@@ -60,7 +60,7 @@ function SolicitarConsulta({ navigation }) {
   const fontSizeBotao = width < 330 ? "13px" : "16px";
   const fontSizeConteudoView = width < 330 ? "18px" : "20px";
   const fontSizeTitulo = width < 330 ? "25px" : "30px";
-  const tamanhoIcone = width > 480 ? 30 : 35;
+  const tamanhoIcone = width > 480 ? 40 : 40;
 
   return (
     <ScrollView>

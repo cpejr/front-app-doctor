@@ -44,7 +44,7 @@ function ListaFormularios({ navigation }) {
   const larguraUrgenciaEstrela =
     width < 400 ? "39%" : larguraUrgenciaEstrelaMedio;
   const larguraCaixaTipoData = width < 700 ? "88%" : "95%";
-  const tamanhoIcone = width > 480 ? 20 : 25;
+  const tamanhoIcone = width > 480 ? 40 : 40;
 
   const idFormularioUrgencia = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
   const [listaOriginal, setListaOriginal] = useState([]);

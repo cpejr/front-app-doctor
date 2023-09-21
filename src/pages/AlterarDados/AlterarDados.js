@@ -483,7 +483,7 @@ function AlterarDados({ navigation }) {
   const { width, height } = useWindowDimensions();
   const tamanhoInputs = width < 400 ? "85%" : "80%";
   const tamanhoFonte = width > 500 ? "18px" : "11px";
-  const widthTitulo = width > height ? "100%" : "200px";
+  const widthTitulo = width > height ? "100%" : (width*0.49 + "px");
   const tamanhoImagem = width > 2000 ? "400" : "180";
   const tamanhoImagemModal = width > 2000 ? "400px" : "180px";
   return (
@@ -540,7 +540,7 @@ function AlterarDados({ navigation }) {
                 </ContainerFotoEAlterarImagem>
               )}
               <CaixaTitulo>
-                <Titulo width={widthTitulo}>Altere os seus dados:</Titulo>
+                <Titulo width={widthTitulo} fontsize={width*0.08 + "px"}>Altere os seus dados:</Titulo>
               </CaixaTitulo>
             </CaixaCima>
             <CaixaBotoesAlterarEDeletarImagem>

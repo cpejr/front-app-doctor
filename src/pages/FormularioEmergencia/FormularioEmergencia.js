@@ -36,7 +36,7 @@ function FormularioEmergencia({ navigation }) {
   const [usuario, setUsuario] = useState({});
   const [formularioPacienteDeEmergencia, setFormularioPacienteDeEmergencia] =
     useState({});
-  const tamanhoIcone = width > 480 ? 20 : 25;
+  const tamanhoIcone = width > 480 ? 40 : 40;
   const height = Dimensions.get("window").height;
   const width = Dimensions.get("window").width;
   const [schema, setSchema] = useState({});
