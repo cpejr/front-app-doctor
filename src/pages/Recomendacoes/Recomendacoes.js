@@ -40,7 +40,7 @@ import { ActivityIndicator,  } from "react-native-paper";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function Recomendacoes({ navigation }) {
-  const tamanhoIcone = width > 900 ? 48 : 48;
+  const tamanhoIcone = width > 900 ? 40 : 40;
   const tamanhoIconeFechar = width > 900 ? 30 : 30;
   const height = useWindowDimensions().height;
   const width = useWindowDimensions().width;

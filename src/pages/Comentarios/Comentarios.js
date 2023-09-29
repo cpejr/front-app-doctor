@@ -8,7 +8,7 @@ function Comentarios({ navigation }) {
 
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
-  const tamanhoIcone = width > 480 ? 20 : 25;
+  const tamanhoIcone = width > 480 ? 40 : 40;
 
 
   const comentarios = ["\"Depois de Deus...tenho o Dr. Guilherme como referência em minha vida!! Ele ajudou muito no tratamento da minha mãe. Apresentava quadros de crises epiléticas parciais, e confusão mental. Como a mudança da medicação ela retornou a ter vida normal e estamos na luta para lhe dar cada dia mais qualidade de vida. Obrigada pela atenção e carinho nesse momento tão dificil em minha vida!! Você é um ser que não existe, literalmente um presente de Deus. \"",

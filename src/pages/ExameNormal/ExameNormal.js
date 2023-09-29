@@ -38,7 +38,7 @@ function ExameNormal({ navigation }) {
 
   const { width, height } = useWindowDimensions();
   const tamanhoIconeWhatsapp = width > 480 ? 25 : 23;
-  const tamanhoIconeSeta = width > 480 ? 36 : 33;
+  const tamanhoIconeSeta = width > 480 ? 40 : 40;
   const tamanhoCaixaContato = height > 480 ? "33%" : "55%";
   const comparaTamanhoCaixaFalaConosco = width > 680 ? "38%" : "26%";
   const tamanhoCaixaFalaConosco = width > 1065 ? "83%" : comparaTamanhoCaixaFalaConosco;

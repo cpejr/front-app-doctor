@@ -34,7 +34,7 @@ function SolicitarExame({ route, navigation }) {
   const exameEspecifico = route.params.paramKey;
 
   const { width } = useWindowDimensions();
-  const tamanhoIcone = width > 900 ? 48 : 48;
+  const tamanhoIcone = width > 900 ? 40 : 40;
   const larguraBotoesMaior = width < 600 ? "60%" : "50%";
   const larguraBotoes = width < 330 ? "60%" : larguraBotoesMaior;
 
