@@ -16,8 +16,6 @@ import {
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import IconeVoltar from "react-native-vector-icons/Feather";
-import GuilhermeMarquesFotoSobreMim from "./Imagens/GuilhermeMarquesFotoSobreMim.webp";
-import GuilhermeMarquesTemplateArteSobreMim from "./Imagens/GuilhermeMarquesTemplateArteSobreMim.webp";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native-paper";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -45,8 +43,6 @@ function SobreMim({ navigation }) {
 
   async function SetandoSobreMim(){
     let Sobremim = await managerService.GetSobremim();
-    Sobremim.imagem_um = await managerService.GetArquivoPorChave(Sobremim.imagem_um)
-    Sobremim.imagem_dois = await managerService.GetArquivoPorChave(Sobremim.imagem_dois)
     setSobreMim(Sobremim)
   }
 
@@ -77,23 +73,6 @@ function SobreMim({ navigation }) {
             />
           </BotaoVoltar>
         </CaixaBotao>
-
-        <CaixaImagem>
-          <Image
-            style={{
-              width: larguraImagem,
-              height: alturaImagem,
-              borderRadius: 3,
-              resizeMode: "contain",
-            }}
-            source={{ uri: sobreMim?.imagem_um }}
-            alt={
-              "Aqui existe uma imagem da logomarca do doutor Guilherme Marques" +
-              30
-            }
-          ></Image>
-        </CaixaImagem>
-
         <CaixaTexto>
           <TituloTexto fontFamily="BarlowSemibold">{sobreMim?.titulo_um}</TituloTexto>
           <Texto fontFamily="BarlowLight" textAlign="justify">
@@ -120,21 +99,6 @@ function SobreMim({ navigation }) {
           </Texto>
         </CaixaTexto>
 
-        <CaixaImagem>
-          <Image
-            style={{
-              width: larguraImagem ,
-              height: alturaImagem * 1.24,
-              borderRadius: 3,
-              resizeMode: "contain",
-            }}
-            source={{ uri: sobreMim?.imagem_dois }}
-            alt={
-              "Aqui existe uma foto do doutor Guilherme Marques em seu consultório" +
-              30
-            }
-          ></Image>
-        </CaixaImagem>
 
         <CaixaTexto>
           <TituloTexto fontFamily="BarlowSemibold">
